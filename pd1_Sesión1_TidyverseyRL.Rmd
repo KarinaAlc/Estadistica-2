@@ -16,12 +16,10 @@ editor_options:
 ### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 <br>
 
 # **Tidyverse y RL**
-
 <br>
-
 <center><img src=" " width="200"/></center>
 
-```{r}
+```{r,include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
@@ -42,7 +40,7 @@ knitr::include_graphics("logoPUCP.png")
 ### **MUNDO TIDYVERSE**
 
 ```{r,echo=FALSE, out.width="30%",fig.align = "center"}
-knitr::include_graphics("tidy.png") 
+knitr::include_graphics("pd1_tidy.png") 
 ```
 
 Tidyverse es un conjunto de de paquetes de R para ciencia de datos, nos
