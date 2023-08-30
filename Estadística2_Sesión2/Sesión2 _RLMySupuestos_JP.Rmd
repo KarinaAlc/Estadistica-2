@@ -1,7 +1,7 @@
 ---
 title: "Sesión 2. RLM y Supuestos"
 author: "Curso: Estadística para el análisis político 2"
-date: "Ciclo 2023-1"
+date: "Ciclo 2023-2"
 output:
   prettydoc::html_pretty:
     theme: cayman
@@ -50,7 +50,7 @@ Para mayor información:
 <https://publicadministration.un.org/egovkb/en-us/About/Overview/-E-Government-Development-Index>
 
 ```{r,echo=FALSE, out.width="70%",fig.align="center", fig.cap = "Diccionario de datos de EGov.xlsx"}
-knitr::include_graphics("DDatos_pd2.png") 
+knitr::include_graphics("pd2_DDatos.png") 
 ```
 
 Obtenemos nuestra base de datos:
