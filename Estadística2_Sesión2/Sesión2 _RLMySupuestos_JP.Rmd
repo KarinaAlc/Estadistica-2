@@ -3,6 +3,8 @@ title: "Sesión 2. RLM y Supuestos"
 author: "Curso: Estadística para el análisis político 2"
 date: "Ciclo 2023-2"
 output:
+   
+      
   prettydoc::html_pretty:
     theme: cayman
     highlight: github
@@ -53,11 +55,11 @@ Para mayor información:
 knitr::include_graphics("pd2_DDatos.png") 
 ```
 
-Obtenemos nuestra base de datos:
+Obtenemos nuestra base de datos 😼:
 
 ```{r}
 library(rio)
-Egov=import("EGov.xlsx")
+Egov<-import("EGov.xlsx")
 names(Egov)
 ```
 
@@ -71,7 +73,7 @@ partir de participación digital*.
 -   Variable independiente: participaciónDigital
 
 ```{r}
-modeloRL = lm(accesoInformacion ~ participaciónDigital, Egov)
+modeloRL <- lm(accesoInformacion ~ participaciónDigital, Egov)
 summary(modeloRL)
 ```
 
@@ -87,10 +89,10 @@ Seguimos nuestro flujograma para evaluar el modelo:
 4.  **Identificamos los coeficientes**
     -   En este caso hacemos uso del código modelo1\$coefficients.
 
-### ¿Qué sucede si agregamos más variables?
+### ¿Qué sucede si agregamos más variables? 👾 
 
 ```{r,echo=FALSE, out.width="40%",fig.align="center"}
-knitr::include_graphics("esperanzaYoda.png") 
+knitr::include_graphics("tehc.png") 
 ```
 
 ## Ejemplo 2: Regresión lineal múltiple
@@ -103,7 +105,7 @@ Calculamos nuestro modelo, en este caso usaremos lo siguiente:
     Telecommunicacion_Infrastructura + ProcesoElectoral
 
 ```{r}
-modelo1= lm(accesoInformacion ~ Capital_Humano + Policulture + Telecommunicacion_Infrastructura + ProcesoElectoral,Egov)
+modelo1<- lm(accesoInformacion ~ Capital_Humano + Policulture + Telecommunicacion_Infrastructura + ProcesoElectoral,Egov)
 summary(modelo1)
 
 ```
@@ -210,7 +212,7 @@ names(Egov)
 
 ```{r}
 library(corrplot)
-#La funci?n cor calcula la matriz de correlaciones
+#La función cor calcula la matriz de correlaciones
 M<-cor(Egov[,c(8,6,5,7,4)],method="pearson")
 corrplot(M, method="circle",type="upper")
 corrplot(M, method="number")
@@ -368,7 +370,7 @@ frente a un caso de autocorrelación.
 nueva regresión.
 
 ```{r}
-modelo2 = lm(accesoInformacion ~ ProcesoElectoral + Policulture + Capital_Humano + UsuariosInternet,Egov)
+modelo2 <- lm(accesoInformacion ~ ProcesoElectoral + Policulture + Capital_Humano + UsuariosInternet,Egov)
 summary(modelo2)
 ```
 
