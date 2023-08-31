@@ -17,9 +17,15 @@ editor_options:
 
 <center><img src=" " width="200"/></center>
 
-```{r,echo=FALSE, out.width="30%",fig.align="center"}
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
 knitr::include_graphics("logoPUCP.png") 
 ```
+
+## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 <br>
+
+### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
 # **Recordando la regresión lineal**
 
@@ -55,10 +61,16 @@ Para mayor información:
 knitr::include_graphics("pd2_DDatos.png") 
 ```
 
+Cargar librerías
+
+```{r , fig.show='hide',warning=FALSE,message=FALSE}
+library(rio)
+library(dplyr)
+```
+
 Obtenemos nuestra base de datos 😼:
 
-```{r}
-library(rio)
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 Egov<-import("EGov.xlsx")
 names(Egov)
 ```
@@ -72,12 +84,32 @@ partir de participación digital*.
 
 -   Variable independiente: participaciónDigital
 
-```{r}
-modeloRL <- lm(accesoInformacion ~ participaciónDigital, Egov)
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+modeloRL <- Egov %>% lm(accesoInformacion ~ participaciónDigital, data=.)
+modeloRL
+```
+Resumen de los datos 
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 summary(modeloRL)
 ```
 
-Seguimos nuestro flujograma para evaluar el modelo:
+Algunos detalles:
+
+- Estimacion (Estimate): Este valor nos dice cuánto esperamos que cambiará el acceso a la información. Por ejemplo, si cambiamos la participación digital un poquito, él modelo te dirá cuánto crees que cambiará el acceso a la información.
+
+-  (Intercept) Es el valor que esperamos de Y cuando x1 y x2 sean cero
+
+- los coeficientes de x1, en este caso participaciondigital, nos indican respectivamente por cada unidad que aumenta la variable X, en cuanto se esperaria que aumente (o disminuya) la variable Y, controlando las demas variables.
+
+- Error Estándar (Std. Error): El modelo puede cometer pequeños errores. El “Error Estándar” nos dice cuánto podría equivocarse en su estimación. Si el error estándar es pequeño, significa que el modelo es más certero
+
+- Valor t (t value): El valor t es como una medida que determina si el modelo es confiable.
+
+- Valor p (Pr(>|t|)): El p-value nos dice si los resultado serán significativos
+
+- El R-squared nos dice el porcentaje de la varianza de Y que es explicada por el modelo
+
+#### **Seguimos nuestro flujograma para evaluar el modelo:**
 
 1.  **Nos preguntamos si el modelo es válido** 🤔
     -   Si el p-value es menor a 0.05 significa que rechazamos la
@@ -104,7 +136,7 @@ Calculamos nuestro modelo, en este caso usaremos lo siguiente:
 -   Variables independientes: Capital_Humano + Policulture +
     Telecommunicacion_Infrastructura + ProcesoElectoral
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 modelo1<- lm(accesoInformacion ~ Capital_Humano + Policulture + Telecommunicacion_Infrastructura + ProcesoElectoral,Egov)
 summary(modelo1)
 
@@ -139,11 +171,8 @@ Seguimos nuestro flujograma para evaluar el modelo:
 
 -   En este caso hacemos uso del código modelo1\$coefficients.
 
-```{r}
-#install.packages("lm.beta")
-library(lm.beta)
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 modelo1$coefficients
-
 ```
 
 -   Armamos nuestra ecuación: y=-0.121108754+
@@ -174,7 +203,7 @@ la dependiente.
 
 **Código e interpretación**
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 library(ggfortify)
 #Exploración gráfica
 plot(modelo1,1)
@@ -190,7 +219,7 @@ varianza aproximadamente constante.
 Si usamos la correlación, entonces revisamos cada una de las
 variables: - Nos fijamos en el p-value - Nos fijamos en el cor
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 #Usando el test
 cor.test(Egov$accesoInformacion, Egov$Capital_Humano)
 cor.test(Egov$accesoInformacion, Egov$Policulture)
@@ -205,12 +234,12 @@ cercana a "no cumplir"?
 
 También lo puedes graficar para que te de una idea de forma más rápida:
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 #install.packages("corrplot")
 names(Egov)
 ```
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 library(corrplot)
 #La función cor calcula la matriz de correlaciones
 M<-cor(Egov[,c(8,6,5,7,4)],method="pearson")
@@ -239,11 +268,11 @@ exigente), entre otros.
 
 Si usamos sólo gráfico
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 plot(modelo1, 2) #o también se puede usar el código autoplot(modelo1,2), las dos indicarían lo mismo.
 ```
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 library(ggfortify)
 autoplot(modelo1,2)
 ```
@@ -254,7 +283,7 @@ concluyentes, entonces procedo a realizar el test.
 Si usamos prueba de normalidad:aplicamos la prueba de Shapiro a los
 residuos del modelo
 
-```{r}
+```{r,  fig.show='hide',warning=FALSE,message=FALSE}
 shapiro.test(modelo1$resid)
 ```
 
@@ -290,7 +319,7 @@ combinación lineal de predictores.
 
 Si usamos el gráfico
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 plot(modelo1, 3)
 ```
 
@@ -331,7 +360,7 @@ no encontramos multicolinealidad.
 
 **Código e interpretación**
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 library(DescTools)
 VIF(modelo1)
 ```
@@ -369,7 +398,7 @@ frente a un caso de autocorrelación.
 **Modelo 2** ¿Es posible mejorar mi modelo1? Esta vez, realizamos una
 nueva regresión.
 
-```{r}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 modelo2 <- lm(accesoInformacion ~ ProcesoElectoral + Policulture + Capital_Humano + UsuariosInternet,Egov)
 summary(modelo2)
 ```
