@@ -218,11 +218,11 @@ partir de participación digital</em>.</p>
 <li><p>Variable dependiente: accesoInformacion</p></li>
 <li><p>Variable independiente: participaciónDigital</p></li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>modeloRL <span class="ot">&lt;-</span> Egov <span class="sc">%&gt;%</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> participaciónDigital, <span class="at">data=</span>.)</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>modeloRL <span class="ot">&lt;-</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> participaciónDigital, <span class="at">data=</span>Egov)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>modeloRL</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = accesoInformacion ~ participaciónDigital, data = .)
+## lm(formula = accesoInformacion ~ participaciónDigital, data = Egov)
 ## 
 ## Coefficients:
 ##          (Intercept)  participaciónDigital  
@@ -231,7 +231,7 @@ partir de participación digital</em>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">summary</span>(modeloRL)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = accesoInformacion ~ participaciónDigital, data = .)
+## lm(formula = accesoInformacion ~ participaciónDigital, data = Egov)
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
@@ -355,7 +355,7 @@ modelo?</strong></li>
 </ol>
 <ul>
 <li><p>Nos enfocamos en el p-value de cada independiente</p></li>
-<li><p>corroboramos que estas rechazen la hipótesis nula, es decir que
+<li><p>corroboramos que estas rechacen la hipótesis nula, es decir que
 sean menores que 0.05.</p></li>
 <li><p>Vemos que todas nuestras variables cumplen ✅</p></li>
 </ul>
@@ -513,7 +513,7 @@ normal)</p>
 <p>Si el pvalor es menor a 0.05 entonces <em>NO existe normalidad de
 residuos</em> (problemas!), se rechazaría la distribución normal. Dado
 que nuestro p-value es 0.1378, mayor que 0.05, entonces sí estamos
-frente a un caso de distribució normal de los residuos.</p>
+frente a un caso de distribución normal de los residuos.</p>
 </div>
 <div id="homocedasticidad-el-problema-es-la-heterocedasticidad" class="section level3">
 <h3><strong>3- Homocedasticidad (el problema es la
@@ -591,7 +591,7 @@ de correlación de cada error residual con el error residual
 <span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="fu">library</span>(car)</span>
 <span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(modelo1)</span></code></pre></div>
 <pre><code>##  lag Autocorrelation D-W Statistic p-value
-##    1      0.09614045      1.805361    0.26
+##    1      0.09614045      1.805361   0.276
 ##  Alternative hypothesis: rho != 0</code></pre>
 <p>Durbin Watson: Las hipótesis son: H0: Los residuos son independientes
 Ha: Los residuos no son independientes Si el pvalor es menor a 0.05
