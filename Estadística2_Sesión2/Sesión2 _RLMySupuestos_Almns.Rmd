@@ -14,7 +14,7 @@ editor_options:
 ---
 CÓDIGO DE LA SESIÓN 2 
 ```{r, eval=FALSE}
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 library(rio)
 library(dplyr)
 library(ggfortify)
@@ -25,24 +25,24 @@ library(nortest)
 library(lmtest)
 library(car)
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 Egov<-import("EGov.xlsx")
 names(Egov)
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 modeloRL <- Egov %>% lm(accesoInformacion ~ participaciónDigital, data=.)
 modeloRL
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 summary(modeloRL)
 
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 modelo1<- Egov %>% lm(accesoInformacion ~ Capital_Humano + Policulture + Telecommunicacion_Infrastructura + ProcesoElectoral,data=.)
 summary(modelo1)
 
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ----
 modelo1$coefficients
 
 ## ---- 
