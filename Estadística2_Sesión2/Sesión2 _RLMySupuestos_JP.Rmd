@@ -92,7 +92,7 @@ partir de participación digital*.
 -   Variable independiente: participaciónDigital
 
 ```{r, fig.show='hide',warning=FALSE,message=FALSE}
-modeloRL <- Egov %>% lm(accesoInformacion ~ participaciónDigital, data=.)
+modeloRL <- lm(accesoInformacion ~ participaciónDigital, data=Egov)
 modeloRL
 ```
 
@@ -183,7 +183,7 @@ Seguimos nuestro flujograma para evaluar el modelo:
 
 -   Nos enfocamos en el p-value de cada independiente
 
--   corroboramos que estas rechazen la hipótesis nula, es decir que sean
+-   corroboramos que estas rechacen la hipótesis nula, es decir que sean
     menores que 0.05.
 
 -   Vemos que todas nuestras variables cumplen ✅
@@ -275,7 +275,7 @@ Ha: No es normal (no hay distribución normal)
 Si el pvalor es menor a 0.05 entonces *NO existe normalidad de residuos*
 (problemas!), se rechazaría la distribución normal. Dado que nuestro
 p-value es 0.1378, mayor que 0.05, entonces sí estamos frente a un caso
-de distribució normal de los residuos.
+de distribución normal de los residuos.
 
 ### **3- Homocedasticidad (el problema es la heterocedasticidad)**
 
