@@ -13,7 +13,7 @@ editor_options:
     wrap: 72
 ---
 CÓDIGO DE LA SESIÓN 2 
-```{r}
+```{r, eval=FALSE}
 ## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
 library(rio)
 library(dplyr)
@@ -45,29 +45,29 @@ summary(modelo1)
 ## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
 modelo1$coefficients
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 #Exploración gráfica
 autoplot(modelo1,1)
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 autoplot(modelo1, 2) 
 
-## ----  fig.show='hide',warning=FALSE,message=FALSE----------------------------
+## ---- 
 shapiro.test(modelo1$resid)
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 autoplot(modelo1, 3)
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
+## ---
 bptest(modelo1)
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 vif(modelo1)
 
-## ----message=FALSE, warning=FALSE---------------------------------------------
+## ----
 autoplot(modelo1,5)
 
-## ---- fig.show='hide',warning=FALSE,message=FALSE-----------------------------
+## ---- 
 
 modelo2 <- Egov %>% lm(accesoInformacion ~ ProcesoElectoral + Policulture + Capital_Humano + UsuariosInternet,data=.)
 summary(modelo2)
