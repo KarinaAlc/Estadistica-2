@@ -67,6 +67,10 @@ Cargar librerías
 library(rio)
 library(dplyr)
 library(ggfortify)
+library(see)
+library(patchwork)
+library(performance)
+library(nortest)
 library(lmtest)
 library(car)
 ```
@@ -154,7 +158,7 @@ Calculamos nuestro modelo, en este caso usaremos lo siguiente:
     Telecommunicacion_Infrastructura + ProcesoElectoral
 
 ```{r, fig.show='hide',warning=FALSE,message=FALSE}
-modelo1<- lm(accesoInformacion ~ Capital_Humano + Policulture + Telecommunicacion_Infrastructura + ProcesoElectoral,data=Egov)
+modelo1<- Egov %>% lm(accesoInformacion ~ Capital_Humano + Policulture + Telecommunicacion_Infrastructura + ProcesoElectoral,data=.)
 summary(modelo1)
 
 ```
@@ -186,7 +190,7 @@ Seguimos nuestro flujograma para evaluar el modelo:
 
 4.  **Identificamos los coeficientes**
 
--   En este caso hacemos uso del código modelo1$coefficients.
+-   En este caso hacemos uso del código modelo1\$coefficients.
 
 ```{r, fig.show='hide',warning=FALSE,message=FALSE}
 modelo1$coefficients
@@ -199,7 +203,7 @@ modelo1$coefficients
 
 ### **1- Linealidad (el problema es la no linealidad)**
 
-**Descripción** Como su nombre lo dice, debe de existir una linealidad
+**Descrición** Como su nombre lo dice, debe de existir una linealidad
 entre la variable independiente y dependiente, en otras palabras,la
 linealidad indica que el valor esperado de la variable dependiente es
 una función lineal de cada variable independiente, manteniendo las demás
@@ -231,43 +235,9 @@ suspicacias. En tanto, dado que la línea roja obedece a los puntos,
 éstos deberían distribuirse alrededor de una línea horizontal, con una
 varianza aproximadamente constante.
 
-<<<<<<< HEAD
-Si usamos la correlación, entonces revisamos cada una de las
-variables: - Nos fijamos en el p-value - Nos fijamos en el cor
-
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
-#Usando el test
-cor.test(Egov$accesoInformacion, Egov$Capital_Humano)
-cor.test(Egov$accesoInformacion, Egov$Policulture)
-cor.test(Egov$accesoInformacion, Egov$Telecommunicacion_Infrastructura)
-cor.test(Egov$accesoInformacion, Egov$ProcesoElectoral)
-```
-
-Al revisar todas las variables nos damos cuenta que todas tienen un
-p-value menor a 0.05, lo cual nos da a conocer que sí existe relación
-lineal. ¿Qué pasaría si tuviese que sacar una variable?, ¿Cuál es la más
-cercana a "no cumplir"?
-
-También lo puedes graficar para que te de una idea de forma más rápida:
-
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
-#install.packages("corrplot")
-```
-
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
-library(corrplot)
-#La función cor calcula la matriz de correlaciones
-M<-cor(Egov[,c(8,6,5,7,4)],method="pearson")
-corrplot(M, method="circle",type="upper")
-corrplot(M, method="number")
-corrplot.mixed(M)
-```
-
-=======
->>>>>>> baaebfed5c6cd11fcd793119f14c0ffd7a3b8ecf
 ### **2. Normalidad de residuos (el problema es la NO normalidad)**
 
-**Descripción**
+**Descrición**
 
 Identificar si los errores siguen una distribución normal. La resta del
 valor observado menos el valor pronosticado (residuos) siguen una
@@ -404,7 +374,7 @@ nueva regresión.
 
 ```{r, fig.show='hide',warning=FALSE,message=FALSE}
 
-modelo2 <- lm(accesoInformacion ~ ProcesoElectoral + Policulture + Capital_Humano + UsuariosInternet,data=Egov)
+modelo2 <- Egov %>% lm(accesoInformacion ~ ProcesoElectoral + Policulture + Capital_Humano + UsuariosInternet,data=.)
 summary(modelo2)
 
 ```
@@ -422,7 +392,7 @@ Seguimos nuestro flujograma para evaluar el modelo:
     explican el 61.7% de la variabilidad de mi dependiente, esto es
     bueno, pero quizá podría ser mejor.
 3.  ¿Las variables independientes aportan al modelo? -Nos enfocamos en
-    el p-value de cada independiente -corroboramos que estas rechacen la
+    el p-value de cada independiente -corroboramos que estas rechazen la
     hipótesis nula, es decir que sean menores que 0.05.
 
 Conclusiones preliminares: el modelo sí pasa la evaluación; mis
