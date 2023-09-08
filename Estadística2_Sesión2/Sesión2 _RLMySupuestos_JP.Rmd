@@ -235,6 +235,28 @@ suspicacias. En tanto, dado que la línea roja obedece a los puntos,
 éstos deberían distribuirse alrededor de una línea horizontal, con una
 varianza aproximadamente constante.
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+Si usamos la correlación, entonces revisamos cada una de las
+variables: - Nos fijamos en el p-value - Nos fijamos en el cor
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+#Usando el test
+cor.test(Egov$accesoInformacion, Egov$Capital_Humano)
+cor.test(Egov$accesoInformacion, Egov$Policulture)
+cor.test(Egov$accesoInformacion, Egov$Telecommunicacion_Infrastructura)
+cor.test(Egov$accesoInformacion, Egov$ProcesoElectoral)
+```
+
+Al revisar todas las variables nos damos cuenta que todas tienen un
+p-value menor a 0.05, lo cual nos da a conocer que sí existe relación
+lineal. ¿Qué pasaría si tuviese que sacar una variable?, ¿Cuál es la más
+cercana a "no cumplir"?
+
+=======
+>>>>>>> baaebfed5c6cd11fcd793119f14c0ffd7a3b8ecf
+>>>>>>> f0b46cffae189287160be0bed68d3dd9e77d7969
 ### **2. Normalidad de residuos (el problema es la NO normalidad)**
 
 **Descrición**
