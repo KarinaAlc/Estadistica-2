@@ -15,13 +15,15 @@ editor_options:
 
 <center><img src=" " width="200"/></center>
 
-```{r,echo=FALSE, out.width="30%",fig.align="center"}
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
 knitr::include_graphics("logoPUCP.png") 
 ```
 
 ## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 1 <br>
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 <br>
+
+### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
 ### **SESIÓN 3 - Regresión Logística Binaria**  <br>
 
