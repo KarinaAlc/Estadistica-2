@@ -1,0 +1,334 @@
+---
+title: "Sesión 3. Regresion Logistica Binaria"
+author: "Curso: Estadística para el análisis político 2"
+date: "Ciclo 2023-1"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+<br>
+
+<center><img src=" " width="200"/></center>
+
+```{r,echo=FALSE, out.width="30%",fig.align="center"}
+knitr::include_graphics("logoPUCP.png") 
+```
+
+## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 1 <br>
+
+### **SESIÓN 3 - Regresión Logística Binaria**  <br>
+
+============================================================
+
+La base que usaremos hoy es la Encuesta Nacional a Docentes de
+Instituciones Educativas Públicas de Educación Básica Regular
+
+Esta base de datos es del 2020, es decir, que hay que tomar en cuenta
+que se realizó en contexto de la pandemia. Entonces, hay diversas
+variables. Con respecto al cuidado de parientes, qué enfermedades ha
+tenido, satisfacción sobre temas personales o de la misma institución
+educativa.
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+library(rio)
+endo=import("ENDO1.sav")
+```
+
+```{r,  echo = T, results = 'hide',  fig.show='hide'}
+library(dplyr)
+```
+
+Estas son las variables que usaremos.
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+data = select(endo, P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G, P1_11_H, P1_11_L, P1_18)
+```
+
+Tenemos variable de sexo, edad, si es que es area rural o urbana.
+También si es que el docente vive con personas de tercera edad, o con
+personas que tienen factores de riesgo de COVID, si en el 2020 han
+tenido depresión, ansiedad, enfermedades respiratorias, también hay otra
+variable sobre si regresarían a a clases de manera presencial etc.
+
+Vamos a realizar diferentes modelos para calentar motores y volvernos
+unos expertos y expertas en la intrepretación de coeficientes.
+
+Lo que queremos hacer es ver qué factores pueden influenciar en que un
+docente quiera retornar a clases presenciales
+
+Variable dependiente: Retorno a clases (P2_2)
+
+Variables independientes:
+
+-   ¿Cuán satisfecho esta Ud. con los siguientes aspectos?: Su empleo en
+    esta IE (P1_24_E)
+
+-   EDAD (P1_2)
+
+-   En su hogar, ¿vive usted con personas de la tercera edad? (P1_4)
+
+-   En su hogar, ¿vive Ud. con personas que están en el grupo de riesgo
+    ante COVID-19 por enfermedades preexistente (P1_5)
+
+-   Durante el año 2020, ¿sufrió o sufre enfermedades
+    respiratorias?(P1_11_B)
+
+-   Durante el año 2020, ¿sufrió o sufre ansiedad? (P1_11_F)
+
+-   Durante el año 2020, ¿sufrió o sufre depresión (P1_11_G)
+
+-   Durante el año 2020, ¿sufrió o sufre cancer? (P1_11_H)
+
+-   Durante el año 2020, ¿sufrió o sufre COVID-19? (P1_11_L)
+
+-   ¿En este momento se encuentra pagando algún préstamo o crédito?
+    (P1_18)
+
+VARIABLE DEPENDIENTE 🤐: Retorno a clases
+
+```{r,  echo = T, results = 'hide',  fig.show='hide'}
+table(data$P2_2)
+data$retorno=as.factor(data$P2_2)
+levels(data$retorno) = c("no", "si")
+table(data$retorno)
+```
+
+Ya teniendo lista la variable depediente vamos a realizar unos cuantos
+modelos y analizar el odds y la probabilidad.
+
+### MODELO 1:
+
+VD: Retorno VI: El docente vive con personas de la tercera edad
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+library(car)
+```
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+data$P1_4=recode(data$P1_4,"1=1;2=0")
+data$P1_4=as.numeric(data$P1_4) #numérica 
+table(data$P1_4)
+```
+
+```{r,  echo = T, results = 'hide',  fig.show='hide'}
+modelo1 = glm(retorno ~ P1_4,family= binomial ,data)
+summary(modelo1)
+```
+
+Ahora vamos a calcular los coeficientes del modelo [*los coefficientes
+obtenidos en esta regresión logística son el logaritmo natural de odds*]
+[*La función exponencial es la inversa del logaritmo*]
+
+```{r,  echo = T, results = 'hide',  fig.show='hide'}
+coef(modelo1)
+```
+
+[*Los odds son iguales a los exponenciales del coeficiente*] En tanto,
+si aplico exponencial a un coeficiente el resultado será el odds y
+cuando hablamos de odds nos referimos a veces.
+
+
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+1/exp(coef(modelo1)) #cuando la independiente disminuye en 1 unidad la dependiente sube en 1.47 veces
+
+```
+
+Tenemos dos maneras de poner analizar este resultado Recordemos que la
+VI era si el o la docente vive con personas de la tercera edad
+
+-   Si el o la docente vive con personas de la tercera edad, el odds de
+    que quiera retornar a clases presenciales disminuye en 1.47
+
+Otra manera de poder analizarlo con una escala de 0 a 100%
+
+Lo que podemos hacer es la siguiente operación
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+(1-exp(-0.3860))*100
+```
+
+-   Si el o la docente que vive con personas de la tercera edad, el
+    odds/probabilidad de que quiera retornar a clases presenciales
+    DISMINUYE en un 32.02%
+
+### MODELO 2
+
+#### REALICEMOS UN SEGUNDO MODELO
+
+Tomemos las variables
+
+vive con personas de la tercera edad (P1_4) ¿sufrió o sufre cancer?
+(P1_11_H) ¿sufrió o sufre depresion? (P1_11_G)
+
+Si influyen en la probabilidad de que el docente quiera retornar o no a
+clases presenciales
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+modelo2 = glm(retorno ~ P1_4+P1_11_H+P1_11_G, family = binomial(link="logit") ,data = data)
+summary(modelo2)
+```
+
+### ojo, los tres coeficientes son negativos. Calculemos el exponencial
+
+```{r,  echo = T, results = 'hide',  fig.show='hide'}
+coef(modelo2)
+```
+
+```{r,  echo = T, results = 'hide',  fig.show='hide'}
+exp(coef(modelo2)) #otra vez son menores que 1
+```
+
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+1/exp(-0.38429) #ojo, es el mismo resultado de P1_4
+```
+
+Como son menores que 1 entonces lo restamos y explicamos los resultados
+en base a la disminución de veces.
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+1/(exp(-0.38429))
+1/(exp(-0.92276))
+1/(exp(-0.26229))
+```
+
+Análisis
+
+-   Si el docente vive con personas de la tercera edad el
+    odds/probabilidad de que quiera retornar a clases presenciales
+    disminuye en 1.46 veces
+
+-   Si el docente ha tenido o tiene cáncer el odds/probabilidad de que
+    quiera retornar a clases presenciales disminuye en 2.51 veces
+
+-   Si el docente ha tenido o tiene depresión el odds/probabilidad de
+    que quiera retornar a clases presenciales disminuye en 1.29 veces
+
+Ahora, en porcentaje
+
+```{r,  echo = T, results = 'hide',  fig.show='hide'}
+#Cuando el odds es menor a 1
+(1-(exp(-0.38429)))*100
+(1-(exp(-0.92276)))*100 
+(1-(exp(-0.26229)))*100 
+```
+
+-   Si el docente vive con personas de la tercera edad el odds de que
+    quiera retornar a clases presenciales disminuye en 31%
+
+-   Si el docente ha tenido o tiene cáncer el odds de que quiera
+    retornar a clases presenciales disminuye en 60%
+
+-   Si el docente ha tenido o tiene depresión el odds de que quiera
+    retornar a clases presenciales disminuye en 23%
+
+#### Si queremos calcular datos determinados
+
+Ejemplo 1: Si el docente no vive con personas de la tercera edad, tiene
+cancer y tiene depresión
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+log.odds1 = predict(modelo2, data.frame(P1_4 = 0, P1_11_H = 1, P1_11_G = 1))
+log.odds1
+exp(log.odds1)/(1+exp(log.odds1))
+```
+
+La probabilidad de que quiera retornara a clases presenciales es de 0.80
+
+Ejemplo 2: Si el docente no vive con personas de la tercera edad, no
+tiene cancer y tiene depresión
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+log.odds1 = predict(modelo2, data.frame(P1_4 = 0, P1_11_H = 0, P1_11_G = 1))
+exp(log.odds1)/(1+exp(log.odds1)) #lo pasamos a probabilidades
+```
+
+La probabilidad de que quiera retornara a clases presenciales es de 0.91
+
+### MODELO 3:
+
+Le ponemos si la persona vive o no con personas de la tercera edad,
+tiene o ha tenido ansiedad y la variable edad.
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+modelo3 = glm(retorno ~ P1_4+P1_11_F+P1_2, family = binomial(link="logit") ,data = data)
+summary(modelo3)
+```
+
+#Calculemos la exponencial
+
+```{r,  echo = T, results = 'hide',  fig.show='hide'}
+coef(modelo3)
+```
+
+Odds:
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+exp(coef(modelo3))
+```
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+1/(exp(-0.35441669))
+1/(exp(-0.43774133))
+1/(exp(-0.01928669 ))
+```
+
+Análisis
+
+-   Si el docente vive con personas de la tercera edad el odds de que
+    quiera retornar a clases presenciales disminuye en 1.42 veces
+
+-   Si el docente ha tenido o tiene ansiedad el odds de que quiera
+    retornar a clases presenciales disminuye en 1.54 veces
+
+-   Si el docente aumenta en un 1 su edad el odds de que quiera retornar
+    a clases presenciales disminuye en 1.01 veces
+
+#### Ahora en porcentaje
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+
+(1-(exp(-0.35441669))) *100
+
+(1-(exp(-0.43774133)))*100 
+(1-(exp(-0.01928669 )))*100 
+```
+
+-   Si el docente vive con personas de la tercera edad el odds de que
+    quiera retornar a clases presenciales disminuye en 29%
+
+-   Si el docente ha tenido o tiene ansiedad el odds de que quiera
+    retornar a clases presenciales disminuye en 35.5%
+
+-   Si el docente aumenta en 1 su edad el odds de que quiera retornar a
+    clases presenciales disminuye en 1.9%
+
+Ahora obtengamos la probabilidad
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+log.odds3 = predict(modelo3, data.frame(P1_4 = 0, P1_11_F = 1, P1_2 = 50))
+exp(log.odds3)/(1+exp(log.odds3))#para pasarlo a probabilidad
+```
+
+Cuando un o una docente vive con personas de tercera edad, tiene
+ansiedad y tenga 50 años, la probabilidad de que quiera retornar a
+clases presenciales es de 0.89.
+
+Ahora obtengamos la probabilidad con menor edad.
+
+```{r, echo = T, results = 'hide',  fig.show='hide'}
+log.odds3 = predict(modelo3, data.frame(P1_4 = 0, P1_11_F = 1, P1_2 = 25))
+exp(log.odds3)/(1+exp(log.odds3))
+```
+
+Cuando un o una docente vive con personas de tercera edad, tiene
+ansiedad y tenga 25 años, la probabilidad de que quiera retornar a
+clases presenciales es de 0.93.
