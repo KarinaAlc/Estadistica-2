@@ -374,8 +374,14 @@ gráfico que representa la distribución normal.
 **Código e interpretación**
 
 ```{r message=FALSE, warning=FALSE}
-autoplot(modelo1,5)
+library(car)
+set.seed(11)
+durbinWatsonTest(modelo1,simulate = TRUE,reps = 1000)
 ```
+el p-value de durbinWatsonTest es 0.262 **Al ser mayor a 0.05, entonces
+podemos afirmar que los residuos son independientes** o que no están
+autocrrelacionados. El modelo **sí** pasa este supuesto.
+
 
 **Modelo 2** ¿Es posible mejorar mi modelo1? Esta vez, realizamos una
 nueva regresión.

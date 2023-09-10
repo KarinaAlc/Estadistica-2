@@ -31,7 +31,7 @@ mayor puntaje hace referencia mayor fragilidad del Estado.*
 
 *Mayor información en: <https://fragilestatesindex.org>*
 
-```{r}
+```{r,warning=FALSE,message=FALSE}
 library(rio)
 library(dplyr)
 library(ggfortify)
@@ -70,7 +70,7 @@ data %>%
 
 #### Democracy_score por tipo de democracia ¿Qué nos dicen los resultados?
 
-```{r}
+```{r,warning=FALSE,message=FALSE}
 data%>% 
   group_by(., Type) %>% 
   summarise(mean = mean(Democracy_Score,na.rm=TRUE), n = n()) %>%
@@ -80,7 +80,7 @@ data%>%
 
 #### ¿Cuántos países son menor que la media de la variable Inecuality?
 
-```{r}
+```{r,warning=FALSE,message=FALSE}
 summary(data$Inequality)
 ```
 
@@ -201,7 +201,7 @@ autoplot(modelo1, 2)
 residuos del modelo si estos son menores a 50 casos y Kolmogorov a aquellos mayores a 50 casos.
 
 ```{r,  fig.show='hide',warning=FALSE,message=FALSE}
-#shapiro.test(modelo1$resid) #dif por muestra
+#shapiro.test(modelo1$resid) #dif por tamaño de muestra
 ```
 
 ```{r}
@@ -214,9 +214,9 @@ Ha: No es normal (no hay distribución normal)
 Si el pvalor es menor a 0.05 entonces *NO existe normalidad de residuos*
 (problemas!), se rechazaría la distribución normal.
 
-Al realizar el shapiro test, observamos que el p-values es 0.04692,
-menor a 0.05, por lo que no existe normalidad de los residuos El modelo
-*no* pasa este supuesto.
+Al realizar el shapiro test, observamos que el p-values es 0.3886,
+mayor a 0.05, por lo que sí existe normalidad de los residuos El modelo
+*sí* pasa este supuesto.
 
 ### **3- Homocedasticidad (el problema es la heterocedasticidad)**
 
@@ -314,13 +314,12 @@ gráfico que representa la distribución normal.
 ```{r message=FALSE, warning=FALSE}
 library(car)
 set.seed(11)
-durbinWatsonTest(modelo1)
+durbinWatsonTest(modelo1,simulate = TRUE,reps = 1000)
 ```
 
 el p-value de durbinWatsonTest es 0.036. **Al ser menor a 0.05, entonces
 podemos afirmar que los residuos no son independientes** o que están
 autocrrelacionados. El modelo tampoco pasa este supuesto.
-
 
 
 ### Dinámica grupal
