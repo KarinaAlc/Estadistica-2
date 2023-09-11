@@ -1,42 +1,13 @@
-name: "Prácticas Estadística_1"
+name: "Prácticas de Estadística 2"
 output_dir: "."
 navbar:
-  title: "Prácticas Estadística_1"
-  google_analytics: "UA-54607327-1"
+  title: "Prácticas de Estadística 2"
   right:
-    - text: "Home"
+    - text: "Sobre el curso"
       href: index.html
-    - text: "Introducción"
-      href: intro.html
-    - text: "Procedimientos básicos"
-      href: basico.html
-    - text: "Práctica 1"
+    - text: "Sesión 1"
       href: pd1.html
-    - text: "Práctica 2"
+    - text: "Sesión 2"
       href: pd2.html
-    - text: "Práctica 3"
-      href: Pd3.html
-    - text: "Práctica 4"
-      href: pd4.html
-    - text: "Práctica 5"
-      href: pd5.html
-    - text: "Práctica 6"
-      href: pd6.html
-    - text: "Práctica 7"
-      href: pd7.html
-    - text: "Práctica 8"
-      href: pd8.html
-    - text: "Práctica 9"
-      href: pd9.html
-    - text: "Práctica 10"
-      href: pd10.html
-    - text: "Práctica 11"
-      href: pd11.html
-    - text: "Práctica 12"
-      href: pd12.html
-    - text: "Práctica 13"
-      href: pd13.html
-    - text: "About"
-      href: about.html
     - icon: fab fa-github
-      href: https://github.com/arturomaldonado/PracticasPOL278
+      href: https://karinaalc.github.io/Estadistica-2/
