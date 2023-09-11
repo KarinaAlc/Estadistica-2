@@ -1,0 +1,421 @@
+---
+title: "Práctica dirigida 2"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
+    toc_depth: 1
+    theme: cosmo
+    highlight: textmate
+    always_allow_html: true
+---
+
+<br>
+
+<center><img src=" " width="200"/></center>
+
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("logoPUCP.png") 
+```
+
+## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 <br>
+
+### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+
+# **Recordando la regresión lineal**
+
+```{r,echo=FALSE, out.width="70%",fig.align="center"}
+knitr::include_graphics("egov.png") 
+```
+
+El E-Government Development Index (EGDI) o Índice de Desarrollo de
+Gobierno Electrónico es un indicador que mide el nivel de desarrollo de
+los servicios gubernamentales en línea y la capacidad de los gobiernos
+para utilizar las tecnologías de la información y la comunicación (TIC)
+para proporcionar servicios públicos eficientes y efectivos. Fue
+desarrollado por la División de Administración Pública y Desarrollo de
+la ONU en colaboración con la Universidad de las Naciones Unidas.
+
+El EGDI se compone de tres dimensiones: el nivel de acceso a las
+tecnologías de la información y la comunicación (TIC), la disponibilidad
+de servicios gubernamentales en línea y el grado de capacitación y
+compromiso del gobierno con el desarrollo de servicios en línea. El
+índice se mide en una escala de 0 a 1, donde 1 representa el nivel más
+alto de desarrollo del gobierno electrónico.
+
+El EGDI es utilizado por los gobiernos, las organizaciones
+internacionales y la sociedad civil para evaluar el progreso en el
+desarrollo del gobierno electrónico y para identificar las áreas en las
+que se deben hacer mejoras para proporcionar servicios públicos más
+eficientes y efectivos en línea.
+
+Para mayor información:
+<https://publicadministration.un.org/egovkb/en-us/About/Overview/-E-Government-Development-Index>
+
+```{r,echo=FALSE, out.width="70%",fig.align="center", fig.cap = "Diccionario de datos de EGov.xlsx"}
+knitr::include_graphics("pd2_DDatos.png") 
+```
+
+Cargar librerías
+
+```{r , fig.show='hide',warning=FALSE,message=FALSE}
+library(rio)
+library(dplyr)
+library(ggfortify)
+library(see)
+library(patchwork)
+library(performance)
+library(nortest)
+library(lmtest)
+library(car)
+```
+
+Obtenemos nuestra base de datos 😼:
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+Egov<-import("EGov.xlsx")
+names(Egov)
+```
+
+## Ejemplo 1: Regresión lineal simple
+
+Calcularemos un modelo para *predecir el acceso a la información a
+partir de participación digital*.
+
+-   Variable dependiente: accesoInformacion
+
+-   Variable independiente: participaciónDigital
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+modeloRL <- lm(accesoInformacion ~ participaciónDigital, data=Egov)
+modeloRL
+```
+
+Resumen de los datos
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+summary(modeloRL)
+```
+
+Algunos detalles:
+
+-   Estimacion (Estimate): Este valor nos dice cuánto esperamos que
+    cambiará el acceso a la información. Por ejemplo, si cambiamos la
+    participación digital un poquito, él modelo te dirá cuánto crees que
+    cambiará el acceso a la información.
+
+-   (Intercept) Es el valor que esperamos de Y cuando x1 y x2 sean cero
+
+-   los coeficientes de x1, en este caso participaciondigital, nos
+    indican respectivamente por cada unidad que aumenta la variable X,
+    en cuanto se esperaria que aumente (o disminuya) la variable Y,
+    controlando las demas variables.
+
+-   Error Estándar (Std. Error): El modelo puede cometer pequeños
+    errores. El "Error Estándar" nos dice cuánto podría equivocarse en
+    su estimación. Si el error estándar es pequeño, significa que el
+    modelo es más certero
+
+-   Valor t (t value): El valor t es como una medida que determina si el
+    modelo es confiable.
+
+-   Valor p (Pr(\>\|t\|)): El p-value nos dice si los resultado serán
+    significativos
+
+-   El R-squared nos dice el porcentaje de la varianza de Y que es
+    explicada por el modelo
+
+#### **Seguimos nuestro flujograma para evaluar el modelo:**
+
+1.  **Nos preguntamos si el modelo es válido** 🤔
+    -   Si el p-value es menor a 0.05 significa que rechazamos la
+        hipótesis nula, lo cual probaría que nuestro modelo sí funciona.
+2.  **¿Qué tanto explica el modelo?**
+    -   Revisamos el R cuadrado ajustado que va de 0 a 1 (0% a 100%)
+3.  **Si la variable independiente aporta al modelo**
+    -   Nos enfocamos en el p-value de cada independiente
+4.  **Identificamos los coeficientes**
+    -   En este caso hacemos uso del código modelo1\$coefficients.
+
+### ¿Qué sucede si agregamos más variables? 👾
+
+```{r,echo=FALSE, out.width="40%",fig.align="center",fig.cap="Tehc is a meme man character  which is similarly used for tasks for which one might feel disproportionately proud of doing, though Tehc is paired with technology"}
+knitr::include_graphics("tehc.png") 
+```
+
+## Ejemplo 2: Regresión lineal múltiple
+
+Calculamos nuestro modelo, en este caso usaremos lo siguiente:
+
+-   Variable dependiente: accesoInformacion
+
+-   Variables independientes: Capital_Humano + Policulture +
+    Telecommunicacion_Infrastructura + ProcesoElectoral
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+modelo1<- Egov %>% lm(accesoInformacion ~ Capital_Humano + Policulture + Telecommunicacion_Infrastructura + ProcesoElectoral,data=.)
+summary(modelo1)
+
+```
+
+Seguimos nuestro flujograma para evaluar el modelo:
+
+1.  **Nos preguntamos si el modelo es válido:**
+
+-   Si el p-value es menor a 0.05 significa que rechazamos la hipótesis
+    nula, lo cual probaría que nuestro modelo sí funciona.
+-   Al tener un p-value de 2.2e-1-16 nuestro modelo sí funciona.
+
+2.  **¿Qué tanto explica el modelo?**
+
+-   Revisamos el **R cuadrado** que va de 0 a 1 (0% a 100%)
+
+-   En este caso mis variables (en conjunto) explican el 92.13% de la
+    variabilidad de mi dependiente, esto es bueno, pero quizá podría ser
+    mejor 😯
+
+3.  **¿Las variables independientes aportan al modelo?**
+
+-   Nos enfocamos en el p-value de cada independiente
+
+-   corroboramos que estas rechacen la hipótesis nula, es decir que sean
+    menores que 0.05.
+
+-   Vemos que todas nuestras variables cumplen ✅
+
+4.  **Identificamos los coeficientes**
+
+-   En este caso hacemos uso del código modelo1\$coefficients.
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+modelo1$coefficients
+```
+
+-   Armamos nuestra ecuación: y=-0.121108754+
+    Capital_Humano(0.338730284)+....
+
+# **SUPUESTOS**
+
+```{r,echo=FALSE, out.width="70%",fig.align="center"}
+knitr::include_graphics("PD2_SUP.png") 
+```
+
+```{r,echo=FALSE, out.width="70%",fig.align="center"}
+knitr::include_graphics("PD2_SUP2.png") 
+```
+
+### **1- Linealidad (el problema es la no linealidad)**
+
+**Descripción** Como su nombre lo dice, debe de existir una linealidad
+entre la variable independiente y dependiente, en otras palabras,la
+linealidad indica que el valor esperado de la variable dependiente es
+una función lineal de cada variable independiente, manteniendo las demás
+fijas. La pendiente de esa línea no depende de los valores de las otras
+variables, por ello también nos fijamos variable por variable. Los
+efectos de diferentes variables independientes sobre el valor esperado
+de la variable dependiente son aditivos. Si este supuesto no se cumple
+significaría que posiblemente existan variables que no aporten al modelo
+o que se trate de una relación no lineal.
+
+**Cómo detectarlo**
+
+OPCIÓN 1: Exploración gráfica: Plot de valores residuales frente a
+valores predichos.
+
+OPCIÓN 2: Calculando la correlación bivariada de cada independiente con
+la dependiente.
+
+**Código e interpretación**
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+#Exploración gráfica
+autoplot(modelo1,1)
+```
+
+Usando el código plot, la línea roja debería de estar lo más cercana a
+la línea punteada. De acuerdo al resultado, el gráfico aún nos generaría
+suspicacias. En tanto, dado que la línea roja obedece a los puntos,
+éstos deberían distribuirse alrededor de una línea horizontal, con una
+varianza aproximadamente constante.
+
+### **2. Normalidad de residuos (el problema es la NO normalidad)**
+
+**Descripción**
+
+Identificar si los errores siguen una distribución normal. La resta del
+valor observado menos el valor pronosticado (residuos) siguen una
+distribución normal, esto es importante porque si es que no se cumple no
+se podrían aplicar las pruebas globales del modelo.
+
+**Cómo detectarlo**
+
+Exploración gráfica: QQ plot de residuos Pruebas de normalidad a los
+residuos. Normalmente bastaría con la prueba de Shapiro Wilk, pero
+también se pueden probar otros como Lillieford, Kolmogorov (no es muy
+exigente), entre otros.
+
+**Código e interpretación**
+
+Si usamos sólo gráfico
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+autoplot(modelo1, 2) 
+```
+
+Todos los puntos deben estar sobre la diagonal. Los dos gráficos no son
+concluyentes, entonces procedo a realizar el test.
+
+Si usamos prueba de normalidad:aplicamos la prueba de Shapiro a los
+residuos del modelo
+
+```{r,  fig.show='hide',warning=FALSE,message=FALSE}
+shapiro.test(modelo1$resid)
+```
+
+**Ojo con la hipótesis nula**. H0: Es normal (distribución normal) \|
+Ha: No es normal (no hay distribución normal)
+
+Si el pvalor es menor a 0.05 entonces *NO existe normalidad de residuos*
+(problemas!), se rechazaría la distribución normal. Dado que nuestro
+p-value es 0.1378, mayor que 0.05, entonces sí estamos frente a un caso
+de distribución normal de los residuos.
+
+### **3- Homocedasticidad (el problema es la heterocedasticidad)**
+
+**Descripción**
+
+La homocedasticidad (también conocido como homogeneidad en la varianza
+de los residuos) indica que las variancias de los errores son
+constantes. Cuando no se cumple es un problema porque los estimadores no
+son consistentes ni eficientes y se presenta el caso de la
+heterocedasticidad.
+
+**Cómo detectarlo**
+
+OPCIÓN 1: Exploración gráfica: diagrama de residuos standarizados y
+valores predichos.
+
+OPCIÓN 2: Con el Score Test for Non-Constant Error Variance, también
+llamado Test Breusch Pagan. Evalúa si la varianza del error cambia con
+el nivel de la variable respuesta (valores ajustados) o con una
+combinación lineal de predictores.
+
+**Código e interpretación**
+
+Si usamos el gráfico
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+autoplot(modelo1, 3)
+```
+
+En el Gráfico la línea roja debe seguir una tendencia horizontal, esto
+representaría que la distribución de los puntos son uniformes. Al ver
+nuestro gráfico nos damos cuenta que la línea roja va hacia arriba, lo
+cual nos dice que el gráfico no es concluyente aún. Vamos al test.
+
+Si usamos el test de BP:
+
+```{r message=FALSE, warning=FALSE}
+bptest(modelo1)
+```
+
+-   H0: El modelo es homocedástico
+-   Ha: El modelo es heterocedástico
+
+Si el pvalor es menor a 0.05 entonces el modelo es heterocedástico
+(problema! ☠️ ). Esta vez estamos frente a un modelo homocedástico
+
+### **4. Ausencia de multicolinealidad (el problema es la presencia de multicolinealidad)**
+
+**Descripción**
+
+Se aplica en la regresión lineal MÚLTIPLE. Significa que las variables
+explicativas están relacionadas linealmente entre sí. La
+multicolinealidad hace que los coeficientes del modelo se vuelvan
+inestables, es decir, oscilarán violentamente ante cambios mínimos en
+las variables de insumo. Esto entendería que existe una relación fuerte
+entre variables independientes, por lo tanto podría darnos un modelo
+inestable.
+
+**Cómo detectarlo**
+
+Con el Factor de Inflación de Varianza (VIF). los factores de inflación
+de varianza deben de ser menores de 5. De acuerdo a nuestros resultados
+no encontramos multicolinealidad.
+
+-   Mayor a 10, grave problema de multicolinealidad.
+
+**Código e interpretación**
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+vif(modelo1)
+```
+
+Valores \> 5 indican presencia de multicolinealidad.
+
+### 5.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)**
+
+**Descripción**
+
+Si los errores residuales **no son independientes**, es probable que
+demuestren algún tipo de patrón (que no siempre es obvio a simple
+vista).
+
+**Cómo detectarlo**
+
+Los puntos se deben acercar lo más posible a la línea oblicua del
+gráfico que representa la distribución normal.
+
+**Código e interpretación**
+
+```{r message=FALSE, warning=FALSE}
+library(car)
+set.seed(11)
+durbinWatsonTest(modelo1,simulate = TRUE,reps = 1000)
+```
+el p-value de durbinWatsonTest es 0.262 **Al ser mayor a 0.05, entonces
+podemos afirmar que los residuos son independientes** o que no están
+autocrrelacionados. El modelo **sí** pasa este supuesto.
+
+
+**Modelo 2** ¿Es posible mejorar mi modelo1? Esta vez, realizamos una
+nueva regresión.
+
+```{r}
+names(Egov)
+```
+
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
+
+modelo2 <- Egov %>% lm(accesoInformacion ~ ProcesoElectoral  + Capital_Humano + UsuariosInternet,data=.)
+summary(modelo2)
+
+```
+
+Seguimos nuestro flujograma para evaluar el modelo:
+
+1.  Nos preguntamos si el modelo es válido:
+
+-   Si el p-value es menor a 0.05 significa que rechazamos la hipótesis
+    nula, lo cual probaría que nuestro modelo sí funciona. -Al tener un
+    p-value de 2.2e-16 nuestro modelo sí funciona.
+
+2.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado  que
+    va de 0 a 1 (0% a 100%) -En este caso mis variables (en conjunto)
+    explican el 89.8% de la variabilidad de mi dependiente, esto es
+    bueno, pero quizá podría ser mejor.
+3.  ¿Las variables independientes aportan al modelo? -Nos enfocamos en
+    el p-value de cada independiente -corroboramos que estas rechacen la
+    hipótesis nula, es decir que sean menores que 0.05.
+
+Conclusiones preliminares: el modelo sí pasa la evaluación; mis
+variables siguen aportando al modelo, mi modelo es válido al tener un p
+value de 2.2e-16; sin embargo, nos damos cuenta que mi modelo2 explica
+menos que mi modelo1. Por lo tanto, solo al evaluar mi modelo2, a pesar
+de que es un modelo válido, optaría por mantener mi modelo1. Ojo, solo
+basándome en esta primera evaluación del modelo. Una decisión más fina
+sería al realizar mis pruebas de supuestos completa.
