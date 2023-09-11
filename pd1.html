@@ -1649,8 +1649,7 @@ gorepre y gorepst para ver la diferencia.</p>
   select(., id, difgore, gorepre, gorepst)</code></pre>
 </div>
 </div>
-<div id="viewusagoredesc-para-corroborar-que-se-agregó-la-variable" class="section level3">
-<h1>View(usagoredesc), para corroborar que se agregó la variable</h1>
+<p>View(usagoredesc), para corroborar que se agregó la variable<<p>
 <pre class="r"><code>#de manera ascendente
 usagoreasc &lt;- mutate(usa, difgore =  gorepst - gorepre) %&gt;%
   arrange(.,difgore) %&gt;%
