@@ -9,7 +9,7 @@ navbar:
       href: pd1.html
     - text: "Sesión 2"
       href: pd2.html
-     - text: "Revancha 2"
+    - text: "Revancha"
       href: TidySup_Revancha_20232.html
     - icon: fab fa-github
       href: https://karinaalc.github.io/Estadistica-2/

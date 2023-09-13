@@ -1,14 +1,16 @@
 ---
-title: "Tidyverse y Supuestos: La revancha "
-author: "Curso: Estadística para el análisis político 2"
-date: "Ciclo 2023-2"
+title: "Revancha"
 output:
-  prettydoc::html_pretty:
-    theme: tactile  
-    highlight: github
-editor_options: 
-  markdown: 
-    wrap: 72
+  html_document:
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
+    toc_depth: 1
+    theme: simplex
+    highlight: kate
+    always_allow_html: true
+    code_folding: show
 ---
 
 <br>
