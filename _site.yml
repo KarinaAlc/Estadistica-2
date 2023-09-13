@@ -1,0 +1,21 @@
+name: "Prácticas Estadística_1"
+output_dir: "."
+navbar:
+  title: "Prácticas Estadística_1"
+  google_analytics: "UA-54607327-1"
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Introducción"
+      href: intro.html
+    - text: "Procedimientos básicos"
+      href: basico.html
+    - text: "Práctica 1"
+      href: pd1.html
+    - text: "Práctica 2"
+      href: pd2.html
+    - text: "Práctica 3"
+      href: PdSab.html
+
+    - icon: fab fa-github
+      href: https://karinaalc.github.io/Estadistica-2
