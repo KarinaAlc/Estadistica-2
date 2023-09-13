@@ -1,6 +1,6 @@
 ---
-title: "Práctica dirigida 1"
-output: 
+title: "Sesión 2"
+output:
   html_document:
     toc: yes
     toc_float: yes
@@ -13,31 +13,20 @@ output:
     code_folding: show
 ---
 
-## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
-
-# **Tidyverse y RL**
-<br>
-<center><img src=" " width="200"/></center>
-
-```{r,include=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-```
-
-```{r,echo=FALSE, out.width="30%"}
+```{r,echo=FALSE, out.width="30%",warning=FALSE,message=FALSE}
 knitr::include_graphics("logoPUCP.png") 
 ```
 
+## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
 
-### Jefas de Práctica: Karina Alcántara 👩‍🏫  y Lizette Crispín 👩‍🏫<br>
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 <br>
 
-### **SESIÓN 1 - Tidyverse y RL** <br>
-
-============================================================
+### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
 ### **MUNDO TIDYVERSE**
 
-```{r,echo=FALSE, out.width="30%",fig.align = "center"}
-knitr::include_graphics("pd1_tidy.png") 
+```{r,echo=FALSE, out.width="30%",fig.align = "center",warning=FALSE,message=FALSE}
+knitr::include_graphics("PD1_tidy.png") 
 ```
 
 Tidyverse es un conjunto de de paquetes de R para ciencia de datos, nos
@@ -70,8 +59,8 @@ Instalando el paquete de tidyverse te incluye los 8 paquetes. Pero, eso
 sí, toma más tiempo de lo debido. Por eso, en esta ocasión, se ha
 descargado los que necesitaremos ahora
 
-```{r}
-#  Paquetes que se usarán #
+```{r,warning=FALSE,message=FALSE}
+# Paquetes que se usarán 
 library(dplyr)
 library(ggplot2)
 library(data.table)
@@ -80,18 +69,23 @@ library(foreign)
 library(rio)
 ```
 
+#### Sobre la data a analizar
+
+```{r,echo=FALSE, out.width="30%",fig.align = "center",warning=FALSE,message=FALSE}
+knitr::include_graphics("PD1_Elec96.png") 
+```
+
 #### Importar y preparar base de datos
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 
 usa <- read.spss("usa.sav",
           use.value.labels = T, 
           to.data.frame=TRUE)
 str(usa)#Ver estructura de bases de datos, tipo de variable
-#View(usa) #Ver base de datos 
 ```
 
-PAQUETE DPLYR
+## **PAQUETE DPLYR**
 
 El paquete dplyr es el más útil en R para la manipulación de datos, una
 de las ventajas es que se pueda usar el pipe para combinar diferentes
@@ -104,8 +98,8 @@ varios comandos.
 Filtra casos o filas que cumplen con el criterio. Por ejemplo, aca
 estamos filtrando de la data usa las personas que son judíos
 
-```{r, results = 'hide',  fig.show='hide'}
-filter(usa, relig=="Judio", intecamp=="1. Mucho") 
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
+filter(usa, relig=="Catolico", intecamp=="1. Mucho") 
 
 filter(usa, edad >= 50)
 
@@ -122,8 +116,8 @@ según nombre.
 En este comando estamos especificando que queremos seleccionar de la
 data usa, las variables interés en las campañas (intecamp) y sexo.
 
-```{r, results = 'hide',  fig.show='hide'}
-inte<-select(usa, intecamp, sexo)
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
+inte=select(usa, intecamp, sexo)
 inte
 ```
 
@@ -133,7 +127,7 @@ quién.
 
 Lo podríamos volver un objeto para poder trabajar con ello
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 # quitando variables
 select(usa, -voto96, -quien96)
 menos96 <- select(usa, -voto96, -quien96)
@@ -152,7 +146,7 @@ media de la variable gorepst, omitiendo los valores perdidos
 
 Solo con variables numéricas (ojo)
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 #Promedio aprobación Al Gore post elecciones
 summarise(usa, promgorepost = mean(gorepst, na.rm = T))
 #CORROBORAMOS
@@ -163,12 +157,12 @@ class(usa$gorepst)
 Acá nos menciona un error, dice que el argumento no es numérico. Las
 convertimos
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 #CORREGIMOS
 usa$gorepst<- as.numeric(usa$gorepst)
 usa$gorepre<- as.numeric(usa$gorepre)
 
-summarise(usa, promgorepost = mean(gorepst, na.rm = T))
+summarise(usa, MediaAprobGorePost = mean(gorepst, na.rm = T))
 ```
 
 ### **COUNT**: contar casos en base a una variable
@@ -180,9 +174,9 @@ Vamos a contar los casos de las personas de acuerdo al nivel educativo.
 Se puede observar que la mayoría tiene un nivel educativo mayor al de
 secundaria.
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 count(usa, relig)
-count(usa, educ, sort = F) #numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente
+count(usa, educ,sort = FALSE) #numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente
 
 ```
 
@@ -199,27 +193,24 @@ creada, se ordene de manera descendente. Finalmente, queremos que los
 resultados muestre únicamente las variables de ID, difgore, gorepre y
 gorepst para ver la diferencia.
 
-```{r, results = 'hide',  fig.show='hide'}
-usagoredesc<-mutate(usa, difgore =  gorepst - gorepre) %>%
-  arrange(., desc(gorepst)) %>%
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
+
+
+usagoredesc<- mutate(usa, difgore =  gorepst - gorepre) %>% arrange(., desc(gorepst)) %>%
   select(., id, difgore, gorepre, gorepst)
 ```
 
-# View(usagoredesc), para corroborar que se agregó la variable
-
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,include=FALSE}
 #de manera ascendente
 usagoreasc <- mutate(usa, difgore =  gorepst - gorepre) %>%
   arrange(.,difgore) %>%
   select(., id, difgore, gorepre, gorepst)
 ```
 
-#View(usagoreasc)
-
 Vamos a poner gorepost como función en arrange para ver su aprobación
 más alta.
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 #diferencia más alta
 mutate(usa, difgore =  gorepst - gorepre) %>%
   arrange(., desc(difgore))  %>%
@@ -238,7 +229,7 @@ Bush
 
 Vamos a cambiarla a numérica, para evitar que ocurra el mismo error.
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 usa$gbushpst<- as.numeric(usa$gbushpst)
 usa$gbushpre<- as.numeric(usa$gbushpre)
 
@@ -246,8 +237,6 @@ usabush<-transmute(usa, difbush = gbushpst - gbushpre) %>%
   arrange(., desc(difbush))
 
 ```
-
-#View(usabush)
 
 ### **group_by**: Agrupar datos
 
@@ -264,20 +253,20 @@ aprobación de Bush post gestión Vemos los resultados. Vemos una
 tendencia que los más conservadores tenían una aprobación más alta de
 Bush
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 usa.g <- usa%>% 
   group_by(.,) %>% 
   summarise(mean = mean(gbushpst,na.rm=TRUE), n = n())
 usa.g
 ```
 
-Ahora con Al Gore ¿los datos se voltean no? Los encuestados que se
-consideran muy Liberales, aprueban más la gestión de AlGore, a
+Ahora con Al Gore ¿los datos se voltean? Los encuestados que se
+consideran muy Liberales, aprueban más la gestión de Al Gore, a
 diferencia de los muy conservadores.
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 usa.b <- usa%>% 
-  group_by(., consipol) %>% 
+  group_by(consipol) %>% 
   summarise(mean = mean(gorepst,na.rm=TRUE), n = n())
 usa.b
 ```
@@ -310,7 +299,7 @@ sociodemográficas, económicas etc.
 
 Obtenemos nuestra base de datos:
 
-```{r setup, results = 'hide',  fig.show='hide'}
+```{r setup, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 library(rio)
 competitividad<-import("COVID - COMPETITIVIDAD.sav")
 names(competitividad)
@@ -318,14 +307,13 @@ names(competitividad)
 
 ### RECORDANDO LA REGRESIÓN LINEAL
 
-Calcularemos un modelo para predecir los casos de COVID-19 a partir del
-gasto real por hogar mensual
+Calcularemos un modelo para predecir los casos de COVID-19 a partir del gasto real por hogar mensual
 
 Variable dependiente: Casos COVID-19 por cada 100 mil personas
 
 Variable independiente: gasto real por hogar mensual (var5)
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 modelo <-lm(competitividad$casos_100k ~ competitividad$var5)
 summary(modelo)
 ```
@@ -337,15 +325,16 @@ Seguimos nuestro flujograma para evaluar el modelo:
 3.  Si la variable independiente aporta al modelo
 4.  Identificamos los coeficientes
 
-¿Qué sucede si ahora agregamos más variables?
+¿Qué sucede si ahora agregamos más variables? 😼
 
 Calculamos nuestro modelo, en este caso usaremos lo siguiente:
 
-Variable dependiente: Casos COVID-19 por cada 100 mil personas Variables
-independientes: Stock de capital por trabajador (var3) + gasto real por
-hogar mensual (var5) + morbilidad (var20).
+-   Variable dependiente: Casos COVID-19 por cada 100 mil personas
 
-```{r, results = 'hide',  fig.show='hide'}
+-   Variables independientes: Stock de capital por trabajador (var3) +
+    gasto real por hogar mensual (var5) + morbilidad (var20).
+
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 modelo1 <- lm(competitividad$casos_100k~ competitividad$var3+competitividad$var5+
                 competitividad$var20)
 summary(modelo1)
@@ -358,10 +347,10 @@ Seguimos nuestro flujograma para evaluar el modelo:
 3.  Si las variables independientes aportan al modelo
 4.  Identificamos los coeficientes
 
-```{r, results = 'hide',  fig.show='hide'}
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 modelo1$coefficients
 ```
 
-5.  Construimos la ecuación
+5.  Construimos la ecuación 🤺
 
 ------------------------------------------------------------------------
