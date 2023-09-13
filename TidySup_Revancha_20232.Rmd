@@ -13,6 +13,13 @@ output:
     code_folding: show
 ---
 
+<br>
+
+<center><img src=" " width="200"/></center>
+
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("logoPUCP.png") 
+```
 
 ## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
 
