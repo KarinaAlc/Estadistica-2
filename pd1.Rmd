@@ -1,6 +1,6 @@
 ---
 title: "Práctica dirigida 1"
-output:
+output: 
   html_document:
     toc: yes
     toc_float: yes
