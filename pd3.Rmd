@@ -1,5 +1,5 @@
 ---
-title: "Sesión 3/4"
+title: "Sesión 3"
 output:
   html_document:
     toc: yes
@@ -9,8 +9,11 @@ output:
     toc_depth: 1
     theme: simplex
     highlight: kate
-    always_allow_html: true
+    always_allow_html: yes
     code_folding: show
+  pdf_document:
+    toc: yes
+    toc_depth: '1'
 ---
 
 <br>
@@ -94,7 +97,7 @@ table(data$retorno)
 
 Ya teniendo lista la variable depediente vamos a realizar unos cuantos modelos y analizar el odds y la probabilidad.
 
-### MODELO 1:
+# MODELO 1:
 
 VD: Retorno VI: El docente vive con personas de la tercera edad
 
@@ -147,7 +150,7 @@ Recuerda que el coeficiente de la VI es *-0.3860* es el
 
 En este caso podemos interpretar los resultados como "si el docente vive con una persona de la tercera edad, la probabilidad de que quiera retornar a clases presenciales DISMINUYE en un 32.03%.
 
-### MODELO 2
+# MODELO 2
 
 #### REALICEMOS UN SEGUNDO MODELO
 
@@ -266,7 +269,7 @@ Divine.Help <- function(model) {
 Divine.Help(modelo2)
 ```
 
-### MODELO 3:
+# MODELO 3:
 
 Nuestras explicativas serán si la persona vive o no con personas de la tercera edad, tiene o ha tenido ansiedad y la variable edad.
 

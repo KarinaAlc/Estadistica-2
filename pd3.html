@@ -11,7 +11,7 @@
 
 
 
-<title>Sesión 3/4</title>
+<title>Sesión 3</title>
 
 <script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -485,7 +485,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Sesión 3/4</h1>
+<h1 class="title toc-ignore">Sesión 3</h1>
 
 </div>
 
@@ -560,8 +560,9 @@ un docente quiera retornar a clases presenciales</p>
 <p>Ya teniendo lista la variable depediente vamos a realizar unos
 cuantos modelos y analizar el odds y la probabilidad.</p>
 </div>
-<div id="modelo-1" class="section level3">
-<h3>MODELO 1:</h3>
+</div>
+<div id="modelo-1" class="section level1">
+<h1>MODELO 1:</h1>
 <p>VD: Retorno VI: El docente vive con personas de la tercera edad</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>data<span class="sc">$</span>P1_4<span class="ot">=</span><span class="fu">ifelse</span>(data<span class="sc">$</span>P1_4 <span class="sc">==</span> <span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>,<span class="st">&quot;0&quot;</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>data<span class="sc">$</span>P1_4<span class="ot">=</span><span class="fu">as.numeric</span>(data<span class="sc">$</span>P1_4) <span class="co">#numérica </span></span>
@@ -628,8 +629,8 @@ exp(coef))*100</strong></p></li>
 vive con una persona de la tercera edad, la probabilidad de que quiera
 retornar a clases presenciales DISMINUYE en un 32.03%.</p>
 </div>
-<div id="modelo-2" class="section level3">
-<h3>MODELO 2</h3>
+<div id="modelo-2" class="section level1">
+<h1>MODELO 2</h1>
 <div id="realicemos-un-segundo-modelo" class="section level4">
 <h4>REALICEMOS UN SEGUNDO MODELO</h4>
 <p>Agreguemos más variables:</p>
@@ -643,7 +644,6 @@ el docente quiera retornar o no a clases presenciales</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>modelo2 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> P1_4<span class="sc">+</span>P1_11_H<span class="sc">+</span>P1_11_G, <span class="at">family =</span> binomial,<span class="at">data =</span> data)</span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">coef</span>(modelo2)</span></code></pre></div>
-</div>
 </div>
 <div
 id="ojo-los-tres-coeficientes-son-negativos.-calculemos-el-exponencial"
@@ -705,7 +705,6 @@ tiene cancer y tiene depresión</p>
 0.91</p>
 </div>
 </div>
-</div>
 <div id="ayuda-divina" class="section level2">
 <h2>🙌 Ayuda divina 🙌</h2>
 <p>Les proponemos esta función (Agradezcanle a su profesor) que facilita
@@ -749,8 +748,10 @@ función.</p>
 ## P1_4       Un aumento de una unidad en la variable P1_4 está asociado con un cambio de 32% en la probabilidad de éxito.
 ## P1_11_H Un aumento de una unidad en la variable P1_11_H está asociado con un cambio de 60% en la probabilidad de éxito.
 ## P1_11_G Un aumento de una unidad en la variable P1_11_G está asociado con un cambio de 23% en la probabilidad de éxito.</code></pre>
-<div id="modelo-3" class="section level3">
-<h3>MODELO 3:</h3>
+</div>
+</div>
+<div id="modelo-3" class="section level1">
+<h1>MODELO 3:</h1>
 <p>Nuestras explicativas serán si la persona vive o no con personas de
 la tercera edad, tiene o ha tenido ansiedad y la variable edad.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>modelo3 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> P1_4<span class="sc">+</span>P1_11_F<span class="sc">+</span>P1_2, <span class="at">family =</span> binomial, <span class="at">data =</span> data)</span>
@@ -797,7 +798,6 @@ clases presenciales es de 0.89.</p>
 <p>Cuando un o una docente vive con personas de tercera edad, tiene
 ansiedad y tenga 25 años, la probabilidad de que quiera retornar a
 clases presenciales es de 0.93.</p>
-</div>
 </div>
 </div>
 
