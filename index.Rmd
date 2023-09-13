@@ -2,18 +2,18 @@
 title: "Estadística para el Análisis Político 2"
 output: 
   html_document:
-    toc: true
-    toc_float: true
-    collapsed: false
-    number_sections: false
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
     toc_depth: 1
-    theme: cosmo
-    highlight: textmate
+    theme: simplex
+    highlight: kate
     always_allow_html: true
+    code_folding: show
 ---
 
 ## Sumilla
- code_download: true
 Se analizan las técnicas cuantitativas de análisis multivariable aplicadas a la investigación en ciencia política. Construcción de modelos cuantitativos para representar relaciones entre fenómenos políticos empíricos. Análisis de la varianza y correlación parcial. Análisis de regresión múltiple: interpretación de coeficientes; regresión con variables categóricas; diagnóstico de regresión; especificación de modelos. Introducción a la regresión logística. Técnicas para identificar categorías de análisis más o menos complejas: análisis discriminante, análisis factorial y análisis de conglomerados.
 
 ## Jefas de práctica:

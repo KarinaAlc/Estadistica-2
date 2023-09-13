@@ -16,7 +16,7 @@
 <script src="site_libs/header-attrs-2.23/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -33,8 +33,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -47,18 +46,122 @@
   ul.task-list{list-style: none;}
     </style>
 
-<style type="text/css">code{white-space: pre;}</style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
   }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
 </script>
-
-
 
 
 
@@ -221,6 +324,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -345,6 +451,14 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Práctica dirigida 1</h1>
@@ -362,9 +476,9 @@ div.tocify {
 <img src=" " width="200"/>
 </center>
 <p><img src="logoPUCP.png" width="30%" /></p>
-<div id="jefes-de-práctica-karina-alcántara-y-lizette-crispín"
+<div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
 class="section level3">
-<h3>Jefes de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h3>
+<h3>Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h3>
 </div>
 <div id="sesión-1---tidyverse-y-rl" class="section level3">
 <h3><strong>SESIÓN 1 - Tidyverse y RL</strong> <br></h3>
@@ -400,20 +514,20 @@ programación. En vez de usar “,” para diferenciar entre comandos, usar
 <p>Instalando el paquete de tidyverse te incluye los 8 paquetes. Pero,
 eso sí, toma más tiempo de lo debido. Por eso, en esta ocasión, se ha
 descargado los que necesitaremos ahora</p>
-<pre class="r"><code>#  Paquetes que se usarán #
-library(dplyr)
-library(ggplot2)
-library(data.table)
-library(devtools)
-library(foreign)
-library(rio)</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#  Paquetes que se usarán #</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(devtools)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(rio)</span></code></pre></div>
 <div id="importar-y-preparar-base-de-datos" class="section level4">
 <h4>Importar y preparar base de datos</h4>
-<pre class="r"><code>usa &lt;- read.spss(&quot;usa.sav&quot;,
-          use.value.labels = T, 
-          to.data.frame=TRUE)
-str(usa)#Ver estructura de bases de datos, tipo de variable
-#View(usa) #Ver base de datos </code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>usa <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">&quot;usa.sav&quot;</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>          <span class="at">use.value.labels =</span> T, </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>          <span class="at">to.data.frame=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">str</span>(usa)<span class="co">#Ver estructura de bases de datos, tipo de variable</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#View(usa) #Ver base de datos </span></span></code></pre></div>
 <p>PAQUETE DPLYR</p>
 <p>El paquete dplyr es el más útil en R para la manipulación de datos,
 una de las ventajas es que se pueda usar el pipe para combinar
@@ -426,13 +540,13 @@ concatenar(unir) varios comandos.</p>
 <h3><strong>FILTER</strong>: filtrar filas según un criterio</h3>
 <p>Filtra casos o filas que cumplen con el criterio. Por ejemplo, aca
 estamos filtrando de la data usa las personas que son judíos</p>
-<pre class="r"><code>filter(usa, relig==&quot;Judio&quot;, intecamp==&quot;1. Mucho&quot;) 
-
-filter(usa, edad &gt;= 50)
-
-filter(usa, intecamp==&quot;1. Mucho&quot;, sexo==&quot;Hombre&quot;, consipol==&quot;1. Muy liberal&quot;)
-
-filter(usa, intecamp==&quot;1. Mucho&quot;, sexo==&quot;Mujer&quot;, consipol==&quot;7. Muy Conservador&quot;)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">filter</span>(usa, relig<span class="sc">==</span><span class="st">&quot;Judio&quot;</span>, intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>) </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">filter</span>(usa, edad <span class="sc">&gt;=</span> <span class="dv">50</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">filter</span>(usa, intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>, sexo<span class="sc">==</span><span class="st">&quot;Hombre&quot;</span>, consipol<span class="sc">==</span><span class="st">&quot;1. Muy liberal&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="fu">filter</span>(usa, intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>, sexo<span class="sc">==</span><span class="st">&quot;Mujer&quot;</span>, consipol<span class="sc">==</span><span class="st">&quot;7. Muy Conservador&quot;</span>)</span></code></pre></div>
 </div>
 <div id="select-seleccionando-subconjunto-de-variables"
 class="section level3">
@@ -441,16 +555,16 @@ class="section level3">
 según nombre.</p>
 <p>En este comando estamos especificando que queremos seleccionar de la
 data usa, las variables interés en las campañas (intecamp) y sexo.</p>
-<pre class="r"><code>inte&lt;-select(usa, intecamp, sexo)
-inte</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>inte<span class="ot">&lt;-</span><span class="fu">select</span>(usa, intecamp, sexo)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>inte</span></code></pre></div>
 <p>Si queremos quitar variable ponemos el signo de menos. Salen todas
 las varibales menos las del si voto en las elecciones del 96 (voto96) y
 por quién.</p>
 <p>Lo podríamos volver un objeto para poder trabajar con ello</p>
-<pre class="r"><code># quitando variables
-select(usa, -voto96, -quien96)
-menos96 &lt;- select(usa, -voto96, -quien96)
-menos96 </code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># quitando variables</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">select</span>(usa, <span class="sc">-</span>voto96, <span class="sc">-</span>quien96)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>menos96 <span class="ot">&lt;-</span> <span class="fu">select</span>(usa, <span class="sc">-</span>voto96, <span class="sc">-</span>quien96)</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>menos96 </span></code></pre></div>
 </div>
 <div id="summarise-crear-resumenes-de-datos" class="section level3">
 <h3><strong>SUMMARISE</strong>: Crear resumenes de datos</h3>
@@ -461,17 +575,17 @@ luego de su gestión. Para eso usamos sumarise. Mencionamos los datos de
 la base usa, luego la variable que se creará en base a ella, que será la
 media de la variable gorepst, omitiendo los valores perdidos</p>
 <p>Solo con variables numéricas (ojo)</p>
-<pre class="r"><code>#Promedio aprobación Al Gore post elecciones
-summarise(usa, promgorepost = mean(gorepst, na.rm = T))
-#CORROBORAMOS
-class(usa$gorepst) </code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#Promedio aprobación Al Gore post elecciones</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">summarise</span>(usa, <span class="at">promgorepost =</span> <span class="fu">mean</span>(gorepst, <span class="at">na.rm =</span> T))</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co">#CORROBORAMOS</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="fu">class</span>(usa<span class="sc">$</span>gorepst) </span></code></pre></div>
 <p>Acá nos menciona un error, dice que el argumento no es numérico. Las
 convertimos</p>
-<pre class="r"><code>#CORREGIMOS
-usa$gorepst&lt;- as.numeric(usa$gorepst)
-usa$gorepre&lt;- as.numeric(usa$gorepre)
-
-summarise(usa, promgorepost = mean(gorepst, na.rm = T))</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#CORREGIMOS</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>usa<span class="sc">$</span>gorepst<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gorepst)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>usa<span class="sc">$</span>gorepre<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gorepre)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="fu">summarise</span>(usa, <span class="at">promgorepost =</span> <span class="fu">mean</span>(gorepst, <span class="at">na.rm =</span> T))</span></code></pre></div>
 </div>
 <div id="count-contar-casos-en-base-a-una-variable"
 class="section level3">
@@ -481,8 +595,8 @@ class="section level3">
 educativo.</p>
 <p>Se puede observar que la mayoría tiene un nivel educativo mayor al de
 secundaria.</p>
-<pre class="r"><code>count(usa, relig)
-count(usa, educ, sort = F) #numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">count</span>(usa, relig)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">count</span>(usa, educ, <span class="at">sort =</span> F) <span class="co">#numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente</span></span></code></pre></div>
 </div>
 <div id="mutate-y-arrange" class="section level3">
 <h3><strong>MUTATE Y ARRANGE</strong></h3>
@@ -495,25 +609,25 @@ Al Gore antes y luego de su gestión, y luego de eso, queremos que esa
 variable creada, se ordene de manera descendente. Finalmente, queremos
 que los resultados muestre únicamente las variables de ID, difgore,
 gorepre y gorepst para ver la diferencia.</p>
-<pre class="r"><code>usagoredesc&lt;-mutate(usa, difgore =  gorepst - gorepre) %&gt;%
-  arrange(., desc(gorepst)) %&gt;%
-  select(., id, difgore, gorepre, gorepst)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>usagoredesc<span class="ot">&lt;-</span><span class="fu">mutate</span>(usa, <span class="at">difgore =</span>  gorepst <span class="sc">-</span> gorepre) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">arrange</span>(., <span class="fu">desc</span>(gorepst)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">select</span>(., id, difgore, gorepre, gorepst)</span></code></pre></div>
 </div>
 </div>
 <div id="viewusagoredesc-para-corroborar-que-se-agregó-la-variable"
 class="section level1">
 <h1>View(usagoredesc), para corroborar que se agregó la variable</h1>
-<pre class="r"><code>#de manera ascendente
-usagoreasc &lt;- mutate(usa, difgore =  gorepst - gorepre) %&gt;%
-  arrange(.,difgore) %&gt;%
-  select(., id, difgore, gorepre, gorepst)</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#de manera ascendente</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>usagoreasc <span class="ot">&lt;-</span> <span class="fu">mutate</span>(usa, <span class="at">difgore =</span>  gorepst <span class="sc">-</span> gorepre) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">arrange</span>(.,difgore) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">select</span>(., id, difgore, gorepre, gorepst)</span></code></pre></div>
 <p>#View(usagoreasc)</p>
 <p>Vamos a poner gorepost como función en arrange para ver su aprobación
 más alta.</p>
-<pre class="r"><code>#diferencia más alta
-mutate(usa, difgore =  gorepst - gorepre) %&gt;%
-  arrange(., desc(difgore))  %&gt;%
-  select(., id, difgore, gorepre, gorepst)</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#diferencia más alta</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">mutate</span>(usa, <span class="at">difgore =</span>  gorepst <span class="sc">-</span> gorepre) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>  <span class="fu">arrange</span>(., <span class="fu">desc</span>(difgore))  <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="fu">select</span>(., id, difgore, gorepre, gorepst)</span></code></pre></div>
 <div id="transmute" class="section level3">
 <h3><strong>TRANSMUTE</strong></h3>
 <p>También existe la función transmute, que realiza lo mismo solo que
@@ -523,11 +637,11 @@ datos)</p>
 George Bush</p>
 <p>Vamos a cambiarla a numérica, para evitar que ocurra el mismo
 error.</p>
-<pre class="r"><code>usa$gbushpst&lt;- as.numeric(usa$gbushpst)
-usa$gbushpre&lt;- as.numeric(usa$gbushpre)
-
-usabush&lt;-transmute(usa, difbush = gbushpst - gbushpre) %&gt;%
-  arrange(., desc(difbush))</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>usa<span class="sc">$</span>gbushpst<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gbushpst)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>usa<span class="sc">$</span>gbushpre<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gbushpre)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>usabush<span class="ot">&lt;-</span><span class="fu">transmute</span>(usa, <span class="at">difbush =</span> gbushpst <span class="sc">-</span> gbushpre) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>  <span class="fu">arrange</span>(., <span class="fu">desc</span>(difbush))</span></code></pre></div>
 <p>#View(usabush)</p>
 </div>
 <div id="group_by-agrupar-datos" class="section level3">
@@ -542,17 +656,17 @@ posición política, y usaremos sumarise para sacar el promedio de la
 aprobación de Bush post gestión Vemos los resultados. Vemos una
 tendencia que los más conservadores tenían una aprobación más alta de
 Bush</p>
-<pre class="r"><code>usa.g &lt;- usa%&gt;% 
-  group_by(.,) %&gt;% 
-  summarise(mean = mean(gbushpst,na.rm=TRUE), n = n())
-usa.g</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>usa.g <span class="ot">&lt;-</span> usa<span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">group_by</span>(.,) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gbushpst,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>usa.g</span></code></pre></div>
 <p>Ahora con Al Gore ¿los datos se voltean no? Los encuestados que se
 consideran muy Liberales, aprueban más la gestión de AlGore, a
 diferencia de los muy conservadores.</p>
-<pre class="r"><code>usa.b &lt;- usa%&gt;% 
-  group_by(., consipol) %&gt;% 
-  summarise(mean = mean(gorepst,na.rm=TRUE), n = n())
-usa.b</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>usa.b <span class="ot">&lt;-</span> usa<span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>  <span class="fu">group_by</span>(., consipol) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gorepst,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>usa.b</span></code></pre></div>
 </div>
 <div id="repaso-modelo-lineal-general-múltiple" class="section level2">
 <h2><strong>REPASO MODELO LINEAL GENERAL MÚLTIPLE</strong></h2>
@@ -578,9 +692,9 @@ sociodemográficas, económicas etc.</p>
 class="section level3">
 <h3>Ejemplo 1: Prediciendo los casos de COVID-19</h3>
 <p>Obtenemos nuestra base de datos:</p>
-<pre class="r"><code>library(rio)
-competitividad&lt;-import(&quot;COVID - COMPETITIVIDAD.sav&quot;)
-names(competitividad)</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>competitividad<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;COVID - COMPETITIVIDAD.sav&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="fu">names</span>(competitividad)</span></code></pre></div>
 </div>
 <div id="recordando-la-regresión-lineal" class="section level3">
 <h3>RECORDANDO LA REGRESIÓN LINEAL</h3>
@@ -588,8 +702,8 @@ names(competitividad)</code></pre>
 del gasto real por hogar mensual</p>
 <p>Variable dependiente: Casos COVID-19 por cada 100 mil personas</p>
 <p>Variable independiente: gasto real por hogar mensual (var5)</p>
-<pre class="r"><code>modelo &lt;-lm(competitividad$casos_100k ~ competitividad$var5)
-summary(modelo)</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>modelo <span class="ot">&lt;-</span><span class="fu">lm</span>(competitividad<span class="sc">$</span>casos_100k <span class="sc">~</span> competitividad<span class="sc">$</span>var5)</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <p>Seguimos nuestro flujograma para evaluar el modelo:</p>
 <ol style="list-style-type: decimal">
 <li>Nos preguntamos si el modelo es válido</li>
@@ -602,9 +716,9 @@ summary(modelo)</code></pre>
 <p>Variable dependiente: Casos COVID-19 por cada 100 mil personas
 Variables independientes: Stock de capital por trabajador (var3) + gasto
 real por hogar mensual (var5) + morbilidad (var20).</p>
-<pre class="r"><code>modelo1 &lt;- lm(competitividad$casos_100k~ competitividad$var3+competitividad$var5+
-                competitividad$var20)
-summary(modelo1)</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(competitividad<span class="sc">$</span>casos_100k<span class="sc">~</span> competitividad<span class="sc">$</span>var3<span class="sc">+</span>competitividad<span class="sc">$</span>var5<span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>                competitividad<span class="sc">$</span>var20)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
 <p>Seguimos nuestro flujograma para evaluar el modelo:</p>
 <ol style="list-style-type: decimal">
 <li>Nos preguntamos si el modelo es válido</li>
@@ -612,7 +726,7 @@ summary(modelo1)</code></pre>
 <li>Si las variables independientes aportan al modelo</li>
 <li>Identificamos los coeficientes</li>
 </ol>
-<pre class="r"><code>modelo1$coefficients</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>modelo1<span class="sc">$</span>coefficients</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Construimos la ecuación</li>
 </ol>
@@ -656,6 +770,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

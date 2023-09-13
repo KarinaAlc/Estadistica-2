@@ -7,9 +7,10 @@ output:
     collapsed: no
     number_sections: no
     toc_depth: 1
-    theme: cosmo
-    highlight: textmate
+    theme: simplex
+    highlight: kate
     always_allow_html: true
+    code_folding: show
 ---
 
 <br>

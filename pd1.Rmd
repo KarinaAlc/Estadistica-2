@@ -7,9 +7,10 @@ output:
     collapsed: no
     number_sections: no
     toc_depth: 1
-    theme: cosmo
-    highlight: textmate
+    theme: simplex
+    highlight: kate
     always_allow_html: true
+    code_folding: show
 ---
 
 ## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
@@ -27,7 +28,7 @@ knitr::include_graphics("logoPUCP.png")
 ```
 
 
-### Jefes de Práctica: Karina Alcántara 👩‍🏫  y Lizette Crispín 👩‍🏫<br>
+### Jefas de Práctica: Karina Alcántara 👩‍🏫  y Lizette Crispín 👩‍🏫<br>
 
 ### **SESIÓN 1 - Tidyverse y RL** <br>
 
