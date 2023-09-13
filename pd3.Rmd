@@ -88,7 +88,7 @@ Lo que queremos hacer es ver qué factores pueden influenciar en que un docente 
 
 VARIABLE DEPENDIENTE 🤐: Retorno a clases
 
-```{r,  echo = T, results = 'hide',  fig.show='hide'}
+```{r,  echo = T, fig.show='hide'}
 table(data$P2_2)
 data$retorno=as.factor(data$P2_2)
 levels(data$retorno) = c("No", "Si")
@@ -101,7 +101,7 @@ Ya teniendo lista la variable depediente vamos a realizar unos cuantos modelos y
 
 VD: Retorno VI: El docente vive con personas de la tercera edad
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 data$P1_4=ifelse(data$P1_4 == "1", "1","0")
 data$P1_4=as.numeric(data$P1_4) #numérica 
 table(data$P1_4)
@@ -115,6 +115,8 @@ summary(modelo1)
 ```
 
 Ahora vamos a calcular los coeficientes del modelo [*los coefficientes obtenidos en esta regresión logística son el logaritmo natural de odds*] [*La función exponencial es la inversa del logaritmo*]
+
+Veamos
 
 Revisemos los coeficientes.
 
@@ -144,7 +146,7 @@ Tenemos dos maneras de poner analizar este resultado Recordemos que la VI era si
 
 Recuerda que el coeficiente de la VI es *-0.3860* es el
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 (1-exp(-0.3860))*100
 ```
 
@@ -164,12 +166,12 @@ Agreguemos más variables:
 
 Queremos saber si estas variables influyen en la probabilidad de que el docente quiera retornar o no a clases presenciales
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 modelo2 = glm(retorno ~ P1_4+P1_11_H+P1_11_G, family = binomial,data = data)
 summary(modelo2)
 ```
 
-```{r,  echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 coef(modelo2)
 ```
 
@@ -177,7 +179,7 @@ coef(modelo2)
 
 Para calcular el odds ratio.
 
-```{r,  echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 exp(coef(modelo2)) 
 ```
 
@@ -185,7 +187,7 @@ Nuevamente, el odds ratio es menor que 1.
 
 Como son menores que 1 entonces lo restamos y explicamos los resultados en base a la disminución de veces.
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 1/(exp(-0.38429))
 1/(exp(-0.92276))
 1/(exp(-0.26229))
@@ -218,7 +220,7 @@ Ahora analicemos las probabilidades:
 
 Ejemplo 1: Si el docente no vive con personas de la tercera edad, tiene cancer y tiene depresión
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 log.odds1 = predict(modelo2, data.frame(P1_4 = 0, P1_11_H = 1, P1_11_G = 1))
 log.odds1
 exp(log.odds1)/(1+exp(log.odds1))
@@ -228,7 +230,7 @@ La probabilidad de que quiera retornara a clases presenciales es de 0.80
 
 Ejemplo 2: Si el docente no vive con personas de la tercera edad, no tiene cancer y tiene depresión
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 log.odds1 = predict(modelo2, data.frame(P1_4 = 0, P1_11_H = 0, P1_11_G = 1))
 exp(log.odds1)/(1+exp(log.odds1)) #lo pasamos a probabilidades
 ```
@@ -273,20 +275,20 @@ Divine.Help(modelo2)
 
 Nuestras explicativas serán si la persona vive o no con personas de la tercera edad, tiene o ha tenido ansiedad y la variable edad.
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 modelo3 = glm(retorno ~ P1_4+P1_11_F+P1_2, family = binomial, data = data)
 summary(modelo3)
 ```
 
 Recuerda revisar los signos, para poder identificar el tipo de relación.
 
-```{r,  echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 coef(modelo3)
 ```
 
 Interpretemos según n° de veces
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 1/(exp(-0.35441669))
 1/(exp(-0.43774133))
 1/(exp(-0.01928669 ))
@@ -302,7 +304,7 @@ Análisis
 
 #### Ahora en porcentaje (probabilidad)
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 (1-(exp(-0.35441669))) *100
 (1-(exp(-0.43774133)))*100 
 (1-(exp(-0.01928669 )))*100 
@@ -316,7 +318,7 @@ Análisis
 
 Ahora obtengamos la probabilidad según casos
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 log.odds3 = predict(modelo3, data.frame(P1_4 = 0, P1_11_F = 1, P1_2 = 50))
 exp(log.odds3)/(1+exp(log.odds3))#para pasarlo a probabilidad
 ```
@@ -325,7 +327,7 @@ Cuando un o una docente vive con personas de tercera edad, tiene ansiedad y teng
 
 Ahora obtengamos la probabilidad con menor edad.
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r}
 log.odds3 = predict(modelo3, data.frame(P1_4 = 0, P1_11_F = 1, P1_2 = 25))
 exp(log.odds3)/(1+exp(log.odds3))
 ```
