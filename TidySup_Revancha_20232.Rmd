@@ -44,7 +44,7 @@ library(car)
 ```
 
 ```{r,echo=FALSE, out.width="70%",fig.align="center",fig.cap = "Diccionario de datos de State_Democracy_final.xlsx"}
-knitr::include_graphics("DDatos.png") 
+knitr::include_graphics("PD_revancha_DDatos.png") 
 ```
 
 -   Variable dependiente: **Índice de democracia**
@@ -136,11 +136,11 @@ summary(modelo1)
 Recordando los supuestos...
 
 ```{r,echo=FALSE, out.width="70%",fig.align="center"}
-knitr::include_graphics("PD2_SUP.png") 
+knitr::include_graphics("PD_revancha_SUP.png") 
 ```
 
 ```{r,echo=FALSE, out.width="70%",fig.align="center"}
-knitr::include_graphics("PD2_SUP2.png") 
+knitr::include_graphics("PD_revancha_SUP2.png") 
 ```
 
 ### **1- Linealidad (el problema es la no linealidad)**
@@ -325,5 +325,5 @@ autocrrelacionados. El modelo tampoco pasa este supuesto.
 ### Dinámica grupal
 
 ```{r,echo=FALSE, out.width="50%",fig.align="center"}
-knitr::include_graphics("whos.png") 
+knitr::include_graphics("PD_revancha_whos.png") 
 ```
