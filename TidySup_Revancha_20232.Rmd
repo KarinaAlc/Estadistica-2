@@ -59,7 +59,7 @@ data=import("state_democracy_final_23.xlsx")
 names(data)
 ```
 
-### Tidyverse
+# Tidyverse
 
 Filtramos y mostramos los resultados de la variable Type de manera
 **descendente**.
@@ -109,7 +109,7 @@ MenMedia%>%
 
 -   Inestabilidad para mantener la legitimidad ante la población.
 
-### SUPUESTOS
+# SUPUESTOS
 
 **Modelo 1:**
 
@@ -324,7 +324,7 @@ podemos afirmar que los residuos no son independientes** o que están
 autocrrelacionados. El modelo tampoco pasa este supuesto.
 
 
-### Dinámica grupal
+## Dinámica grupal
 
 ```{r,echo=FALSE, out.width="50%",fig.align="center"}
 knitr::include_graphics("PD_revancha_whos.png") 
