@@ -11,5 +11,19 @@ navbar:
       href: pd2.html
     - text: "Revancha"
       href: TidySup_Revancha_20232.html
+    - text: "Sesión 3"
+      href: pd3.html
+    - text: "Sesión 4"
+      href: pd4.html
+    - text: "Sesión 5"
+      href: pd5.html
+    - text: "Sesión 6"
+      href: pd6.html
+    - text: "Sesión 7"
+      href: pd1.html
+    - text: "Sesión 8"
+      href: pd8.html
+    - text: "Sesión 9"
+      href: pd9.html
     - icon: fab fa-github
       href: https://karinaalc.github.io/Estadistica-2/
