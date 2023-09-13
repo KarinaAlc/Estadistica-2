@@ -21,3 +21,13 @@ Se analizan las técnicas cuantitativas de análisis multivariable aplicadas a l
 -   Karina Alcántara 👩‍🏫 : k.alcantara\@pucp.pe
 
 -   Lizette Crispín 👩‍🏫: lizette.crispinf\@pucp.edu.pe
+
+## Rúbrica de participación:
+
+```{r,echo=FALSE, out.width="120%",fig.align="center"}
+
+knitr::include_graphics("rubrica.png") 
+
+```
+
+
