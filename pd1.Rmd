@@ -99,13 +99,17 @@ Filtra casos o filas que cumplen con el criterio. Por ejemplo, aca
 estamos filtrando de la data usa las personas que son judíos
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-filter(usa, relig=="Catolico", intecamp=="1. Mucho") 
+usa %>%
+  filter(relig=="Catolico", intecamp=="1. Mucho") 
 
-filter(usa, edad >= 50)
+usa %>%
+  filter(edad >= 50)
 
-filter(usa, intecamp=="1. Mucho", sexo=="Hombre", consipol=="1. Muy liberal")
+usa %>%
+  filter(intecamp=="1. Mucho", sexo=="Hombre", consipol=="1. Muy liberal")
 
-filter(usa, intecamp=="1. Mucho", sexo=="Mujer", consipol=="7. Muy Conservador")
+usa %>%
+  filter(intecamp=="1. Mucho", sexo=="Mujer", consipol=="7. Muy Conservador")
 ```
 
 ### **SELECT**: Seleccionando subconjunto de variables
@@ -117,7 +121,8 @@ En este comando estamos especificando que queremos seleccionar de la
 data usa, las variables interés en las campañas (intecamp) y sexo.
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-inte=select(usa, intecamp, sexo)
+inte= usa %>%
+  select(intecamp, sexo)
 inte
 ```
 
@@ -129,8 +134,10 @@ Lo podríamos volver un objeto para poder trabajar con ello
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 # quitando variables
-select(usa, -voto96, -quien96)
-menos96 <- select(usa, -voto96, -quien96)
+usa %>%
+  select(-voto96, -quien96)
+menos96 <- usa %>%
+  select(-voto96, -quien96)
 menos96 
 ```
 
@@ -148,7 +155,9 @@ Solo con variables numéricas (ojo)
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 #Promedio aprobación Al Gore post elecciones
-summarise(usa, promgorepost = mean(gorepst, na.rm = T))
+usa %>%
+  summarise(promgorepost = mean(gorepst, na.rm = T))
+
 #CORROBORAMOS
 class(usa$gorepst) 
 
@@ -162,7 +171,8 @@ convertimos
 usa$gorepst<- as.numeric(usa$gorepst)
 usa$gorepre<- as.numeric(usa$gorepre)
 
-summarise(usa, MediaAprobGorePost = mean(gorepst, na.rm = T))
+usa %>%
+  summarise(MediaAprobGorePost = mean(gorepst, na.rm = T))
 ```
 
 ### **COUNT**: contar casos en base a una variable
@@ -175,8 +185,11 @@ Se puede observar que la mayoría tiene un nivel educativo mayor al de
 secundaria.
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-count(usa, relig)
-count(usa, educ,sort = FALSE) #numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente
+usa %>%
+  count(relig)
+
+usa %>%
+  count(educ,sort = FALSE) #numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente
 
 ```
 
@@ -194,17 +207,17 @@ resultados muestre únicamente las variables de ID, difgore, gorepre y
 gorepst para ver la diferencia.
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-
-
-usagoredesc<- mutate(usa, difgore =  gorepst - gorepre) %>% arrange(., desc(gorepst)) %>%
-  select(., id, difgore, gorepre, gorepst)
+usagoredesc<- usa %>%
+  mutate(difgore =  gorepst - gorepre) %>% arrange(., desc(gorepst)) %>%
+  select(id, difgore, gorepre, gorepst)
 ```
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,include=FALSE}
 #de manera ascendente
-usagoreasc <- mutate(usa, difgore =  gorepst - gorepre) %>%
-  arrange(.,difgore) %>%
-  select(., id, difgore, gorepre, gorepst)
+usagoreasc <- usa %>%
+  mutate(difgore =  gorepst - gorepre) %>%
+  arrange(difgore) %>%
+  select(id, difgore, gorepre, gorepst)
 ```
 
 Vamos a poner gorepost como función en arrange para ver su aprobación
@@ -212,9 +225,10 @@ más alta.
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 #diferencia más alta
-mutate(usa, difgore =  gorepst - gorepre) %>%
-  arrange(., desc(difgore))  %>%
-  select(., id, difgore, gorepre, gorepst)
+usa %>%
+  mutate(difgore =  gorepst - gorepre) %>%
+  arrange(desc(difgore))  %>%
+  select(id, difgore, gorepre, gorepst)
 
 ```
 
@@ -233,8 +247,9 @@ Vamos a cambiarla a numérica, para evitar que ocurra el mismo error.
 usa$gbushpst<- as.numeric(usa$gbushpst)
 usa$gbushpre<- as.numeric(usa$gbushpre)
 
-usabush<-transmute(usa, difbush = gbushpst - gbushpre) %>%
-  arrange(., desc(difbush))
+usabush <- usa %>%
+  transmute(difbush = gbushpst - gbushpre) %>%
+  arrange(desc(difbush))
 
 ```
 
@@ -254,8 +269,8 @@ tendencia que los más conservadores tenían una aprobación más alta de
 Bush
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa.g <- usa%>% 
-  group_by(.,) %>% 
+usa.g <- usa %>% 
+  group_by(consipol) %>% 
   summarise(mean = mean(gbushpst,na.rm=TRUE), n = n())
 usa.g
 ```
@@ -265,7 +280,7 @@ consideran muy Liberales, aprueban más la gestión de Al Gore, a
 diferencia de los muy conservadores.
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa.b <- usa%>% 
+usa.b <- usa %>% 
   group_by(consipol) %>% 
   summarise(mean = mean(gorepst,na.rm=TRUE), n = n())
 usa.b
