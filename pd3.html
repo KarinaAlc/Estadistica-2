@@ -13,7 +13,7 @@
 
 <title>Sesión 3</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -496,16 +496,18 @@ div.tocify {
 </center>
 <p><img src="logoPUCP.png" width="30%" style="display: block; margin: auto auto auto 0;" /></p>
 <div id="facultad-de-ciencias-sociales---pucp" class="section level2">
-<h2>FACULTAD DE CIENCIAS SOCIALES - PUCP <br></h2>
+<h2><strong>FACULTAD DE CIENCIAS SOCIALES - PUCP</strong> <br></h2>
 <div
 id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2023---2"
 class="section level3">
 <h3>Curso: POL 304 - Estadística para el análisis político 2 | Semestre
-2023 - 2 <br></h3>
-</div>
+2023 - 2</h3>
+<p><br></p>
 <div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
-class="section level3">
-<h3>Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h3>
+class="section level4">
+<h4>Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h4>
+<p><br></p>
+</div>
 </div>
 <div id="sesión-3---regresión-logística-binaria" class="section level3">
 <h3><strong>SESIÓN 3 - Regresión Logística Binaria</strong> <br></h3>
@@ -521,7 +523,7 @@ educativa.</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>endo<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;ENDO1.sav&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <p>Estas son las variables que usaremos:</p>
-<p><strong>Variable dependiente</strong>: <em>(P2_2)</em>-&gt;Retorno a
+<p><strong>Variable dependiente</strong>: <em>(P2_2)</em> Retorno a
 clases</p>
 <p><strong>Variables independientes</strong>:</p>
 <ul>
@@ -530,16 +532,20 @@ siguientes aspectos?: Su empleo en esta IE</p></li>
 <li><p><strong>P1_2</strong>: EDAD</p></li>
 <li><p><strong>P1_4</strong>: En su hogar, ¿vive usted con personas de
 la tercera edad?</p></li>
-<li><p>En su hogar, ¿vive Ud. con personas que están en el grupo de
-riesgo ante COVID-19 por enfermedades preexistente (P1_5)</p></li>
-<li><p>Durante el año 2020, ¿sufrió o sufre enfermedades
-respiratorias?(P1_11_B)</p></li>
-<li><p>Durante el año 2020, ¿sufrió o sufre ansiedad? (P1_11_F)</p></li>
-<li><p>Durante el año 2020, ¿sufrió o sufre depresión (P1_11_G)</p></li>
-<li><p>Durante el año 2020, ¿sufrió o sufre cancer? (P1_11_H)</p></li>
-<li><p>Durante el año 2020, ¿sufrió o sufre COVID-19? (P1_11_L)</p></li>
-<li><p>¿En este momento se encuentra pagando algún préstamo o crédito?
-(P1_18)</p></li>
+<li><p><strong>P1_5</strong>: En su hogar, ¿vive Ud. con personas que
+están en el grupo de riesgo ante COVID-19 por enfermedades
+preexistente</p></li>
+</ul>
+<p>Durante el año 2020</p>
+<ul>
+<li><p><strong>P1_11_B</strong>: ¿sufrió o sufre enfermedades
+respiratorias?</p></li>
+<li><p><strong>P1_11_F</strong>: ¿sufrió o sufre ansiedad?</p></li>
+<li><p><strong>P1_11_G</strong>: ¿sufrió o sufre depresión</p></li>
+<li><p><strong>P1_11_H</strong>: ¿sufrió o sufre cancer?</p></li>
+<li><p><strong>P1_11_L</strong>: ¿sufrió o sufre COVID-19?</p></li>
+<li><p><strong>P1_18</strong>: ¿En este momento se encuentra pagando
+algún préstamo o crédito?</p></li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>data <span class="ot">=</span>endo<span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>       <span class="fu">select</span>( P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G,P1_11_H, P1_11_L, P1_18)</span></code></pre></div>
@@ -583,10 +589,6 @@ modelando es el logaritmo del odds (p/1-p).</p>
 <pre><code>## 
 ## Call:
 ## glm(formula = retorno ~ P1_4, family = binomial, data = data)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.2860   0.3903   0.3903   0.4693   0.4693  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -658,10 +660,6 @@ el docente quiera retornar o no a clases presenciales</p>
 ## Call:
 ## glm(formula = retorno ~ P1_4 + P1_11_H + P1_11_G, family = binomial, 
 ##     data = data)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.3089   0.3798   0.3798   0.4565   0.7834  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -810,10 +808,6 @@ la tercera edad, tiene o ha tenido ansiedad y la variable edad.</p>
 ## Call:
 ## glm(formula = retorno ~ P1_4 + P1_11_F + P1_2, family = binomial, 
 ##     data = data)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.5018   0.3542   0.3997   0.4535   0.6623  
 ## 
 ## Coefficients:
 ##              Estimate Std. Error z value Pr(&gt;|z|)    

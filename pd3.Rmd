@@ -1,9 +1,6 @@
 ---
 title: "Sesión 3"
 output:
-  pdf_document:
-    toc: yes
-    toc_depth: '1'
   html_document:
     toc: yes
     toc_float: yes
@@ -14,6 +11,9 @@ output:
     highlight: kate
     always_allow_html: yes
     code_folding: show
+  pdf_document:
+    toc: yes
+    toc_depth: '1'
 ---
 
 <br>
@@ -24,11 +24,14 @@ output:
 knitr::include_graphics("logoPUCP.png") 
 ```
 
-## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 <br>
+<br>
 
-### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+#### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+
+<br>
 
 ### **SESIÓN 3 - Regresión Logística Binaria** <br>
 
@@ -61,20 +64,21 @@ Estas son las variables que usaremos:
 
 -   **P1_4**: En su hogar, ¿vive usted con personas de la tercera edad?
 
--   En su hogar, ¿vive Ud. con personas que están en el grupo de riesgo ante COVID-19 por enfermedades preexistente (P1_5)
+-   **P1_5**: En su hogar, ¿vive Ud. con personas que están en el grupo de riesgo ante COVID-19 por enfermedades preexistente 
 
 Durante el año 2020 
--   ¿sufrió o sufre enfermedades respiratorias?(P1_11_B)
 
--   ¿sufrió o sufre ansiedad? (P1_11_F)
+-   **P1_11_B**: ¿sufrió o sufre enfermedades respiratorias?
 
--   ¿sufrió o sufre depresión (P1_11_G)
+-   **P1_11_F**: ¿sufrió o sufre ansiedad?
 
--   ¿sufrió o sufre cancer? (P1_11_H)
+-   **P1_11_G**: ¿sufrió o sufre depresión 
 
--   ¿sufrió o sufre COVID-19? (P1_11_L)
+-   **P1_11_H**: ¿sufrió o sufre cancer? 
 
--   ¿En este momento se encuentra pagando algún préstamo o crédito? (P1_18)
+-   **P1_11_L**: ¿sufrió o sufre COVID-19? 
+
+-   **P1_18**: ¿En este momento se encuentra pagando algún préstamo o crédito? 
 
 ```{r, echo = T, results = 'hide',  fig.show='hide'}
 data =endo%>% 
