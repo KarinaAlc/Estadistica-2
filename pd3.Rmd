@@ -1,6 +1,11 @@
 ---
 title: "Sesión 3"
 output:
+  pdf_document:
+    latex_engine: lualatex
+    toc: yes
+    toc_depth: '1'
+  fontfamily: "Apple Color Emoji"
   html_document:
     toc: yes
     toc_float: yes
@@ -11,9 +16,6 @@ output:
     highlight: kate
     always_allow_html: yes
     code_folding: show
-  pdf_document:
-    toc: yes
-    toc_depth: '1'
 ---
 
 <br>
@@ -25,7 +27,8 @@ knitr::include_graphics("logoPUCP.png")
 ```
 
 ## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 
+
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
 
 <br>
 
@@ -64,34 +67,34 @@ Estas son las variables que usaremos:
 
 -   **P1_4**: En su hogar, ¿vive usted con personas de la tercera edad?
 
--   **P1_5**: En su hogar, ¿vive Ud. con personas que están en el grupo de riesgo ante COVID-19 por enfermedades preexistente 
+-   **P1_5**: En su hogar, ¿vive Ud. con personas que están en el grupo de riesgo ante COVID-19 por enfermedades preexistente
 
-Durante el año 2020 
+Durante el año 2020
 
 -   **P1_11_B**: ¿sufrió o sufre enfermedades respiratorias?
 
 -   **P1_11_F**: ¿sufrió o sufre ansiedad?
 
--   **P1_11_G**: ¿sufrió o sufre depresión 
+-   **P1_11_G**: ¿sufrió o sufre depresión
 
--   **P1_11_H**: ¿sufrió o sufre cancer? 
+-   **P1_11_H**: ¿sufrió o sufre cancer?
 
--   **P1_11_L**: ¿sufrió o sufre COVID-19? 
+-   **P1_11_L**: ¿sufrió o sufre COVID-19?
 
--   **P1_18**: ¿En este momento se encuentra pagando algún préstamo o crédito? 
+-   **P1_18**: ¿En este momento se encuentra pagando algún préstamo o crédito?
 
 ```{r, echo = T, results = 'hide',  fig.show='hide'}
 data =endo%>% 
        select( P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G,P1_11_H, P1_11_L, P1_18)
 ```
 
-Tenemos variable de sexo, edad, si es que es area rural o urbana. También si es que el docente vive con personas de tercera edad, o con personas que tienen factores de riesgo de COVID, si en el 2020 han tenido depresión, ansiedad, enfermedades respiratorias, también hay otra variable sobre si regresarían a a clases de manera presencial etc.
+Tenemos variable de sexo, edad, si es que es area rural o urbana. También si es que el docente vive con personas de tercera edad, o con personas que tienen factores de riesgo de COVID, si en el 2020 han tenido depresión, ansiedad, enfermedades respiratorias, también hay otra variable sobre si regresarían a clases de manera presencial.
 
-Vamos a realizar diferentes modelos para calentar motores y volvernos unos expertos y expertas en la intrepretación de coeficientes.
+Vamos a realizar diferentes modelos para calentar motores y volvernos expertas y expertos en la intrepretación de coeficientes.
 
-Lo que queremos hacer es ver qué factores pueden influenciar en que un docente quiera retornar a clases presenciales
+Lo que queremos hacer es ver **qué factores pueden influenciar en que un docente quiera retornar a clases presenciales**
 
-VARIABLE DEPENDIENTE 🤐: Retorno a clases
+**VARIABLE DEPENDIENTE: P2_2 Retorno a clases**
 
 ```{r,  echo = T, fig.show='hide'}
 table(data$P2_2)
@@ -102,9 +105,10 @@ table(data$retorno)
 
 Ya teniendo lista la variable depediente vamos a realizar unos cuantos modelos y analizar el odds y la probabilidad.
 
-# MODELO 1:
+# MODELO 1 : Retorno y personas de la tercera edad
 
-VD: Retorno VI: El docente vive con personas de la tercera edad
+-   VD: Retorno
+-   VI: El docente vive con personas de la tercera edad P1_4
 
 ```{r}
 data$P1_4=ifelse(data$P1_4 == "1", "1","0")
@@ -338,11 +342,6 @@ exp(log.odds3)/(1+exp(log.odds3))
 ```
 
 Cuando un o una docente vive con personas de tercera edad, tiene ansiedad y tenga 25 años, la probabilidad de que quiera retornar a clases presenciales es de 0.93.
-
-
-
-
-
 
 
 

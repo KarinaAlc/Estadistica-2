@@ -553,12 +553,12 @@ algún préstamo o crédito?</p></li>
 También si es que el docente vive con personas de tercera edad, o con
 personas que tienen factores de riesgo de COVID, si en el 2020 han
 tenido depresión, ansiedad, enfermedades respiratorias, también hay otra
-variable sobre si regresarían a a clases de manera presencial etc.</p>
+variable sobre si regresarían a clases de manera presencial.</p>
 <p>Vamos a realizar diferentes modelos para calentar motores y volvernos
-unos expertos y expertas en la intrepretación de coeficientes.</p>
-<p>Lo que queremos hacer es ver qué factores pueden influenciar en que
-un docente quiera retornar a clases presenciales</p>
-<p>VARIABLE DEPENDIENTE 🤐: Retorno a clases</p>
+expertas y expertos en la intrepretación de coeficientes.</p>
+<p>Lo que queremos hacer es ver <strong>qué factores pueden influenciar
+en que un docente quiera retornar a clases presenciales</strong></p>
+<p><strong>VARIABLE DEPENDIENTE: P2_2 Retorno a clases</strong></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>P2_2)</span></code></pre></div>
 <pre><code>## 
 ##     0     1 
@@ -573,9 +573,13 @@ un docente quiera retornar a clases presenciales</p>
 cuantos modelos y analizar el odds y la probabilidad.</p>
 </div>
 </div>
-<div id="modelo-1" class="section level1">
-<h1>MODELO 1:</h1>
-<p>VD: Retorno VI: El docente vive con personas de la tercera edad</p>
+<div id="modelo-1-retorno-y-personas-de-la-tercera-edad"
+class="section level1">
+<h1>MODELO 1 : Retorno y personas de la tercera edad</h1>
+<ul>
+<li>VD: Retorno</li>
+<li>VI: El docente vive con personas de la tercera edad P1_4</li>
+</ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>data<span class="sc">$</span>P1_4<span class="ot">=</span><span class="fu">ifelse</span>(data<span class="sc">$</span>P1_4 <span class="sc">==</span> <span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>,<span class="st">&quot;0&quot;</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>data<span class="sc">$</span>P1_4<span class="ot">=</span><span class="fu">as.numeric</span>(data<span class="sc">$</span>P1_4) <span class="co">#numérica </span></span>
 <span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>P1_4)</span></code></pre></div>
