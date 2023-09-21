@@ -1,6 +1,9 @@
 ---
 title: "Sesión 3"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: '1'
   html_document:
     toc: yes
     toc_float: yes
@@ -11,9 +14,6 @@ output:
     highlight: kate
     always_allow_html: yes
     code_folding: show
-  pdf_document:
-    toc: yes
-    toc_depth: '1'
 ---
 
 <br>
@@ -51,7 +51,7 @@ library(dplyr)
 
 Estas son las variables que usaremos:
 
-**Variable dependiente**: *(P2_2)*-\>Retorno a clases
+**Variable dependiente**: *(P2_2)* Retorno a clases
 
 **Variables independientes**:
 
@@ -63,15 +63,16 @@ Estas son las variables que usaremos:
 
 -   En su hogar, ¿vive Ud. con personas que están en el grupo de riesgo ante COVID-19 por enfermedades preexistente (P1_5)
 
--   Durante el año 2020, ¿sufrió o sufre enfermedades respiratorias?(P1_11_B)
+Durante el año 2020 
+-   ¿sufrió o sufre enfermedades respiratorias?(P1_11_B)
 
--   Durante el año 2020, ¿sufrió o sufre ansiedad? (P1_11_F)
+-   ¿sufrió o sufre ansiedad? (P1_11_F)
 
--   Durante el año 2020, ¿sufrió o sufre depresión (P1_11_G)
+-   ¿sufrió o sufre depresión (P1_11_G)
 
--   Durante el año 2020, ¿sufrió o sufre cancer? (P1_11_H)
+-   ¿sufrió o sufre cancer? (P1_11_H)
 
--   Durante el año 2020, ¿sufrió o sufre COVID-19? (P1_11_L)
+-   ¿sufrió o sufre COVID-19? (P1_11_L)
 
 -   ¿En este momento se encuentra pagando algún préstamo o crédito? (P1_18)
 
@@ -333,3 +334,6 @@ exp(log.odds3)/(1+exp(log.odds3))
 ```
 
 Cuando un o una docente vive con personas de tercera edad, tiene ansiedad y tenga 25 años, la probabilidad de que quiera retornar a clases presenciales es de 0.93.
+
+
+
