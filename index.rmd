@@ -22,6 +22,9 @@ Se analizan las técnicas cuantitativas de análisis multivariable aplicadas a l
 
 -   Lizette Crispín 👩‍🏫: lizette.crispinf\@pucp.edu.pe
 
+-   Profesor del curso : Hans Burkli
+
+
 ## Rúbrica de participación:
 
 ```{r,echo=FALSE, out.width="120%",fig.align="center"}
