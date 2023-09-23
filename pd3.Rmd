@@ -1,11 +1,6 @@
 ---
 title: "Sesión 3"
 output:
-  pdf_document:
-    latex_engine: lualatex
-    toc: yes
-    toc_depth: '1'
-  fontfamily: "Apple Color Emoji"
   html_document:
     toc: yes
     toc_float: yes
@@ -16,6 +11,11 @@ output:
     highlight: kate
     always_allow_html: yes
     code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: yes
+    toc_depth: '1'
 ---
 
 <br>
@@ -37,6 +37,41 @@ knitr::include_graphics("logoPUCP.png")
 <br>
 
 ### **SESIÓN 3 - Regresión Logística Binaria** <br>
+
+Repasito
+
+```{r,echo=FALSE, out.width="100%",fig.align="center"}
+knitr::include_graphics("PD3_Conceptos.png") 
+```
+<br>
+<br>
+<br>
+
+```{r,echo=FALSE, out.width="100%",fig.align="center"}
+knitr::include_graphics("PD3_Ejemplo1.png") 
+```
+
+<br>
+<br>
+<br>
+
+
+```{r,echo=FALSE, out.width="100%",fig.align="center"}
+knitr::include_graphics("PD3_ejemplo2.png") 
+```
+
+<br>
+<br>
+<br>
+
+```{r,echo=FALSE, out.width="100%",fig.align="center"}
+knitr::include_graphics("PD3_EJEMPLO3.png") 
+```
+<br>
+<br>
+<br>
+
+# Modelo logístico binario
 
 La base que usaremos hoy es la Encuesta Nacional a Docentes de Instituciones Educativas Públicas de Educación Básica Regular
 
@@ -90,6 +125,17 @@ data =endo%>%
 
 Tenemos variable de sexo, edad, si es que es area rural o urbana. También si es que el docente vive con personas de tercera edad, o con personas que tienen factores de riesgo de COVID, si en el 2020 han tenido depresión, ansiedad, enfermedades respiratorias, también hay otra variable sobre si regresarían a clases de manera presencial.
 
+```{r}
+names(data)
+```
+```{r}
+colnames(data)=c("P2_2" ,  "satIE","edad"  ,  "terEd" ,   "riesCov",  "resp","anx", "dep", "cancer", "cov","cred")
+```
+
+```{r}
+data=as.data.frame(data[complete.cases(data),])
+```
+
 Vamos a realizar diferentes modelos para calentar motores y volvernos expertas y expertos en la intrepretación de coeficientes.
 
 Lo que queremos hacer es ver **qué factores pueden influenciar en que un docente quiera retornar a clases presenciales**
@@ -100,58 +146,60 @@ Lo que queremos hacer es ver **qué factores pueden influenciar en que un docent
 table(data$P2_2)
 data$retorno=as.factor(data$P2_2)
 levels(data$retorno) = c("No", "Si")
-table(data$retorno)
+table(data$retorno) #confirmo el nuevo formato de la variable
 ```
 
 Ya teniendo lista la variable depediente vamos a realizar unos cuantos modelos y analizar el odds y la probabilidad.
 
 # MODELO 1 : Retorno y personas de la tercera edad
 
--   VD: Retorno
--   VI: El docente vive con personas de la tercera edad P1_4
+-   VD: Retorno (variable dicotómica)
+-   VI: El docente vive con personas de la tercera edad terEd
 
 ```{r}
-data$P1_4=ifelse(data$P1_4 == "1", "1","0")
-data$P1_4=as.numeric(data$P1_4) #numérica 
-table(data$P1_4)
+data$terEd=ifelse(data$terEd == "1", "1","0") 
+data$terEd=as.numeric(data$terEd)  
+table(data$terEd)
 ```
 
-Creemos nuestro modelo (función glm) Recuerda que lo que se está modelando es el logaritmo del odds (p/1-p).
+Creemos nuestro modelo (función glm). Recuerda que lo que se está modelando es el logaritmo del odds (p/1-p).
 
 ```{r}
-modelo1 = glm(retorno ~ P1_4,family= binomial ,data)
+modelo1 = glm(retorno ~ terEd,family= binomial,data)
 summary(modelo1)
 ```
 
-Ahora vamos a calcular los coeficientes del modelo [*los coefficientes obtenidos en esta regresión logística son el logaritmo natural de odds*] [*La función exponencial es la inversa del logaritmo*]
-
-Veamos
+Ahora vamos a calcular los coeficientes del modelo
+- [*los coefficientes obtenidos en esta regresión logística son el logaritmo natural de odds*] 
+- [*La función exponencial es la inversa del logaritmo*]
 
 Revisemos los coeficientes.
 
 ```{r}
 coef(modelo1)
 ```
+Recuerda que es importante revisar el **signo** del coeficiente, ya que dependiendo de eso procederemos a interpretar. En este caso, el coeficiente es negativo; es decir, *la relación es inversa.*
 
-Recuerda que es importante revisar el signo del coeficiente, ya que dependiendo de eso procederemos a interpretar. En este caso, el coeficiente es negativo; es decir, la relación es inversa.
 
-```{r,echo=FALSE, out.width="30%",fig.align="center"}
-knitr::include_graphics("coef_negativo.png") 
-```
-
-[Cuando calculcamos el exponencial de los coeficientes, obtenemos el odds ratio (\# de veces de que ocurra)].Sin embargo, como el coeficiente es negativo esa exponencial debe dividir al 1 (1/exp(log)).
+Damos el resultado en veces
 
 ```{r}
-1/exp(coef(modelo1)) 
+1-exp(-0.385568) 
 ```
+Si el docente vive con una persona de la tercera edad su deseo de retornar a la presencialidad disminuye en 0.32 veces.
 
+##### Alternativo
+[Cuando calculamos el exponencial de los coeficientes, obtenemos el odds (\# de veces de que ocurra)].Sin embargo, como el coeficiente es negativo una de las alternativas es  dividir el exponencial al 1 (1/exp(log)).
+
+```{r}
+#Alternativo
+1/exp(-0.385568) 
+```
 Siempre que la relación es inversa, la interpretación es cuando la VI disminuye, la VD aumenta en xx veces. En este caso, 1.47 veces.
 
-Tenemos dos maneras de poner analizar este resultado Recordemos que la VI era si el o la docente vive con personas de la tercera edad.
+Tenemos dos maneras de poder analizar este resultado Recordemos que la VI era si el o la docente vive con personas de la tercera edad.
 
--   Si el o la docente vive con personas de la tercera edad, el odds de que quiera retornar a clases presenciales disminuye en 1.47
-
--   Otra manera analizarlo como una probablilidad, para ello es necesario realizar el siguiente cálculo (**1- exp(coef))\*100**
+Otra manera analizarlo como una probablilidad, para ello es necesario realizar el siguiente cálculo (**1- exp(coef))\*100**)
 
 Recuerda que el coeficiente de la VI es *-0.3860* es el
 
@@ -159,24 +207,23 @@ Recuerda que el coeficiente de la VI es *-0.3860* es el
 (1-exp(-0.3860))*100
 ```
 
-En este caso podemos interpretar los resultados como "si el docente vive con una persona de la tercera edad, la probabilidad de que quiera retornar a clases presenciales DISMINUYE en un 32.03%.
+En este caso podemos interpretar los resultados como **"si el docente vive con una persona de la tercera edad, la probabilidad de que quiera retornar a clases presenciales DISMINUYE en un 32.02%"**
 
-# MODELO 2
-
-#### REALICEMOS UN SEGUNDO MODELO
+# MODELO 2 : Retorno, personas de la tercera edad y enfermedades
 
 Agreguemos más variables:
 
--   vive con personas de la tercera edad (P1_4)
+-   vive con personas de la tercera edad **(terEd)**
 
--   ¿sufrió o sufre cancer? (P1_11_H)
+-   ¿sufrió o sufre cancer? **(cancer)**
 
--   ¿sufrió o sufre depresion? (P1_11_G)
+-   ¿sufrió o sufre depresion? **(dep)**
 
 Queremos saber si estas variables influyen en la probabilidad de que el docente quiera retornar o no a clases presenciales
 
+
 ```{r}
-modelo2 = glm(retorno ~ P1_4+P1_11_H+P1_11_G, family = binomial,data = data)
+modelo2 = glm(retorno ~ terEd+cancer+dep, family = binomial(link=logit),data = data)
 summary(modelo2)
 ```
 
@@ -184,31 +231,32 @@ summary(modelo2)
 coef(modelo2)
 ```
 
+
 ### Ojo, los tres coeficientes son negativos. Calculemos el exponencial
 
-Para calcular el odds ratio.
+Para calcular el odds.
 
 ```{r}
 exp(coef(modelo2)) 
 ```
 
-Nuevamente, el odds ratio es menor que 1.
+Nuevamente, el odds  es menor que 1.
 
 Como son menores que 1 entonces lo restamos y explicamos los resultados en base a la disminución de veces.
 
 ```{r}
-1/(exp(-0.38429))
-1/(exp(-0.92276))
-1/(exp(-0.26229))
+1-(exp(-0.3837506))
+1-(exp(-0.9224211))
+1-(exp(-0.2627631))
 ```
 
 Análisis según n° de veces
 
--   Si el docente vive con personas de la tercera edad el odds/probabilidad de que quiera retornar a clases presenciales disminuye en 1.46 veces
+-   Si el docente vive con personas de la tercera edad el odds/probabilidad de que quiera retornar a clases presenciales disminuye en 0.31 veces
 
--   Si el docente ha tenido o tiene cáncer el odds/probabilidad de que quiera retornar a clases presenciales disminuye en 2.51 veces
+-   Si el docente ha tenido o tiene cáncer el odds/probabilidad de que quiera retornar a clases presenciales disminuye en 0.6 veces
 
--   Si el docente ha tenido o tiene depresión el odds/probabilidad de que quiera retornar a clases presenciales disminuye en 1.29 veces
+-   Si el docente ha tenido o tiene depresión el odds/probabilidad de que quiera retornar a clases presenciales disminuye en 0.23 veces
 
 Ahora analicemos las probabilidades:
 
@@ -230,62 +278,35 @@ Ahora analicemos las probabilidades:
 Ejemplo 1: Si el docente no vive con personas de la tercera edad, tiene cancer y tiene depresión
 
 ```{r}
-log.odds1 = predict(modelo2, data.frame(P1_4 = 0, P1_11_H = 1, P1_11_G = 1))
-log.odds1
+log.odds1 = predict(modelo2, data.frame(terEd = 0, cancer = 1, dep = 1))
+
+exp(log.odds1)/(1+exp(log.odds1))
+```
+```{r}
+exp(log.odds1)
+```
+
+```{r}
 exp(log.odds1)/(1+exp(log.odds1))
 ```
 
-La probabilidad de que quiera retornara a clases presenciales es de 0.80
+La probabilidad estimada de que quiera retornara a clases presenciales es de 0.80
 
 Ejemplo 2: Si el docente no vive con personas de la tercera edad, no tiene cancer y tiene depresión
 
 ```{r}
-log.odds1 = predict(modelo2, data.frame(P1_4 = 0, P1_11_H = 0, P1_11_G = 1))
+log.odds1 = predict(modelo2, data.frame(terEd = 0, cancer = 0, dep = 1))
 exp(log.odds1)/(1+exp(log.odds1)) #lo pasamos a probabilidades
 ```
-
 La probabilidad de que quiera retornara a clases presenciales es de 0.91
 
-## 🙌 Ayuda divina 🙌
-
-Les proponemos esta función (Agradezcanle a su profesor) que facilita la interpretación de los resultados. La función se llama Divine.Help, para poder usarla solo necesitas indicar como argumento al nombre de tu modelo: Divine.Help(modelo). Recuerda que esta función solo podrá ejecutarse si previamente has ejecutado el código que crea la función.
-
-```{r}
-Divine.Help <- function(model) {
-   # Extraer los coeficientes del modelo
-  coeficients <- coef(model)[-1] # Excluye el intercepto
-   # Inicializar un vector para almacenar los efectos
-  effects <- numeric(length(coeficients))
-  
-  for (i in 1:length(coeficients)) {
-    if (coeficients[i] < 1) {
-      effects[i] <- round(1 - exp(coeficients[i]), 2)
-    } else {
-      effects[i] <- round(exp(coeficients[i] - 1), 2)
-    }
-  }
-  
-   # Generar la interpretación en lenguaje natural
-  interpretation <- paste0("Un aumento de una unidad en la variable ", names(coeficients),
-                           " está asociado con un cambio de ",
-                           abs(effects)*100, "% en la probabilidad de éxito.")
-   # Devolver los coeficientes, efectos y la interpretación en un dataframe
-  result <- data.frame(Coefficient = coeficients,
-                       Exp = exp(coeficients),
-                       Probability = effects,
-                       Interpretation = interpretation)
-   return(result)
-}
-
-Divine.Help(modelo2)
-```
 
 # MODELO 3:
 
 Nuestras explicativas serán si la persona vive o no con personas de la tercera edad, tiene o ha tenido ansiedad y la variable edad.
 
 ```{r}
-modelo3 = glm(retorno ~ P1_4+P1_11_F+P1_2, family = binomial, data = data)
+modelo3 = glm(retorno ~ terEd+anx+edad, family = binomial, data = data)
 summary(modelo3)
 ```
 
@@ -328,7 +349,7 @@ Análisis
 Ahora obtengamos la probabilidad según casos
 
 ```{r}
-log.odds3 = predict(modelo3, data.frame(P1_4 = 0, P1_11_F = 1, P1_2 = 50))
+log.odds3 = predict(modelo3, data.frame(terEd = 0, anx = 1, edad = 50))
 exp(log.odds3)/(1+exp(log.odds3))#para pasarlo a probabilidad
 ```
 
@@ -337,11 +358,59 @@ Cuando un o una docente vive con personas de tercera edad, tiene ansiedad y teng
 Ahora obtengamos la probabilidad con menor edad.
 
 ```{r}
-log.odds3 = predict(modelo3, data.frame(P1_4 = 0, P1_11_F = 1, P1_2 = 25))
+log.odds3 = predict(modelo3, data.frame(terEd = 0, anx = 1, edad = 25))
 exp(log.odds3)/(1+exp(log.odds3))
 ```
 
 Cuando un o una docente vive con personas de tercera edad, tiene ansiedad y tenga 25 años, la probabilidad de que quiera retornar a clases presenciales es de 0.93.
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
+Este fue un capítulo de...
+
+```{r,echo=FALSE, out.width="30%",fig.align="center"}
+knitr::include_graphics("PD3_MEME.png") 
+```
+
+## **Extra:** 🙌 Ayuda divina 🙌 
+
+*disclaimer* : Material opcional y autodidacta para lxs alumnxs que desean ahondar más en el tema de funciones y usarlo para el presente tema.
+
+Les proponemos esta función (Agradezcanle a su profesor) que facilita la interpretación de los resultados. La función se llama Divine.Help, para poder usarla solo necesitas indicar como argumento al nombre de tu modelo: Divine.Help(modelo). Recuerda que esta función solo podrá ejecutarse si previamente has ejecutado el código que crea la función.
+
+```{r}
+Divine.Help <- function(model) {
+   # Extraer los coeficientes del modelo
+  coeficients <- coef(model)[-1] # Excluye el intercepto
+   # Inicializar un vector para almacenar los efectos
+  effects <- numeric(length(coeficients))
+  
+  for (i in 1:length(coeficients)) {
+    if (coeficients[i] < 1) {
+      effects[i] <- round(1 - exp(coeficients[i]), 2)
+    } else {
+      effects[i] <- round(exp(coeficients[i] - 1), 2)
+    }
+  }
+  
+   # Generar la interpretación en lenguaje natural
+  interpretation <- paste0("Un aumento de una unidad en la variable ", names(coeficients),
+                           " está asociado con un cambio de ",
+                           abs(effects)*100, "% en la probabilidad de éxito.")
+   # Devolver los coeficientes, efectos y la interpretación en un dataframe
+  result <- data.frame(Coefficient = coeficients,
+                       Exp = exp(coeficients),
+                       Probability = effects,
+                       Interpretation = interpretation)
+   return(result)
+}
+
+Divine.Help(modelo2)
+```
 
