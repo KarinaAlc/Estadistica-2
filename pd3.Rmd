@@ -319,18 +319,18 @@ coef(modelo3)
 Interpretemos según n° de veces
 
 ```{r}
-1/(exp(-0.35441669))
-1/(exp(-0.43774133))
-1/(exp(-0.01928669 ))
+1-(exp(-0.35441669))
+1-(exp(-0.43774133))
+1-(exp(-0.01928669 ))
 ```
 
 Análisis
 
--   Si el docente vive con personas de la tercera edad el odds de que quiera retornar a clases presenciales disminuye en 1.42 veces
+-   Si el docente vive con personas de la tercera edad el odds de que quiera retornar a clases presenciales disminuye en 0.29 veces
 
--   Si el docente ha tenido o tiene ansiedad el odds de que quiera retornar a clases presenciales disminuye en 1.54 veces
+-   Si el docente ha tenido o tiene ansiedad el odds de que quiera retornar a clases presenciales disminuye en 0.35 veces
 
--   Si el docente aumenta en un 1 su edad el odds de que quiera retornar a clases presenciales disminuye en 1.01 veces
+-   Si el docente aumenta en un 1 su edad el odds de que quiera retornar a clases presenciales disminuye en 0.02 veces
 
 #### Ahora en porcentaje (probabilidad)
 

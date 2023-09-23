@@ -13,7 +13,7 @@
 
 <title>Sesión 3</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -532,9 +532,9 @@ que se realizó en contexto de la pandemia. Entonces, hay diversas
 variables. Con respecto al cuidado de parientes, qué enfermedades ha
 tenido, satisfacción sobre temas personales o de la misma institución
 educativa.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>endo<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;ENDO1.sav&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>endo<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;ENDO1.sav&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <p>Estas son las variables que usaremos:</p>
 <p><strong>Variable dependiente</strong>: <em>(P2_2)</em> Retorno a
 clases</p>
@@ -560,30 +560,30 @@ respiratorias?</p></li>
 <li><p><strong>P1_18</strong>: ¿En este momento se encuentra pagando
 algún préstamo o crédito?</p></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>data <span class="ot">=</span>endo<span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>       <span class="fu">select</span>( P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G,P1_11_H, P1_11_L, P1_18)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span>endo<span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">select</span>( P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G,P1_11_H, P1_11_L, P1_18)</span></code></pre></div>
 <p>Tenemos variable de sexo, edad, si es que es area rural o urbana.
 También si es que el docente vive con personas de tercera edad, o con
 personas que tienen factores de riesgo de COVID, si en el 2020 han
 tenido depresión, ansiedad, enfermedades respiratorias, también hay otra
 variable sobre si regresarían a clases de manera presencial.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
 <pre><code>##  [1] &quot;P2_2&quot;    &quot;P1_24_E&quot; &quot;P1_2&quot;    &quot;P1_4&quot;    &quot;P1_5&quot;    &quot;P1_11_B&quot; &quot;P1_11_F&quot;
 ##  [8] &quot;P1_11_G&quot; &quot;P1_11_H&quot; &quot;P1_11_L&quot; &quot;P1_18&quot;</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">colnames</span>(data)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;P2_2&quot;</span> ,  <span class="st">&quot;satIE&quot;</span>,<span class="st">&quot;edad&quot;</span>  ,  <span class="st">&quot;terEd&quot;</span> ,   <span class="st">&quot;riesCov&quot;</span>,  <span class="st">&quot;resp&quot;</span>,<span class="st">&quot;anx&quot;</span>, <span class="st">&quot;dep&quot;</span>, <span class="st">&quot;cancer&quot;</span>, <span class="st">&quot;cov&quot;</span>,<span class="st">&quot;cred&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">as.data.frame</span>(data[<span class="fu">complete.cases</span>(data),])</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;P2_2&quot;</span> ,  <span class="st">&quot;satIE&quot;</span>,<span class="st">&quot;edad&quot;</span>  ,  <span class="st">&quot;terEd&quot;</span> ,   <span class="st">&quot;riesCov&quot;</span>,  <span class="st">&quot;resp&quot;</span>,<span class="st">&quot;anx&quot;</span>, <span class="st">&quot;dep&quot;</span>, <span class="st">&quot;cancer&quot;</span>, <span class="st">&quot;cov&quot;</span>,<span class="st">&quot;cred&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">as.data.frame</span>(data[<span class="fu">complete.cases</span>(data),])</span></code></pre></div>
 <p>Vamos a realizar diferentes modelos para calentar motores y volvernos
 expertas y expertos en la intrepretación de coeficientes.</p>
 <p>Lo que queremos hacer es ver <strong>qué factores pueden influenciar
 en que un docente quiera retornar a clases presenciales</strong></p>
 <p><strong>VARIABLE DEPENDIENTE: P2_2 Retorno a clases</strong></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>P2_2)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>P2_2)</span></code></pre></div>
 <pre><code>## 
 ##     0     1 
 ##  1551 16484</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>data<span class="sc">$</span>retorno<span class="ot">=</span><span class="fu">as.factor</span>(data<span class="sc">$</span>P2_2)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>retorno) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Si&quot;</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>retorno) <span class="co">#confirmo el nuevo formato de la variable</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>retorno<span class="ot">=</span><span class="fu">as.factor</span>(data<span class="sc">$</span>P2_2)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>retorno) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Si&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>retorno) <span class="co">#confirmo el nuevo formato de la variable</span></span></code></pre></div>
 <pre><code>## 
 ##    No    Si 
 ##  1551 16484</code></pre>
@@ -597,16 +597,16 @@ class="section level1">
 <li>VD: Retorno (variable dicotómica)</li>
 <li>VI: El docente vive con personas de la tercera edad terEd</li>
 </ul>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>data<span class="sc">$</span>terEd<span class="ot">=</span><span class="fu">ifelse</span>(data<span class="sc">$</span>terEd <span class="sc">==</span> <span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>,<span class="st">&quot;0&quot;</span>) </span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>data<span class="sc">$</span>terEd<span class="ot">=</span><span class="fu">as.numeric</span>(data<span class="sc">$</span>terEd)  </span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>terEd)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>terEd<span class="ot">=</span><span class="fu">ifelse</span>(data<span class="sc">$</span>terEd <span class="sc">==</span> <span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>,<span class="st">&quot;0&quot;</span>) </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>terEd<span class="ot">=</span><span class="fu">as.numeric</span>(data<span class="sc">$</span>terEd)  </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>terEd)</span></code></pre></div>
 <pre><code>## 
 ##     0     1 
 ## 10660  7375</code></pre>
 <p>Creemos nuestro modelo (función glm). Recuerda que lo que se está
 modelando es el logaritmo del odds (p/1-p).</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>modelo1 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd,<span class="at">family=</span> binomial,data)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>modelo1 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd,<span class="at">family=</span> binomial,data)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = retorno ~ terEd, family = binomial, data = data)
@@ -630,7 +630,7 @@ coefficientes obtenidos en esta regresión logística son el logaritmo
 natural de odds</em>] - [<em>La función exponencial es la inversa del
 logaritmo</em>]</p>
 <p>Revisemos los coeficientes.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">coef</span>(modelo1)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo1)</span></code></pre></div>
 <pre><code>## (Intercept)       terEd 
 ##    2.536211   -0.385568</code></pre>
 <p>Recuerda que es importante revisar el <strong>signo</strong> del
@@ -638,7 +638,7 @@ coeficiente, ya que dependiendo de eso procederemos a interpretar. En
 este caso, el coeficiente es negativo; es decir, <em>la relación es
 inversa.</em></p>
 <p>Damos el resultado en veces</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.385568</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.385568</span>) </span></code></pre></div>
 <pre><code>## [1] 0.3199358</code></pre>
 <p>Si el docente vive con una persona de la tercera edad su deseo de
 retornar a la presencialidad disminuye en 0.32 veces.</p>
@@ -648,8 +648,8 @@ retornar a la presencialidad disminuye en 0.32 veces.</p>
 odds (# de veces de que ocurra)].Sin embargo, como el coeficiente es
 negativo una de las alternativas es dividir el exponencial al 1
 (1/exp(log)).</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co">#Alternativo</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.385568</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Alternativo</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.385568</span>) </span></code></pre></div>
 <pre><code>## [1] 1.470449</code></pre>
 <p>Siempre que la relación es inversa, la interpretación es cuando la VI
 disminuye, la VD aumenta en xx veces. En este caso, 1.47 veces.</p>
@@ -658,7 +658,7 @@ la VI era si el o la docente vive con personas de la tercera edad.</p>
 <p>Otra manera analizarlo como una probablilidad, para ello es necesario
 realizar el siguiente cálculo (<strong>1- exp(coef))*100</strong>)</p>
 <p>Recuerda que el coeficiente de la VI es <em>-0.3860</em> es el</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.3860</span>))<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.3860</span>))<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
 <pre><code>## [1] 32.02295</code></pre>
 <p>En este caso podemos interpretar los resultados como <strong>“si el
 docente vive con una persona de la tercera edad, la probabilidad de que
@@ -678,8 +678,8 @@ class="section level1">
 </ul>
 <p>Queremos saber si estas variables influyen en la probabilidad de que
 el docente quiera retornar o no a clases presenciales</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>modelo2 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd<span class="sc">+</span>cancer<span class="sc">+</span>dep, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span>logit),<span class="at">data =</span> data)</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>modelo2 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd<span class="sc">+</span>cancer<span class="sc">+</span>dep, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span>logit),<span class="at">data =</span> data)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = retorno ~ terEd + cancer + dep, family = binomial(link = logit), 
@@ -701,7 +701,7 @@ el docente quiera retornar o no a clases presenciales</p>
 ## AIC: 10500
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">coef</span>(modelo2)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo2)</span></code></pre></div>
 <pre><code>## (Intercept)       terEd      cancer         dep 
 ##   2.5928268  -0.3837506  -0.9224211  -0.2627631</code></pre>
 <div
@@ -710,17 +710,17 @@ class="section level3">
 <h3>Ojo, los tres coeficientes son negativos. Calculemos el
 exponencial</h3>
 <p>Para calcular el odds.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modelo2)) </span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modelo2)) </span></code></pre></div>
 <pre><code>## (Intercept)       terEd      cancer         dep 
 ##  13.3675056   0.6813013   0.3975554   0.7689240</code></pre>
 <p>Nuevamente, el odds es menor que 1.</p>
 <p>Como son menores que 1 entonces lo restamos y explicamos los
 resultados en base a la disminución de veces.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.3837506</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.3837506</span>))</span></code></pre></div>
 <pre><code>## [1] 0.3186987</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.9224211</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.9224211</span>))</span></code></pre></div>
 <pre><code>## [1] 0.6024446</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.2627631</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.2627631</span>))</span></code></pre></div>
 <pre><code>## [1] 0.231076</code></pre>
 <p>Análisis según n° de veces</p>
 <ul>
@@ -735,12 +735,12 @@ que quiera retornar a clases presenciales disminuye en 0.23
 veces</p></li>
 </ul>
 <p>Ahora analicemos las probabilidades:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co">#Cuando el odds es menor a 1</span></span>
-<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.38429</span>)))<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Cuando el odds es menor a 1</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.38429</span>)))<span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
 <pre><code>## [1] 31.90661</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.92276</span>)))<span class="sc">*</span><span class="dv">100</span> </span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.92276</span>)))<span class="sc">*</span><span class="dv">100</span> </span></code></pre></div>
 <pre><code>## [1] 60.25794</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.26229</span>)))<span class="sc">*</span><span class="dv">100</span> </span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.26229</span>)))<span class="sc">*</span><span class="dv">100</span> </span></code></pre></div>
 <pre><code>## [1] 23.07121</code></pre>
 <ul>
 <li><p>Si el docente vive con personas de la tercera edad, la
@@ -756,23 +756,23 @@ class="section level4">
 <h4>Si queremos calcular datos determinados</h4>
 <p>Ejemplo 1: Si el docente no vive con personas de la tercera edad,
 tiene cancer y tiene depresión</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>log.odds1 <span class="ot">=</span> <span class="fu">predict</span>(modelo2, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">cancer =</span> <span class="dv">1</span>, <span class="at">dep =</span> <span class="dv">1</span>))</span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds1))</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>log.odds1 <span class="ot">=</span> <span class="fu">predict</span>(modelo2, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">cancer =</span> <span class="dv">1</span>, <span class="at">dep =</span> <span class="dv">1</span>))</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds1))</span></code></pre></div>
 <pre><code>##         1 
 ## 0.8033939</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)</span></code></pre></div>
 <pre><code>##        1 
 ## 4.086311</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds1))</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds1))</span></code></pre></div>
 <pre><code>##         1 
 ## 0.8033939</code></pre>
 <p>La probabilidad estimada de que quiera retornara a clases
 presenciales es de 0.80</p>
 <p>Ejemplo 2: Si el docente no vive con personas de la tercera edad, no
 tiene cancer y tiene depresión</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>log.odds1 <span class="ot">=</span> <span class="fu">predict</span>(modelo2, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">cancer =</span> <span class="dv">0</span>, <span class="at">dep =</span> <span class="dv">1</span>))</span>
-<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds1)) <span class="co">#lo pasamos a probabilidades</span></span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>log.odds1 <span class="ot">=</span> <span class="fu">predict</span>(modelo2, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">cancer =</span> <span class="dv">0</span>, <span class="at">dep =</span> <span class="dv">1</span>))</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds1)) <span class="co">#lo pasamos a probabilidades</span></span></code></pre></div>
 <pre><code>##         1 
 ## 0.9113365</code></pre>
 <p>La probabilidad de que quiera retornara a clases presenciales es de
@@ -784,8 +784,8 @@ tiene cancer y tiene depresión</p>
 <h1>MODELO 3:</h1>
 <p>Nuestras explicativas serán si la persona vive o no con personas de
 la tercera edad, tiene o ha tenido ansiedad y la variable edad.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>modelo3 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd<span class="sc">+</span>anx<span class="sc">+</span>edad, <span class="at">family =</span> binomial, <span class="at">data =</span> data)</span>
-<span id="cb50-2"><a href="#cb50-2" tabindex="-1"></a><span class="fu">summary</span>(modelo3)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>modelo3 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd<span class="sc">+</span>anx<span class="sc">+</span>edad, <span class="at">family =</span> binomial, <span class="at">data =</span> data)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = retorno ~ terEd + anx + edad, family = binomial, 
@@ -809,32 +809,32 @@ la tercera edad, tiene o ha tenido ansiedad y la variable edad.</p>
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>Recuerda revisar los signos, para poder identificar el tipo de
 relación.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="fu">coef</span>(modelo3)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(modelo3)</span></code></pre></div>
 <pre><code>## (Intercept)       terEd         anx        edad 
 ##  3.54771740 -0.35441669 -0.43774133 -0.01928669</code></pre>
 <p>Interpretemos según n° de veces</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.35441669</span>))</span></code></pre></div>
-<pre><code>## [1] 1.425349</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.43774133</span>))</span></code></pre></div>
-<pre><code>## [1] 1.549204</code></pre>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.01928669</span> ))</span></code></pre></div>
-<pre><code>## [1] 1.019474</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.35441669</span>))</span></code></pre></div>
+<pre><code>## [1] 0.2984174</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.43774133</span>))</span></code></pre></div>
+<pre><code>## [1] 0.3545073</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.01928669</span> ))</span></code></pre></div>
+<pre><code>## [1] 0.01910189</code></pre>
 <p>Análisis</p>
 <ul>
 <li><p>Si el docente vive con personas de la tercera edad el odds de que
-quiera retornar a clases presenciales disminuye en 1.42 veces</p></li>
+quiera retornar a clases presenciales disminuye en 0.29 veces</p></li>
 <li><p>Si el docente ha tenido o tiene ansiedad el odds de que quiera
-retornar a clases presenciales disminuye en 1.54 veces</p></li>
+retornar a clases presenciales disminuye en 0.35 veces</p></li>
 <li><p>Si el docente aumenta en un 1 su edad el odds de que quiera
-retornar a clases presenciales disminuye en 1.01 veces</p></li>
+retornar a clases presenciales disminuye en 0.02 veces</p></li>
 </ul>
 <div id="ahora-en-porcentaje-probabilidad" class="section level4">
 <h4>Ahora en porcentaje (probabilidad)</h4>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.35441669</span>))) <span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.35441669</span>))) <span class="sc">*</span><span class="dv">100</span></span></code></pre></div>
 <pre><code>## [1] 29.84174</code></pre>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.43774133</span>)))<span class="sc">*</span><span class="dv">100</span> </span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.43774133</span>)))<span class="sc">*</span><span class="dv">100</span> </span></code></pre></div>
 <pre><code>## [1] 35.45073</code></pre>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.01928669</span> )))<span class="sc">*</span><span class="dv">100</span> </span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span><span class="sc">-</span>(<span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.01928669</span> )))<span class="sc">*</span><span class="dv">100</span> </span></code></pre></div>
 <pre><code>## [1] 1.910189</code></pre>
 <ul>
 <li><p>Si el docente vive con personas de la tercera edad la
@@ -846,16 +846,16 @@ quiera retornar a clases presenciales disminuye en 35.5%</p></li>
 retornar a clases presenciales disminuye en 1.9%</p></li>
 </ul>
 <p>Ahora obtengamos la probabilidad según casos</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" tabindex="-1"></a>log.odds3 <span class="ot">=</span> <span class="fu">predict</span>(modelo3, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">anx =</span> <span class="dv">1</span>, <span class="at">edad =</span> <span class="dv">50</span>))</span>
-<span id="cb66-2"><a href="#cb66-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds3)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds3))<span class="co">#para pasarlo a probabilidad</span></span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>log.odds3 <span class="ot">=</span> <span class="fu">predict</span>(modelo3, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">anx =</span> <span class="dv">1</span>, <span class="at">edad =</span> <span class="dv">50</span>))</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(log.odds3)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds3))<span class="co">#para pasarlo a probabilidad</span></span></code></pre></div>
 <pre><code>##         1 
 ## 0.8952608</code></pre>
 <p>Cuando un o una docente vive con personas de tercera edad, tiene
 ansiedad y tenga 50 años, la probabilidad de que quiera retornar a
 clases presenciales es de 0.89.</p>
 <p>Ahora obtengamos la probabilidad con menor edad.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" tabindex="-1"></a>log.odds3 <span class="ot">=</span> <span class="fu">predict</span>(modelo3, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">anx =</span> <span class="dv">1</span>, <span class="at">edad =</span> <span class="dv">25</span>))</span>
-<span id="cb68-2"><a href="#cb68-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds3)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds3))</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>log.odds3 <span class="ot">=</span> <span class="fu">predict</span>(modelo3, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">anx =</span> <span class="dv">1</span>, <span class="at">edad =</span> <span class="dv">25</span>))</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(log.odds3)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds3))</span></code></pre></div>
 <pre><code>##       1 
 ## 0.93263</code></pre>
 <p>Cuando un o una docente vive con personas de tercera edad, tiene
@@ -876,33 +876,33 @@ para poder usarla solo necesitas indicar como argumento al nombre de tu
 modelo: Divine.Help(modelo). Recuerda que esta función solo podrá
 ejecutarse si previamente has ejecutado el código que crea la
 función.</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a>Divine.Help <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
-<span id="cb70-2"><a href="#cb70-2" tabindex="-1"></a>   <span class="co"># Extraer los coeficientes del modelo</span></span>
-<span id="cb70-3"><a href="#cb70-3" tabindex="-1"></a>  coeficients <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="sc">-</span><span class="dv">1</span>] <span class="co"># Excluye el intercepto</span></span>
-<span id="cb70-4"><a href="#cb70-4" tabindex="-1"></a>   <span class="co"># Inicializar un vector para almacenar los efectos</span></span>
-<span id="cb70-5"><a href="#cb70-5" tabindex="-1"></a>  effects <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(coeficients))</span>
-<span id="cb70-6"><a href="#cb70-6" tabindex="-1"></a>  </span>
-<span id="cb70-7"><a href="#cb70-7" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(coeficients)) {</span>
-<span id="cb70-8"><a href="#cb70-8" tabindex="-1"></a>    <span class="cf">if</span> (coeficients[i] <span class="sc">&lt;</span> <span class="dv">1</span>) {</span>
-<span id="cb70-9"><a href="#cb70-9" tabindex="-1"></a>      effects[i] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(coeficients[i]), <span class="dv">2</span>)</span>
-<span id="cb70-10"><a href="#cb70-10" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb70-11"><a href="#cb70-11" tabindex="-1"></a>      effects[i] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">exp</span>(coeficients[i] <span class="sc">-</span> <span class="dv">1</span>), <span class="dv">2</span>)</span>
-<span id="cb70-12"><a href="#cb70-12" tabindex="-1"></a>    }</span>
-<span id="cb70-13"><a href="#cb70-13" tabindex="-1"></a>  }</span>
-<span id="cb70-14"><a href="#cb70-14" tabindex="-1"></a>  </span>
-<span id="cb70-15"><a href="#cb70-15" tabindex="-1"></a>   <span class="co"># Generar la interpretación en lenguaje natural</span></span>
-<span id="cb70-16"><a href="#cb70-16" tabindex="-1"></a>  interpretation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Un aumento de una unidad en la variable &quot;</span>, <span class="fu">names</span>(coeficients),</span>
-<span id="cb70-17"><a href="#cb70-17" tabindex="-1"></a>                           <span class="st">&quot; está asociado con un cambio de &quot;</span>,</span>
-<span id="cb70-18"><a href="#cb70-18" tabindex="-1"></a>                           <span class="fu">abs</span>(effects)<span class="sc">*</span><span class="dv">100</span>, <span class="st">&quot;% en la probabilidad de éxito.&quot;</span>)</span>
-<span id="cb70-19"><a href="#cb70-19" tabindex="-1"></a>   <span class="co"># Devolver los coeficientes, efectos y la interpretación en un dataframe</span></span>
-<span id="cb70-20"><a href="#cb70-20" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Coefficient =</span> coeficients,</span>
-<span id="cb70-21"><a href="#cb70-21" tabindex="-1"></a>                       <span class="at">Exp =</span> <span class="fu">exp</span>(coeficients),</span>
-<span id="cb70-22"><a href="#cb70-22" tabindex="-1"></a>                       <span class="at">Probability =</span> effects,</span>
-<span id="cb70-23"><a href="#cb70-23" tabindex="-1"></a>                       <span class="at">Interpretation =</span> interpretation)</span>
-<span id="cb70-24"><a href="#cb70-24" tabindex="-1"></a>   <span class="fu">return</span>(result)</span>
-<span id="cb70-25"><a href="#cb70-25" tabindex="-1"></a>}</span>
-<span id="cb70-26"><a href="#cb70-26" tabindex="-1"></a></span>
-<span id="cb70-27"><a href="#cb70-27" tabindex="-1"></a><span class="fu">Divine.Help</span>(modelo2)</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>Divine.Help <span class="ot">&lt;-</span> <span class="cf">function</span>(model) {</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Extraer los coeficientes del modelo</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  coeficients <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="sc">-</span><span class="dv">1</span>] <span class="co"># Excluye el intercepto</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Inicializar un vector para almacenar los efectos</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>  effects <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(coeficients))</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(coeficients)) {</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (coeficients[i] <span class="sc">&lt;</span> <span class="dv">1</span>) {</span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>      effects[i] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(coeficients[i]), <span class="dv">2</span>)</span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a>      effects[i] <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">exp</span>(coeficients[i] <span class="sc">-</span> <span class="dv">1</span>), <span class="dv">2</span>)</span>
+<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb70-13"><a href="#cb70-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb70-14"><a href="#cb70-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb70-15"><a href="#cb70-15" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Generar la interpretación en lenguaje natural</span></span>
+<span id="cb70-16"><a href="#cb70-16" aria-hidden="true" tabindex="-1"></a>  interpretation <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;Un aumento de una unidad en la variable &quot;</span>, <span class="fu">names</span>(coeficients),</span>
+<span id="cb70-17"><a href="#cb70-17" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot; está asociado con un cambio de &quot;</span>,</span>
+<span id="cb70-18"><a href="#cb70-18" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">abs</span>(effects)<span class="sc">*</span><span class="dv">100</span>, <span class="st">&quot;% en la probabilidad de éxito.&quot;</span>)</span>
+<span id="cb70-19"><a href="#cb70-19" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Devolver los coeficientes, efectos y la interpretación en un dataframe</span></span>
+<span id="cb70-20"><a href="#cb70-20" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Coefficient =</span> coeficients,</span>
+<span id="cb70-21"><a href="#cb70-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Exp =</span> <span class="fu">exp</span>(coeficients),</span>
+<span id="cb70-22"><a href="#cb70-22" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Probability =</span> effects,</span>
+<span id="cb70-23"><a href="#cb70-23" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Interpretation =</span> interpretation)</span>
+<span id="cb70-24"><a href="#cb70-24" aria-hidden="true" tabindex="-1"></a>   <span class="fu">return</span>(result)</span>
+<span id="cb70-25"><a href="#cb70-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb70-26"><a href="#cb70-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-27"><a href="#cb70-27" aria-hidden="true" tabindex="-1"></a><span class="fu">Divine.Help</span>(modelo2)</span></code></pre></div>
 <pre><code>##        Coefficient       Exp Probability
 ## terEd   -0.3837506 0.6813013        0.32
 ## cancer  -0.9224211 0.3975554        0.60
