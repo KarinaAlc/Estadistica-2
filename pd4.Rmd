@@ -53,7 +53,7 @@ str(demofree) #Ver estructura de la base de datos
 
 ### Pregunta de investigación
 
-**¿Existe alguna relación entre el tipo de régimen político y las variables "Trade freedom" sistema económico con mayor libertad de comercio y "Property Rights" Derecho a la propiedad privada**
+**¿Existe alguna relación entre el tipo de régimen político y las variables "Trade freedom" sistema económico con mayor libertad de comercio y "Property Rights" Derecho a la propiedad privada?**
 
 - VD= Regimen Político
 
@@ -117,7 +117,7 @@ Verificamos qué ha considerado R
 contrasts(demofree$regimen)
 ```
 
-Con el siguiente  comando establecemos la categoría de referencia. Donde en ref mencionamos cómo se llama esta categoría, por eso es importante tener bien etiquetadas las variables.
+Con el siguiente  comando establecemos la categoría de referencia. en *ref* mencionamos cómo se llama esta categoría, por eso es importante tener bien etiquetadas las variables.
 
 
 ```{r}
@@ -138,9 +138,11 @@ summary(mod1)
 ```
 #### Recordamos la ecuación y realizamos un ejemplo
 
+#INSERTAR PNG DE ECUACIÓN
+
 Usamos los valores de 50 (property) y 60 (tradefree)
 
-prob dictadura/prob democracia fallida (linea base)
+prob dictadura
 ```{r}
 z1<-exp(6.118423)*(exp(-0.02654594*50)*exp(-0.07105396*60))
 num1<-z1
