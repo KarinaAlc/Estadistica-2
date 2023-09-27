@@ -136,7 +136,10 @@ library(nnet)
 mod1 <- multinom(regimen ~ property + tradefree, data = demofree)
 summary(mod1)
 ```
+<<<<<<< HEAD
 
+=======
+>>>>>>> e9cc0000d5268f09e5606a92331b853eb1684a57
 
 ### 2.2: RELACIÓN DE LAS VARIABLES
 
@@ -146,22 +149,28 @@ Un primer paso sería ver el signo de los coeficientes para determinar la relaci
 
 - Coeficiente (dictadura) :-0.02654594
 
+<<<<<<< HEAD
 Si un país incrementa 1 punto en el índice de derecho a la propiedad es 0.0262 menos probable que el estado sea dictadura a demoracia fallida.
+=======
+Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea dictadura a que sea democracia fallidad disminuye
+
+>>>>>>> e9cc0000d5268f09e5606a92331b853eb1684a57
 ----
 - Coeficiente (democracia): 0.15297576
 
- Si un país aumenta en un punto el indicador de derechos de propiedad, la comparación de que sea democracia a que sea democracia fallida aumenta
+ Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea democracia a que sea democracia fallida aumenta
 
 
-**Libre comercio**
+**Libertad económica**
 
 - Coeficiente(dictadura) :-0.07105396
 
- Si un país aumenta en un punto indicador de libre comercio, la comparación de que sea dictadura a que sea democracia fallida disminuye.
+ Si un país aumenta en un punto indicador de libre comercio, la probabilidad de que sea dictadura a que sea democracia fallida disminuye.
 
+----
 - Coeficiente(democracia):0.01435271
 
- Si un país aumenta en un punto el indicador de libre comercio, la comparación de que sea democracia a que sea democracia fallida aumenta
+ Si un país aumenta en un punto el indicador de libre comercio, la probabilidad de que sea democracia a que sea democracia fallida aumenta
 
 ### 2.3: Aplicando la ecuación
 
@@ -201,147 +210,44 @@ library(RVAideMemoire)
 test.multinom(mod1,property) # Se coloca test.multinom(nombredelmodelo,variableindependiente1)
 ```
 
-
 ```{r}
 test.multinom(mod1,tradefree)
 # Se coloca test.multinom(nombredelmodelo,variableindependiente2)
 ```
 
-
-## PASO 3: INTERPRETACIÓN DE COEFICIENTES
-
-### 3.1  REVISAMOS LOS COEFICIENTES
-```{r}
-exp(coef(mod1))
-```
-
-### 3.2  INTERPRETAMOS 
-
-**DICTADURA Y DERECHO A LA PROPIEDAD**
-
-- COEFICIENTE: -0.02654594
-- ODDS : 0.9738033
-
-EL COEFICIENTE ES NEGATIVO ASI QUE ESTA RELACIÓN SERÁ INVERSA
-
-- VECES - RELACIÓN INVERSA
-
-VI:DISMINUYE/NO OCURRE
-VD: AUMENTA/SI OCURRE
+## PASO 3: INTERPRETACIÓN DE COEFICIENTES OJO, USEMOS MARGINAL EFFECTS
 
 ```{r}
-1-0.9738033
+library(marginaleffects)
+Marg1=marginaleffects(mod1,type = "probs")
+summary(Marg1)[c(1,2,4)]   
 ```
 
-Si un país **aumenta** en un punto en su indicador de derecho a la propiedad el odds que sea dictadura en comparación a que sea democracia fallida **disminuye** en 0.03 veces
+#### Recordamos la ecuación y realizamos un ejemplo
 
-- PORCENTAJE - RELACIÓN INVERSA
+#INSERTAR PNG DE ECUACIÓN
 
-VI: AUMENTA/SI OCURRE
-VD: DISMINUYE/NO OCURRE
+Usamos los valores de 50 (property) y 60 (tradefree)
 
+prob dictadura
+```{r}
+Num1<-exp(6.118423-0.02654594*50-0.07105396*60)
+Deno1<-1+Num1
+ProbDictadura<-Num1/Deno1
+ProbDictadura
+```
+
+prob democracia
+```{r}
+Num2= exp(-13.772977)*(exp(0.15297576*50)*exp(0.01435271*60)*exp(-1.0531380*1))
+Deno2=1+Num2
+ProbDemo=Num2/Deno2
+ProbDemo
+```
 
 ```{r}
-(1-0.97)*100 
+1-(ProbDictadura+ProbDemo)
 ```
-
-Si un país **aumenta** en un punto en su indicador de derecho a la propiedad la probabilidad que sea dictadura en comparación que sea democracia fallida **disminuye** en 3% 
-
-
-
-Ahora seguiremos con la seguiremos con la variable independiente libre comercio y dictadura, que al iguaL que el anterior el coeficiente es negativo.
-
-
-**DICTADURA Y LIBRE COMERCIO**
-
-- COEFICIENTE: -0.07105396
-- ODDS: 0.93
-
-
-- VECES - RELACIÓN INVERSA
-
-VI:DISMINUYE/NO OCURRE
-VD: AUMENTA/SI OCURRE
-
-
-```{r}
-1-0.9314116
-```
-
-Si un país **aumenta** en un punto en su indicador de libertad de comercio la probabilidad que sea dictadura en comparación que sea democracia fallida **disminuye** en 0.07 veces 
-
-- PORCENTAJE - RELACIÓN INVERSA
-
-VI: AUMENTA/SI OCURRE
-VD: DISMINUYE/NO OCURRE
-
-```{r}
-(1-0.93)*100 
-```
-
-Si un país **aumenta** en un punto en su indicador de libertad de comercio la probabilidad que sea dictadura en comparación que sea democracia fallida **disminuye** en 7 % 
-
-Ahora con respecto a la categoría democracia, sus coeficientes son positivos, así que es una relación directa
-
-
-**DEMOCRACIA Y DERECHO A LA PROPIEDAD**
-
-- COEFICIENTE:0.15297576
-- ODDS: 1.17
-
-- VECES - RELACIÓN DIRECTA
-
-VI:AUMENTA/SI OCURRE
-VD: AUMENTA/SI OCURRE
-
-Recordemos que en el caso de que sea una relación directa para número de veces solo se calcula el exponencial del coeficiente que salía: 1.17
-
-Entonces, sería
-
-Si un país **aumenta** en un punto en su indicador de derecho a la propiedad la probabilidad que sea democracia en comparación que sea democracia fallida **aumenta** en 1.17 veces 
-
-- PORCENTAJE - RELACIÓN DIRECTA
-
-VI: DISMINUYE/NO OCURRE
-VD: DISMINUYE/NO OCURRE
-
-```{r}
-(1.17 - 1) *100
-```
-
-Para porcentaje
-Si un país **disminuye** en un punto en su indicador de derecho a la propiedad la probabilidad que sea democracia en comparación que sea democracia fallida **disminuye** en 17% 
-
-
-**DEMOCRACIA Y LIBRE COMERCIO**
-
-- COEFICIENTE: 0.01435271
-- ODDS: 1.101
-
-Acá también vemos que es una relación directa. Entonces, para veces solo tomamos el resultado del exponencial del coeficiente.
-
-- VECES 
-
-- RELACIÓN DIRECTA
-VI:AUMENTA/SI OCURRE
-VD: AUMENTA/SI OCURRE
-
-
-Si un país **aumenta** en un punto en su indicador de libertad de comercio la probabilidad que sea democracia en comparación que sea democracia fallida **aumenta** en 1.101 veces
-
-
-- PORCENTAJE - RELACIÓN DIRECTA
-
-VI: DISMINUYE/NO OCURRE
-VD: DISMINUYE/NO OCURRE
-
-
-
-```{r}
-(1.01 - 1) *100
-```
-
-Si un país **disminuye** en un punto en su indicador de libertad de comercio la probabilidad que sea democracia en comparación que sea democracia fallida **disminuye** en en 1%
 
 ------------------------------
 ### MODELO 2
@@ -362,14 +268,16 @@ demofree$busfree=demofree$`Business Freedom`
 La volvemos numérica porque tbm es un indicador numérico pero la volveremos dummy para así poder analizarla como categórica.
 ```{r}
 demofree$busfree = as.numeric(demofree$busfree)
+summary(demofree$busfree)
 ```
 
 Pero,para fines prácticos, dividamos esta variable en países con poca libertad comercial y con mucha libertad comercial.
 
 Libertad comercial Poca
-Libertad comcercial Mucha
+Libertad comercial Mucha
 ```{r}
-demofree$busfreef = cut(demofree$busfree, 2, labels = c("Poca", "Mucha"))
+demofree$busfreef = ifelse(demofree$busfree<=74.50, "Poca", "Mucha")
+table(demofree$busfreef)
 ```
 
 
@@ -385,7 +293,6 @@ demofree=dummy_cols(demofree, select_columns = c("busfreef"))
 ```{r}
 names(demofree)
 ```
-
 
 ```{r}
 table(demofree$busfreef_Poca)
@@ -403,94 +310,98 @@ mod2<- multinom(regimen ~ property + tradefree + busfreef_Poca, data = demofree)
 summary(mod2)
 ```
 
+##PASO 3: RELACIÓN DE LAS VARIABLES
 
-## PASO 3: INTERPRETACIÓN DE COEFICIENTES
 
-Calculamos los exponenciales
+**Derechos de propiedad**
+
+- Coeficiente (dictadura) :-0.03774142
+
+Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea dictadura a que sea democracia fallidad disminuye
+
+----
+- Coeficiente (democracia): 0.14741855
+
+ Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea democracia a que sea democracia fallida aumenta
+
+
+**Libertad económica**
+
+- Coeficiente(dictadura) :-0.07454554
+
+ Si un país aumenta en un punto indicador de libre comercio, la probabilidad de que sea dictadura a que sea democracia fallida disminuye
+----
+- Coeficiente(democracia):0.01448272
+
+ Si un país aumenta en un punto el indicador de libre comercio, la probabilidad de que sea democracia a que sea democracia fallida aumenta
+
+**Poca libertad de comercio**
+
+- Coeficiente(busfreef_Poca): -1.0531380
+
+Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de que sea democracia fallida a que sea dictadura disminuye.
+
+----
+- Coeficiente(busfreef_Poca): -0.2906452
+
+Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de que sea democracia fallida a que sea democracia disminuye.
+
+### 3.1: SIGNIFICANCIA DE LAS VARIABLES
 
 ```{r}
-exp(coef(mod2))
+#install.packages("RVAideMemoire")
+library(RVAideMemoire)
+test.multinom(mod2,property) # Se colocar test.multinom(nombredelmodelo,variableindependiente1)
+```
+
+```{r}
+test.multinom(mod2,tradefree)
+# Se coloca test.multinom(nombredelmodelo,variableindependiente2)
+```
+
+## PASO 4: INTERPRETACIÓN DE COEFICIENTES OJO, USEMOS MARGINAL EFFECTS
+
+```{r}
+library(marginaleffects)
+Marg2=marginaleffects(mod2,type = "probs")
+summary(Marg2)[c(1,2,4)]   
+```
+
+#### Recordamos la ecuación y realizamos un ejemplo
+
+#INSERTAR PNG DE ECUACIÓN
+
+Usamos los valores de 50 (property), 60 (tradefree) y si hay poca libertad de comercio (1)
+
+prob dictadura
+```{r}
+Num1<-exp(7.719501-0.037741424*50-0.07454554*60-1.0531380*1)
+Deno1<-1+Num1
+ProbDictadura<-Num1/Deno1
+ProbDictadura
+```
+
+prob democracia
+```{r}
+Num2= exp(-13.207954)*(exp(0.14741855*50)*exp(0.01448272*60)*exp(-0.2906452*1))
+Deno2=1+Num2
+ProbDemo=Num2/Deno2
+ProbDemo
+```
+
+prob demo fallida
+```{r}
+1-(ProbDictadura+ProbDemo)
 ```
 
 
-**DICTADURA Y POCA LIBERTAD ECONÓMICA**
-
-- COEFICIENTE:-0.03106614
-- ODDS: 0.969411457
-
-Vemos que el coeficiente es negativo así que implica que es una relación inversa.
-
-- VECES - RELACIÓN INVERSA
-
-VI:DISMINUYE (NUMÉRICA)/NO OCURRE (CATEGÓRICA)
-VD: AUMENTA(NUMÉRICA)/SI OCURRE (CATEGÓRICA)
-
-
-Si un país NO tiene poca libertad de negocio, la probabilidad de ser una dictadura que ser una democracia fallida **aumenta** 
-
-```{r}
-1-0.969411457
-```
-Si un país NO tiene poca libertad de negocio, la probabilidad que sea  una dictadura en comparación de que sea una democracia fallida **aumenta** 1.03 veces.
-
-- PORCENTAJE - RELACIÓN INVERSA
-
-
-VI: AUMENTA/SI OCURRE
-VD: DISMINUYE/NO OCURRE
-
-```{r}
-(1-0.969411457)*100 
-```
-
-Si un país tiene poca libertad de negocio, la probabilidad que sea  una dictadura en comparación de que sea una democracia fallida **disminuye** en 3%
-
-
-
-
-**DEMOCRACIA Y POCA LIBERTAD ECONÓMICA**
-
-- COEFICIENTE: -5.51416179
-
-- ODDS:0.004029303
-
-Nuestro coeficiente es negativo, así que la relación también es inversa.
-
-- VECES - RELACIÓN INVERSA
-
-VI:DISMINUYE (NUMÉRICA)/NO OCURRE (CATEGÓRICA)
-VD: AUMENTA(NUMÉRICA)/SI OCURRE (CATEGÓRICA)
-
-```{r}
-1/0.00402
-```
-
-Si un país NO tiene poca libertad de negocio (que tiene mucha libertad de negocio), la probabilidad que sea  una democracia en comparación de que sea una democracia fallida **aumenta** en 248 veces
-
-- PORCENTAJE - RELACIÓN INVERSA
-
-VI: AUMENTA/SI OCURRE
-VD: DISMINUYE/NO OCURRE
-
-```{r}
-(1-0.00402)*100 
-```
-
-Si un país tiene poca libertad de negocio, la probabilidad que sea  una democracia en comparación de que sea una democracia fallida **disminuye** en 99%
-
-
-## PASO 4 COMPARAR Y ELEGIR MODELOS
+## PASO 5: COMPARAR Y ELEGIR MODELOS
 
 ```{r}
 library(nnet)
 mod0 <- multinom(regimen ~ 1, data = demofree)
 summary(mod0)
 ```
-
-```{r}
-anova=anova(mod0,mod2)
-```
-
 
 ### AIC
 ```{r}
