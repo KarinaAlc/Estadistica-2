@@ -48,6 +48,7 @@ Llamemos a las librerías
 library(rio)
 library(car)
 library(nnet)
+library(DescTools)
 ```
 
 Exploremos la data:
@@ -135,6 +136,7 @@ demofree$regimen <- relevel(demofree$regimen , ref = "Democracia fallida")
 ### 2.1 REALIZAR EL MODELO LOGÍSTICO 
 
 No olvidemos cual es nuesta línea de base para la interpretación.
+
 ```{r}
 mod1 <- multinom(regimen ~ property + tradefree, data = demofree)
 summary(mod1)
@@ -150,11 +152,9 @@ Un primer paso sería ver el signo de los coeficientes para determinar la relaci
 
 Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea dictadura a que sea democracia fallidad disminuye
 
-----
 - Coeficiente (democracia): 0.15297576
 
  Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea democracia a que sea democracia fallida aumenta
-
 
 **Libertad económica**
 
@@ -162,14 +162,15 @@ Si un país aumenta en un punto el indicador de derechos a la propiedad, la prob
 
  Si un país aumenta en un punto indicador de libre comercio, la probabilidad de que sea dictadura a que sea democracia fallida disminuye.
 
-----
 - Coeficiente(democracia):0.01435271
 
  Si un país aumenta en un punto el indicador de libre comercio, la probabilidad de que sea democracia a que sea democracia fallida aumenta
 
 
 ### 2.3: SIGNIFICANCIA DE LAS VARIABLES
+
 Se debe realizar variable por variable
+
 ```{r}
 #install.packages("RVAideMemoire")
 library(RVAideMemoire)
@@ -185,11 +186,21 @@ Para la variable tradefree, de la dos comparaciones con nuestra categoría de re
 
 ## PASO 3: INTERPRETACIÓN DE COEFICIENTES OJO, USEMOS MARGINAL EFFECTS
 
+Con los efectos marginales podemos medir la probabilidad de que ocurra cada escenario (democracia, democracia fallida o dictadura). Para la interpretación usamos el estimado.
+
 ```{r}
 library(marginaleffects)
 Marg1=marginaleffects(mod1,type = "probs")
 summary(Marg1)[c(1,2,4)]   
 ```
+- Cuando en un país el índice de derecho a la propiedad incrementa un punto, la probabilidad de que este país presente una democracia aumenta en promedio 0.00958.
+
+- Cuando en un país el índice de libertad de comercio incrementa un punto, la probabilidad de que este país presente una democracia aumenta en promedio 0.00141.
+
+-  Cuando en un país el índice de derecho a la propiedad incrementa un punto, la probabilidad de que este país presente una democracia fallida disminuye en promedio 0.00423.
+
+-  Cuando en un país el índice de derecho a la propiedad incrementa un punto, la probabilidad de que este país presente una democracia fallida aumenta en promedio 0.00998
+
 
 #### Recordamos la ecuación y realizamos un ejemplo
 
@@ -229,7 +240,7 @@ knitr::include_graphics("prob-demofallida.jpeg")
 ```
 
 Si un país tiene 50 de indice de derecho a la propiedad y 60 de indice de libertad de comercio, tiene un 0.366 de probabilidad de ser una democracia fallida 
-------------------------------
+
 ### MODELO 2
 
 
@@ -298,7 +309,6 @@ summary(mod2)
 
 Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea dictadura a que sea democracia fallidad disminuye
 
-----
 - Coeficiente (democracia): 0.14741855
 
  Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea democracia a que sea democracia fallida aumenta
@@ -309,7 +319,7 @@ Si un país aumenta en un punto el indicador de derechos a la propiedad, la prob
 - Coeficiente(dictadura) :-0.07454554
 
  Si un país aumenta en un punto indicador de libre comercio, la probabilidad de que sea dictadura a que sea democracia fallida disminuye
-----
+
 - Coeficiente(democracia):0.01448272
 
  Si un país aumenta en un punto el indicador de libre comercio, la probabilidad de que sea democracia a que sea democracia fallida aumenta
@@ -320,7 +330,6 @@ Si un país aumenta en un punto el indicador de derechos a la propiedad, la prob
 
 Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de que sea democracia fallida a que sea dictadura disminuye.
 
-----
 - Coeficiente(busfreef_Poca): -0.2906452
 
 Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de que sea democracia fallida a que sea democracia disminuye.
@@ -400,7 +409,6 @@ prop.table(table(demofree$regimen,predict(mod1)),1)
 ### PSEUDO R CUADRADO
 
 ```{r,warning=FALSE}
-library("DescTools")
 PseudoR2(mod1, which = c("Nagelkerke"))
 PseudoR2(mod2, which = c("Nagelkerke"))
 ```
