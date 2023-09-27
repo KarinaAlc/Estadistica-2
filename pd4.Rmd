@@ -136,29 +136,7 @@ library(nnet)
 mod1 <- multinom(regimen ~ property + tradefree, data = demofree)
 summary(mod1)
 ```
-#### Recordamos la ecuación y realizamos un ejemplo
 
-#INSERTAR PNG DE ECUACIÓN
-
-Usamos los valores de 50 (property) y 60 (tradefree)
-
-prob dictadura
-```{r}
-z1<-exp(6.118423)*(exp(-0.02654594*50)*exp(-0.07105396*60))
-num1<-z1
-denom1<-1+z1
-dic_demfall<-num1/denom1
-dic_demfall
-```
-
-prob democracia/prob democracia fallida (linea base)
-```{r}
-z2= exp(-13.772977)*(exp(0.15297576*50)*exp(0.01435271*60))
-num2=z2
-denom2=1+z2
-dem_demofall=num2/denom2
-dem_demofall
-```
 
 ### 2.2: RELACIÓN DE LAS VARIABLES
 
@@ -168,8 +146,7 @@ Un primer paso sería ver el signo de los coeficientes para determinar la relaci
 
 - Coeficiente (dictadura) :-0.02654594
 
-Si un país aumenta en un punto el indicador de derechos de propiedad, la comparación de que sea dictadura a que sea democracia fallidad disminuye
-
+Si un país incrementa 1 punto en el índice de derecho a la propiedad es 0.0262 menos probable que el estado sea dictadura a demoracia fallida.
 ----
 - Coeficiente (democracia): 0.15297576
 
@@ -186,13 +163,42 @@ Si un país aumenta en un punto el indicador de derechos de propiedad, la compar
 
  Si un país aumenta en un punto el indicador de libre comercio, la comparación de que sea democracia a que sea democracia fallida aumenta
 
+### 2.3: Aplicando la ecuación
 
-### 2.3: SIGNIFICANCIA DE LAS VARIABLES
+#### Recordamos la ecuación y realizamos un ejemplo
+
+#INSERTAR PNG DE ECUACIÓN (elegir la adecuada)
+
+Usamos los valores de 50 (property) y 60 (tradefree)
+
+prob dictadura
+```{r}
+numeDct<-exp(6.015109-0.02654594*50-0.07105396*60)
+denomDct<-1+numeDct
+ProbDct<-numeDct/denomDct
+ProbDct
+```
+
+prob democracia
+```{r}
+numDemo= exp(-13.772977)*(exp(0.15297576*50)*exp(0.01435271*60))
+denomDemo=1+numDemo
+ProbDemo=numDemo/denomDemo
+ProbDemo
+```
+¿Probabilidad de la democracia fallida?
+
+
+#insertar imagen de: 
+demfallida=1-probdictadura-probdemocracia <3
+
+
+### 2.4: SIGNIFICANCIA DE LAS VARIABLES
 
 ```{r}
 #install.packages("RVAideMemoire")
 library(RVAideMemoire)
-test.multinom(mod1,property) # Se colocar test.multinom(nombredelmodelo,variableindependiente1)
+test.multinom(mod1,property) # Se coloca test.multinom(nombredelmodelo,variableindependiente1)
 ```
 
 
