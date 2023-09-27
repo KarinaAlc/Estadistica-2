@@ -144,14 +144,13 @@ Usamos los valores de 50 (property) y 60 (tradefree)
 
 prob dictadura
 ```{r}
-z1<-exp(6.118423)*(exp(-0.02654594*50)*exp(-0.07105396*60))
-num1<-z1
-denom1<-1+z1
-dic_demfall<-num1/denom1
-dic_demfall
+Num1<-exp(6.118423-0.02654594*50-0.07105396*60)
+Deno1<-1+Num1
+ProbDictadura<-Num1/Deno1
+ProbDictadura
 ```
 
-prob democracia/prob democracia fallida (linea base)
+prob democracia
 ```{r}
 z2= exp(-13.772977)*(exp(0.15297576*50)*exp(0.01435271*60))
 num2=z2
@@ -202,7 +201,14 @@ test.multinom(mod1,tradefree)
 ```
 
 
-## PASO 3: INTERPRETACIÓN DE COEFICIENTES
+## PASO 3: INTERPRETACIÓN DE COEFICIENTES OJO, USEMOS MARGINAL EFFECTS
+
+```{r}
+library(marginaleffects)
+Marg1=marginaleffects(mod1,type = "probs")
+summary(Marg1)
+```
+
 
 ### 3.1  REVISAMOS LOS COEFICIENTES
 ```{r}
