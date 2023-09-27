@@ -43,10 +43,16 @@ La base de datos a trabajar combina los datos obtenidos en el Democracy Index (h
 
 Todo esto para comprobar el supuesto: *¿una economía liberal influye en el nivel de democracia?*
 
+Llamemos a las librerías
+```{r}
+library(rio)
+library(car)
+library(nnet)
+```
+
 Exploremos la data:
 
 ```{r}
-library(rio)
 demofree=import("https://github.com/schrodingercase/primary/raw/master/demofree.xlsx")
 str(demofree) #Ver estructura de la base de datos
 ```
@@ -57,7 +63,7 @@ str(demofree) #Ver estructura de la base de datos
 
 - VD= Regimen Político
 
-- VI= Trade Freedom (Sistema económico con mayor libertad) y Property Rights (Derecho a la propiedad privada)
+- VI= Trade Freedom (Libertad de comercio) y Property Rights (Derecho a la propiedad privada)
  
 
 ## PASO 1: Preparar la data 
@@ -82,7 +88,6 @@ Ahora comencemos a dar formato
  
 Comencemos con la variable dependiente:
 ```{r}
-library(car)
 table(demofree$regimen)
 ```
 
@@ -121,7 +126,6 @@ Con el siguiente  comando establecemos la categoría de referencia. en *ref* men
 
 
 ```{r}
-library(reshape2)
 demofree$regimen <- relevel(demofree$regimen , ref = "Democracia fallida")
 ```
 
@@ -132,7 +136,6 @@ demofree$regimen <- relevel(demofree$regimen , ref = "Democracia fallida")
 
 No olvidemos cual es nuesta línea de base para la interpretación.
 ```{r}
-library(nnet)
 mod1 <- multinom(regimen ~ property + tradefree, data = demofree)
 summary(mod1)
 ```
@@ -166,17 +169,19 @@ Si un país aumenta en un punto el indicador de derechos a la propiedad, la prob
 
 
 ### 2.3: SIGNIFICANCIA DE LAS VARIABLES
-
+Se debe realizar variable por variable
 ```{r}
 #install.packages("RVAideMemoire")
 library(RVAideMemoire)
-test.multinom(mod1,property) # Se colocar test.multinom(nombredelmodelo,variableindependiente1)
+test.multinom(mod1,property) # Se coloca test.multinom(nombredelmodelo,variableindependiente1)
 ```
+Para la variable property, de la dos comparaciones con nuestra categoría de referencia, la única significativa es cuando se compara democracia con democracia fallida. 
 
 ```{r}
 test.multinom(mod1,tradefree)
 # Se coloca test.multinom(nombredelmodelo,variableindependiente2)
 ```
+Para la variable tradefree, de la dos comparaciones con nuestra categoría de referencia, la única significativa es cuando se compara dictadura con democracia fallida. 
 
 ## PASO 3: INTERPRETACIÓN DE COEFICIENTES OJO, USEMOS MARGINAL EFFECTS
 
@@ -188,30 +193,42 @@ summary(Marg1)[c(1,2,4)]
 
 #### Recordamos la ecuación y realizamos un ejemplo
 
-#INSERTAR PNG DE ECUACIÓN
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("ecuacion.jpeg") 
+```
 
 Usamos los valores de 50 (property) y 60 (tradefree)
 
-prob dictadura
+Probabilidad de que sea dictadura
 ```{r}
 Num1<-exp(6.118423-0.02654594*50-0.07105396*60)
 Deno1<-1+Num1
 ProbDictadura<-Num1/Deno1
 ProbDictadura
 ```
+Si un país tiene 50 de indice de derecho a la propiedad y 60 de indice de libertad de comercio, tiene un 0.62 de probabilidad de ser una dictadura. 
 
-prob democracia
+Probabilidad de que sea democracia
 ```{r}
-Num2= exp(-13.772977)*(exp(0.15297576*50)*exp(0.01435271*60)*exp(-1.0531380*1))
-Deno2=1+Num2
-ProbDemo=Num2/Deno2
+Num2 <- exp(-13.772977+0.15297576*50+0.01435271*60)
+Deno2<-1+Num2
+ProbDemo<-Num2/Deno2
 ProbDemo
 ```
 
-```{r}
-1-(ProbDictadura+ProbDemo)
+Si un país tiene 50 de indice de derecho a la propiedad y 60 de indice de libertad de comercio, tiene un 0.005 de probabilidad de ser una democracia 
+
+¿Cuál es la probabilidad de que sea una democracia fallida?
+
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("prob-demofallida.jpeg") 
 ```
 
+```{r}
+1-ProbDictadura-ProbDemo
+```
+
+Si un país tiene 50 de indice de derecho a la propiedad y 60 de indice de libertad de comercio, tiene un 0.366 de probabilidad de ser una democracia fallida 
 ------------------------------
 ### MODELO 2
 
@@ -268,7 +285,6 @@ table(demofree$busfreef_Mucha)
 ## PASO 2: MODELO LOGÍSTICO
 
 ```{r}
-library(nnet)
 mod2<- multinom(regimen ~ property + tradefree + busfreef_Poca, data = demofree)
 summary(mod2)
 ```
@@ -316,7 +332,6 @@ Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de q
 library(RVAideMemoire)
 test.multinom(mod2,property) # Se colocar test.multinom(nombredelmodelo,variableindependiente1)
 ```
-
 ```{r}
 test.multinom(mod2,tradefree)
 # Se coloca test.multinom(nombredelmodelo,variableindependiente2)
@@ -334,9 +349,9 @@ summary(Marg2)[c(1,2,4)]
 
 #INSERTAR PNG DE ECUACIÓN
 
-Usamos los valores de 50 (property), 60 (tradefree) y si hay poca libertad de comercio (1)
+Usamos los valores de 50 (property), 60 (tradefree) y si hay poca Bussines liberty (1)
 
-prob dictadura
+Probabilidad de que sea dictadura
 ```{r}
 Num1<-exp(7.719501-0.037741424*50-0.07454554*60-1.0531380*1)
 Deno1<-1+Num1
@@ -344,52 +359,49 @@ ProbDictadura<-Num1/Deno1
 ProbDictadura
 ```
 
-prob democracia
+Probabilidad de que sea democracia
 ```{r}
-Num2= exp(-13.207954)*(exp(0.14741855*50)*exp(0.01448272*60)*exp(-0.2906452*1))
+Num2= exp(-13.207954+0.14741855*50+0.01448272*60-0.2906452*1)
 Deno2=1+Num2
 ProbDemo=Num2/Deno2
 ProbDemo
 ```
 
-prob demo fallida
+Probabilidad de que sea democracia fallida
 ```{r}
-1-(ProbDictadura+ProbDemo)
+1-ProbDictadura-ProbDemo
 ```
 
 
 ## PASO 5: COMPARAR Y ELEGIR MODELOS
 
-```{r}
-library(nnet)
-mod0 <- multinom(regimen ~ 1, data = demofree)
-summary(mod0)
-```
 
 ### AIC
+Debemos elegir el que arroje un menor valor. Ojo! Solo se usa para comparar modelos.
 ```{r}
-AIC(mod0)
 AIC(mod1) #GANADOR
 AIC(mod2)
 ```
 
 ¿Predice bien mi modelo?
+Revisemos qué tan bien estarían categorizados mis países según mi modelo 1.
 
 ```{r}
+table(demofree$regimen)
 table(demofree$regimen,predict(mod1))
-table(predict(mod1))
 ```
+Vemos que ha categorizado a la mayoría de países bien por cada categorías.
 
-
-Lo vemos en %
+Esto también podemos verlo en porcentaje
 ```{r}
 prop.table(table(demofree$regimen,predict(mod1)),1)
 ```
 
 ### PSEUDO R CUADRADO
 
-```{r}
+```{r,warning=FALSE}
 library("DescTools")
 PseudoR2(mod1, which = c("Nagelkerke"))
 PseudoR2(mod2, which = c("Nagelkerke"))
 ```
+Según el Pseudo R2, los modelos tienen un nivel de ajuste muy parecido.
