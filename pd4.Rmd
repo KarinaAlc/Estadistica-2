@@ -328,11 +328,11 @@ Si un país aumenta en un punto el indicador de derechos a la propiedad, la prob
 
 - Coeficiente(busfreef_Poca): -1.0531380
 
-Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de que sea democracia fallida a que sea dictadura disminuye.
+Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de que sea dictadura a que sea democracia fallida disminuye.
 
 - Coeficiente(busfreef_Poca): -0.2906452
 
-Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de que sea democracia fallida a que sea democracia disminuye.
+Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de que sea democracia a que sea democracia fallida disminuye.
 
 ### 3.1: SIGNIFICANCIA DE LAS VARIABLES
 
@@ -350,6 +350,7 @@ test.multinom(mod2,tradefree)
 Marg2<-marginaleffects(mod2,type = "probs")
 summary(Marg2)[c(1,2,4)]   
 ```
+
 
 #### Recordamos la ecuación y realizamos un ejemplo
 
