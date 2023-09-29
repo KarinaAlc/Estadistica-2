@@ -49,12 +49,14 @@ library(rio)
 library(car)
 library(nnet)
 library(DescTools)
+library(RVAideMemoire)
+library(marginaleffects)
 ```
 
 Exploremos la data:
 
 ```{r}
-demofree=import("https://github.com/schrodingercase/primary/raw/master/demofree.xlsx")
+demofree <- import("https://github.com/schrodingercase/primary/raw/master/demofree.xlsx")
 str(demofree) #Ver estructura de la base de datos
 ```
 
@@ -72,15 +74,15 @@ str(demofree) #Ver estructura de la base de datos
 ###  1.1: Limpieza de data e identificación de las variables
 
 ```{r}
-demofree$regimen=demofree$`Regime type`
-demofree$property=demofree$`Property Rights`
-demofree$tradefree=demofree$`Trade Freedom`
+demofree$regimen <- demofree$`Regime type`
+demofree$property <- demofree$`Property Rights`
+demofree$tradefree <- demofree$`Trade Freedom`
 ```
 
 Eliminamos casos perdidos
 
 ```{r}
-demofree = demofree[complete.cases(demofree$regimen),]
+demofree <- demofree[complete.cases(demofree$regimen),]
 ```
 
 Ahora comencemos a dar formato
@@ -94,14 +96,14 @@ table(demofree$regimen)
 
 Ojo, con Hybrid regime y Flawed democracy
 ```{r}
-demofree$regimen = recode(demofree$regimen, "'Full democracy' = 3; 'Hybrid regime' = 2; 'Flawed democracy' = 2; 'Authoritarian' = 1")
+demofree$regimen <- recode(demofree$regimen, "'Full democracy' = 3; 'Hybrid regime' = 2; 'Flawed democracy' = 2; 'Authoritarian' = 1")
 table(demofree$regimen)
 ```
 
 Volvemos factor la variable para poder etiquetarla nuevamente
 ```{r}
-demofree$regimen=as.factor(demofree$regimen)
-levels(demofree$regimen)=c("Dictadura","Democracia fallida","Democracia")
+demofree$regimen <- as.factor(demofree$regimen)
+levels(demofree$regimen) <- c("Dictadura","Democracia fallida","Democracia")
 ```
 
 ```{r}
@@ -109,8 +111,8 @@ table(demofree$regimen)
 ```
 
 ```{r}
-demofree$property<-as.numeric(demofree$property)
-demofree$tradefree<-as.numeric(demofree$tradefree)
+demofree$property <- as.numeric(demofree$property)
+demofree$tradefree <- as.numeric(demofree$tradefree)
 ```
 
 ### 1.2: ELEGIR NUESTRA LÍNEA DE BASE
@@ -173,7 +175,6 @@ Se debe realizar variable por variable
 
 ```{r}
 #install.packages("RVAideMemoire")
-library(RVAideMemoire)
 test.multinom(mod1,property) # Se coloca test.multinom(nombredelmodelo,variableindependiente1)
 ```
 Para la variable property, de la dos comparaciones con nuestra categoría de referencia, la única significativa es cuando se compara democracia con democracia fallida. 
@@ -189,7 +190,6 @@ Para la variable tradefree, de la dos comparaciones con nuestra categoría de re
 Con los efectos marginales podemos medir la probabilidad de que ocurra cada escenario (democracia, democracia fallida o dictadura). Para la interpretación usamos el estimado.
 
 ```{r}
-library(marginaleffects)
 Marg1=marginaleffects(mod1,type = "probs")
 summary(Marg1)[c(1,2,4)]   
 ```
@@ -204,7 +204,7 @@ summary(Marg1)[c(1,2,4)]
 
 #### Recordamos la ecuación y realizamos un ejemplo
 
-```{r,echo=FALSE, out.width="30%",fig.align="left"}
+```{r,echo=FALSE, out.width="80%",fig.align="center"}
 knitr::include_graphics("ecuacion.jpeg") 
 ```
 
@@ -231,7 +231,7 @@ Si un país tiene 50 de indice de derecho a la propiedad y 60 de indice de liber
 
 ¿Cuál es la probabilidad de que sea una democracia fallida?
 
-```{r,echo=FALSE, out.width="30%",fig.align="left"}
+```{r,echo=FALSE, out.width="80%",fig.align="center"}
 knitr::include_graphics("prob-demofallida.jpeg") 
 ```
 
@@ -253,12 +253,12 @@ Vamos a crear un modelo agregando esta variable al modelo
 
 Cambiamos el nombre de la variable
 ```{r}
-demofree$busfree=demofree$`Business Freedom`
+demofree$busfree <- demofree$`Business Freedom`
 ```
 
 La volvemos numérica porque tbm es un indicador numérico pero la volveremos dummy para así poder analizarla como categórica.
 ```{r}
-demofree$busfree = as.numeric(demofree$busfree)
+demofree$busfree <- as.numeric(demofree$busfree)
 summary(demofree$busfree)
 ```
 
@@ -267,7 +267,7 @@ Pero,para fines prácticos, dividamos esta variable en países con poca libertad
 Libertad comercial Poca
 Libertad comercial Mucha
 ```{r}
-demofree$busfreef = ifelse(demofree$busfree<=74.50, "Poca", "Mucha")
+demofree$busfreef <- ifelse(demofree$busfree<=74.50, "Poca", "Mucha")
 table(demofree$busfreef)
 ```
 
@@ -278,7 +278,7 @@ Utilizamos el paquete fastDummies para dicotomizar las variables, en select_colu
 
 ```{r}
 library(fastDummies)
-demofree=dummy_cols(demofree, select_columns = c("busfreef"))
+demofree <- dummy_cols(demofree, select_columns = c("busfreef"))
 ```
 
 ```{r}
@@ -337,8 +337,6 @@ Cuando un país sí tiene poca libertad de comercio (es 1), la probabilidad de q
 ### 3.1: SIGNIFICANCIA DE LAS VARIABLES
 
 ```{r}
-#install.packages("RVAideMemoire")
-library(RVAideMemoire)
 test.multinom(mod2,property) # Se colocar test.multinom(nombredelmodelo,variableindependiente1)
 ```
 ```{r}
@@ -349,14 +347,11 @@ test.multinom(mod2,tradefree)
 ## PASO 4: INTERPRETACIÓN DE COEFICIENTES OJO, USEMOS MARGINAL EFFECTS
 
 ```{r}
-library(marginaleffects)
-Marg2=marginaleffects(mod2,type = "probs")
+Marg2<-marginaleffects(mod2,type = "probs")
 summary(Marg2)[c(1,2,4)]   
 ```
 
 #### Recordamos la ecuación y realizamos un ejemplo
-
-#INSERTAR PNG DE ECUACIÓN
 
 Usamos los valores de 50 (property), 60 (tradefree) y si hay poca Bussines liberty (1)
 
@@ -370,9 +365,9 @@ ProbDictadura
 
 Probabilidad de que sea democracia
 ```{r}
-Num2= exp(-13.207954+0.14741855*50+0.01448272*60-0.2906452*1)
-Deno2=1+Num2
-ProbDemo=Num2/Deno2
+Num2<- exp(-13.207954+0.14741855*50+0.01448272*60-0.2906452*1)
+Deno2<-1+Num2
+ProbDemo<-Num2/Deno2
 ProbDemo
 ```
 
@@ -383,7 +378,6 @@ Probabilidad de que sea democracia fallida
 
 
 ## PASO 5: COMPARAR Y ELEGIR MODELOS
-
 
 ### AIC
 Debemos elegir el que arroje un menor valor. Ojo! Solo se usa para comparar modelos.
