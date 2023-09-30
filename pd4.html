@@ -13,7 +13,7 @@
 
 <title>Sesión Multinomial</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -506,7 +506,12 @@ class="section level3">
 <div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
 class="section level4">
 <h4>Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h4>
+<p><br> <br></p>
+<p><img src="PD4_GLM.png" width="100%" style="display: block; margin: auto;" /></p>
 <p><br></p>
+<p><img src="PD4_ECUACIO%CC%81N.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p><img src="PD4_Ejemplo.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
@@ -525,23 +530,16 @@ variables económicas.</p>
 influye en el nivel de democracia?</em></p>
 <p>Llamemos a las librerías</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
-<pre><code>## Loading required package: carData</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;DescTools&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:car&#39;:
-## 
-##     Recode</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">library</span>(RVAideMemoire)</span></code></pre></div>
-<pre><code>## *** Package RVAideMemoire v 0.9-83-3 ***</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(RVAideMemoire)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span></code></pre></div>
 <p>Exploremos la data:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>demofree <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;https://github.com/schrodingercase/primary/raw/master/demofree.xlsx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>demofree <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;https://github.com/schrodingercase/primary/raw/master/demofree.xlsx&quot;</span>)</span></code></pre></div>
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">str</span>(demofree) <span class="co">#Ver estructura de la base de datos</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">str</span>(demofree) <span class="co">#Ver estructura de la base de datos</span></span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    158 obs. of  21 variables:
 ##  $ ...1                           : chr  &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
 ##  $ Country                        : chr  &quot;Afghanistan&quot; &quot;Albania&quot; &quot;Algeria&quot; &quot;Angola&quot; ...
@@ -564,8 +562,9 @@ influye en el nivel de democracia?</em></p>
 ##  $ Political culture              : num  2.5 6.25 5 5 5.63 3.13 8.75 6.88 3.75 4.38 ...
 ##  $ Civil liberties                : num  3.82 7.35 3.82 2.65 7.94 5 9.71 8.53 2.94 1.76 ...
 ##  $ Overallscore                   : num  2.85 6.08 3.77 3.66 6.95 5.35 8.96 8.16 2.68 2.49 ...</code></pre>
-<div id="pregunta-de-investigación" class="section level3">
-<h3>Pregunta de investigación</h3>
+</div>
+<div id="pregunta-de-investigación" class="section level1">
+<h1>Pregunta de investigación</h1>
 <p><strong>¿Existe alguna relación entre el tipo de régimen político y
 las variables “Trade freedom” sistema económico con mayor libertad de
 comercio y “Property Rights” Derecho a la propiedad
@@ -576,49 +575,49 @@ privada?</strong></p>
 (Derecho a la propiedad privada)</p></li>
 </ul>
 </div>
-</div>
+<div id="modelo-1" class="section level1">
+<h1>Modelo 1</h1>
 <div id="paso-1-preparar-la-data" class="section level2">
-<h2>PASO 1: Preparar la data</h2>
+<h2>Paso 1: Preparar la data</h2>
 <div id="limpieza-de-data-e-identificación-de-las-variables"
 class="section level3">
-<h3>1.1: Limpieza de data e identificación de las variables</h3>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>demofree<span class="sc">$</span>regimen <span class="ot">&lt;-</span> demofree<span class="sc">$</span><span class="st">`</span><span class="at">Regime type</span><span class="st">`</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>demofree<span class="sc">$</span>property <span class="ot">&lt;-</span> demofree<span class="sc">$</span><span class="st">`</span><span class="at">Property Rights</span><span class="st">`</span></span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>demofree<span class="sc">$</span>tradefree <span class="ot">&lt;-</span> demofree<span class="sc">$</span><span class="st">`</span><span class="at">Trade Freedom</span><span class="st">`</span></span></code></pre></div>
+<h3>1.1. Limpieza de data e identificación de las variables</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>demofree<span class="sc">$</span>regimen <span class="ot">&lt;-</span> demofree<span class="sc">$</span><span class="st">`</span><span class="at">Regime type</span><span class="st">`</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>demofree<span class="sc">$</span>property <span class="ot">&lt;-</span> demofree<span class="sc">$</span><span class="st">`</span><span class="at">Property Rights</span><span class="st">`</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>demofree<span class="sc">$</span>tradefree <span class="ot">&lt;-</span> demofree<span class="sc">$</span><span class="st">`</span><span class="at">Trade Freedom</span><span class="st">`</span></span></code></pre></div>
 <p>Eliminamos casos perdidos</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>demofree <span class="ot">&lt;-</span> demofree[<span class="fu">complete.cases</span>(demofree<span class="sc">$</span>regimen),]</span></code></pre></div>
-<p>Ahora comencemos a dar formato</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>demofree <span class="ot">&lt;-</span> demofree[<span class="fu">complete.cases</span>(demofree<span class="sc">$</span>regimen),]</span></code></pre></div>
 <p><br></p>
 <p>Comencemos con la variable dependiente:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
 <pre><code>## 
 ##    Authoritarian Flawed democracy   Full democracy    Hybrid regime 
 ##               52               51               22               33</code></pre>
 <p>Ojo, con Hybrid regime y Flawed democracy</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>demofree<span class="sc">$</span>regimen <span class="ot">&lt;-</span> <span class="fu">recode</span>(demofree<span class="sc">$</span>regimen, <span class="st">&quot;&#39;Full democracy&#39; = 3; &#39;Hybrid regime&#39; = 2; &#39;Flawed democracy&#39; = 2; &#39;Authoritarian&#39; = 1&quot;</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>demofree<span class="sc">$</span>regimen <span class="ot">&lt;-</span> <span class="fu">recode</span>(demofree<span class="sc">$</span>regimen, <span class="st">&quot;&#39;Full democracy&#39; = 3; &#39;Hybrid regime&#39; = 2; &#39;Flawed democracy&#39; = 2; &#39;Authoritarian&#39; = 1&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
 <pre><code>## 
 ##  1  2  3 
 ## 52 84 22</code></pre>
 <p>Volvemos factor la variable para poder etiquetarla nuevamente</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>demofree<span class="sc">$</span>regimen <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(demofree<span class="sc">$</span>regimen)</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">levels</span>(demofree<span class="sc">$</span>regimen) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Dictadura&quot;</span>,<span class="st">&quot;Democracia fallida&quot;</span>,<span class="st">&quot;Democracia&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>demofree<span class="sc">$</span>regimen <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(demofree<span class="sc">$</span>regimen)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">levels</span>(demofree<span class="sc">$</span>regimen) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Dictadura&quot;</span>,<span class="st">&quot;Democracia fallida&quot;</span>,<span class="st">&quot;Democracia&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
 <pre><code>## 
 ##          Dictadura Democracia fallida         Democracia 
 ##                 52                 84                 22</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>demofree<span class="sc">$</span>property <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(demofree<span class="sc">$</span>property)</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>demofree<span class="sc">$</span>tradefree <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(demofree<span class="sc">$</span>tradefree)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>demofree<span class="sc">$</span>property <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(demofree<span class="sc">$</span>property)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>demofree<span class="sc">$</span>tradefree <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(demofree<span class="sc">$</span>tradefree)</span></code></pre></div>
 </div>
-<div id="elegir-nuestra-línea-de-base" class="section level3">
-<h3>1.2: ELEGIR NUESTRA LÍNEA DE BASE</h3>
+<div id="elegir-la-línea-base" class="section level3">
+<h3>1.2. Elegir la línea base</h3>
 <p>La línea de base o baseline sirve para tener una referencia al
 interpretar los resultados del modelo. En este caso nuestra dependiente
 fue recodificada en “Democracia”,“Democracia fallida”,“Dictadura”.
 Entonces, “Democracia fallida” al estar en el medio es nuestra
 baseline.</p>
 <p>Verificamos qué ha considerado R</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">contrasts</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">contrasts</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
 <pre><code>##                    Democracia fallida Democracia
 ## Dictadura                           0          0
 ## Democracia fallida                  1          0
@@ -626,22 +625,22 @@ baseline.</p>
 <p>Con el siguiente comando establecemos la categoría de referencia. en
 <em>ref</em> mencionamos cómo se llama esta categoría, por eso es
 importante tener bien etiquetadas las variables.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>demofree<span class="sc">$</span>regimen <span class="ot">&lt;-</span> <span class="fu">relevel</span>(demofree<span class="sc">$</span>regimen , <span class="at">ref =</span> <span class="st">&quot;Democracia fallida&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>demofree<span class="sc">$</span>regimen <span class="ot">&lt;-</span> <span class="fu">relevel</span>(demofree<span class="sc">$</span>regimen , <span class="at">ref =</span> <span class="st">&quot;Democracia fallida&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="paso-2-modelo-logístico" class="section level2">
-<h2>PASO 2: MODELO LOGÍSTICO</h2>
-<div id="realizar-el-modelo-logístico" class="section level3">
-<h3>2.1 REALIZAR EL MODELO LOGÍSTICO</h3>
+<h2>Paso 2: Modelo logístico</h2>
+<div id="realizar-modelo-logístico" class="section level3">
+<h3>2.1 Realizar modelo logístico</h3>
 <p>No olvidemos cual es nuesta línea de base para la interpretación.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">multinom</span>(regimen <span class="sc">~</span> property <span class="sc">+</span> tradefree, <span class="at">data =</span> demofree)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">multinom</span>(regimen <span class="sc">~</span> property <span class="sc">+</span> tradefree, <span class="at">data =</span> demofree)</span></code></pre></div>
 <pre><code>## # weights:  12 (6 variable)
 ## initial  value 173.580742 
 ## iter  10 value 106.123891
 ## iter  20 value 105.309757
 ## final  value 105.300936 
 ## converged</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
 <pre><code>## Call:
 ## multinom(formula = regimen ~ property + tradefree, data = demofree)
 ## 
@@ -659,7 +658,7 @@ importante tener bien etiquetadas las variables.</p>
 ## AIC: 222.6019</code></pre>
 </div>
 <div id="relación-de-las-variables" class="section level3">
-<h3>2.2: RELACIÓN DE LAS VARIABLES</h3>
+<h3>2.2: Relación de las variables</h3>
 <p>Un primer paso sería ver el signo de los coeficientes para determinar
 la relación entre la variable independiente y la variable
 dependiente</p>
@@ -691,10 +690,10 @@ probabilidad de que sea democracia a que sea democracia fallida
 aumenta</p>
 </div>
 <div id="significancia-de-las-variables" class="section level3">
-<h3>2.3: SIGNIFICANCIA DE LAS VARIABLES</h3>
+<h3>2.3: Significancia de las variables</h3>
 <p>Se debe realizar variable por variable</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="co">#install.packages(&quot;RVAideMemoire&quot;)</span></span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="fu">test.multinom</span>(mod1,property) <span class="co"># Se coloca test.multinom(nombredelmodelo,variableindependiente1)</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co">#install.packages(&quot;RVAideMemoire&quot;)</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">test.multinom</span>(mod1,property) <span class="co"># Se coloca test.multinom(nombredelmodelo,variableindependiente1)</span></span></code></pre></div>
 <pre><code>##                                   Coeff       SE Odds.ratio       z  Pr(&gt;|z|)
 ## Dictadura|Democracia fallida  -0.026546 0.016048     0.9738 -1.6542   0.09809
 ## Democracia|Democracia fallida  0.152976 0.037843     1.1653  4.0423 5.292e-05
@@ -708,7 +707,7 @@ aumenta</p>
 <p>Para la variable property, de la dos comparaciones con nuestra
 categoría de referencia, la única significativa es cuando se compara
 democracia con democracia fallida.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod1,tradefree)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod1,tradefree)</span></code></pre></div>
 <pre><code>##                                   Coeff       SE Odds.ratio        z Pr(&gt;|z|)
 ## Dictadura|Democracia fallida  -0.071054 0.022710    0.93141 -3.12874 0.001756
 ## Democracia|Democracia fallida  0.014353 0.072568    1.01446  0.19778 0.843215
@@ -719,22 +718,20 @@ democracia con democracia fallida.</p>
 ## Democracia|Dictadura            
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co"># Se coloca test.multinom(nombredelmodelo,variableindependiente2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co"># Se coloca test.multinom(nombredelmodelo,variableindependiente2)</span></span></code></pre></div>
 <p>Para la variable tradefree, de la dos comparaciones con nuestra
 categoría de referencia, la única significativa es cuando se compara
 dictadura con democracia fallida.</p>
 </div>
 </div>
-<div
-id="paso-3-interpretación-de-coeficientes-ojo-usemos-marginal-effects"
+<div id="paso-3-interpretación-de-coeficientes-con-efectos-marginales"
 class="section level2">
-<h2>PASO 3: INTERPRETACIÓN DE COEFICIENTES OJO, USEMOS MARGINAL
-EFFECTS</h2>
+<h2>Paso 3: Interpretación de coeficientes con efectos marginales</h2>
 <p>Con los efectos marginales podemos medir la probabilidad de que
 ocurra cada escenario (democracia, democracia fallida o dictadura). Para
 la interpretación usamos el estimado.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>Marg1<span class="ot">=</span><span class="fu">marginaleffects</span>(mod1,<span class="at">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">summary</span>(Marg1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]   </span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>Marg1<span class="ot">=</span><span class="fu">marginaleffects</span>(mod1,<span class="at">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">summary</span>(Marg1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]   </span></code></pre></div>
 <pre><code>## 
 ##               Group      Term Estimate
 ##  Democracia         property   0.00958
@@ -759,74 +756,79 @@ fallida disminuye en promedio 0.00423.</p></li>
 un punto, la probabilidad de que este país presente una democracia
 fallida aumenta en promedio 0.00998</p></li>
 </ul>
-<div id="recordamos-la-ecuación-y-realizamos-un-ejemplo"
-class="section level4">
-<h4>Recordamos la ecuación y realizamos un ejemplo</h4>
+</div>
+<div id="paso-4-recordando-la-ecuación" class="section level2">
+<h2>Paso 4: Recordando la ecuación</h2>
 <p><img src="ecuacion.jpeg" width="80%" style="display: block; margin: auto;" /></p>
-<p>Usamos los valores de 50 (property) y 60 (tradefree)</p>
-<p>Probabilidad de que sea dictadura</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>Num1<span class="ot">&lt;-</span><span class="fu">exp</span>(<span class="fl">6.118423-0.02654594</span><span class="sc">*</span><span class="dv">50</span><span class="fl">-0.07105396</span><span class="sc">*</span><span class="dv">60</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a>Deno1<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">+</span>Num1</span>
-<span id="cb37-3"><a href="#cb37-3" tabindex="-1"></a>ProbDictadura<span class="ot">&lt;-</span>Num1<span class="sc">/</span>Deno1</span>
-<span id="cb37-4"><a href="#cb37-4" tabindex="-1"></a>ProbDictadura</span></code></pre></div>
+<p>Usemos los siguientes valores:</p>
+<ul>
+<li><p>Property = 50</p></li>
+<li><p>Tradefree= 60</p></li>
+</ul>
+<p>Probabilidad de que sea <strong>dictadura</strong></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>Num1<span class="ot">&lt;-</span><span class="fu">exp</span>(<span class="fl">6.118423-0.02654594</span><span class="sc">*</span><span class="dv">50</span><span class="fl">-0.07105396</span><span class="sc">*</span><span class="dv">60</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>Deno1<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">+</span>Num1</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>ProbDictadura<span class="ot">&lt;-</span>Num1<span class="sc">/</span>Deno1</span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>ProbDictadura</span></code></pre></div>
 <pre><code>## [1] 0.6289905</code></pre>
 <p>Si un país tiene 50 de indice de derecho a la propiedad y 60 de
 indice de libertad de comercio, tiene un 0.62 de probabilidad de ser una
 dictadura.</p>
-<p>Probabilidad de que sea democracia</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>Num2 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">13.772977+0.15297576</span><span class="sc">*</span><span class="dv">50</span><span class="fl">+0.01435271</span><span class="sc">*</span><span class="dv">60</span>)</span>
-<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>Deno2<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">+</span>Num2</span>
-<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>ProbDemo<span class="ot">&lt;-</span>Num2<span class="sc">/</span>Deno2</span>
-<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>ProbDemo</span></code></pre></div>
+<p>Probabilidad de que sea <strong>democracia</strong></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>Num2 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">13.772977+0.15297576</span><span class="sc">*</span><span class="dv">50</span><span class="fl">+0.01435271</span><span class="sc">*</span><span class="dv">60</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>Deno2<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">+</span>Num2</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>ProbDemo<span class="ot">&lt;-</span>Num2<span class="sc">/</span>Deno2</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>ProbDemo</span></code></pre></div>
 <pre><code>## [1] 0.005152915</code></pre>
 <p>Si un país tiene 50 de indice de derecho a la propiedad y 60 de
 indice de libertad de comercio, tiene un 0.005 de probabilidad de ser
 una democracia</p>
-<p>¿Cuál es la probabilidad de que sea una democracia fallida?</p>
+<p>¿Cuál es la probabilidad de que sea una <strong>democracia
+fallida</strong>?</p>
 <p><img src="prob-demofallida.jpeg" width="80%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>ProbDictadura<span class="sc">-</span>ProbDemo</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>ProbDictadura<span class="sc">-</span>ProbDemo</span></code></pre></div>
 <pre><code>## [1] 0.3658566</code></pre>
 <p>Si un país tiene 50 de indice de derecho a la propiedad y 60 de
 indice de libertad de comercio, tiene un 0.366 de probabilidad de ser
 una democracia fallida</p>
 </div>
-<div id="modelo-2" class="section level3">
-<h3>MODELO 2</h3>
+</div>
+<div id="modelo-2" class="section level1">
+<h1>Modelo 2</h1>
 <p>¿Qué sucede si añadimos a nuestras variables independientes una
 categórica?</p>
+<p><img src="tehc.png" width="20%" style="display: block; margin: auto;" /></p>
 <p>La libertad comercial (Business Freedom) es muchas veces reconocida
 como una variable indispensable en toda democracia. ¿Cuánto afectaría al
 modelo? Vamos a crear un modelo agregando esta variable al modelo</p>
-</div>
-</div>
 <div id="paso-1-preparación-de-data" class="section level2">
-<h2>PASO 1 PREPARACIÓN DE DATA</h2>
+<h2>Paso 1: Preparación de data</h2>
 <p>Cambiamos el nombre de la variable</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>demofree<span class="sc">$</span>busfree <span class="ot">&lt;-</span> demofree<span class="sc">$</span><span class="st">`</span><span class="at">Business Freedom</span><span class="st">`</span></span></code></pre></div>
-<p>La volvemos numérica porque tbm es un indicador numérico pero la
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>demofree<span class="sc">$</span>busfree <span class="ot">&lt;-</span> demofree<span class="sc">$</span><span class="st">`</span><span class="at">Business Freedom</span><span class="st">`</span></span></code></pre></div>
+<p>La volvemos numérica porque también es un indicador numérico, pero la
 volveremos dummy para así poder analizarla como categórica.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>demofree<span class="sc">$</span>busfree <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(demofree<span class="sc">$</span>busfree)</span>
-<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a><span class="fu">summary</span>(demofree<span class="sc">$</span>busfree)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a>demofree<span class="sc">$</span>busfree <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(demofree<span class="sc">$</span>busfree)</span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="fu">summary</span>(demofree<span class="sc">$</span>busfree)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   18.20   54.40   62.80   63.46   74.50   96.20</code></pre>
-<p>Pero,para fines prácticos, dividamos esta variable en países con poca
+<p>Para fines prácticos, dividamos esta variable en países con poca
 libertad comercial y con mucha libertad comercial.</p>
-<p>Libertad comercial Poca Libertad comercial Mucha</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>demofree<span class="sc">$</span>busfreef <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(demofree<span class="sc">$</span>busfree<span class="sc">&lt;=</span><span class="fl">74.50</span>, <span class="st">&quot;Poca&quot;</span>, <span class="st">&quot;Mucha&quot;</span>)</span>
-<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>busfreef)</span></code></pre></div>
+<p>Libertad comercial: Poca Libertad comercial Mucha</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>demofree<span class="sc">$</span>busfreef <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(demofree<span class="sc">$</span>busfree<span class="sc">&lt;=</span><span class="fl">74.50</span>, <span class="st">&quot;Poca&quot;</span>, <span class="st">&quot;Mucha&quot;</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>busfreef)</span></code></pre></div>
 <pre><code>## 
 ## Mucha  Poca 
 ##    40   118</code></pre>
-<div id="volvemos-dummy" class="section level5">
-<h5>Volvemos “Dummy”</h5>
+<div id="volvemos-dummy" class="section level4">
+<h4>Volvemos “Dummy”</h4>
 <p>Utilizamos el paquete fastDummies para dicotomizar las variables, en
 select_columns indicamos qué variable queremos dicotomizar</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">library</span>(fastDummies)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="fu">library</span>(fastDummies)</span></code></pre></div>
 <pre><code>## Thank you for using fastDummies!</code></pre>
 <pre><code>## To acknowledge our work, please cite the package:</code></pre>
 <pre><code>## Kaplan, J. &amp; Schlegel, B. (2023). fastDummies: Fast Creation of Dummy (Binary) Columns and Rows from Categorical Variables. Version 1.7.1. URL: https://github.com/jacobkap/fastDummies, https://jacobkap.github.io/fastDummies/.</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>demofree <span class="ot">&lt;-</span> <span class="fu">dummy_cols</span>(demofree, <span class="at">select_columns =</span> <span class="fu">c</span>(<span class="st">&quot;busfreef&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="fu">names</span>(demofree)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>demofree <span class="ot">&lt;-</span> <span class="fu">dummy_cols</span>(demofree, <span class="at">select_columns =</span> <span class="fu">c</span>(<span class="st">&quot;busfreef&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">names</span>(demofree)</span></code></pre></div>
 <pre><code>##  [1] &quot;...1&quot;                            &quot;Country&quot;                        
 ##  [3] &quot;Property Rights&quot;                 &quot;Judicial Effectiveness&quot;         
 ##  [5] &quot;Government Integrity&quot;            &quot;Tax Burden&quot;                     
@@ -841,19 +843,19 @@ select_columns indicamos qué variable queremos dicotomizar</p>
 ## [23] &quot;property&quot;                        &quot;tradefree&quot;                      
 ## [25] &quot;busfree&quot;                         &quot;busfreef&quot;                       
 ## [27] &quot;busfreef_Mucha&quot;                  &quot;busfreef_Poca&quot;</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>busfreef_Poca)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>busfreef_Poca)</span></code></pre></div>
 <pre><code>## 
 ##   0   1 
 ##  40 118</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>busfreef_Mucha)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>busfreef_Mucha)</span></code></pre></div>
 <pre><code>## 
 ##   0   1 
 ## 118  40</code></pre>
 </div>
 </div>
 <div id="paso-2-modelo-logístico-1" class="section level2">
-<h2>PASO 2: MODELO LOGÍSTICO</h2>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a>mod2<span class="ot">&lt;-</span> <span class="fu">multinom</span>(regimen <span class="sc">~</span> property <span class="sc">+</span> tradefree <span class="sc">+</span> busfreef_Poca, <span class="at">data =</span> demofree)</span></code></pre></div>
+<h2>Paso 2: Modelo logístico</h2>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>mod2<span class="ot">&lt;-</span> <span class="fu">multinom</span>(regimen <span class="sc">~</span> property <span class="sc">+</span> tradefree <span class="sc">+</span> busfreef_Poca, <span class="at">data =</span> demofree)</span></code></pre></div>
 <pre><code>## # weights:  15 (8 variable)
 ## initial  value 173.580742 
 ## iter  10 value 106.010358
@@ -861,7 +863,7 @@ select_columns indicamos qué variable queremos dicotomizar</p>
 ## iter  30 value 103.901620
 ## final  value 103.901117 
 ## converged</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div>
 <pre><code>## Call:
 ## multinom(formula = regimen ~ property + tradefree + busfreef_Poca, 
 ##     data = demofree)
@@ -878,8 +880,10 @@ select_columns indicamos qué variable queremos dicotomizar</p>
 ## 
 ## Residual Deviance: 207.8022 
 ## AIC: 223.8022</code></pre>
-<p>##PASO 3: RELACIÓN DE LAS VARIABLES</p>
-<p><strong>Derechos de propiedad</strong></p>
+<div id="relación-de-las-variables-1" class="section level3">
+<h3>2.2. Relación de las variables</h3>
+<div id="derechos-de-propiedad" class="section level4">
+<h4><strong>Derechos de propiedad</strong></h4>
 <ul>
 <li>Coeficiente (dictadura) :-0.03774142</li>
 </ul>
@@ -892,7 +896,9 @@ fallidad disminuye</p>
 <p>Si un país aumenta en un punto el indicador de derechos a la
 propiedad, la probabilidad de que sea democracia a que sea democracia
 fallida aumenta</p>
-<p><strong>Libertad económica</strong></p>
+</div>
+<div id="libertad-económica" class="section level4">
+<h4><strong>Libertad económica</strong></h4>
 <ul>
 <li>Coeficiente(dictadura) :-0.07454554</li>
 </ul>
@@ -905,7 +911,9 @@ disminuye</p>
 <p>Si un país aumenta en un punto el indicador de libre comercio, la
 probabilidad de que sea democracia a que sea democracia fallida
 aumenta</p>
-<p><strong>Poca libertad de comercio</strong></p>
+</div>
+<div id="poca-libertad-de-comercio" class="section level4">
+<h4><strong>Poca libertad de comercio</strong></h4>
 <ul>
 <li>Coeficiente(busfreef_Poca): -1.0531380</li>
 </ul>
@@ -918,9 +926,11 @@ disminuye.</p>
 <p>Cuando un país sí tiene poca libertad de comercio (es 1), la
 probabilidad de que sea democracia a que sea democracia fallida
 disminuye.</p>
+</div>
+</div>
 <div id="significancia-de-las-variables-1" class="section level3">
-<h3>3.1: SIGNIFICANCIA DE LAS VARIABLES</h3>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod2,property) <span class="co"># Se colocar test.multinom(nombredelmodelo,variableindependiente1)</span></span></code></pre></div>
+<h3>2.1: Significancia de las variables</h3>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod2,property) <span class="co"># Se colocar test.multinom(nombredelmodelo,variableindependiente1)</span></span></code></pre></div>
 <pre><code>##                                   Coeff       SE Odds.ratio       z  Pr(&gt;|z|)
 ## Dictadura|Democracia fallida  -0.037741 0.017767    0.96296 -2.1243 0.0336482
 ## Democracia|Democracia fallida  0.147419 0.040761    1.15884  3.6167 0.0002984
@@ -931,23 +941,21 @@ disminuye.</p>
 ## Democracia|Dictadura          ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod2,tradefree)</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod2,tradefree)</span></code></pre></div>
 <pre><code>##                                   Coeff       SE Odds.ratio       z Pr(&gt;|z|)   
 ## Dictadura|Democracia fallida  -0.074546 0.023180    0.92817 -3.2159   0.0013 **
 ## Democracia|Democracia fallida  0.014483 0.072192    1.01459  0.2006   0.8410   
 ## Democracia|Dictadura           0.089013 0.074139    1.09310  1.2006   0.2299   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="co"># Se coloca test.multinom(nombredelmodelo,variableindependiente2)</span></span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a><span class="co"># Se coloca test.multinom(nombredelmodelo,variableindependiente2)</span></span></code></pre></div>
 </div>
 </div>
-<div
-id="paso-4-interpretación-de-coeficientes-ojo-usemos-marginal-effects"
+<div id="paso-3-interpretación-de-coeficientes-con-efectos-marginales-1"
 class="section level2">
-<h2>PASO 4: INTERPRETACIÓN DE COEFICIENTES OJO, USEMOS MARGINAL
-EFFECTS</h2>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" tabindex="-1"></a>Marg2<span class="ot">&lt;-</span><span class="fu">marginaleffects</span>(mod2,<span class="at">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
-<span id="cb68-2"><a href="#cb68-2" tabindex="-1"></a><span class="fu">summary</span>(Marg2)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]   </span></code></pre></div>
+<h2>Paso 3: Interpretación de coeficientes con efectos marginales</h2>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a>Marg2<span class="ot">&lt;-</span><span class="fu">marginaleffects</span>(mod2,<span class="at">type =</span> <span class="st">&quot;probs&quot;</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" tabindex="-1"></a><span class="fu">summary</span>(Marg2)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]   </span></code></pre></div>
 <pre><code>## 
 ##               Group          Term Estimate
 ##  Democracia         busfreef_Poca -0.00974
@@ -961,45 +969,49 @@ EFFECTS</h2>
 ##  Dictadura          tradefree     -0.01172
 ## 
 ## Columns: term, group, estimate</code></pre>
-<div id="recordamos-la-ecuación-y-realizamos-un-ejemplo-1"
-class="section level4">
-<h4>Recordamos la ecuación y realizamos un ejemplo</h4>
-<p>Usamos los valores de 50 (property), 60 (tradefree) y si hay poca
-Bussines liberty (1)</p>
+</div>
+<div id="paso-4-recordamos-la-ecuación" class="section level2">
+<h2>Paso 4: Recordamos la ecuación</h2>
+<p>Usemos los siguientes valores:</p>
+<ul>
+<li><p>Property = 50</p></li>
+<li><p>Tradefree= 60</p></li>
+<li><p>Busfreef= 1</p></li>
+</ul>
 <p>Probabilidad de que sea dictadura</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" tabindex="-1"></a>Num1<span class="ot">&lt;-</span><span class="fu">exp</span>(<span class="fl">7.719501-0.037741424</span><span class="sc">*</span><span class="dv">50</span><span class="fl">-0.07454554</span><span class="sc">*</span><span class="dv">60</span><span class="fl">-1.0531380</span><span class="sc">*</span><span class="dv">1</span>)</span>
-<span id="cb70-2"><a href="#cb70-2" tabindex="-1"></a>Deno1<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">+</span>Num1</span>
-<span id="cb70-3"><a href="#cb70-3" tabindex="-1"></a>ProbDictadura<span class="ot">&lt;-</span>Num1<span class="sc">/</span>Deno1</span>
-<span id="cb70-4"><a href="#cb70-4" tabindex="-1"></a>ProbDictadura</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" tabindex="-1"></a>Num1<span class="ot">&lt;-</span><span class="fu">exp</span>(<span class="fl">7.719501-0.037741424</span><span class="sc">*</span><span class="dv">50</span><span class="fl">-0.07454554</span><span class="sc">*</span><span class="dv">60</span><span class="fl">-1.0531380</span><span class="sc">*</span><span class="dv">1</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" tabindex="-1"></a>Deno1<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">+</span>Num1</span>
+<span id="cb63-3"><a href="#cb63-3" tabindex="-1"></a>ProbDictadura<span class="ot">&lt;-</span>Num1<span class="sc">/</span>Deno1</span>
+<span id="cb63-4"><a href="#cb63-4" tabindex="-1"></a>ProbDictadura</span></code></pre></div>
 <pre><code>## [1] 0.5760452</code></pre>
 <p>Probabilidad de que sea democracia</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" tabindex="-1"></a>Num2<span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">13.207954+0.14741855</span><span class="sc">*</span><span class="dv">50</span><span class="fl">+0.01448272</span><span class="sc">*</span><span class="dv">60</span><span class="fl">-0.2906452</span><span class="sc">*</span><span class="dv">1</span>)</span>
-<span id="cb72-2"><a href="#cb72-2" tabindex="-1"></a>Deno2<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">+</span>Num2</span>
-<span id="cb72-3"><a href="#cb72-3" tabindex="-1"></a>ProbDemo<span class="ot">&lt;-</span>Num2<span class="sc">/</span>Deno2</span>
-<span id="cb72-4"><a href="#cb72-4" tabindex="-1"></a>ProbDemo</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" tabindex="-1"></a>Num2<span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">13.207954+0.14741855</span><span class="sc">*</span><span class="dv">50</span><span class="fl">+0.01448272</span><span class="sc">*</span><span class="dv">60</span><span class="fl">-0.2906452</span><span class="sc">*</span><span class="dv">1</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" tabindex="-1"></a>Deno2<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">+</span>Num2</span>
+<span id="cb65-3"><a href="#cb65-3" tabindex="-1"></a>ProbDemo<span class="ot">&lt;-</span>Num2<span class="sc">/</span>Deno2</span>
+<span id="cb65-4"><a href="#cb65-4" tabindex="-1"></a>ProbDemo</span></code></pre></div>
 <pre><code>## [1] 0.005175098</code></pre>
 <p>Probabilidad de que sea democracia fallida</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>ProbDictadura<span class="sc">-</span>ProbDemo</span></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>ProbDictadura<span class="sc">-</span>ProbDemo</span></code></pre></div>
 <pre><code>## [1] 0.4187797</code></pre>
 </div>
 </div>
-<div id="paso-5-comparar-y-elegir-modelos" class="section level2">
-<h2>PASO 5: COMPARAR Y ELEGIR MODELOS</h2>
+<div id="comparar-modelos" class="section level1">
+<h1>COMPARAR MODELOS</h1>
 <div id="aic" class="section level3">
 <h3>AIC</h3>
 <p>Debemos elegir el que arroje un menor valor. Ojo! Solo se usa para
 comparar modelos.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" tabindex="-1"></a><span class="fu">AIC</span>(mod1) <span class="co">#GANADOR</span></span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" tabindex="-1"></a><span class="fu">AIC</span>(mod1) <span class="co">#GANADOR</span></span></code></pre></div>
 <pre><code>## [1] 222.6019</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" tabindex="-1"></a><span class="fu">AIC</span>(mod2)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" tabindex="-1"></a><span class="fu">AIC</span>(mod2)</span></code></pre></div>
 <pre><code>## [1] 223.8022</code></pre>
 <p>¿Predice bien mi modelo? Revisemos qué tan bien estarían
 categorizados mis países según mi modelo 1.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen)</span></code></pre></div>
 <pre><code>## 
 ## Democracia fallida          Dictadura         Democracia 
 ##                 84                 52                 22</code></pre>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen,<span class="fu">predict</span>(mod1))</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" tabindex="-1"></a><span class="fu">table</span>(demofree<span class="sc">$</span>regimen,<span class="fu">predict</span>(mod1))</span></code></pre></div>
 <pre><code>##                     
 ##                      Democracia fallida Dictadura Democracia
 ##   Democracia fallida                 62        15          7
@@ -1008,7 +1020,7 @@ categorizados mis países según mi modelo 1.</p>
 <p>Vemos que ha categorizado a la mayoría de países bien por cada
 categorías.</p>
 <p>Esto también podemos verlo en porcentaje</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(demofree<span class="sc">$</span>regimen,<span class="fu">predict</span>(mod1)),<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(demofree<span class="sc">$</span>regimen,<span class="fu">predict</span>(mod1)),<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>##                     
 ##                      Democracia fallida  Dictadura Democracia
 ##   Democracia fallida         0.73809524 0.17857143 0.08333333
@@ -1017,10 +1029,10 @@ categorías.</p>
 </div>
 <div id="pseudo-r-cuadrado" class="section level3">
 <h3>PSEUDO R CUADRADO</h3>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" tabindex="-1"></a><span class="fu">PseudoR2</span>(mod1, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Nagelkerke&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" tabindex="-1"></a><span class="fu">PseudoR2</span>(mod1, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Nagelkerke&quot;</span>))</span></code></pre></div>
 <pre><code>## Nagelkerke 
 ##  0.5381166</code></pre>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" tabindex="-1"></a><span class="fu">PseudoR2</span>(mod2, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Nagelkerke&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" tabindex="-1"></a><span class="fu">PseudoR2</span>(mod2, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Nagelkerke&quot;</span>))</span></code></pre></div>
 <pre><code>## Nagelkerke 
 ##  0.5491341</code></pre>
 <p>Según el Pseudo R2, los modelos tienen un nivel de ajuste muy
@@ -1082,7 +1094,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
