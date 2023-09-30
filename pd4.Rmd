@@ -176,10 +176,6 @@ No olvidemos cual es nuesta línea de base para la interpretación.
 mod1 <- multinom(regimen ~ property + tradefree, data = demofree)
 summary(mod1)
 ```
-<<<<<<< HEAD
-
-=======
->>>>>>> e9cc0000d5268f09e5606a92331b853eb1684a57
 
 ### 2.2: Relación de las variables
 
@@ -188,24 +184,22 @@ relación entre la variable independiente y la variable dependiente
 
 **Derechos de propiedad**
 
-<<<<<<< HEAD
-- Coeficiente (dictadura) :-0.02654594
+-   Coeficiente (dictadura) :-0.02654594
 
-<<<<<<< HEAD
-Si un país incrementa 1 punto en el índice de derecho a la propiedad es 0.0262 menos probable que el estado sea dictadura a demoracia fallida.
-=======
-Si un país aumenta en un punto el indicador de derechos a la propiedad, la probabilidad de que sea dictadura a que sea democracia fallidad disminuye
+Si un país incrementa 1 punto en el índice de derecho a la propiedad es
+0.0262 menos probable que el estado sea dictadura a demoracia fallida.
 
->>>>>>> e9cc0000d5268f09e5606a92331b853eb1684a57
-----
-- Coeficiente (democracia): 0.15297576
-=======
+Si un país aumenta en un punto el indicador de derechos a la propiedad,
+la probabilidad de que sea dictadura a que sea democracia fallidad
+disminuye
+
+-   Coeficiente (democracia): 0.15297576
+
 -   Coeficiente (dictadura) :-0.02654594
 
 Si un país aumenta en un punto el indicador de derechos a la propiedad,
 la probabilidad de que sea dictadura a que sea democracia fallidad
 disminuye
->>>>>>> 7358bf9e97328fc5d9ff4c60407fa79f97afb5e4
 
 -   Coeficiente (democracia): 0.15297576
 
@@ -226,7 +220,6 @@ disminuye.
 Si un país aumenta en un punto el indicador de libre comercio, la
 probabilidad de que sea democracia a que sea democracia fallida aumenta
 
-<<<<<<< HEAD
 ### 2.3: Aplicando la ecuación
 
 #### Recordamos la ecuación y realizamos un ejemplo
@@ -236,6 +229,7 @@ probabilidad de que sea democracia a que sea democracia fallida aumenta
 Usamos los valores de 50 (property) y 60 (tradefree)
 
 prob dictadura
+
 ```{r}
 numeDct<-exp(6.015109-0.02654594*50-0.07105396*60)
 denomDct<-1+numeDct
@@ -244,18 +238,17 @@ ProbDct
 ```
 
 prob democracia
+
 ```{r}
 numDemo= exp(-13.772977)*(exp(0.15297576*50)*exp(0.01435271*60))
 denomDemo=1+numDemo
 ProbDemo=numDemo/denomDemo
 ProbDemo
 ```
+
 ¿Probabilidad de la democracia fallida?
 
-
-#insertar imagen de: 
-demfallida=1-probdictadura-probdemocracia <3
-
+#insertar imagen de: demfallida=1-probdictadura-probdemocracia \<3
 
 ### 2.4: SIGNIFICANCIA DE LAS VARIABLES
 
@@ -263,9 +256,6 @@ demfallida=1-probdictadura-probdemocracia <3
 #install.packages("RVAideMemoire")
 library(RVAideMemoire)
 ```
-
-
-
 
 ### 2.3: Significancia de las variables
 
@@ -467,13 +457,13 @@ probabilidad de que sea democracia a que sea democracia fallida aumenta
 
 #### **Poca libertad de comercio**
 
--   Coeficiente(busfreef_Poca): -1.0531380
+-   Coeficiente(dictadura): -1.0531380
 
 Cuando un país sí tiene poca libertad de comercio (es 1), la
 probabilidad de que sea dictadura a que sea democracia fallida
 disminuye.
 
--   Coeficiente(busfreef_Poca): -0.2906452
+-   Coeficiente(democracia): -0.2906452
 
 Cuando un país sí tiene poca libertad de comercio (es 1), la
 probabilidad de que sea democracia a que sea democracia fallida
