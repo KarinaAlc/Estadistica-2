@@ -262,14 +262,18 @@ demfallida=1-probdictadura-probdemocracia <3
 ```{r}
 #install.packages("RVAideMemoire")
 library(RVAideMemoire)
-=======
+```
+
+
+```{r}
+
 ### 2.3: Significancia de las variables
 
 Se debe realizar variable por variable
 
 ```{r}
 #install.packages("RVAideMemoire")
->>>>>>> 7358bf9e97328fc5d9ff4c60407fa79f97afb5e4
+
 test.multinom(mod1,property) # Se coloca test.multinom(nombredelmodelo,variableindependiente1)
 ```
 
