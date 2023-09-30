@@ -265,7 +265,7 @@ library(RVAideMemoire)
 ```
 
 
-```{r}
+
 
 ### 2.3: Significancia de las variables
 
