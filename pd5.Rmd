@@ -41,7 +41,7 @@ knitr::include_graphics("logoPUCP.png")
 
 
 
-```{r message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(rio)
 data <- import("trabajadores.sav")
 ```
@@ -63,7 +63,7 @@ hist(data$salario_actual)
 Vamos a recodificarla
 
 ```{r}
-data$salario_actual_ordinal = cut(data$salario_actual, breaks = c(0, 24000,28875, 36938,135000),
+data$salario_actual_ordinal <- cut(data$salario_actual, breaks = c(0, 24000,28875, 36938,135000),
                                   include.lowest = T, ordered_result = T,
                                   labels = c("Muy Bajo", "Bajo",
                                         "Alto", "Muy Alto"))
@@ -81,8 +81,8 @@ table(data$sexo)
 ```
 
 ```{r}
-data$sexo = as.factor(data$sexo)
-levels(data$sexo) = c("Mujer", "Hombre")
+data$sexo <- as.factor(data$sexo)
+levels(data$sexo) <- c("Mujer", "Hombre")
 table(data$sexo)
 ```
 
@@ -97,7 +97,7 @@ str(data$educ)
 
 ```{r}
 library(fastDummies)
-data=dummy_cols(data, select_columns = c("sexo"))
+data<-dummy_cols(data, select_columns = c("sexo"))
 ```
 
 ```{r}
@@ -110,7 +110,7 @@ Veamos si el nivel educativo, y el ser mujer influye en el salario actual
 
 ```{r}
 library(MASS)
-modelo = polr(salario_actual_ordinal ~ sexo_Mujer + educ, data = data, Hess=T)
+modelo <- polr(salario_actual_ordinal ~ sexo_Mujer + educ, data = data, Hess=T)
 summary(modelo)
 
 ```
@@ -149,7 +149,7 @@ Lo que buscamos entonces es ver si el pvalue es menor a 0.05 en las variables in
 ```{r}
 library(marginaleffects)
 
-marg=marginaleffects(modelo,type="probs")
+marg<-marginaleffects(modelo,type="probs")
 summary(marg)[c(1,2,4)]  
 ```
 
@@ -176,9 +176,9 @@ Todas las categorías menos Bajo
 Reemplazamos los números de los coeficientes del corte de las variables independientes.
 
 ```{r}
-num_1 = exp(3.6632 - ((-1.8363*0) + (0.4618*15)))
-denom_1 = 1 + num_1
-p_menorigual_muybajo= num_1/denom_1
+num_1 <- exp(3.6632 - ((-1.8363*0) + (0.4618*15)))
+denom_1 <- 1 + num_1
+p_menorigual_muybajo<- num_1/denom_1
 p_menorigual_muybajo
 
 ```
@@ -192,9 +192,9 @@ Se tiene que restar los 2 escalones menos 1 escalón.
 Se tiene la rpobabilidad de ser bajo y muy bajo, y previamente se hizo la de muy
 
 ```{r}
-num_2 = exp(5.3306 - ((-1.8363*0) + (0.4618*15)))
-denom_2 = (1 + num_2)
-p_menorigual_bajo=num_2/denom_2
+num_2 <- exp(5.3306 - ((-1.8363*0) + (0.4618*15)))
+denom_2 <- (1 + num_2)
+p_menorigual_bajo<-num_2/denom_2
 p_menorigual_bajo
 ```
 La probabilidad de que una persona que sea hombre y con 15 años de educación tenga un salario menor o igual a Bajo - Bajo es de 16%
@@ -215,9 +215,9 @@ Alto y Muy alto
 Calcula los 3 escalones: Muy Bajo, Bajo y Alto o tbm decir menor o igual a Alto
 Todas las categorías menos Muy Alto
 ```{r}
-num_3 = exp(7.1165 - ((-1.8363*0) + (0.4618*15)))
-denom_3 = (1 + num_3)
-p_menorigual_alto=num_3/denom_3
+num_3 <-exp(7.1165 - ((-1.8363*0) + (0.4618*15)))
+denom_3 <- (1 + num_3)
+p_menorigual_alto<-num_3/denom_3
 p_menorigual_alto
 ```
 La probabilidad de que una persona que sea hombre y con 15 años de educación tenga un salario menor o igual a Alto  - Bajo es de 54%. Puede caer en Muy Bajo, Bajo o Alto
