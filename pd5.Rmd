@@ -1,14 +1,44 @@
 ---
-output: pdf_document
+title: "Regresión Logística Ordinal"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
+    toc_depth: 2
+    theme: simplex
+    highlight: kate
+    always_allow_html: yes
+    code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: true
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
-## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+<br>
 
-### Curso: POL 304 - Estadística para el análisis político 2   | Semestre 2023 - 2 <br> 
+<center><img src=" " width="200"/></center>
+
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("logoPUCP.png") 
+```
 
 
+## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-### **SESIÓN 5 - Regresión Logística Ordinal** <br>
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+
+<br>
+
+#### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+
+<br> <br>
+
 
 
 ```{r message=FALSE, warning=FALSE}
