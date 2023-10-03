@@ -1,0 +1,222 @@
+---
+output: pdf_document
+---
+
+## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+
+### Curso: POL 304 - Estadística para el análisis político 2   | Semestre 2023 - 2 <br> 
+
+
+
+### **SESIÓN 5 - Regresión Logística Ordinal** <br>
+
+
+```{r message=FALSE, warning=FALSE}
+library(rio)
+data <- import("trabajadores.sav")
+```
+
+
+# Pregunta de investgiación
+¿De qué manera, el sexo y el nivel educativo condiciona el nivel de salario que puede tener un trabajador?
+
+## Preparamos las variables
+
+Variable dependiente: Salario
+
+De acuerdo a los datos, vendría a ser salario anual
+```{r}
+summary(data$salario_actual)
+hist(data$salario_actual)
+```
+
+Vamos a recodificarla
+
+```{r}
+data$salario_actual_ordinal = cut(data$salario_actual, breaks = c(0, 24000,28875, 36938,135000),
+                                  include.lowest = T, ordered_result = T,
+                                  labels = c("Muy Bajo", "Bajo",
+                                        "Alto", "Muy Alto"))
+
+table(data$salario_actual_ordinal)
+```
+
+Variables independientes:
+
+#SEXO
+```{r}
+#Sexo
+str(data$sexo)
+table(data$sexo)
+```
+
+```{r}
+data$sexo = as.factor(data$sexo)
+levels(data$sexo) = c("Mujer", "Hombre")
+table(data$sexo)
+```
+
+#EDUCACION
+
+```{r}
+#Años de educación
+str(data$educ)
+```
+
+#Volvemos Dummy Sexo
+
+```{r}
+library(fastDummies)
+data=dummy_cols(data, select_columns = c("sexo"))
+```
+
+```{r}
+names(data)
+```
+Veamos si el nivel educativo, y el ser mujer influye en el salario actual
+
+
+## Realizamos el modelo
+
+```{r}
+library(MASS)
+modelo = polr(salario_actual_ordinal ~ sexo_Mujer + educ, data = data, Hess=T)
+summary(modelo)
+
+```
+
+
+
+### Veamos el p-value y determinar la significancia de las variables independientes
+
+
+
+```{r}
+summary_table <- coef(summary(modelo))#OBTENER TABLA CON COEFICIENTES
+summary_table
+```
+
+
+```{r}
+pval <- pnorm(abs(summary_table[, "t value"]),lower.tail = FALSE)* 2
+pval
+```
+
+
+```{r}
+summary_table <- cbind(summary_table, "p value" = pval)
+summary_table
+```
+
+Esta tabla nos da un resumen de los coeficientes y el pvalue.
+
+H0=La variable independiente no aporta al modelo
+
+Lo que buscamos entonces es ver si el pvalue es menor a 0.05 en las variables independientes seleccionadas.
+
+## Interpretamos el efecto de las variables en mi modelo 
+
+```{r}
+library(marginaleffects)
+
+marg=marginaleffects(modelo,type="probs")
+summary(marg)[c(1,2,4)]  
+```
+
+## Preparamos la ecuación del modelo
+
+Hagamos un ejemplo
+
+Queremos hallar la probabilidad de cada uno de los cortes y categorías para el caso de que la persona sea hombre y tenga 15 años de educación
+
+##¿Cuál es la probabilidad de tener un salario alto para una hombre con 15 años de educación?
+
+Para tener los coeficientes a la mano
+```{r}
+coef(summary(modelo))
+```
+
+##PRIMER CORTE
+Muy Bajo - Bajo
+
+Hallemos primero la probabilidad del primer corte, que era Muy Bajo - Bajo. Es decir, que la persona sea hombre con 15 años de educación tenga un salario menor o igual a Muy Bajo, sin llegar a ser muy bajo.
+
+Todas las categorías menos Bajo
+
+Reemplazamos los números de los coeficientes del corte de las variables independientes.
+
+```{r}
+num_1 = exp(3.6632 - ((-1.8363*0) + (0.4618*15)))
+denom_1 = 1 + num_1
+p_menorigual_muybajo= num_1/denom_1
+p_menorigual_muybajo
+
+```
+La probabilidad de que una persona que sea hombre y con 15 años de educación tenga un salario menor o igual a Muy Bajo es de 3.6%
+  
+## SEGUNDO CORTE
+Bajo - Alto
+Calcula los 2 escalones: Bajo y Muy Bajo
+Todas las categorías menos Alto, es decir Bajo y Muy Bajo
+Se tiene que restar los 2 escalones menos 1 escalón.
+Se tiene la rpobabilidad de ser bajo y muy bajo, y previamente se hizo la de muy
+
+```{r}
+num_2 = exp(5.3306 - ((-1.8363*0) + (0.4618*15)))
+denom_2 = (1 + num_2)
+p_menorigual_bajo=num_2/denom_2
+p_menorigual_bajo
+```
+La probabilidad de que una persona que sea hombre y con 15 años de educación tenga un salario menor o igual a Bajo - Bajo es de 16%
+
+## SOLO PROBABILIDAD DE BAJO 
+
+Se tiene la rpobabilidad de ser bajo y muy bajo, y previamente se hizo la de muy bajo, estos se restan vas a tener la probabilidad de ser únicamente bajo
+
+Lo que tenemos que hacer es calcular primero la probabilidad ade que sea Muy Bajo y Bajo (que ya la obtuvimos) y luego se resta la probabilidad de que sea Bajo-Alto:
+
+```{r}
+p_menorigual_bajo-p_menorigual_muybajo
+```
+La probabilidad de que una persona que sea hombre y con 15 años de educación tenga un salario Alto es de 13.1%
+
+## TERCER CORTE
+Alto y Muy alto
+Calcula los 3 escalones: Muy Bajo, Bajo y Alto o tbm decir menor o igual a Alto
+Todas las categorías menos Muy Alto
+```{r}
+num_3 = exp(7.1165 - ((-1.8363*0) + (0.4618*15)))
+denom_3 = (1 + num_3)
+p_menorigual_alto=num_3/denom_3
+p_menorigual_alto
+```
+La probabilidad de que una persona que sea hombre y con 15 años de educación tenga un salario menor o igual a Alto  - Bajo es de 54%. Puede caer en Muy Bajo, Bajo o Alto
+
+## SOLO PROBABILIDAD DE ALTO
+
+Le restamos la probabilidad de que esté en el corte de  Bajo|Alto(que incluye este corte? La probabilidad de caer en Bajo y Muy Bajo) a la probabilidad de que esté en el corte Alto|Muy Alto (que incluye este corte? La probabilidad de caer en Bajo, Muy Bajo y Alto)
+
+```{r}
+p_menorigual_alto - p_menorigual_bajo
+```
+La probabilidad de que una persona que sea hombre y con 15 años de educación tenga un salario Alto es de 37.8%
+
+
+Ahora,
+
+## SOLO PROBABILIDAD DE MUY ALTO
+
+Como recordamos que era una probabilidad acumulada, donde llegaba hast MUY ALTO era 1, le restamos 1 menos el corte de Alto-Muy Alto
+
+```{r}
+1-p_menorigual_alto
+```
+Entonces, la probabilidad de que una persona que sea hombre y con 15 años de educación tenga un salario Muy Alto es de 45.2%
+
+
+## ¿Cuánto explica nuestro modelo?
+
+```{r}
+library(DescTools)
+PseudoR2(modelo, which = c("Nagelkerke"))
+```
