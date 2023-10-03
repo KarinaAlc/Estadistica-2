@@ -13,6 +13,8 @@ navbar:
       href: TidySup_Revancha_20232.html
     - text: "Sesión 3"
       href: pd3.html
+    - text: "Sesión 3 v2.0"
+      href: pd3_v2.html
     - text: "Sesión 4"
       href: pd4.html
     - text: "Sesión 5"
