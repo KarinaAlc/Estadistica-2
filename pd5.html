@@ -516,12 +516,13 @@ class="section level4">
 </div>
 </div>
 <div id="pregunta-de-investigación" class="section level1">
-<h1>Pregunta de investigación</h1>
+<h1><strong>Pregunta de investigación</strong></h1>
 <p>¿De qué manera, el sexo y el nivel educativo condiciona el nivel de
 salario que puede tener un trabajador?</p>
+<p><br> <br></p>
 </div>
 <div id="paso-1-preparar-la-data" class="section level1">
-<h1>Paso 1: Preparar la data</h1>
+<h1><strong>Paso 1: Preparar la data</strong></h1>
 <p>Variable dependiente: Salario (nivel)</p>
 <p>De acuerdo a los datos, vendría a ser salario anual</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>salario_actual)</span></code></pre></div>
@@ -574,12 +575,9 @@ salario que puede tener un trabajador?</p>
 ##  - attr(*, &quot;labels&quot;)= Named num [1:11] 0 8 12 14 15 16 17 18 19 20 ...
 ##   ..- attr(*, &quot;names&quot;)= chr [1:11] &quot;0 (Ausente)&quot; &quot;8&quot; &quot;12&quot; &quot;14&quot; ...</code></pre>
 <p>Volvemos Dummy la variable <em>Sexo</em></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">library</span>(fastDummies)</span></code></pre></div>
-<pre><code>## Thank you for using fastDummies!</code></pre>
-<pre><code>## To acknowledge our work, please cite the package:</code></pre>
-<pre><code>## Kaplan, J. &amp; Schlegel, B. (2023). fastDummies: Fast Creation of Dummy (Binary) Columns and Rows from Categorical Variables. Version 1.7.1. URL: https://github.com/jacobkap/fastDummies, https://jacobkap.github.io/fastDummies/.</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">dummy_cols</span>(data, <span class="at">select_columns =</span> <span class="fu">c</span>(<span class="st">&quot;sexo&quot;</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">library</span>(fastDummies)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">dummy_cols</span>(data, <span class="at">select_columns =</span> <span class="fu">c</span>(<span class="st">&quot;sexo&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
 <pre><code>##  [1] &quot;id&quot;                     &quot;sexo&quot;                   &quot;fechnac&quot;               
 ##  [4] &quot;educ&quot;                   &quot;catlab&quot;                 &quot;salario_actual&quot;        
 ##  [7] &quot;salario_inicial&quot;        &quot;antiguedad&quot;             &quot;experiencia&quot;           
@@ -588,11 +586,12 @@ salario que puede tener un trabajador?</p>
 <p>Veamos si el nivel educativo, y el ser mujer influye en el salario
 actual</p>
 </div>
-<div id="paso-2-modelo" class="section level2">
-<h2>Paso 2: Modelo</h2>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">polr</span>(salario_actual_ordinal <span class="sc">~</span> sexo_Mujer <span class="sc">+</span> educ, <span class="at">data =</span> data, <span class="at">Hess=</span>T)</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+</div>
+<div id="paso-2-modelo" class="section level1">
+<h1><strong>Paso 2: Modelo</strong></h1>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>modelo <span class="ot">&lt;-</span> <span class="fu">polr</span>(salario_actual_ordinal <span class="sc">~</span> sexo_Mujer <span class="sc">+</span> educ, <span class="at">data =</span> data, <span class="at">Hess=</span>T)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <pre><code>## Call:
 ## polr(formula = salario_actual_ordinal ~ sexo_Mujer + educ, data = data, 
 ##     Hess = T)
@@ -615,20 +614,20 @@ id="veamos-el-p-value-y-determinar-la-significancia-de-las-variables-independien
 class="section level3">
 <h3>Veamos el p-value y determinar la significancia de las variables
 independientes</h3>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(modelo)) <span class="co">#OBTENER TABLA CON COEFICIENTES</span></span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>summary_table</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">coef</span>(<span class="fu">summary</span>(modelo)) <span class="co">#OBTENER TABLA CON COEFICIENTES</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>summary_table</span></code></pre></div>
 <pre><code>##                    Value Std. Error   t value
 ## sexo_Mujer    -1.8362608 0.20267681 -9.060044
 ## educ           0.4618446 0.04136102 11.166180
 ## Muy Bajo|Bajo  3.6632440 0.55662857  6.581128
 ## Bajo|Alto      5.3305723 0.57522584  9.266921
 ## Alto|Muy Alto  7.1165070 0.62144567 11.451535</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(summary_table[, <span class="st">&quot;t value&quot;</span>]),<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)<span class="sc">*</span> <span class="dv">2</span></span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>pval</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(summary_table[, <span class="st">&quot;t value&quot;</span>]),<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)<span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>pval</span></code></pre></div>
 <pre><code>##    sexo_Mujer          educ Muy Bajo|Bajo     Bajo|Alto Alto|Muy Alto 
 ##  1.303979e-19  5.969318e-29  4.668919e-11  1.915972e-20  2.310177e-30</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">cbind</span>(summary_table, <span class="st">&quot;p value&quot;</span> <span class="ot">=</span> pval)</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>summary_table</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>summary_table <span class="ot">&lt;-</span> <span class="fu">cbind</span>(summary_table, <span class="st">&quot;p value&quot;</span> <span class="ot">=</span> pval)</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>summary_table</span></code></pre></div>
 <pre><code>##                    Value Std. Error   t value      p value
 ## sexo_Mujer    -1.8362608 0.20267681 -9.060044 1.303979e-19
 ## educ           0.4618446 0.04136102 11.166180 5.969318e-29
@@ -643,14 +642,14 @@ independientes</h3>
 0.05</em> en las variables independientes seleccionadas.</p>
 </div>
 </div>
-</div>
 <div id="paso-3-interpretamos-el-efecto-de-las-variables"
 class="section level1">
-<h1>Paso 3: Interpretamos el efecto de las variables</h1>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>marg<span class="ot">&lt;-</span><span class="fu">marginaleffects</span>(modelo,<span class="at">type=</span><span class="st">&quot;probs&quot;</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="fu">summary</span>(marg)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]  </span></code></pre></div>
+<h1><strong>Paso 3: Interpretamos el efecto de las
+variables</strong></h1>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>marg<span class="ot">&lt;-</span><span class="fu">marginaleffects</span>(modelo,<span class="at">type=</span><span class="st">&quot;probs&quot;</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a><span class="fu">summary</span>(marg)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]  </span></code></pre></div>
 <pre><code>## 
 ##     Group       Term Estimate
 ##  Alto     educ        0.01031
@@ -666,7 +665,7 @@ class="section level1">
 </div>
 <div id="paso-4-preparamos-la-ecuación-del-modelo"
 class="section level1">
-<h1>Paso 4: Preparamos la ecuación del modelo</h1>
+<h1><strong>Paso 4: Preparamos la ecuación del modelo</strong></h1>
 <p><em>Hagamos un ejemplo</em></p>
 <p>Queremos hallar la probabilidad de cada uno de los cortes y
 categorías para el caso de que la persona sea hombre y tenga 15 años de
@@ -677,7 +676,7 @@ class="section level3">
 <h3>¿Cuál es la probabilidad de tener un salario alto para un <em>hombre
 con 15 años de educación</em>?</h3>
 <p>Recordamos los coeficientes</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">summary</span>(modelo))</span></code></pre></div>
 <pre><code>##                    Value Std. Error   t value
 ## sexo_Mujer    -1.8362608 0.20267681 -9.060044
 ## educ           0.4618446 0.04136102 11.166180
@@ -685,32 +684,32 @@ con 15 años de educación</em>?</h3>
 ## Bajo|Alto      5.3305723 0.57522584  9.266921
 ## Alto|Muy Alto  7.1165070 0.62144567 11.451535</code></pre>
 </div>
-<div id="primer-corte-muy-bajo-bajo" class="section level3">
-<h3>PRIMER CORTE: Muy Bajo | Bajo</h3>
+<div id="primer-corte-muy-bajo-bajo" class="section level2">
+<h2><strong>PRIMER CORTE: Muy Bajo | Bajo</strong></h2>
 <p>Hallemos primero la probabilidad del primer corte, que era Muy Bajo -
 Bajo. Es decir, que la persona sea hombre con 15 años de educación tenga
 un salario menor o igual a Muy Bajo, sin llegar a ser muy bajo.</p>
 <p>Todas las categorías menos Bajo</p>
 <p>Reemplazamos los números de los coeficientes del corte de las
 variables independientes.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>num_1 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fl">3.6632</span> <span class="sc">-</span> ((<span class="sc">-</span><span class="fl">1.8363</span><span class="sc">*</span><span class="dv">0</span>) <span class="sc">+</span> (<span class="fl">0.4618</span><span class="sc">*</span><span class="dv">15</span>)))</span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>denom_1 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> num_1</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>p_menorigual_muybajo<span class="ot">&lt;-</span> num_1<span class="sc">/</span>denom_1</span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>p_menorigual_muybajo</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>num_1 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fl">3.6632</span> <span class="sc">-</span> ((<span class="sc">-</span><span class="fl">1.8363</span><span class="sc">*</span><span class="dv">0</span>) <span class="sc">+</span> (<span class="fl">0.4618</span><span class="sc">*</span><span class="dv">15</span>)))</span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>denom_1 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> num_1</span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>p_menorigual_muybajo<span class="ot">&lt;-</span> num_1<span class="sc">/</span>denom_1</span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>p_menorigual_muybajo</span></code></pre></div>
 <pre><code>## [1] 0.03683416</code></pre>
 <p>La probabilidad de que una persona que sea hombre y con 15 años de
 educación tenga un salario menor o igual a Muy Bajo es de 3.6%</p>
 </div>
-<div id="segundo-corte-bajo---alto" class="section level3">
-<h3>SEGUNDO CORTE: Bajo - Alto</h3>
+<div id="segundo-corte-bajo-alto" class="section level2">
+<h2><strong>SEGUNDO CORTE: Bajo | Alto</strong></h2>
 <p>Calcula los 2 escalones: Bajo y Muy Bajo Todas las categorías menos
 Alto, es decir Bajo y Muy Bajo Se tiene que restar los 2 escalones menos
 1 escalón. Se tiene la rpobabilidad de ser bajo y muy bajo, y
 previamente se hizo la de muy</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>num_2 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fl">5.3306</span> <span class="sc">-</span> ((<span class="sc">-</span><span class="fl">1.8363</span><span class="sc">*</span><span class="dv">0</span>) <span class="sc">+</span> (<span class="fl">0.4618</span><span class="sc">*</span><span class="dv">15</span>)))</span>
-<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>denom_2 <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> num_2)</span>
-<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>p_menorigual_bajo<span class="ot">&lt;-</span>num_2<span class="sc">/</span>denom_2</span>
-<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>p_menorigual_bajo</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>num_2 <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fl">5.3306</span> <span class="sc">-</span> ((<span class="sc">-</span><span class="fl">1.8363</span><span class="sc">*</span><span class="dv">0</span>) <span class="sc">+</span> (<span class="fl">0.4618</span><span class="sc">*</span><span class="dv">15</span>)))</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>denom_2 <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> num_2)</span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>p_menorigual_bajo<span class="ot">&lt;-</span>num_2<span class="sc">/</span>denom_2</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>p_menorigual_bajo</span></code></pre></div>
 <pre><code>## [1] 0.1684854</code></pre>
 <p>La probabilidad de que una persona que sea hombre y con 15 años de
 educación tenga un salario menor o igual a Bajo - Bajo es de 16%</p>
@@ -722,20 +721,20 @@ hizo la de muy bajo, estos se restan vas a tener la probabilidad de ser
 <p>Lo que tenemos que hacer es calcular primero la probabilidad ade que
 sea Muy Bajo y Bajo (que ya la obtuvimos) y luego se resta la
 probabilidad de que sea Bajo-Alto:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>p_menorigual_bajo<span class="sc">-</span>p_menorigual_muybajo</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>p_menorigual_bajo<span class="sc">-</span>p_menorigual_muybajo</span></code></pre></div>
 <pre><code>## [1] 0.1316512</code></pre>
 <p>La probabilidad de que una persona que sea hombre y con 15 años de
 educación tenga un salario Alto es de 13.1%</p>
 </div>
 </div>
-<div id="tercer-corte" class="section level3">
-<h3>TERCER CORTE</h3>
+<div id="tercer-corte" class="section level2">
+<h2><strong>TERCER CORTE</strong></h2>
 <p>Alto y Muy alto Calcula los 3 escalones: Muy Bajo, Bajo y Alto o tbm
 decir menor o igual a Alto Todas las categorías menos Muy Alto</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>num_3 <span class="ot">&lt;-</span><span class="fu">exp</span>(<span class="fl">7.1165</span> <span class="sc">-</span> ((<span class="sc">-</span><span class="fl">1.8363</span><span class="sc">*</span><span class="dv">0</span>) <span class="sc">+</span> (<span class="fl">0.4618</span><span class="sc">*</span><span class="dv">15</span>)))</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a>denom_3 <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> num_3)</span>
-<span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a>p_menorigual_alto<span class="ot">&lt;-</span>num_3<span class="sc">/</span>denom_3</span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a>p_menorigual_alto</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a>num_3 <span class="ot">&lt;-</span><span class="fu">exp</span>(<span class="fl">7.1165</span> <span class="sc">-</span> ((<span class="sc">-</span><span class="fl">1.8363</span><span class="sc">*</span><span class="dv">0</span>) <span class="sc">+</span> (<span class="fl">0.4618</span><span class="sc">*</span><span class="dv">15</span>)))</span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a>denom_3 <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> num_3)</span>
+<span id="cb36-3"><a href="#cb36-3" tabindex="-1"></a>p_menorigual_alto<span class="ot">&lt;-</span>num_3<span class="sc">/</span>denom_3</span>
+<span id="cb36-4"><a href="#cb36-4" tabindex="-1"></a>p_menorigual_alto</span></code></pre></div>
 <pre><code>## [1] 0.5472337</code></pre>
 <p>La probabilidad de que una persona que sea hombre y con 15 años de
 educación tenga un salario menor o igual a Alto - Bajo es de 54%. Puede
@@ -746,7 +745,7 @@ caer en Muy Bajo, Bajo o Alto</p>
 incluye este corte? La probabilidad de caer en Bajo y Muy Bajo) a la
 probabilidad de que esté en el corte Alto|Muy Alto (que incluye este
 corte? La probabilidad de caer en Bajo, Muy Bajo y Alto)</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a>p_menorigual_alto <span class="sc">-</span> p_menorigual_bajo</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>p_menorigual_alto <span class="sc">-</span> p_menorigual_bajo</span></code></pre></div>
 <pre><code>## [1] 0.3787484</code></pre>
 <p>La probabilidad de que una persona que sea hombre y con 15 años de
 educación tenga un salario Alto es de 37.8%</p>
@@ -756,7 +755,7 @@ educación tenga un salario Alto es de 37.8%</p>
 <h4>SOLO PROBABILIDAD DE MUY ALTO</h4>
 <p>Como recordamos que era una probabilidad acumulada, donde llegaba
 hast MUY ALTO era 1, le restamos 1 menos el corte de Alto-Muy Alto</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>p_menorigual_alto</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">-</span>p_menorigual_alto</span></code></pre></div>
 <pre><code>## [1] 0.4527663</code></pre>
 <p>Entonces, la probabilidad de que una persona que sea hombre y con 15
 años de educación tenga un salario Muy Alto es de 45.2%</p>
@@ -764,9 +763,9 @@ años de educación tenga un salario Muy Alto es de 45.2%</p>
 </div>
 </div>
 <div id="paso-5-cuánto-explica-nuestro-modelo" class="section level1">
-<h1>Paso 5: ¿Cuánto explica nuestro modelo?</h1>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
-<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a><span class="fu">PseudoR2</span>(modelo, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Nagelkerke&quot;</span>))</span></code></pre></div>
+<h1><strong>Paso 5: ¿Cuánto explica nuestro modelo?</strong></h1>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a><span class="fu">PseudoR2</span>(modelo, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Nagelkerke&quot;</span>))</span></code></pre></div>
 <pre><code>## Nagelkerke 
 ##  0.5160308</code></pre>
 </div>

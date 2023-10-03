@@ -43,12 +43,14 @@ library(rio)
 data <- import("trabajadores.sav")
 ```
 
-# Pregunta de investigación
+# **Pregunta de investigación**
 
 ¿De qué manera, el sexo y el nivel educativo condiciona el nivel de
 salario que puede tener un trabajador?
 
-# Paso 1: Preparar la data
+<br> <br>
+
+# **Paso 1: Preparar la data**
 
 Variable dependiente: Salario (nivel)
 
@@ -95,7 +97,7 @@ str(data$educ)
 
 Volvemos Dummy la variable *Sexo*
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(fastDummies)
 data<-dummy_cols(data, select_columns = c("sexo"))
 ```
@@ -107,9 +109,9 @@ names(data)
 Veamos si el nivel educativo, y el ser mujer influye en el salario
 actual
 
-## Paso 2: Modelo
+# **Paso 2: Modelo**
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(MASS)
 modelo <- polr(salario_actual_ordinal ~ sexo_Mujer + educ, data = data, Hess=T)
 summary(modelo)
@@ -140,7 +142,7 @@ Esta tabla nos da un resumen de los coeficientes y el pvalue.
 Lo que buscamos entonces es ver *si el p-value es menor a 0.05* en las
 variables independientes seleccionadas.
 
-# Paso 3: Interpretamos el efecto de las variables 
+# **Paso 3: Interpretamos el efecto de las variables** 
 
 ```{r}
 library(marginaleffects)
@@ -149,7 +151,7 @@ marg<-marginaleffects(modelo,type="probs")
 summary(marg)[c(1,2,4)]  
 ```
 
-# Paso 4: Preparamos la ecuación del modelo
+# **Paso 4: Preparamos la ecuación del modelo**
 
 *Hagamos un ejemplo*
 
@@ -164,7 +166,7 @@ Recordamos los coeficientes
 coef(summary(modelo))
 ```
 
-### PRIMER CORTE: Muy Bajo \| Bajo
+## **PRIMER CORTE: Muy Bajo \| Bajo**
 
 Hallemos primero la probabilidad del primer corte, que era Muy Bajo -
 Bajo. Es decir, que la persona sea hombre con 15 años de educación tenga
@@ -186,7 +188,7 @@ p_menorigual_muybajo
 La probabilidad de que una persona que sea hombre y con 15 años de
 educación tenga un salario menor o igual a Muy Bajo es de 3.6%
 
-### SEGUNDO CORTE: Bajo - Alto 
+## **SEGUNDO CORTE: Bajo \|  Alto** 
 
 Calcula los 2 escalones: Bajo y Muy Bajo Todas las categorías menos
 Alto, es decir Bajo y Muy Bajo Se tiene que restar los 2 escalones menos
@@ -220,7 +222,7 @@ p_menorigual_bajo-p_menorigual_muybajo
 La probabilidad de que una persona que sea hombre y con 15 años de
 educación tenga un salario Alto es de 13.1%
 
-### TERCER CORTE
+## **TERCER CORTE**
 
 Alto y Muy alto Calcula los 3 escalones: Muy Bajo, Bajo y Alto o tbm
 decir menor o igual a Alto Todas las categorías menos Muy Alto
@@ -264,7 +266,7 @@ MUY ALTO era 1, le restamos 1 menos el corte de Alto-Muy Alto
 Entonces, la probabilidad de que una persona que sea hombre y con 15
 años de educación tenga un salario Muy Alto es de 45.2%
 
-# Paso 5: ¿Cuánto explica nuestro modelo?
+# **Paso 5: ¿Cuánto explica nuestro modelo?**
 
 ```{r}
 library(DescTools)
