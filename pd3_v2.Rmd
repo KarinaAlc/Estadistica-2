@@ -151,7 +151,7 @@ summary(modelo1)
 
 Recordemos que
 
-\- [*los coefficientes obtenidos en esta regresión logística son el logaritmo natural de odds*]
+-   *Los coefficientes obtenidos en esta regresión logística son el logaritmo natural de odds*
 
 Es importante revisar el **signo** del coeficiente, ya que dependiendo de eso procederemos a interpretar. En este caso, el coeficiente es negativo; es decir, *la relación es inversa.* La interpretación de la probabilidad tendrá la siguiente forma: cuando la VI aumenta o es 1 (para dicotómicas), la probabilidad de que la VD sea 1 (se de el caso de éxito) disminuye en ...
 
@@ -166,12 +166,25 @@ Ejemplo para VI dicotómica:
 Apliquémoslo en nuestro modelo:
 
 ```{r}
-marg1=marginaleffects(modelo1)
+marg1<-marginaleffects(modelo1)
 summary(marg1)[c(1,3)]
 
 ```
 
 Identificamos que la variación en la probabilidad es de -0.0309; es decir, disminuye un 3.09%. Esto quiere decir que cuando una persona sí vive con personas de tercera edad (es 1), la probabilidad de que quiera retornar a clases disminuye en un 0.0309 o en 3.09% (en promedio).
+
+¿De donde sale este valor?
+
+```{r, eval = T}
+head(modelo1$fitted.values,10)
+```
+
+Solo existen dos posibles probabilidades: cuando no tiene personas de tercera edad, 0.926, y cuando sí tiene personas de tercera edad, 0.895. Entonces la reducción de la probabilidad será la diferencia entre ambos.
+
+```{r}
+0.9266417 - 0.8957288
+
+```
 
 # MODELO 2 : Retorno, personas de la tercera edad y enfermedades
 
@@ -226,7 +239,7 @@ exp(log.odds2)/(1+exp(log.odds2)) #lo pasamos a probabilidades
 
 La probabilidad de que quiera retornara a clases presenciales es de 0.91
 
-# MODELO 3:
+# MODELO 3: Retorno, personas de la tercera edad, ansiedad, edad
 
 Nuestras explicativas serán si la persona vive o no con personas de la tercera edad, tiene o ha tenido ansiedad y la variable edad.
 
@@ -256,7 +269,7 @@ Ahora obtengamos la probabilidad de que quieran retornar a clases presenciales s
 
 ```{r}
 log.odds3 = predict(modelo3, data.frame(terEd = 0, anx = 1, edad = 50))
-exp(log.odds3)/(1+exp(log.odds3))#para pasarlo a probabilidad
+exp(log.odds3)/(1+exp(log.odds3)) #para pasarlo a probabilidad
 ```
 
 Cuando un o una docente vive con personas de tercera edad, tiene ansiedad y tenga 50 años, la probabilidad de que quiera retornar a clases presenciales es de 0.89 o de 89.34%.
@@ -269,11 +282,3 @@ exp(log.odds4)/(1+exp(log.odds4))
 ```
 
 Cuando un o una docente vive con personas de tercera edad, tiene ansiedad y tenga 25 años, la probabilidad de que quiera retornar a clases presenciales es de 0.93 o de 93.27%
-
-<br> <br> <br> <br> <br> <br> <br>
-
-Este fue un capítulo de...
-
-```{r,echo=FALSE, out.width="30%",fig.align="center"}
-knitr::include_graphics("PD3_MEME.png") 
-```
