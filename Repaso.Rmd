@@ -1,0 +1,371 @@
+---
+title: "Repaso"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
+    toc_depth: 1
+    theme: simplex
+    highlight: kate
+    always_allow_html: yes
+    code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: yes
+    toc_depth: '1'
+---
+
+
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("logoPUCP.png") 
+```
+
+## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
+
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+
+
+#### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+
+
+```{r, message=FALSE,warning=FALSE}
+library(rio)
+library(dplyr)
+library(car)
+library(nnet)
+library(DescTools)
+library(RVAideMemoire)
+library(marginaleffects)
+
+```
+
+```{r}
+data <- import("Repaso.xlsx")
+```
+
+| Nombre de variable  | Descripción                            | Valores                                    |
+|-------------------------|------------------------|------------------------|
+| abany1              | ¿A favor del aborto?                   | 1: si/0:No                                 |
+| age                 | Edad                                   |                                            |
+| treinta_menos       | ¿La persona tiene 30 años o menos?     | 1: si/0:No                                 |
+| relig_bajo          | ¿Tiene asistencia baja a la iglesia?   | 1: si/0:No                                 |
+| favor_penamuerte    | ¿A favor de la pena de muerte?         | 1: si/0:No                                 |
+| childs              | N° de hijos                            |                                            |
+| mucha_conf_congreso | ¿Tiene mucha confianza en el congreso? | 1: si/0:No                                 |
+| blanco_raza         | ¿La persona es de raza blanca?         | 1: si/0:No                                 |
+| partido             | ¿Por cuál partido siente afinidad?     | 1-Democrata,2-Republicano, 3-Independiente |
+
+: Diccionario de datos
+
+## Regresión logística binaria:
+
+### Modelo 1
+
+***¿Qué factores afectan la probabilidad de que una persona esté a favor de la pena de muerte?***
+
+-   Su edad (treinta_menos):
+
+```{r}
+modelo1 <- glm(favor_penamuerte ~ treinta_menos,family= binomial,data)
+summary(modelo1)
+```
+
+#### ¿Cuál es el efecto de la variable?
+
+Cuando una persona tiene menos que 30 años, la probabilidad de que esté a favor de la pena de muerte disminuye.
+
+#### Significancia de las variables
+
+¿La variable es significativa?
+
+Sí, su p valor es menor a 0.05 :)
+
+#### Predicciones
+
+¿Cuál sera la probabilidad de estar a favor de la pena de muerte cuando una persona si tiene 30 años o menos (treinta_menos = 1)?
+
+```{r}
+coef(modelo1) #Veamos los coeficientes
+```
+
+```{r}
+#Prob cuando tiene 30 años o menos
+Num1 = exp(0.6647477 -0.2496671*1)
+Den1 = 1 + Num1 
+Prob_simenor30 = Num1/Den1
+Prob_simenor30
+```
+
+¿Cuál sera la probabilidad de estar a favor de la pena de muerte cuando una persona si tiene 30 años o menos (treinta_menos = 1)?
+
+```{r}
+#Prob cuando NO tiene 30 años o menos
+Num1 = exp(0.6647477 -0.2496671*0)
+Den1 = 1 + Num1 
+Prob_simenor30 = Num1/Den1
+Prob_simenor30
+```
+
+¿Hay alguna diferencia entre las probabilidades?
+
+#### Efectos marginales:
+
+Revisemos el ompacto de la VI en la probabilidad con efectos marginales. Recuerda que la interpretación se hace por cada variable independiente.
+
+Calculemos como la edad impacta en la probabilidad con efectos marginales.
+
+```{r}
+margi=marginaleffects(modelo1)
+summary(margi)[c(1,3)]
+```
+
+Cuando una persona tiene menos que 30 años la probabilidad en promedio de que esté a favor de la pena de muerte disminuye en 5.8%
+
+(Solo para ver que la variación de la probabilidad calza con lo calculado previamente)
+
+```{r}
+head(modelo1$fitted.values)
+0.6603261-0.6023055 
+```
+
+Sale igualito :)
+
+### Modelo 2
+
+-   Su edad (treinta_menos)
+
+-   Baja asistencia a misa (relig_bajo)
+
+```{r}
+modelo2 <- glm(favor_penamuerte ~ treinta_menos+relig_bajo,family= binomial,data)
+summary(modelo2)
+```
+
+#### ¿Cuál es el efecto de la variable?
+
+Cuando una persona tiene menos que 30 años, la probabilidad de que esté a favor de la pena de muerte disminuye.
+
+Cuando una persona tiene una asistencia baja a la iglesia la probabilidad de que esté a favor de la pena de muerte aumenta.
+
+#### Significancia de las variables
+
+¿Las variables son significativas?
+
+Sí, las dos tienen valor menor a 0.05 :)
+
+#### Predicciones
+
+¿Cuál sera la probabilidad de estar a favor de la pena de muerte cuando una persona si tiene 30 años o menos (treinta_menos = 1) y tiene asistencia baja a la iglesia (relig_bajo = 1) ?
+
+```{r}
+coef(modelo2) #Revisemos los coeficientes
+```
+
+```{r}
+Num2 = exp(0.5431132 -0.2770298*1 + 0.2326816*1)
+Den2 = 1 + Num2 
+Prob2 = Num2/Den2
+Prob2
+```
+
+¿Cuál sera la probabilidad de estar a favor de la pena de muerte cuando una persona si tiene 30 años o menos (treinta_menos = 1) y tiene asistencia baja a la iglesia (relig_bajo = 0) ?
+
+```{r}
+Num2 = exp(0.5431132 -0.2770298*1 + 0.2326816*0)
+Den2 = 1 + Num2 
+Prob3 = Num2/Den2
+Prob3
+```
+
+#### Efectos marginales:
+
+Revisemos el ompacto de la VI en la probabilidad con efectos marginales. Recuerda que la interpretación se hace por cada variable independiente.
+
+```{r}
+margi2=marginaleffects(modelo2)
+summary(margi2)[c(1,3)]
+```
+
+Cuando una persona sí tienen una asistencia baja a la iglesia la probabilidad (en promedio) de que esté a favor del aborto aumenta en 5.4%.
+
+Cuando una persona si tiene 30 años o menos, la probabilidad (en promedio) de que esté a favor del aborto disminuye en 6.4%.
+
+## Regresión logística multinomial
+
+***¿Qué factores afectan la probabilidad de que una persona sienta afinidad por cierto partido (democrata/republicano/independiente)?***
+
+### Elección de linea base
+
+```{r}
+table(data$partido)
+data$partido1 <- factor(data$partido,levels=c(1:3), labels = c("Democrata","Republicano","Independiente"))
+
+table(data$partido1)
+
+contrasts(data$partido1)
+
+```
+
+```{r}
+data$partido1 <- relevel(data$partido1 , ref = "Independiente")
+```
+
+### Modelo 1
+
+Variables independientes
+
+abany: ¿Apoya el aborto? (Si/No)
+
+age: Edad (numérico)
+
+### Creación del modelo
+
+```{r}
+mod1 <- multinom(partido1 ~ abany + age, data = data)
+summary(mod1)
+```
+
+#### Significancia de las variables
+
+1.  Solo podemos revisar la significancia de las variables numéricas.
+
+2.  El test se hace variable por variable.
+
+```{r}
+test.multinom(mod1,age)
+```
+
+Sobre la variable edad: La edad es una variable que puede impactar en la probabilidad de sentir afinidad por el partido demócrata en contraste al independiente; y también impacta en la probabilidad de sentir afinidad por el partido republicano en contraste del independiente. Sin embargo, no es significativa para la probabilidad de ser republicano y no demócrata.
+
+#### Predicciones:
+
+¿Cuál será la probabilidad de sentir afinidad por x partido cuando se está a favor del aborto y tiene 45 años?
+
+```{r}
+#recordando los coeficientes
+coef(mod1)
+```
+
+Probabilidad por demócrata:
+
+```{r}
+#Demócrata
+Num1 = exp(-1.277693 + 0.4664781*1 + 0.02104493*45 )
+Den1 = 1 + Num1 
+Prob_dem = Num1/Den1
+Prob_dem
+
+```
+
+Probabilidad por republicano:
+
+```{r}
+Num2 = exp(-1.236709 -0.7020387*1 + 0.02129955*45 )
+Den2 = 1 + Num2 
+Prob_rep = Num2/Den2
+Prob_rep
+```
+
+Como sabemos la probabilidad es un valor que va del 0 al 1. Para poder encontrar la probabilidad restante solo debemos restarle la suma de las dos probabilidades encontradas al 1; es decir 1 - (prob1 + prob2).
+
+Probabilidad por independiente:
+
+```{r}
+Prob_inde=1-(Prob_dem+Prob_rep)
+Prob_inde
+```
+
+#### Efectos marginales:
+
+Revisemos el ompacto de la VI en la probabilidad con efectos marginales. Recuerda que la interpretación se hace por cada variable independiente.
+
+```{r}
+margiMod1=marginaleffects(mod1)
+summary(margiMod1)[c(1,3,4)]
+```
+
+-   Cuando una persona está a favor del aborto, la probabilidad (en promedio) de sentir afinidad por el partido demócrata aumenta en 16.68%
+
+-   Cuando la edad de una persona aumenta en un año, la probabilidad (en promedio) de sentir afinidad por el partido demócrata aumenta en 0.29%
+
+-   Cuando una persona está a favor del aborto, la probabilidad (en promedio) de sentir afinidad por el partido independiente disminuye en 0.69%
+
+-   Cuando la edad de una persona aumenta en un año, la probabilidad (en promedio) de sentir afinidad por el partido independiente disminuye en 0.48%
+
+### Modelo 2
+
+Se agregaron las variables
+
+-   childs: número de hijos
+
+-   blanco_raza: es blanco?
+
+#### Creación del modelo
+
+```{r}
+mod2 <- multinom(partido1 ~ abany + age+childs+blanco_raza, data = data)
+summary(mod2)
+```
+
+#### Significancia de las variables
+
+```{r}
+test.multinom(mod2,age)
+test.multinom(mod2,childs)
+```
+
+En el caso de edad, encontramos que la variable solo es significativa para los cruces demócrata-independiente y republicano - independiente. Para la variable n° de hijos, la variable solo es significativa cuando queremos saber la probabilidad de sentir afinidad por el partido demócrata en comparación del independiente.
+
+#### Predicciones:
+
+¿Cuál es la probabilidad de sentir afinidad por x partido cuando la persona está a favor del aborto, tiene 45 años, tiene 3 hijos, y es de raza blanca?
+
+Probabilidad por partido demócrata
+
+```{r}
+Num1 = exp(-0.7794812 + 0.5204134*1 + 0.02994665*45 -0.13445720*3 -1.011832 * 1)
+Den1 = 1 + Num1 
+Prob_dem = Num1/Den1
+Prob_dem
+```
+
+Probabilidad por partido republicano
+
+```{r}
+Num2 = exp(-2.3455902 -0.8127828*1 + 0.02064037*45 -0.06776204*3 + 1.519681*1)
+Den2 = 1 + Num2 
+Prob_rep = Num2/Den2
+Prob_rep
+```
+
+Probabilidad por partido independiente
+
+```{r}
+1 - (Prob_dem+Prob_rep)
+```
+
+#### Efectos marginales:
+
+Revisemos el ompacto de la VI en la probabilidad con efectos marginales. Recuerda que la interpretación se hace por cada variable independiente.
+
+```{r}
+margiMod2=marginaleffects(mod2)
+summary(margiMod2)[c(1,2,4)]
+```
+
+Interpretemos para las variables que acabamos de agregar **(blanco_raza y childs)**
+
+-   Cuando la persona es de raza blanca (blanco_raza = 1), la probabilidad de sentir afinidad por el partido demócrata disminuye en 31.75%
+
+-   Cuando la persona aumenta sus hijos en 1, la probabilidad de sentir afinidad por el partido demócrata disminuye en 2.28%
+
+-   Cuando la persona es de raza blanca (blanco_raza = 1), la probabilidad de sentir afinidad por el partido independiente aumenta en 7.08%
+
+-   Cuando la persona aumenta sus hijos en 1, la probabilidad de sentir afinidad por el partido independiente aumenta en 2.45%
+
+-   Cuando la persona es de raza blanca (blanco_raza = 1), la probabilidad de sentir afinidad por el partido republicano aumenta en 24.67%
+
+-   Cuando la persona aumenta sus hijos en 1, la probabilidad de sentir afinidad por el partido republicano disminuye en 0.16%

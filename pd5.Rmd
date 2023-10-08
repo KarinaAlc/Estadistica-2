@@ -126,7 +126,7 @@ names(data)
 Veamos si el nivel educativo, y el ser mujer influye en el salario
 actual
 
-# **Paso 2: Creación del modelo** 
+# **Paso 2: Creación del modelo**
 
 ```{r, message=FALSE, warning=FALSE}
 modelo <- polr(salario_actual_ordinal ~ sexo_Mujer + educ, data = data, Hess=T)
