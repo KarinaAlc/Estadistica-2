@@ -1,20 +1,42 @@
 ---
-title: "SESIÓN 06 - Análisis Factorial Exploratorio (AFE)"
-author: "Curso: Estadística para el análisis político 2"
-date: "Ciclo 2023-1"
+title: "Análisis Factorial Exploratorio"
 output:
-  prettydoc::html_pretty:
-    theme: cayman
-    highlight: github
+  html_document:
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
+    toc_depth: 2
+    theme: simplex
+    highlight: kate
+    always_allow_html: yes
+    code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: true
 editor_options: 
   markdown: 
     wrap: 72
 ---
 
-## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+<br>
 
-#### Jefe de Práctica: Lizette Crispín 👩‍💻 <br>
+<center><img src=" " width="200"/></center>
 
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("logoPUCP.png") 
+```
+
+**FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
+
+## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+
+<br>
+
+#### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+
+<br> <br>
 El Análisis Factorial Exploratorio (AFE) es una técnica estadística que
 permite explorar con mayor precisión las dimensiones subyacentes,
 constructos o variables latentes de las variables observadas, es decir,
@@ -44,24 +66,24 @@ Confianza en las instituciones
 
 ### Subset de las variables que usaremos
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, fig.show='hide', message=FALSE, warning=FALSE}
 confianza=data[,c(11:22)]
 #En caso quieran mencionar el nombre de la variable pueden usar el comando select() del paquete dplyr.
 ```
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 confianza[confianza== 5] <- NA
 ```
 
 Eliminamos los datos perdidos únicamente de la selección de variables.
 
-```{r echo = T, results = 'hide',  fig.show='hide'}
+```{r echo = T,   fig.show='hide'}
 confianza=na.omit(confianza)
 ```
 
 Etiquetamos las variables seleccionadas de acuerdo al nombre
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 names(confianza)=c("JNE","ONPE","RENIEC","Mun.Prov","Mun.Dist","PNP","FFAA","Gob.Reg","P.Judicial","MINEDU","Def.Pueblo","Congreso")
 ```
 
@@ -73,7 +95,7 @@ Al tener una variable que mide confianza desde nada a mucha confianza,
 la denominamos como ordinal, y por lo tanto,tendremos que ejecutar la
 correlación policórica.
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 #install.packages("polycor")
 library(polycor)
 library(psych)
@@ -83,11 +105,11 @@ poly_cor
 
 Creamos un objeto con la matriz de correlaciones
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 corMatrix=poly_cor$rho 
 ```
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 cor.plot(corMatrix,
           numbers=T, #Se muestren los numeros de las correlaciones
           upper=F, #Que aparezca la segunda parte
@@ -107,7 +129,7 @@ Lo que buscamos es que la correlación parcial sea mayor a 0.5
 
 Se solicita un valor de al menos 0.5, a partir del 0.8 ya es excelente.
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 library(psych)
 psych::KMO(confianza) 
 ```
@@ -139,7 +161,7 @@ es entre las mismas variables.
 Entonces, lo que esperamos es que la matriz de correlación sea diferente
 a la matriz de identidad, para concluir que sí hay correlación.
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 cortest.bartlett(corMatrix,n=nrow(confianza))$p.value>0.05#Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE
 ```
 
@@ -166,7 +188,7 @@ factores.
 
 Donde está el codo las X's que están encima de la línea roja
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, fig.show='hide', message=FALSE, warning=FALSE}
 fa.parallel(corMatrix, fm="pa", fa="fa", main = "Scree Plot")
 ```
 
@@ -177,7 +199,7 @@ los autovalores
 
 Los autovalores que superan 1 son los factores que podríamos realizar.
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 eigenf = eigen(cor(confianza, use="complete"))
 eigenf$values
 ```
@@ -188,7 +210,7 @@ Aplicamos la redimensión
 
 En esta parte, aplicamos los componentes principales.
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, fig.show='hide', message=FALSE, warning=FALSE}
 #install.packages("GPArotation")
 library(GPArotation)
 factorial = fa(confianza,nfactors= 3 ,rotate = "varimax",fm="minres")
@@ -197,13 +219,13 @@ factorial
 
 Diagramamos 📊
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 fa.diagram(factorial)
 ```
 
 ¿Que variables componen cada uno de mis factores?
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 print(factorial$loadings,cutoff = 0.4)
 ```
 
@@ -217,19 +239,19 @@ print(factorial$loadings,cutoff = 0.4)
 
 -   ¿Qué variables aportaron mas a los factores?
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 sort(factorial$communality)
 ```
 
 -   ¿Qué variables contribuyen a mas de un factor?
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 sort(factorial$complexity)
 ```
 
 -   ¿Qué variables tiene un componente "único" más grande?
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 sort(factorial$uniquenesses)
 ```
 
@@ -240,7 +262,7 @@ información en común (o sea varianza común)
 
 Podemos crear un data set con sólo los factores creados
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,   fig.show='hide', message=FALSE, warning=FALSE}
 factorial_casos<-as.data.frame(factorial$scores)
 head(factorial_casos)
 summary(factorial_casos)
@@ -248,7 +270,7 @@ summary(factorial_casos)
 
 Agregamos a la subdata
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,   fig.show='hide', message=FALSE, warning=FALSE}
 confianza$confins1<- factorial_casos$MR1
 confianza$confins2<- factorial_casos$MR2
 confianza$confins3<- factorial_casos$MR3
@@ -260,7 +282,7 @@ confianza$confins3<- factorial_casos$MR3
 
 ## **PASO 8:** Estandarizamos a una escala de 100
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 #install.packages("BBmisc")
 library(BBmisc)
 confianza$confins1 = normalize(confianza$confins1, 
@@ -280,6 +302,6 @@ confianza$confins3 = normalize(confianza$confins3,
 
 Vemos resultados de cada factor
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,   fig.show='hide', message=FALSE, warning=FALSE}
 summary(confianza)
 ```
