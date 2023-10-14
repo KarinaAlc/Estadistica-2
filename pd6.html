@@ -520,7 +520,7 @@ variables resumen. Es decir, queremos saber si las nuevas variables
 tienen un nombre, al cual se le denomina técnicamente variable latente.
 En esta sesión exploraremos la data a ver qué emerge.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;enaho_2020.sav&quot;</span>,<span class="at">use.value.labels=</span><span class="cn">TRUE</span>, <span class="at">max.value.labels=</span><span class="cn">TRUE</span>, <span class="at">to.data.frame=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;enaho_2020.sav&quot;</span>,<span class="at">to.data.frame=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="tema-de-la-clase" class="section level2">
@@ -537,14 +537,14 @@ cuestionario.</p>
 <p>Confianza en las instituciones</p>
 <div id="subset-de-las-variables-que-usaremos" class="section level3">
 <h3>Subset de las variables que usaremos</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>confianza<span class="ot">=</span>data[,<span class="fu">c</span>(<span class="dv">11</span><span class="sc">:</span><span class="dv">22</span>)]</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>confianza<span class="ot">&lt;-</span>data[,<span class="fu">c</span>(<span class="dv">11</span><span class="sc">:</span><span class="dv">22</span>)]</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#En caso quieran mencionar el nombre de la variable pueden usar el comando select() del paquete dplyr.</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>confianza[confianza<span class="sc">==</span> <span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
 <p>Eliminamos los datos perdidos únicamente de la selección de
 variables.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>confianza<span class="ot">=</span><span class="fu">na.omit</span>(confianza)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>confianza<span class="ot">&lt;-</span><span class="fu">na.omit</span>(confianza)</span></code></pre></div>
 <p>Etiquetamos las variables seleccionadas de acuerdo al nombre</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">names</span>(confianza)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;JNE&quot;</span>,<span class="st">&quot;ONPE&quot;</span>,<span class="st">&quot;RENIEC&quot;</span>,<span class="st">&quot;Mun.Prov&quot;</span>,<span class="st">&quot;Mun.Dist&quot;</span>,<span class="st">&quot;PNP&quot;</span>,<span class="st">&quot;FFAA&quot;</span>,<span class="st">&quot;Gob.Reg&quot;</span>,<span class="st">&quot;P.Judicial&quot;</span>,<span class="st">&quot;MINEDU&quot;</span>,<span class="st">&quot;Def.Pueblo&quot;</span>,<span class="st">&quot;Congreso&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">names</span>(confianza)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;JNE&quot;</span>,<span class="st">&quot;ONPE&quot;</span>,<span class="st">&quot;RENIEC&quot;</span>,<span class="st">&quot;Mun.Prov&quot;</span>,<span class="st">&quot;Mun.Dist&quot;</span>,<span class="st">&quot;PNP&quot;</span>,<span class="st">&quot;FFAA&quot;</span>,<span class="st">&quot;Gob.Reg&quot;</span>,<span class="st">&quot;P.Judicial&quot;</span>,<span class="st">&quot;MINEDU&quot;</span>,<span class="st">&quot;Def.Pueblo&quot;</span>,<span class="st">&quot;Congreso&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="paso-1-calcular-la-matriz-de-correlación"
@@ -557,7 +557,7 @@ ejecutar la correlación policórica.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#install.packages(&quot;polycor&quot;)</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">library</span>(polycor)</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>poly_cor <span class="ot">=</span> <span class="fu">polychoric</span>(confianza)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>poly_cor <span class="ot">&lt;-</span> <span class="fu">polychoric</span>(confianza)</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>poly_cor</span></code></pre></div>
 <pre><code>## Call: polychoric(x = confianza)
 ## Polychoric correlations 
@@ -677,7 +677,7 @@ son los autovalores</p>
 <h4>➡️ <strong>Opción 2: Eigen values - Autovalores</strong></h4>
 <p>Los autovalores que superan 1 son los factores que podríamos
 realizar.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>eigenf <span class="ot">=</span> <span class="fu">eigen</span>(<span class="fu">cor</span>(confianza, <span class="at">use=</span><span class="st">&quot;complete&quot;</span>))</span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>eigenf <span class="ot">&lt;-</span> <span class="fu">eigen</span>(<span class="fu">cor</span>(confianza, <span class="at">use=</span><span class="st">&quot;complete&quot;</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>eigenf<span class="sc">$</span>values</span></code></pre></div>
 <pre><code>##  [1] 5.7243559 1.1305763 0.9707585 0.7816106 0.6636440 0.5535846 0.5075943
 ##  [8] 0.4647083 0.4033080 0.3622893 0.2257831 0.2117871</code></pre>
@@ -690,7 +690,7 @@ class="section level2">
 <p>En esta parte, aplicamos los componentes principales.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co">#install.packages(&quot;GPArotation&quot;)</span></span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>factorial <span class="ot">=</span> <span class="fu">fa</span>(confianza,<span class="at">nfactors=</span> <span class="dv">3</span> ,<span class="at">rotate =</span> <span class="st">&quot;varimax&quot;</span>,<span class="at">fm=</span><span class="st">&quot;minres&quot;</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>factorial <span class="ot">&lt;-</span> <span class="fu">fa</span>(confianza,<span class="at">nfactors=</span> <span class="dv">3</span> ,<span class="at">rotate =</span> <span class="st">&quot;varimax&quot;</span>,<span class="at">fm=</span><span class="st">&quot;minres&quot;</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>factorial</span></code></pre></div>
 <pre><code>## Factor Analysis using method =  minres
 ## Call: fa(r = confianza, nfactors = 3, rotate = &quot;varimax&quot;, fm = &quot;minres&quot;)
@@ -833,15 +833,15 @@ class="section level2">
 <h2><strong>PASO 8:</strong> Estandarizamos a una escala de 100</h2>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co">#install.packages(&quot;BBmisc&quot;)</span></span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>confianza<span class="sc">$</span>confins1 <span class="ot">=</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>confins1, </span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>confianza<span class="sc">$</span>confins1 <span class="ot">&lt;-</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>confins1, </span>
 <span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
 <span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
 <span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
-<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>confianza<span class="sc">$</span>confins2 <span class="ot">=</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>confins2, </span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>confianza<span class="sc">$</span>confins2 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>confins2, </span>
 <span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
 <span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
 <span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
-<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>confianza<span class="sc">$</span>confins3 <span class="ot">=</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>confins3, </span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>confianza<span class="sc">$</span>confins3 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>confins3, </span>
 <span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
 <span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
 <span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span></code></pre></div>

@@ -1,6 +1,10 @@
 ---
 title: "Análisis Factorial Exploratorio"
 output:
+  pdf_document:
+    latex_engine: lualatex
+    toc: true
+  fontfamily: "Apple Color Emoji"
   html_document:
     toc: yes
     toc_float: yes
@@ -11,10 +15,6 @@ output:
     highlight: kate
     always_allow_html: yes
     code_folding: show
-  fontfamily: "Apple Color Emoji"
-  pdf_document:
-    latex_engine: lualatex
-    toc: true
 editor_options: 
   markdown: 
     wrap: 72
@@ -49,7 +49,7 @@ sesión exploraremos la data a ver qué emerge.
 
 ```{r message=FALSE, warning=FALSE}
 library(rio)
-data<-import("enaho_2020.sav",use.value.labels=TRUE, max.value.labels=TRUE, to.data.frame=TRUE)
+data<-import("enaho_2020.sav",to.data.frame=TRUE)
 ```
 
 ## Tema de la clase
@@ -67,7 +67,7 @@ Confianza en las instituciones
 ### Subset de las variables que usaremos
 
 ```{r echo = T, fig.show='hide', message=FALSE, warning=FALSE}
-confianza=data[,c(11:22)]
+confianza<-data[,c(11:22)]
 #En caso quieran mencionar el nombre de la variable pueden usar el comando select() del paquete dplyr.
 ```
 
@@ -78,13 +78,13 @@ confianza[confianza== 5] <- NA
 Eliminamos los datos perdidos únicamente de la selección de variables.
 
 ```{r echo = T,   fig.show='hide'}
-confianza=na.omit(confianza)
+confianza<-na.omit(confianza)
 ```
 
 Etiquetamos las variables seleccionadas de acuerdo al nombre
 
 ```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
-names(confianza)=c("JNE","ONPE","RENIEC","Mun.Prov","Mun.Dist","PNP","FFAA","Gob.Reg","P.Judicial","MINEDU","Def.Pueblo","Congreso")
+names(confianza)<-c("JNE","ONPE","RENIEC","Mun.Prov","Mun.Dist","PNP","FFAA","Gob.Reg","P.Judicial","MINEDU","Def.Pueblo","Congreso")
 ```
 
 ## **PASO 1:** Calcular la matriz de correlación
@@ -99,7 +99,7 @@ correlación policórica.
 #install.packages("polycor")
 library(polycor)
 library(psych)
-poly_cor = polychoric(confianza)
+poly_cor <- polychoric(confianza)
 poly_cor
 ```
 
@@ -200,7 +200,7 @@ los autovalores
 Los autovalores que superan 1 son los factores que podríamos realizar.
 
 ```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
-eigenf = eigen(cor(confianza, use="complete"))
+eigenf <- eigen(cor(confianza, use="complete"))
 eigenf$values
 ```
 
@@ -213,7 +213,7 @@ En esta parte, aplicamos los componentes principales.
 ```{r echo = T, fig.show='hide', message=FALSE, warning=FALSE}
 #install.packages("GPArotation")
 library(GPArotation)
-factorial = fa(confianza,nfactors= 3 ,rotate = "varimax",fm="minres")
+factorial <- fa(confianza,nfactors= 3 ,rotate = "varimax",fm="minres")
 factorial
 ```
 
@@ -285,15 +285,15 @@ confianza$confins3<- factorial_casos$MR3
 ```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 #install.packages("BBmisc")
 library(BBmisc)
-confianza$confins1 = normalize(confianza$confins1, 
+confianza$confins1 <- normalize(confianza$confins1, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 100))
-confianza$confins2 = normalize(confianza$confins2, 
+confianza$confins2 <-normalize(confianza$confins2, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 100))
-confianza$confins3 = normalize(confianza$confins3, 
+confianza$confins3 <-normalize(confianza$confins3, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 100))
