@@ -1,0 +1,285 @@
+---
+title: "SESIÓN 06 - Análisis Factorial Exploratorio (AFE)"
+author: "Curso: Estadística para el análisis político 2"
+date: "Ciclo 2023-1"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+
+#### Jefe de Práctica: Lizette Crispín 👩‍💻 <br>
+
+El Análisis Factorial Exploratorio (AFE) es una técnica estadística que
+permite explorar con mayor precisión las dimensiones subyacentes,
+constructos o variables latentes de las variables observadas, es decir,
+las que observa y mide el investigador.
+
+Hacemos analisis factorial para reducir las variables en otras variables
+resumen. Es decir, queremos saber si las nuevas variables tienen un
+nombre, al cual se le denomina técnicamente variable latente. En esta
+sesión exploraremos la data a ver qué emerge.
+
+```{r message=FALSE, warning=FALSE}
+library(rio)
+data<-import("enaho_2020.sav",use.value.labels=TRUE, max.value.labels=TRUE, to.data.frame=TRUE)
+```
+
+## Tema de la clase
+
+Vamos a ver si podemos crear una variable *latente de confianza* en las
+instituciones *(del P1\$01 (col 11) al P1\$31 (col 31)).*
+
+Vamos a tomar 11 variables observables de la base de datos de enaho, que
+es justo la batería de preguntas que les mostré en el cuestionario.
+
+## Preparamos las variables
+
+Confianza en las instituciones
+
+### Subset de las variables que usaremos
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+confianza=data[,c(11:22)]
+#En caso quieran mencionar el nombre de la variable pueden usar el comando select() del paquete dplyr.
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+confianza[confianza== 5] <- NA
+```
+
+Eliminamos los datos perdidos únicamente de la selección de variables.
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+confianza=na.omit(confianza)
+```
+
+Etiquetamos las variables seleccionadas de acuerdo al nombre
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+names(confianza)=c("JNE","ONPE","RENIEC","Mun.Prov","Mun.Dist","PNP","FFAA","Gob.Reg","P.Judicial","MINEDU","Def.Pueblo","Congreso")
+```
+
+## **PASO 1:** Calcular la matriz de correlación
+
+Tenemos diferentes maneras de crear la matriz de correlación.
+
+Al tener una variable que mide confianza desde nada a mucha confianza,
+la denominamos como ordinal, y por lo tanto,tendremos que ejecutar la
+correlación policórica.
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+#install.packages("polycor")
+library(polycor)
+library(psych)
+poly_cor = polychoric(confianza)
+poly_cor
+```
+
+Creamos un objeto con la matriz de correlaciones
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+corMatrix=poly_cor$rho 
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+cor.plot(corMatrix,
+          numbers=T, #Se muestren los numeros de las correlaciones
+          upper=F, #Que aparezca la segunda parte
+          main= "Matriz de correlaciones",#Titulo
+          show.legend=T)#Mostrar leyenda
+```
+
+## **PASO 2:** Verificando que los datos se puedan factorizar
+
+❗ La prueba de KMO nos permite determinar si se puede factorizar o no.
+
+Lo que hace es eliminar la influencia o la información que realmente no
+aporta en la relación con las variables observables, para así ver la
+correlación real, a este proceso se le denomina correlación parcial.
+
+Lo que buscamos es que la correlación parcial sea mayor a 0.5
+
+Se solicita un valor de al menos 0.5, a partir del 0.8 ya es excelente.
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+library(psych)
+psych::KMO(confianza) 
+```
+
+Lo que tenemos que ver es el overall MSA, este valor de preferencia
+tiene que ser mayor a 0.5, queremos que salga más cercano a 1.
+
+## **PASO 3:** Verificar si la matriz de correlaciones es adecuada
+
+Verificar si la matriz de correlaciones es adecuada.
+
+-   Test de Bartlett:
+
+```{r,echo=FALSE, out.width="20%", fig.align="center", message=FALSE, warning=FALSE}
+knitr::include_graphics("BARTLETT.png") 
+```
+
+Otro manera de poder determinar si podemos realizar o no el análisis
+factorial, es mediante el test de bartlett, que nos permite indicar si
+la matriz de correlaciones que henmos obsrvado en el primer paso se
+parece o no a una matriz de identidad.
+
+-   Que es la matriz de identidad?
+
+Es una matriz donde solo se cuenta con los valores de 1 en la diagonal y
+en los demás valores es 0, es decir, que la unica correlación existente
+es entre las mismas variables.
+
+Entonces, lo que esperamos es que la matriz de correlación sea diferente
+a la matriz de identidad, para concluir que sí hay correlación.
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+cortest.bartlett(corMatrix,n=nrow(confianza))$p.value>0.05#Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE
+```
+
+Este es una prueba de hipótesis donde H0: La matriz de correlacion es
+una matriz identidad
+
+Entonces buscamos que se rechace la hipótesis nula para así poder
+determinar que la matriz de correlación no se prece una matriz de
+identidad
+
+## **PASO 4:** Determinar cuántos factores o variables latentes puede redimensionar la data
+
+#### ➡️ **Opción 1: Gráfico de sedimentación**
+
+Luego de haber determinado si podemos realizar el análisis factorial,
+pasaremos al paso de calcular el número de factores o de variables
+latentes podemos obtener.
+
+Esto lo podemos ver con 2 maneras,
+
+Mediante el gráfico de sedimentación. En este gráfico lo que veremos es
+en donde se presenta la mayor caída para determinar el número de
+factores.
+
+Donde está el codo las X's que están encima de la línea roja
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+fa.parallel(corMatrix, fm="pa", fa="fa", main = "Scree Plot")
+```
+
+El eje X vendría a ser lo factores que se podrían dividir y el eje Y son
+los autovalores
+
+#### ➡️ **Opción 2: Eigen values - Autovalores**
+
+Los autovalores que superan 1 son los factores que podríamos realizar.
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+eigenf = eigen(cor(confianza, use="complete"))
+eigenf$values
+```
+
+## **PASO 5:** Solicitamos el número de componentes.
+
+Aplicamos la redimensión
+
+En esta parte, aplicamos los componentes principales.
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+#install.packages("GPArotation")
+library(GPArotation)
+factorial = fa(confianza,nfactors= 3 ,rotate = "varimax",fm="minres")
+factorial
+```
+
+Diagramamos 📊
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+fa.diagram(factorial)
+```
+
+¿Que variables componen cada uno de mis factores?
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+print(factorial$loadings,cutoff = 0.4)
+```
+
+1.Ver qué variables tiene cada componente
+
+2.Ver la carga, que tanto aporta cada variable al componente.
+
+3.Proportion Var y Cumulative Var
+
+## **PASO 6:** Evaluamos el Análisis Factorial Exploratorio solicitado
+
+-   ¿Qué variables aportaron mas a los factores?
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+sort(factorial$communality)
+```
+
+-   ¿Qué variables contribuyen a mas de un factor?
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+sort(factorial$complexity)
+```
+
+-   ¿Qué variables tiene un componente "único" más grande?
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+sort(factorial$uniquenesses)
+```
+
+Que tanto componente unico entre las variales, tiene menor cantidad de
+información en común (o sea varianza común)
+
+## **PASO 7:** Guardamos los componentes como nuevas variables
+
+Podemos crear un data set con sólo los factores creados
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+factorial_casos<-as.data.frame(factorial$scores)
+head(factorial_casos)
+summary(factorial_casos)
+```
+
+Agregamos a la subdata
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+confianza$confins1<- factorial_casos$MR1
+confianza$confins2<- factorial_casos$MR2
+confianza$confins3<- factorial_casos$MR3
+```
+
+-   Primer factor:Poderes del Estado
+-   Segundo factor: Organismos electorales (confins2)
+-   Tercer factor:organismos regionales
+
+## **PASO 8:** Estandarizamos a una escala de 100
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+#install.packages("BBmisc")
+library(BBmisc)
+confianza$confins1 = normalize(confianza$confins1, 
+                                        method = "range", 
+                                        margin=2, # by column
+                                        range = c(0, 100))
+confianza$confins2 = normalize(confianza$confins2, 
+                                        method = "range", 
+                                        margin=2, # by column
+                                        range = c(0, 100))
+confianza$confins3 = normalize(confianza$confins3, 
+                                        method = "range", 
+                                        margin=2, # by column
+                                        range = c(0, 100))
+
+```
+
+Vemos resultados de cada factor
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+summary(confianza)
+```
