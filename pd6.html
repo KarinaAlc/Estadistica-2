@@ -13,7 +13,7 @@
 
 <title>Análisis Factorial Exploratorio</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -719,14 +719,14 @@ class="section level2">
 ## Mean item complexity =  1.7
 ## Test of the hypothesis that 3 factors are sufficient.
 ## 
-## df null model =  66  with the objective function =  5.82 with Chi Square =  65402.32
-## df of  the model are 33  and the objective function was  0.25 
+## The degrees of freedom for the null model are  66  and the objective function was  5.82 with Chi Square of  65402.32
+## The degrees of freedom for the model are 33  and the objective function was  0.25 
 ## 
 ## The root mean square of the residuals (RMSR) is  0.03 
 ## The df corrected root mean square of the residuals is  0.05 
 ## 
-## The harmonic n.obs is  11247 with the empirical chi square  1614.08  with prob &lt;  7.200019e-319 
-## The total n.obs was  11247  with Likelihood Chi Square =  2841.41  with prob &lt;  0 
+## The harmonic number of observations is  11247 with the empirical chi square  1614.08  with prob &lt;  7.200019e-319 
+## The total number of observations was  11247  with Likelihood Chi Square =  2841.41  with prob &lt;  0 
 ## 
 ## Tucker Lewis Index of factoring reliability =  0.914
 ## RMSEA index =  0.087  and the 90 % confidence intervals are  0.084 0.09
@@ -740,7 +740,7 @@ class="section level2">
 <p>Diagramamos 📊</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">fa.diagram</span>(factorial)</span></code></pre></div>
 <p>¿Que variables componen cada uno de mis factores?</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">print</span>(factorial<span class="sc">$</span>loadings,<span class="at">cutoff =</span> <span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">print</span>(factorial<span class="sc">$</span>loadings,<span class="at">cutoff =</span> <span class="fl">0.35</span>)</span></code></pre></div>
 <pre><code>## 
 ## Loadings:
 ##            MR1   MR3   MR2  
@@ -752,10 +752,10 @@ class="section level2">
 ## PNP        0.614            
 ## FFAA       0.630            
 ## Gob.Reg    0.506 0.489      
-## P.Judicial 0.589            
+## P.Judicial 0.589 0.372      
 ## MINEDU     0.577            
 ## Def.Pueblo 0.592            
-## Congreso   0.434            
+## Congreso   0.434 0.357      
 ## 
 ##                  MR1   MR3   MR2
 ## SS loadings    2.735 2.107 1.875
@@ -819,13 +819,13 @@ variables</h2>
 ##  3rd Qu.: 0.54671   3rd Qu.: 0.513798   3rd Qu.: 0.4524  
 ##  Max.   : 4.07026   Max.   : 3.554010   Max.   : 3.3607</code></pre>
 <p>Agregamos a la subdata</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>confianza<span class="sc">$</span>confins1<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR1</span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>confianza<span class="sc">$</span>confins2<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR2</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>confianza<span class="sc">$</span>confins3<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR3</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>confianza<span class="sc">$</span>pod_estado<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR1</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>confianza<span class="sc">$</span>org_elect<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR2</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>confianza<span class="sc">$</span>municipios<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR3</span></code></pre></div>
 <ul>
 <li>Primer factor:Poderes del Estado</li>
 <li>Segundo factor: Organismos electorales (confins2)</li>
-<li>Tercer factor:organismos regionales</li>
+<li>Tercer factor:municipios</li>
 </ul>
 </div>
 <div id="paso-8-estandarizamos-a-una-escala-de-100"
@@ -833,15 +833,15 @@ class="section level2">
 <h2><strong>PASO 8:</strong> Estandarizamos a una escala de 100</h2>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co">#install.packages(&quot;BBmisc&quot;)</span></span>
 <span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>confianza<span class="sc">$</span>confins1 <span class="ot">&lt;-</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>confins1, </span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>confianza<span class="sc">$</span>confins1 <span class="ot">&lt;-</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>pod_estado, </span>
 <span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
 <span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
 <span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
-<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>confianza<span class="sc">$</span>confins2 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>confins2, </span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>confianza<span class="sc">$</span>confins2 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>org_elect, </span>
 <span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
 <span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
 <span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
-<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>confianza<span class="sc">$</span>confins3 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>confins3, </span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>confianza<span class="sc">$</span>confins3 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>municipios, </span>
 <span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
 <span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
 <span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span></code></pre></div>
@@ -861,20 +861,27 @@ class="section level2">
 ##  Mean   :1.927   Mean   :2.234   Mean   :1.664   Mean   :1.722  
 ##  3rd Qu.:2.000   3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:2.000  
 ##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000  
-##      MINEDU        Def.Pueblo       Congreso        confins1     
-##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :  0.00  
-##  1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.000   1st Qu.: 30.31  
-##  Median :2.000   Median :2.000   Median :1.000   Median : 38.24  
-##  Mean   :2.271   Mean   :1.979   Mean   :1.449   Mean   : 39.28  
-##  3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.: 47.43  
-##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :100.00  
-##     confins2         confins3     
-##  Min.   :  0.00   Min.   :  0.00  
-##  1st Qu.: 28.55   1st Qu.: 22.75  
-##  Median : 43.22   Median : 35.66  
-##  Mean   : 43.43   Mean   : 35.82  
-##  3rd Qu.: 51.04   3rd Qu.: 45.10  
-##  Max.   :100.00   Max.   :100.00</code></pre>
+##      MINEDU        Def.Pueblo       Congreso       pod_estado      
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :-2.63272  
+##  1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.000   1st Qu.:-0.60080  
+##  Median :2.000   Median :2.000   Median :1.000   Median :-0.06942  
+##  Mean   :2.271   Mean   :1.979   Mean   :1.449   Mean   : 0.00000  
+##  3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.: 0.54671  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   : 4.07026  
+##    org_elect         municipios           confins1         confins2     
+##  Min.   :-2.5800   Min.   :-1.983424   Min.   :  0.00   Min.   :  0.00  
+##  1st Qu.:-0.8837   1st Qu.:-0.723521   1st Qu.: 30.31   1st Qu.: 28.55  
+##  Median :-0.0122   Median :-0.008546   Median : 38.24   Median : 43.22  
+##  Mean   : 0.0000   Mean   : 0.000000   Mean   : 39.28   Mean   : 43.43  
+##  3rd Qu.: 0.4524   3rd Qu.: 0.513798   3rd Qu.: 47.43   3rd Qu.: 51.04  
+##  Max.   : 3.3607   Max.   : 3.554010   Max.   :100.00   Max.   :100.00  
+##     confins3     
+##  Min.   :  0.00  
+##  1st Qu.: 22.75  
+##  Median : 35.66  
+##  Mean   : 35.82  
+##  3rd Qu.: 45.10  
+##  Max.   :100.00</code></pre>
 </div>
 
 
