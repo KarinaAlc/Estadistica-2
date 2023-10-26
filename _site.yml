@@ -23,6 +23,8 @@ navbar:
       href: Repaso.html
     - text: "Sesión 6"
       href: pd6.html
+    - text: "Solución - ejercicio clase"
+      href: Full_Factor.html
     - text: "Sesión 7"
       href: pd1.html
     - text: "Sesión 8"
