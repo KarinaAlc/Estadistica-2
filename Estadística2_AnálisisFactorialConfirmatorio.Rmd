@@ -1,0 +1,259 @@
+---
+title: "Análisis Factorial Confirmatorio"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
+    toc_depth: 2
+    theme: simplex
+    highlight: kate
+    always_allow_html: yes
+    code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: true
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+<br>
+
+<center><img src=" " width="200"/></center>
+
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("logoPUCP.png") 
+```
+
+**FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
+
+## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+
+<br>
+
+#### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+
+<br> <br>
+
+
+Vamos a trabajar con una base de datos creada por unos alumnos que buscan poder explicar la variable de desigualdad de género a nivel de países. Esta base de datos tiene las siguientes variables independientes:
+
+1. País: País del que pertenece la información
+
+2. DesigualdadGenero: Indice de desigualdad de género
+
+3. MLAutonomia: Mide que tanto el sistema legal protege derechos reproductivos de las mujeres
+
+4. MLViolencia: Mide que tanto el sistema legal protege a las mujeres de la violencia
+
+5. VozPolítica: Presencia de mujeres en el parlamento
+
+6. LibertadMov: Porcentaje de mujeres que declaran no sentirse seguras en las calles
+
+7. DesconfianzaSJ: Porcentaje de mujeres que no confian en el sistema de justicia
+
+8. SecundariaC: Porcentaje de población con secundaria completa
+
+9. DesempleoMuj: Ratio de desempleo de mujeres frente a hombres
+
+10. CuentaF: Porcentaje de mujeres que cuentan con una cuenta en el sistema financiero.
+
+
+Las dos primeras variables son descriptivas, la primera es con respecto al país y la segunda es el índice, como un resultado final.
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+library(rio)
+data<- import("desigualdad.xlsx")
+names(data)
+```
+
+Lo llamaremos **subdata**:
+
+```{r}
+subdata<- data[,c(3:10)]
+```
+
+
+## Paso 1: Matriz de correlaciones
+
+Generamos la matriz de correlaciones para identificar qué variables de nuestra subdata están correlacionadas. 
+
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+library(polycor)
+corMatrix<-polycor::hetcor(subdata)$correlations
+corMatrix
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+library(psych)
+cor.plot(corMatrix,
+          numbers=T, #Se muestren los numeros de las correlaciones
+          upper=F, #Que aparezca la segunda parte
+          main= "Matriz de correlaciones",#Titulo
+          show.legend=T)#Mostrar leyenda
+```
+# Paso 2: Corroborar si se puede factorizar
+
+KMO
+
+Proceso correlación
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+library(psych)
+psych::KMO(subdata)
+```
+
+Bartlet
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+cortest.bartlett(corMatrix,n=nrow(subdata))$p.value>0.05 #Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE
+```
+
+# Paso 3: Análisis Factorial Exploratorio
+
+Gráfico de sedimentación
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+fa.parallel(corMatrix, fm="pa", fa="fa", main = "Scree Plot")
+```
+Recomienda 3 factores, 3 triangulos debajo de la línea punteada
+
+Autovalores
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+eigenf = eigen(cor(subdata, use="complete"))
+eigenf$values
+```
+También recomienda 3 factores :)
+
+# Factorizar
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+library(GPArotation)
+factorial <- fa(subdata,nfactors= 3 ,rotate = "varimax",fm="minres")
+factorial
+```
+
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+fa.diagram(factorial)
+```
+
+
+Podemos observar que hay unas líneas punteadas rojas, ello implica que las cargas factoriales son negativas, lo que significa que la relación entre la variable observable y el factor creado es inversa.
+
+
+ ** Vemos cargas factoriales y cumulative var.**
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+print(factorial$loadings,cutoff = 0.3)
+```
+1.Ver qué variables tiene cada componente
+
+
+2.Ver la carga, que tanto aporta cada variable al componente. 
+
+
+
+3.Proportion Var y Cumulative Var
+
+
+
+#Evaluamos las variables observadas
+
+- ¿Qué variables observables tienen mayor información en común aportaron mas a los factores?
+
+```{r echo = T, message=FALSE, warning=FALSE}
+sort(factorial$communality) #comunalidad=varianza común
+```
+Secundaria y Libertad Mov tienen mayor información en común con las demás variables (comunalidad)
+
+- ¿Qué variables contribuyen a mas de un factor?
+```{r echo = T,  message=FALSE, warning=FALSE}
+sort(factorial$complexity)
+```
+
+- ¿Qué variables observables tiene un componente "único" más grande?
+```{r echo = T, message=FALSE, warning=FALSE}
+sort(factorial$uniquenesses)
+```
+ML Violencia y Desempleo mujer tienen mayor información única, ello quiere decir que aportan poco cn la información en común que se tiene con las demás variables.
+
+# Análisis Factorial confirmatorio
+
+Como tenemos una sugerencia planteada en el AFE, lo corroboraremos con el AFC.
+
+En caso una variable observable comparte en más de un factor la consideraremos en donde tiene una mayor carga factorial.
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+#install.packages("lavaan")
+#install.packages("semPlot")
+library(lavaan)
+library(semPlot)
+```
+
+```{r}
+names(subdata)
+```
+
+
+```{r echo = T, message=FALSE, warning=FALSE}
+Modelo_confir <- "FAC1 =~ SecundariaC + CuentaF + MLAutonomia + DesempleoMuj
+                FAC2 =~ LibertadMov + DesconfianzaSJ
+                FAC3 =~ VozPolitica + MLViolencia"
+Modelo_confir
+```
+
+Lo que se realizaría es indicar el nombre de cada facrtor, y qué variables las integran, solo indicamos el nombre de estas variables, en el siguiente comando indicaríamos la base
+
+
+```{r echo = T, message=FALSE, warning=FALSE}
+modelo<-cfa(Modelo_confir, data=subdata)
+summary(modelo,fit.measures=F)
+```
+
+Nos fijamos en la tabla de Latent Variables, y que las variables tengan un pvalue menor a 0.05 para concluir que si aportan a los factores de manera significativa.
+
+
+## **Graficamos**
+```{r echo = T, message=FALSE, warning=FALSE}
+semPaths(modelo, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+Podemos observar los 3 factores creados. Los numeros que vemos entre los factores y las variables latentes son las cargas facrtoriales, mientras más fuerte la línea o número mayor carga factorial tendrá. los numeros que vemos direccionados hacia las variable observable es la información que no es eplicada con el factor, lo esperado es que este sea menor que la carga factorial.
+
+
+## Agregamos los factores a la base de datos
+
+```{r echo = T, message=FALSE, warning=FALSE}
+factorial_casos<-as.data.frame(factorial$scores)
+```
+
+```{r echo = T,  message=FALSE, warning=FALSE}
+subdata$factor1<- factorial_casos$MR1
+subdata$factor2<- factorial_casos$MR2
+subdata$factor3<- factorial_casos$MR3
+```
+
+```{r echo = T, message=FALSE, warning=FALSE}
+library(BBmisc)
+data$autoecon <- normalize(subdata$factor1, 
+                                        method = "range", 
+                                        margin=2, # by column
+                                        range = c(0, 10))
+data$percpinst <- normalize(subdata$factor2, 
+                                        method = "range", 
+                                        margin=2, # by column
+                                        range = c(0, 10))
+data$autopol <- normalize(subdata$factor3, 
+                                        method = "range", 
+                                        margin=2, # by column
+                                        range = c(0, 10))
+
+
+```
+
+
