@@ -26,7 +26,7 @@ navbar:
     - text: "Solución - ejercicio clase"
       href: Full_Factor.html
     - text: "Sesión 7"
-      href: Estadística2_AnálisisFactorialConfirmatorio.html
+      href: AFC.html
     - text: "Sesión 8"
       href: pd8.html
     - text: "Sesión 9"
