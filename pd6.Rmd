@@ -1,10 +1,6 @@
 ---
 title: "Análisis Factorial Exploratorio"
 output:
-  pdf_document:
-    latex_engine: lualatex
-    toc: true
-  fontfamily: "Apple Color Emoji"
   html_document:
     toc: yes
     toc_float: yes
@@ -15,6 +11,10 @@ output:
     highlight: kate
     always_allow_html: yes
     code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: true
 editor_options: 
   markdown: 
     wrap: 72
@@ -105,7 +105,7 @@ poly_cor
 
 Creamos un objeto con la matriz de correlaciones
 
-```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
+```{r }
 corMatrix=poly_cor$rho 
 ```
 
@@ -226,7 +226,7 @@ fa.diagram(factorial)
 ¿Que variables componen cada uno de mis factores?
 
 ```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
-print(factorial$loadings,cutoff = 0.4)
+print(factorial$loadings,cutoff = 0.35)
 ```
 
 1.Ver qué variables tiene cada componente
@@ -271,33 +271,32 @@ summary(factorial_casos)
 Agregamos a la subdata
 
 ```{r echo = T,   fig.show='hide', message=FALSE, warning=FALSE}
-confianza$confins1<- factorial_casos$MR1
-confianza$confins2<- factorial_casos$MR2
-confianza$confins3<- factorial_casos$MR3
+confianza$pod_estado<- factorial_casos$MR1
+confianza$org_elect<- factorial_casos$MR2
+confianza$municipios<- factorial_casos$MR3
 ```
 
 -   Primer factor:Poderes del Estado
 -   Segundo factor: Organismos electorales (confins2)
--   Tercer factor:organismos regionales
+-   Tercer factor:municipios
 
 ## **PASO 8:** Estandarizamos a una escala de 100
 
 ```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 #install.packages("BBmisc")
 library(BBmisc)
-confianza$confins1 <- normalize(confianza$confins1, 
+confianza$confins1 <- normalize(confianza$pod_estado, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 100))
-confianza$confins2 <-normalize(confianza$confins2, 
+confianza$confins2 <-normalize(confianza$org_elect, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 100))
-confianza$confins3 <-normalize(confianza$confins3, 
+confianza$confins3 <-normalize(confianza$municipios, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 100))
-
 ```
 
 Vemos resultados de cada factor
@@ -305,3 +304,7 @@ Vemos resultados de cada factor
 ```{r echo = T,   fig.show='hide', message=FALSE, warning=FALSE}
 summary(confianza)
 ```
+
+
+
+

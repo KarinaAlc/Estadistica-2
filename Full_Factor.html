@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Full Factor - CT</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Prácticas de Estadística 2</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Sobre el curso</a>
+</li>
+<li>
+  <a href="pd1.html">Sesión 1</a>
+</li>
+<li>
+  <a href="pd2.html">Sesión 2</a>
+</li>
+<li>
+  <a href="TidySup_Revancha_20232.html">Revancha</a>
+</li>
+<li>
+  <a href="pd3.html">Sesión 3</a>
+</li>
+<li>
+  <a href="pd3_v2.html">Sesión 3 v2.0</a>
+</li>
+<li>
+  <a href="pd4.html">Sesión 4</a>
+</li>
+<li>
+  <a href="pd5.html">Sesión 5</a>
+</li>
+<li>
+  <a href="Repaso.html">Repaso</a>
+</li>
+<li>
+  <a href="pd6.html">Sesión 6</a>
+</li>
+<li>
+  <a href="Full_Factor.html">Solución - ejercicio clase</a>
+</li>
+<li>
+  <a href="AFC.html">Sesión 7</a>
+</li>
+<li>
+  <a href="pd8.html">Sesión 8</a>
+</li>
+<li>
+  <a href="pd9.html">Sesión 9</a>
+</li>
+<li>
+  <a href="https://karinaalc.github.io/Estadistica-2/">
+    <span class="fab fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Full Factor - CT</h1>
+
+</div>
+
+
+<div id="pasos-previos" class="section level1">
+<h1>Pasos previos</h1>
+<div id="cargar-las-librerias" class="section level2">
+<h2>Cargar las librerias</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">require</span>(car) <span class="co">#Para recodificar</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">require</span>(foreign) <span class="co">#Cargar base de datos de otras librerias </span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">require</span>(ggcorrplot) <span class="co">#Para graficar las correlaciones</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">require</span>(psych)</span></code></pre></div>
+</div>
+<div id="cargar-los-datos" class="section level2">
+<h2>Cargar los datos</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>genero12 <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">&quot;https://www.dropbox.com/s/kjva39yh3dzb07r/IOP_1212_01_B.sav?dl=1&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                       ,<span class="at">to.data.frame =</span> T, <span class="at">use.value.labels =</span> F)</span></code></pre></div>
+</div>
+<div id="procesar-los-datos" class="section level2">
+<h2>Procesar los datos</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>genero12<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(genero12<span class="sc">$</span>SEXO, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Hombre&quot;</span>, <span class="st">&quot;Mujer&quot;</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>genero12<span class="sc">$</span>region1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(genero12<span class="sc">$</span>Ambito,<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Lima&quot;</span>, <span class="st">&quot;Resto Urbano&quot;</span>, <span class="st">&quot;Rural&quot;</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>genero12<span class="sc">$</span>educ <span class="ot">&lt;-</span> genero12<span class="sc">$</span>P48</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>genero12<span class="sc">$</span>educ[genero12<span class="sc">$</span>educ <span class="sc">==</span> <span class="dv">99</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>Subset1 <span class="ot">&lt;-</span> genero12[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">108</span><span class="sc">:</span><span class="dv">118</span>)]</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>NRO <span class="ot">&lt;-</span> Subset1[, <span class="dv">1</span>]</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>df <span class="ot">&lt;-</span> Subset1[, <span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>df[df<span class="sc">==</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>Subset1 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(NRO, df)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="fu">rm</span>(df, NRO)</span></code></pre></div>
+<div class="float">
+<img src="Captura.JPG" alt="Diccionario" />
+<div class="figcaption">Diccionario</div>
+</div>
+</div>
+</div>
+<div id="paso-01-matriz-de-correlaciones" class="section level1">
+<h1>Paso 01 Matriz de correlaciones</h1>
+<p>Se utiliza la función ’ “cor” ’ para crear la matriz de
+correlaciones. Esta función toma la lista de variables y compara qué tan
+similares son entre sí. Puede medir la similitud en función de cómo
+están distribuidos los valores de las variables mediane el coeficiente
+de correlación de ’ Pearson ’. Esta medida cuantifica la relación lineal
+entre dos variables.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>poly_cor <span class="ot">&lt;-</span> <span class="fu">polychoric</span>(Subset1[<span class="sc">-</span><span class="dv">1</span>])</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>matri_01 <span class="ot">&lt;-</span> poly_cor<span class="sc">$</span>rho</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>matri_01</span></code></pre></div>
+<pre><code>##             P51A        P51B         P51C       P51D        P51E        P51F
+## P51A  1.00000000  0.82133251  0.691606502  0.3441905  0.16530773  0.24027450
+## P51B  0.82133251  1.00000000  0.759130028  0.3468787  0.19271776  0.30113203
+## P51C  0.69160650  0.75913003  1.000000000  0.3705105  0.19657388  0.27111912
+## P51D  0.34419046  0.34687874  0.370510517  1.0000000  0.55158805  0.54890481
+## P51E  0.16530773  0.19271776  0.196573885  0.5515881  1.00000000  0.68635367
+## P51F  0.24027450  0.30113203  0.271119123  0.5489048  0.68635367  1.00000000
+## P51G  0.09409781  0.13457900  0.147623837  0.3931127  0.51361372  0.64028168
+## P51H  0.04433515  0.08408269  0.037425855  0.3421292  0.42816260  0.51422129
+## P51I  0.02835823  0.10609463  0.083052695  0.3367763  0.40655062  0.48462054
+## P51J  0.27303697  0.31888518  0.296430477  0.4841850  0.48884404  0.62090865
+## P51K -0.01101479 -0.04913792 -0.003730479 -0.0397010 -0.08681838 -0.07740018
+##             P51G        P51H        P51I        P51J         P51K
+## P51A  0.09409781  0.04433515  0.02835823  0.27303697 -0.011014789
+## P51B  0.13457900  0.08408269  0.10609463  0.31888518 -0.049137916
+## P51C  0.14762384  0.03742585  0.08305270  0.29643048 -0.003730479
+## P51D  0.39311271  0.34212921  0.33677628  0.48418498 -0.039701005
+## P51E  0.51361372  0.42816260  0.40655062  0.48884404 -0.086818382
+## P51F  0.64028168  0.51422129  0.48462054  0.62090865 -0.077400177
+## P51G  1.00000000  0.81053684  0.75936595  0.57915322 -0.145358980
+## P51H  0.81053684  1.00000000  0.90767306  0.50333860 -0.094473995
+## P51I  0.75936595  0.90767306  1.00000000  0.52248820 -0.094298458
+## P51J  0.57915322  0.50333860  0.52248820  1.00000000 -0.076420947
+## P51K -0.14535898 -0.09447399 -0.09429846 -0.07642095  1.000000000</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">ggcorrplot</span>(matri_01,<span class="at">type=</span><span class="st">&quot;lower&quot;</span>,<span class="at">hc.order =</span> T)</span></code></pre></div>
+<p><img src="Full_Factor_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="paso-02-prueba-de-bartlett" class="section level1">
+<h1>Paso 02 Prueba de Bartlett</h1>
+<p>La prueba de Bartlett sirve para evaluar si hay correlaciones
+significativas entre las variables en la matriz de correlaciones en
+comparación con la matriz de identidad. De esta manera se compara que la
+matriz sea igual a una matriz de identidad (HO) y buscamos que nuestra
+matriz sea diferente(H1). Por lo que buscamos un p-vlaue menora
+0.05.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">cortest.bartlett</span>(matri_01)</span></code></pre></div>
+<pre><code>## $chisq
+## [1] 706.6443
+## 
+## $p.value
+## [1] 6.239193e-114
+## 
+## $df
+## [1] 55</code></pre>
+</div>
+<div id="paso-03-prueba-de-kmo" class="section level1">
+<h1>Paso 03 Prueba de KMO</h1>
+<p>El valor de Kaiser-Meyer-Olkin factor adequacy (KMO) obtenido indica
+la adecuación para realizar análisis factorial.</p>
+<p>Lo que hace es eliminar la influencia o la información que no aporta
+en la relación con las variables observables, para así ver la
+correlación real, a este proceso se le denomina correlación parcial.</p>
+<p>Lo que buscamos es que cada correlación parcial sea mayor a 0.5.</p>
+<p>Los valores de MSA (Medida de Adecuación por Ítem) indican la
+adecuación individual de cada variable para los análisis
+mencionados.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">KMO</span>(matri_01)</span></code></pre></div>
+<pre><code>## Kaiser-Meyer-Olkin factor adequacy
+## Call: KMO(r = matri_01)
+## Overall MSA =  0.82
+## MSA for each item = 
+## P51A P51B P51C P51D P51E P51F P51G P51H P51I P51J P51K 
+## 0.75 0.72 0.82 0.91 0.87 0.86 0.88 0.74 0.77 0.94 0.67</code></pre>
+</div>
+<div id="paso-04-determinar-el-número-de-factores-a-extraer"
+class="section level1">
+<h1>Paso 04 Determinar el número de Factores a Extraer</h1>
+<p>Este grafico se utiliza determinar el número óptimo de factores a
+extraer de un conjunto de datos.</p>
+<p>En el eje X del gráfico, se muestra el número de factores que se
+están considerando para el análisis factorial.</p>
+<p>En el eje Y del gráfico, se representa la proporción de varianza
+explicada. Esta proporción indica cuánta varianza de los datos puede ser
+explicada por los factores extraídos.</p>
+<p>El punto en el gráfico donde la línea azul cruza o se aleja
+significativamente de las barras punteadas indica el número óptimo de
+factores a extraer. Este punto se considera el punto de inflexión, donde
+agregar más factores no proporcionaría una mejora sustancial en la
+varianza explicada.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(matri_01, <span class="at">fm =</span> <span class="st">&quot;minres&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
+<p><img src="Full_Factor_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
+</div>
+<div id="paso-05-extraemos-los-facores-sin-rotar"
+class="section level1">
+<h1>Paso 05 Extraemos los facores sin rotar</h1>
+<p>Standardized loadings (cargas estandarizadas): Representan la
+relación entre cada variable y cada factor en el análisis factorial.
+Valores más altos indican una mayor asociación entre la variable y el
+factor.</p>
+<p>Com: Representa la comunalidad de cada variable, es una medida de la
+varianza total de las variables que se explica mediante los factores.
+Valores más altos indican una mayor proporción de varianza explicada por
+los factores.</p>
+<p>SS loadings: Representa la suma de los cuadrados de las cargas
+factoriales al cuadrado para cada factor. Indica la cantidad de varianza
+total explicada por cada factor.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>AF1<span class="fl">.1</span><span class="ot">&lt;-</span> <span class="fu">fa</span>(matri_01, <span class="at">nfactors =</span> <span class="dv">2</span>, <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>, <span class="at">fm=</span><span class="st">&quot;ml&quot;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>AF1<span class="fl">.2</span><span class="ot">&lt;-</span> <span class="fu">fa</span>(matri_01, <span class="at">nfactors =</span> <span class="dv">2</span>, <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>, <span class="at">fm=</span><span class="st">&quot;minres&quot;</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>AF1<span class="fl">.1</span></span></code></pre></div>
+<pre><code>## Factor Analysis using method =  ml
+## Call: fa(r = matri_01, nfactors = 2, rotate = &quot;none&quot;, fm = &quot;ml&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##        ML1   ML2    h2    u2 com
+## P51A  0.21  0.85 0.761 0.239 1.1
+## P51B  0.27  0.88 0.855 0.145 1.2
+## P51C  0.23  0.78 0.662 0.338 1.2
+## P51D  0.47  0.30 0.309 0.691 1.7
+## P51E  0.53  0.11 0.290 0.710 1.1
+## P51F  0.63  0.18 0.433 0.567 1.2
+## P51G  0.85 -0.09 0.733 0.267 1.0
+## P51H  0.93 -0.20 0.913 0.087 1.1
+## P51I  0.91 -0.18 0.862 0.138 1.1
+## P51J  0.63  0.20 0.430 0.570 1.2
+## P51K -0.11  0.00 0.013 0.987 1.0
+## 
+##                        ML1  ML2
+## SS loadings           3.90 2.36
+## Proportion Var        0.35 0.21
+## Cumulative Var        0.35 0.57
+## Proportion Explained  0.62 0.38
+## Cumulative Proportion 0.62 1.00
+## 
+## Mean item complexity =  1.2
+## Test of the hypothesis that 2 factors are sufficient.
+## 
+## df null model =  55  with the objective function =  7.48
+## df of  the model are 34  and the objective function was  1.06 
+## 
+## The root mean square of the residuals (RMSR) is  0.08 
+## The df corrected root mean square of the residuals is  0.1 
+## 
+## Fit based upon off diagonal values = 0.96
+## Measures of factor score adequacy             
+##                                                    ML1  ML2
+## Correlation of (regression) scores with factors   0.98 0.96
+## Multiple R square of scores with factors          0.96 0.92
+## Minimum correlation of possible factor scores     0.91 0.84</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>AF1<span class="fl">.2</span></span></code></pre></div>
+<pre><code>## Factor Analysis using method =  minres
+## Call: fa(r = matri_01, nfactors = 2, rotate = &quot;none&quot;, fm = &quot;minres&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##        MR1   MR2    h2   u2 com
+## P51A  0.44  0.74 0.734 0.27 1.6
+## P51B  0.50  0.75 0.822 0.18 1.7
+## P51C  0.46  0.67 0.657 0.34 1.8
+## P51D  0.62  0.12 0.406 0.59 1.1
+## P51E  0.65 -0.09 0.429 0.57 1.0
+## P51F  0.77 -0.07 0.603 0.40 1.0
+## P51G  0.80 -0.37 0.778 0.22 1.4
+## P51H  0.74 -0.46 0.762 0.24 1.7
+## P51I  0.73 -0.42 0.702 0.30 1.6
+## P51J  0.72 -0.03 0.523 0.48 1.0
+## P51K -0.11  0.05 0.015 0.99 1.3
+## 
+##                        MR1  MR2
+## SS loadings           4.32 2.11
+## Proportion Var        0.39 0.19
+## Cumulative Var        0.39 0.58
+## Proportion Explained  0.67 0.33
+## Cumulative Proportion 0.67 1.00
+## 
+## Mean item complexity =  1.4
+## Test of the hypothesis that 2 factors are sufficient.
+## 
+## df null model =  55  with the objective function =  7.48
+## df of  the model are 34  and the objective function was  1.28 
+## 
+## The root mean square of the residuals (RMSR) is  0.06 
+## The df corrected root mean square of the residuals is  0.08 
+## 
+## Fit based upon off diagonal values = 0.98
+## Measures of factor score adequacy             
+##                                                    MR1  MR2
+## Correlation of (regression) scores with factors   0.96 0.95
+## Multiple R square of scores with factors          0.93 0.90
+## Minimum correlation of possible factor scores     0.86 0.80</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">fa.diagram</span>(AF1<span class="fl">.1</span>)</span></code></pre></div>
+<p><img src="Full_Factor_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">fa.diagram</span>(AF1<span class="fl">.2</span>)</span></code></pre></div>
+<p><img src="Full_Factor_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+</div>
+<div id="paso-06-extraemos-los-facores-rotados-varimax"
+class="section level1">
+<h1>Paso 06 Extraemos los facores rotados (varimax)</h1>
+<p>La rotación de los factores es un procedimiento matemático que se
+aplica para reorganizar y simplificar los factores, de modo que sean más
+fáciles de entender e interpretar.</p>
+<p>La rotación de los factores se basa en las correlaciones entre las
+variables y busca una configuración en la que las correlaciones sean más
+claras y tengan una estructura más simple.</p>
+<p>Al aplicar la rotación de los factores, se obtiene una nueva
+configuración en la que los factores están más separados y se destacan
+las relaciones más fuertes entre las variables. Esto facilita la
+interpretación de los factores y permite comprender mejor cómo se
+agrupan las variables.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>AF1<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">fa</span>(matri_01, <span class="at">nfactors =</span> <span class="dv">2</span>, <span class="at">rotate =</span> <span class="st">&quot;varimax&quot;</span>, <span class="at">fm=</span><span class="st">&quot;ml&quot;</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>AF1<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">fa</span>(matri_01, <span class="at">nfactors =</span> <span class="dv">2</span>, <span class="at">rotate =</span> <span class="st">&quot;varimax&quot;</span>, <span class="at">fm=</span><span class="st">&quot;minres&quot;</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">fa.diagram</span>(AF1<span class="fl">.3</span>)</span></code></pre></div>
+<p><img src="Full_Factor_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">fa.diagram</span>(AF1<span class="fl">.4</span>)</span></code></pre></div>
+<p><img src="Full_Factor_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">print</span>(AF1<span class="fl">.3</span><span class="sc">$</span>loadings,<span class="at">cutoff =</span> <span class="fl">0.35</span>)</span></code></pre></div>
+<pre><code>## 
+## Loadings:
+##      ML1    ML2   
+## P51A         0.870
+## P51B         0.915
+## P51C         0.807
+## P51D  0.412  0.373
+## P51E  0.504       
+## P51F  0.598       
+## P51G  0.855       
+## P51H  0.954       
+## P51I  0.928       
+## P51J  0.587       
+## P51K              
+## 
+##                  ML1   ML2
+## SS loadings    3.671 2.589
+## Proportion Var 0.334 0.235
+## Cumulative Var 0.334 0.569</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">print</span>(AF1<span class="fl">.4</span><span class="sc">$</span>loadings,<span class="at">cutoff =</span> <span class="fl">0.35</span>)</span></code></pre></div>
+<pre><code>## 
+## Loadings:
+##      MR1    MR2   
+## P51A         0.856
+## P51B         0.901
+## P51C         0.805
+## P51D  0.498  0.397
+## P51E  0.619       
+## P51F  0.720       
+## P51G  0.881       
+## P51H  0.871       
+## P51I  0.837       
+## P51J  0.657       
+## P51K              
+## 
+##                  MR1   MR2
+## SS loadings    3.855 2.576
+## Proportion Var 0.350 0.234
+## Cumulative Var 0.350 0.585</code></pre>
+</div>
+<div id="paso-07" class="section level1">
+<h1>Paso 07</h1>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="co">#¿Qué variables aportaron mas a los factores?</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="fu">sort</span>(AF1<span class="fl">.3</span><span class="sc">$</span>communality)</span></code></pre></div>
+<pre><code>##       P51K       P51E       P51D       P51J       P51F       P51C       P51G 
+## 0.01291514 0.28952844 0.30857428 0.43022686 0.43311018 0.66183994 0.73275013 
+##       P51A       P51B       P51I       P51H 
+## 0.76126770 0.85461580 0.86202164 0.91319406</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="co">#¿Qué variables contribuyen a mas de un factor?</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">sort</span>(AF1<span class="fl">.3</span><span class="sc">$</span>complexity)</span></code></pre></div>
+<pre><code>##     P51I     P51H     P51G     P51A     P51C     P51B     P51K     P51E 
+## 1.002214 1.005585 1.007061 1.013824 1.030089 1.039675 1.074277 1.277172 
+##     P51F     P51J     P51D 
+## 1.405821 1.468941 1.981020</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co">#¿Qué variables tiene un componente “único” más grande?</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">sort</span>(AF1<span class="fl">.3</span><span class="sc">$</span>uniquenesses)</span></code></pre></div>
+<pre><code>##       P51H       P51I       P51B       P51A       P51G       P51C       P51F 
+## 0.08680594 0.13797836 0.14538420 0.23873230 0.26724987 0.33816006 0.56688982 
+##       P51J       P51D       P51E       P51K 
+## 0.56977314 0.69142572 0.71047156 0.98708486</code></pre>
+<p>Notas finales</p>
+<p>*Factoring method fm=“minres” will do a minimum residual as will
+fm=“uls”. Both of these use a first derivative. fm=“ols” differs very
+slightly from “minres” in that it minimizes the entire residual matrix
+using an OLS procedure but uses the empirical first derivative. This
+will be slower. fm=“wls” will do a weighted least squares (WLS)
+solution, fm=“gls” does a generalized weighted least squares (GLS),
+fm=“pa” will do the principal factor solution, fm=“ml” will do a maximum
+likelihood factor analysis. fm=“minchi” will minimize the sample size
+weighted chi square when treating pairwise correlations with different
+number of subjects per pair. fm =“minrank” will do a minimum rank factor
+analysis. “old.min” will do minimal residual the way it was done prior
+to April, 2017 (see discussion below). fm=“alpha” will do alpha factor
+analysis as described in Kaiser and Coffey (1965) Al respecto vease <a
+href="https://rdrr.io/cran/psych/man/fa.html"
+class="uri">https://rdrr.io/cran/psych/man/fa.html</a></p>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
