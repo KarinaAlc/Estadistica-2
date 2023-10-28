@@ -81,13 +81,13 @@ subdata<- data[,c(3:10)]
 Generamos la matriz de correlaciones para identificar qué variables de nuestra subdata están correlacionadas. 
 
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  message=FALSE, warning=FALSE}
 library(polycor)
 corMatrix<-polycor::hetcor(subdata)$correlations
 corMatrix
 ```
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, message=FALSE, warning=FALSE}
 library(psych)
 cor.plot(corMatrix,
           numbers=T, #Se muestren los numeros de las correlaciones
@@ -101,14 +101,14 @@ KMO
 
 Proceso correlación
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, message=FALSE, warning=FALSE}
 library(psych)
 psych::KMO(subdata)
 ```
 
 Bartlet
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, message=FALSE, warning=FALSE}
 cortest.bartlett(corMatrix,n=nrow(subdata))$p.value>0.05 #Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE
 ```
 
@@ -116,14 +116,14 @@ cortest.bartlett(corMatrix,n=nrow(subdata))$p.value>0.05 #Menor a 0.05 saldrá F
 
 Gráfico de sedimentación
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, message=FALSE, warning=FALSE}
 fa.parallel(corMatrix, fm="pa", fa="fa", main = "Scree Plot")
 ```
 Recomienda 3 factores, 3 triangulos debajo de la línea punteada
 
 Autovalores
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,message=FALSE, warning=FALSE}
 eigenf = eigen(cor(subdata, use="complete"))
 eigenf$values
 ```
@@ -131,14 +131,14 @@ También recomienda 3 factores :)
 
 # Factorizar
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  message=FALSE, warning=FALSE}
 library(GPArotation)
 factorial <- fa(subdata,nfactors= 3 ,rotate = "varimax",fm="minres")
 factorial
 ```
 
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  message=FALSE, warning=FALSE}
 fa.diagram(factorial)
 ```
 
@@ -148,7 +148,7 @@ Podemos observar que hay unas líneas punteadas rojas, ello implica que las carg
 
  ** Vemos cargas factoriales y cumulative var.**
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, message=FALSE, warning=FALSE}
 print(factorial$loadings,cutoff = 0.3)
 ```
 1.Ver qué variables tiene cada componente
@@ -188,7 +188,7 @@ Como tenemos una sugerencia planteada en el AFE, lo corroboraremos con el AFC.
 
 En caso una variable observable comparte en más de un factor la consideraremos en donde tiene una mayor carga factorial.
 
-```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, message=FALSE, warning=FALSE}
 #install.packages("lavaan")
 #install.packages("semPlot")
 library(lavaan)
