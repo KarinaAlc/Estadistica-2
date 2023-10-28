@@ -119,7 +119,7 @@ Gráfico de sedimentación
 ```{r echo = T, message=FALSE, warning=FALSE}
 fa.parallel(corMatrix, fm="pa", fa="fa", main = "Scree Plot")
 ```
-Recomienda 3 factores, 3 triangulos debajo de la línea punteada
+
 
 Autovalores
 
@@ -149,7 +149,7 @@ Podemos observar que hay unas líneas punteadas rojas, ello implica que las carg
  ** Vemos cargas factoriales y cumulative var.**
 
 ```{r echo = T, message=FALSE, warning=FALSE}
-print(factorial$loadings,cutoff = 0.3)
+print(factorial$loadings,cutoff = 0.2)
 ```
 1.Ver qué variables tiene cada componente
 
@@ -217,6 +217,9 @@ summary(modelo,fit.measures=F)
 
 Nos fijamos en la tabla de Latent Variables, y que las variables tengan un pvalue menor a 0.05 para concluir que si aportan a los factores de manera significativa.
 
+```{r}
+
+```
 
 ## **Graficamos**
 ```{r echo = T, message=FALSE, warning=FALSE}
