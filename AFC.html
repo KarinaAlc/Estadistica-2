@@ -551,8 +551,7 @@ respecto al país y la segunda es el índice, como un resultado final.</p>
 <h1>Paso 1: Matriz de correlaciones</h1>
 <p>Generamos la matriz de correlaciones para identificar qué variables
 de nuestra subdata están correlacionadas.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(polycor)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>corMatrix<span class="ot">&lt;-</span>polycor<span class="sc">::</span><span class="fu">hetcor</span>(subdata)<span class="sc">$</span>correlations</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>corMatrix<span class="ot">&lt;-</span><span class="fu">cor</span>(subdata)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">cor.plot</span>(corMatrix,</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>          <span class="at">numbers=</span>T, <span class="co">#Se muestren los numeros de las correlaciones</span></span>
@@ -585,7 +584,7 @@ class="section level1">
 <p>Gráfico de sedimentación</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(corMatrix, <span class="at">fm=</span><span class="st">&quot;pa&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
 <p><img src="AFC_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<pre><code>## Parallel analysis suggests that the number of factors =  4  and the number of components =  NA</code></pre>
+<pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
 <p>Autovalores</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>eigenf <span class="ot">=</span> <span class="fu">eigen</span>(<span class="fu">cor</span>(subdata, <span class="at">use=</span><span class="st">&quot;complete&quot;</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>eigenf<span class="sc">$</span>values</span></code></pre></div>

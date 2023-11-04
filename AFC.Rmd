@@ -89,8 +89,7 @@ Generamos la matriz de correlaciones para identificar qué variables de
 nuestra subdata están correlacionadas.
 
 ```{r echo = T,  message=FALSE, warning=FALSE}
-library(polycor)
-corMatrix<-polycor::hetcor(subdata)$correlations
+corMatrix<-cor(subdata)
 ```
 
 ```{r echo = T, message=FALSE, warning=FALSE}
