@@ -124,6 +124,7 @@ res1 <- hcut(data1, k = 4, stand = TRUE, hc_method = "ward.D")
 #Ward: se va agrupando de acuerdo a las menores distancias
 ```
 
+
  **Dendograma**
 ```{r , warning=FALSE}
 #comando de gráfico
@@ -144,6 +145,7 @@ fviz_cluster(res1, data = data1)
 ```{r , message=FALSE}
 data$clus=as.factor(res1$cluster) #Agregamos la asignación a la base de datos inicial
 ```
+
 
 ```{r, message=FALSE}
 table(data$clus)
@@ -259,6 +261,7 @@ resnumclust<-NbClust(data1, distance = "euclidean", min.nc=2, max.nc=10, method 
 k1 <- kmeans(data1, centers = 2, nstart = 25)
 ```
 
+
 ## Paso 4. Graficamos clústers
 
 Graficamos clústers
@@ -269,6 +272,8 @@ fviz_cluster(k1, data = data1, ellipse.type = "norm",palette = "Set2", ggtheme =
 ## Paso 5. Ver características de los grupos
 
 Agregamos a la base de datos
+
+
 ```{r }
 data1$clus<-as.factor(k1$cluster)
 ```
