@@ -1,0 +1,305 @@
+---
+title: "Análisis de conglomerados"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
+    toc_depth: 2
+    theme: simplex
+    highlight: kate
+    always_allow_html: yes
+    code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: true
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+<br>
+
+<center><img src=" " width="200"/></center>
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("logoPUCP.png") 
+```
+
+**FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
+
+## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+
+<br>
+
+#### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+
+<br> <br>
+
+# **Cluster jerárquico**
+
+<br> <br>
+
+## Paso 1. Preparación de variables
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE}
+library(rio)
+data<- import("desigualdad.xlsx")
+names(data)
+```
+Vamos a usar una base que tiene diferentes indicadores relacionados a desigualdad de género, utilizaremos desde MLautonomia hasta Cuenta F
+
+  + DesigualdadGenero: Indice de desigualdad de género
+  
+  + MLAutonomia: Mide que tanto el sistema legal protege derechos reporductivos de las mujeres
+  
+  + MLViolencia: Mide que tanto el sistema legal protege a las mujeres de la violencia
+  
+  + VozPolítica: Presencia de mujeres en el parlamento
+  
+  + LibertadMov: Porcentaje de mujeres que declaran no sentirse seguras en las calles
+  
+  + DesconfianzaSJ: Porcentaje de mujeres que no confian en el sistema de justicia
+  
+  + SecundariaC: Porcentaje de población con secundaria completa
+  
+  + DesempleoMuj: Ratio de desempleo de muejeres frente a hombres
+  
+  + CuentaF: Porcentaje de mujeres que cuentan con una cuenta en el sistema financiero
+
+Vamos a preparar la base 
+
+```{r , message=FALSE}
+rownames(data) <- data[,1]
+#Asignamos las filas (casos) de acuerdo a la primera columna que era países
+```
+
+
+```{r ,message=FALSE}
+library(dplyr)
+data1 <- select(data, -Pais, -DesigualdadGenero)
+#Mencionamos que queremos todas las variables menos la 1 (que es país) y 2 (que es el indicador general)
+data1<-na.omit(data1)
+```
+
+Exploramos la clasificación de todas las variables
+```{r , message=FALSE}
+summary(data1)
+```
+
+## Paso 2. Cálculo de matriz distancias
+
+```{r, message=FALSE}
+library(factoextra)
+library(ggplot2)
+m.distancia <- get_dist(data1, method = "euclidean", stand = TRUE)
+```
+
+
+
+Vemos la matriz de distancia
+```{r , message=FALSE}
+fviz_dist(m.distancia,gradient = list(low="blue", mid="white", high ="red"))
+```
+
+
+## Paso 3. Calculo de clúster
+
+```{r , message=FALSE}
+library(NbClust)
+resnumclust=NbClust(data1, distance = "euclidean", min.nc= 2, max.nc= 10, 
+                       method = "ward.D")
+
+```
+
+
+## Paso 4. Observamos el dendograma
+```{r , message=FALSE}
+#Aca especificamos el número de clusters que deseamos
+res1 <- hcut(data1, k = 4, stand = TRUE, hc_method = "ward.D")
+#Ward: se va agrupando de acuerdo a las menores distancias
+```
+
+
+ **Dendograma**
+```{r , warning=FALSE}
+#comando de gráfico
+#rect= agregar rectangulo punteado
+#cex=Tamaño del titulo
+fviz_dend(res1, rect = T, cex = 0.5)
+
+```
+
+Gráficamos los clusters
+```{r , message=FALSE}
+fviz_cluster(res1, data = data1)
+```
+
+## Paso 5. Ver características de los grupos
+
+
+```{r , message=FALSE}
+data$clus=as.factor(res1$cluster) #Agregamos la asignación a la base de datos inicial
+```
+
+
+```{r, message=FALSE}
+table(data$clus)
+```
+
+```{r , message=FALSE}
+library(dplyr)
+clust_car<-data1 %>%
+  mutate(Cluster = res1$cluster) %>%
+  group_by(Cluster) %>%
+  summarise_all("mean")
+clust_car
+```
+
+# **Cluster NO jerárquico**
+
+Base de datos: Indicadores de ENDES 2019
+
+Variables que se usarán son de indicadores ENDES 2019 relacionados a violencia física contra la mujer y sus hijas/os
+
+Haremos un indicador sobre violencia física contra la mujer.
+
+  + psico-esp: VIOLENCIA PSICOLÓGICA EJERCIDA ALGUNA VEZ POR EL ESPOSO O COMPAÑERO
+
+  + fisica-esp:	VIOLENCIA FÍSICA EJERCIDA ALGUNA VEZ POR EL ESPOSO O COMPAÑERO
+
+  + sexual-esp:	VIOLENCIA  SEXUAL EJERCIDA ALGUNA VEZ POR EL ESPOSO O COMPAÑERO
+
+  + fisica-otros:	VIOLENCIA FÍSICA EJERCIDA ALGUNA VEZ POR OTRA PERSONA, APARTE DE SU ACTUAL/ÚLTIMO ESPOSO
+  
+  + con-alcohol:Esposo / Compañero  toma o tomaba bebidas alcohólicas algunas veces o con frecuencia
+
+  + golpes-hija	GOLPES O CASTIGOS FÍSICOS EJERCIDOS POR EL PADRE BIOLÓGICO A SUS HIJAS E HIJOS
+
+  + fisica-preshija:	MUJERES DE 15 A 49 AÑOS DE EDAD QUE DECLARARON LA PRESENCIA DE SUS HIJAS/OS DE 1 A 5 AÑOS DE EDAD CUANDO SU ESPOSO O COMPAÑERO LA MALTRATABA FISICAMENTE
+
+  + sexual-preshija	MUJERES DE 15 A 49 AÑOS DE EDAD QUE DECLARARON LA PRESENCIA DE SUS HIJAS/OS DE 1 A 5 AÑOS DE EDAD CUANDO SU ESPOSO O COMPAÑERO LA MALTRATABA SEXUALMENTE
+
+  + vio-hijamadre:	MUJERES DE 15 A 49 AÑOS DE EDAD QUE DECLARARON QUE SU PAPÁ GOLPEÓ ALGUNA VEZ A SU MAMÁ 
+  
+Cargamos paquetes
+```{r echo = T, results = 'hide',  fig.show='hide'}
+library(dplyr)
+library(cluster)
+library(factoextra)
+library(NbClust)
+library(tidyr)
+```
+
+
+Cargamos data
+
+```{r }
+library(rio)
+data= import("INDICADORES-ENDES.xlsx")
+names(data)
+```
+
+Preparamos variables y vamos a hacer lo mismo que el ejercicio anterior. 
+
+```{r }
+rownames(data) = data[,1]
+#Asignamos los nombres de acuerdo a la primera columna que es regiones, el 1 es de acuerdo a la posición
+```
+
+
+Eliminamos la variable región porque ya tenemos las etiquetas 
+```{r }
+data = data[,-1]
+#Mencionamos que queremos todas las variables menos la 1 
+str(data)
+```
+
+¿Qué variables seleccionamos?
+
+
+```{r }
+library(dplyr)
+data1=select(data, "psico-esp","fisica-esp","sexual-esp", "fisica-otros","con-alcohol")
+```
+
+En este caso como tenemos indicadores en la escala de % del 0 al 100, no necesitamos estandarizar
+
+
+
+## Paso 1.  Calculamos distancias y elaboramos matriz de distancias
+
+Calculamos distancias
+```{r }
+m.distancia <- get_dist(data1, method = "euclidean") 
+```
+
+Elaboramos matriz de distancias
+```{r }
+fviz_dist(m.distancia, gradient = list(low = "blue", mid = "white", high = "red"))
+```
+
+
+## Paso 2. Estimar el número de clústers
+Especificar que el metodo es **kmeans**
+```{r }
+resnumclust<-NbClust(data1, distance = "euclidean", min.nc=2, max.nc=10, method = "kmeans", index = "alllong")
+
+```
+
+- ¿Qué nos sugiere el gráfico?  
+- ¿Cuántos clúster podemos hacer? 
+- ¿Cuál es la segunda opción?
+
+## Paso 3. Calculamos los clústers con el método de k-means
+
+```{r }
+k1 <- kmeans(data1, centers = 2, nstart = 25)
+```
+
+
+## Paso 4. Graficamos clústers
+
+Graficamos clústers
+```{r }
+fviz_cluster(k1, data = data1, ellipse.type = "norm",palette = "Set2", ggtheme = theme_minimal())
+```
+
+## Paso 5. Ver características de los grupos
+
+Agregamos a la base de datos
+
+
+```{r }
+data1$clus<-as.factor(k1$cluster)
+```
+
+Observamos características
+
+```{r }
+tabla<-data1 %>%
+  mutate(Cluster = k1$cluster) %>%
+  group_by(Cluster) %>%
+  summarise_all("mean")
+tabla
+```
+
+¿Cómo podemos determinar las categorías de ambos conglomerados?
+
+Los valores de abajo tienden a ser más altos en cuanto a violencia física
+
+- 2=Nivel bajo de violencia física hacia la mujer
+
+- 1=Nivel alto de violencia física hacia la mujer
+
+```{r}
+data1$clus=as.factor(data1$clus)
+levels(data1$clus)=c("Alto","Bajo")
+table(data1$clus)
+```
+
+
