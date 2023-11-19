@@ -1,0 +1,443 @@
+---
+title: "Georeferenciación"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    collapsed: no
+    number_sections: no
+    toc_depth: 2
+    theme: simplex
+    highlight: kate
+    always_allow_html: yes
+    code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: true
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+<br>
+
+<center><img src=" " width="200"/></center>
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+```{r,echo=FALSE, out.width="30%",fig.align="left"}
+knitr::include_graphics("logoPUCP.png") 
+```
+
+**FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
+
+## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+
+<br>
+
+#### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
+
+<br> <br>
+
+LLamamos a los paquetes necesarios.
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+library(latexpdf)
+library(rio)
+library(data.table)
+library(tidyr)
+library(dplyr)
+library(tidyverse)
+library(sp)
+library(polycor)
+library(psych)
+library(lavaan)
+library(semPlot)
+library(BBmisc)
+library(sf)
+library(GPArotation)
+```
+
+Esta vez usaremos la data "EgovDemocracia", la cual es un conglomerado
+de diversos dataset tales como E-gov index, IDH, democracy index,
+digital access index e internet users by country. Estas datas fueron
+elegidas debido a la relevancia que han tomado las TIC (tecnologías de
+información y comunicación) en el acceso a la información por medios
+digitales. Esto, de cara a las ciencias sociales, nos lleva a una
+sustancial pregunta: ¿Es el desarrollo de las TICs un factor importante
+para el desarrollo de la democracia?
+
+```{r,echo=FALSE, out.width="20%",fig.align="center"}
+knitr::include_graphics("kermit.png")
+```
+
+En tanto, para reforzar lo aprendido en la segunda parte del curso,
+haremos uso de las técnicas de factorización y cluster para visualizar
+los resultados a nivel mundial por medio de la georeferenciación. De esa
+manera podremos observar el comportamiento de nuestras variables y
+obtener los primeros hallazgos.
+
+# **Factores**
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+data= import("EgovDemocracia.xlsx")
+names(data)
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+data2=data[,c(2:13)]
+```
+
+## Paso 1: Matriz de correlaciones
+
+Generamos la matriz de correlaciones para identificar qué variables de
+nuestra subdata están correlacionadas.
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+corMatrix=polycor::hetcor(data2)$correlations
+corMatrix
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+cor.plot(corMatrix,
+          numbers=T, #Se muestren los numeros de las correlaciones
+          upper=F, #Que aparezca la segunda parte
+          main= "Matriz de correlaciones",#Titulo
+          show.legend=T)#Mostrar leyenda
+```
+
+## Paso 2: Corroborar si se puede factorizar
+
+**KMO**
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+psych::KMO(data2)
+```
+
+**Bartlett**
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+cortest.bartlett(corMatrix,n=nrow(data2))$p.value>0.05 #Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE
+```
+
+## Paso 3: Análisis Factorial Exploratorio
+
+Gráfico de sedimentación
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+fa.parallel(corMatrix, fm="pa", fa="fa", main = "Scree Plot")
+```
+
+Recomienda 2 factores :)
+
+Autovalores
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+eigenf = eigen(cor(data2, use="complete"))
+eigenf$values
+```
+
+También recomienda 2 factores :)
+
+**Factorizar**
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+factorial <- fa(data2,nfactors= 2 ,rotate = "varimax",fm="minres")
+factorial
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+fa.diagram(factorial)
+```
+
+Tenemos una recomendación del modelo exploratorio, corroboremos si ello
+va de la mano con el conocimiento de científicos sociales y ajustemos
+los factores. ¿Cómo se llamarían los factores?
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+Modelo_confir = "FAC1 =~ InterUsers + telecommunicationInfras + accesoInformacion + onlineService
+                FAC2 =~ ProcesoElectoral + FuncionGob + ParticipacionPol+Policulture"
+Modelo_confir
+```
+
+Lo que se realizaría es indicar el nombre de cada factor, y qué
+variables las integran, solo indicamos el nombre de estas variables, en
+el siguiente comando indicaríamos la base de datos.
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+modelo=cfa(Modelo_confir, data=data2)
+summary(modelo,fit.measures=F)
+```
+
+Nos fijamos en la tabla de Latent Variables, y que las variables tengan
+un pvalue menor a 0.05 para concluir que si aportan a los factores de
+manera significativa.
+
+## Graficamos 🤓
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+semPaths(modelo, intercepts = FALSE,edge.label.cex=1.5, optimizeLatRes = TRUE, groups = "lat",pastel = TRUE, exoVar = FALSE, sizeInt=5,edge.color ="black",esize = 6, label.prop=2,sizeLat = 6,"std", layout="circle2")
+```
+
+Observemos las *"señales gráficas"*: Vértices, nodos, colores.
+
+## Agregamos los factores a la base de datos
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+factorial_casos<-as.data.frame(factorial$scores)
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+data2$factor1<- factorial_casos$MR1
+data2$factor2<- factorial_casos$MR2
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+data$Egov = normalize(data2$factor1, 
+                                        method = "range", 
+                                        margin=2, # by column
+                                        range = c(0, 10))
+data$Demo = normalize(data2$factor2, 
+                                        method = "range", 
+                                        margin=2, # by column
+                                        range = c(0, 10))
+```
+
+# **Georeferencia a nivel mundial** 🗺️
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+folder="world_map"
+file="world_map.shp"
+
+mapaFile=file.path(folder,file)
+
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+worldmap=st_read(mapaFile,stringsAsFactors=FALSE)
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+str(data)
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+#CON INNER JOIN
+world_map_data=inner_join(worldmap,data,by="NAME")
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+world_map_data_DEMO=world_map_data[complete.cases(world_map_data$Demo),]
+```
+
+## Heatmap DEMO
+
+```{r echo = T}
+library(ggplot2)
+ggplot(world_map_data_DEMO)+
+  geom_sf(aes(fill=Demo),lwd=0.2)+
+   geom_sf_text(aes(label =NAME), size = 2
+                ,family="sans",fontface = "bold",check_overlap = TRUE
+                )+
+  guides(fill=guide_colorbar(title = "Pensar en un título para la leyenda")) +
+  labs(title = "Pensar en un título para el graf"
+      # ,subtitle = "añadir si se desea",
+      #caption = "Fuente:añadir si se desea"
+      ) +
+  scale_fill_gradient(breaks=c(0,5,10),limits= c(0,10), high = "steelblue", low = "lightcyan", guide = "colorbar" ) +
+ theme_bw()+
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks =  element_blank(),
+    axis.title = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  
+    )+
+
+  theme(
+    legend.position=c(0.1, 0.3),
+    legend.title = element_text(colour="black", size=10,  face="bold"),
+    
+    #"left","buttom"
+      )
+  
+```
+
+## Heatmap E-GOV 
+
+```{r }
+world_map_data_EGOV=world_map_data[complete.cases(world_map_data$Egov),]
+```
+
+```{r echo = T}
+ggplot(world_map_data_EGOV)+
+  geom_sf(aes(fill=Egov),lwd=0.2)+
+   geom_sf_text(aes(label = NAME), size = 2
+                ,family="sans",fontface = "bold",check_overlap = TRUE
+                )+
+  guides(fill=guide_colorbar(title = "Pensar en un título de la leyenda")) +
+  labs(title = "Pensar en un título") +
+  scale_fill_gradient(breaks=c(0,5,10),limits= c(0,10), high = "steelblue", low = "lightcyan", guide = "colorbar") +
+ theme_bw()+
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks =  element_blank(),
+    axis.title = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank()
+  )+
+
+  
+  theme(
+    legend.position=c(0.1, 0.3),
+    legend.title = element_text(colour="black", size=10,  face="bold"),
+    
+    #"left","buttom"
+      )
+  
+```
+
+# **Clusters** 😎
+
+Ahora realizamos georeferenciación con la técnica de clusters
+
+```{r}
+dataClus=data
+```
+
+## Vamos a preparar la base
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE}
+rownames(dataClus) = dataClus[,1]
+#Asignamos las filas (casos) de acuerdo a la primera columna que era países
+```
+
+```{r}
+dataClus=dataClus[,c(2:13)]
+```
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE}
+dataClus=na.omit(dataClus)
+```
+
+## Exploramos la clasificación de todas las variables
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE}
+summary(dataClus)
+```
+
+## Cálculo de matriz distancias
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE}
+library(factoextra)
+library(ggplot2)
+library(plyr)
+m.distancia <- get_dist(dataClus, method = "euclidean", stand = TRUE)
+```
+
+Vemos la matriz de distancia
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE}
+fviz_dist(m.distancia,gradient = list(low="blue", mid="white", high ="red"))
+```
+
+## Calculo de clúster
+
+```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE}
+library(NbClust)
+resnumclust=NbClust(dataClus, distance = "euclidean", min.nc= 2, max.nc= 10, 
+                       method = "ward.D")
+
+```
+
+## Observamos el dendograma
+
+```{r}
+#Aca especificamos el número de cortes que deseamos
+res1 <- hcut(dataClus, k = 2, stand = TRUE, hc_method = "ward.D")
+#Ward: se va agrupando de acuerdo a las menores distancias
+```
+
+## Graficar
+
+```{r }
+#comando de gráfico
+fviz_dend(res1, rect = T, cex = 0.5)
+#rect= agregar rectangulo punteado
+#cex=Tamaño del titulo
+```
+
+## Gráficamos los clusters
+
+```{r }
+fviz_cluster(res1, data = dataClus)
+```
+
+## Ver características de los grupos
+
+```{r }
+dataClus$cluster=as.factor(res1$cluster) #Agregamos la asignación a la base de datos inicial
+```
+
+```{r }
+table(dataClus$cluster)
+```
+
+```{r }
+library(dplyr)
+cluster_resumen=dataClus %>%
+  mutate(Cluster = res1$cluster) %>%
+  group_by(Cluster) %>%
+  summarise_all("mean")
+cluster_resumen
+```
+
+```{r}
+names(dataClus)
+```
+
+## unimos datasets y ploteamos 💥
+
+```{r}
+dataClus$NAME=rownames(dataClus)
+cluster_map=inner_join(worldmap,dataClus )
+```
+
+```{r}
+names(dataClus)
+```
+
+```{r }
+cluster_map %>%
+  
+  ggplot() +
+  geom_sf(aes(fill = cluster),lwd=0.2)+
+ geom_sf_text(aes(label = NAME), size = 2
+                ,family="sans",fontface = "bold",check_overlap = TRUE )+
+   scale_fill_manual(values = c("khaki", "#FFCC66"),labels =c("Grupo 1","Grupo 2"))+
+ labs(title = "pensar en un nombre adecuado ", subtitle = "pensar en un nombre adecuado",
+      caption = "pensar en un nombre adecuado",
+      fill="pensar en un nombre adecuado") +
+theme_bw()+
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks =  element_blank(),
+    axis.title = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank())+
+   theme(
+    legend.position=c(0.1, 0.3),
+    legend.title = element_text(
+      colour="black", size=10, 
+                                      face="bold")#"left","buttom"
+      )
+ 
+```
