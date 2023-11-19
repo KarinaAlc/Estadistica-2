@@ -268,6 +268,9 @@ Graficamos clústers
 ```{r }
 fviz_cluster(k1, data = data1, ellipse.type = "norm",palette = "Set2", ggtheme = theme_minimal())
 ```
+```{r}
+k1$cluster
+```
 
 ## Paso 5. Ver características de los grupos
 
@@ -275,7 +278,9 @@ Agregamos a la base de datos
 
 
 ```{r }
-data1$clus<-as.factor(k1$cluster)
+data1$cluster<-as.factor(k1$cluster)
+head(data1)
+names(data1)#ahora ya aparece la columna cluster :)
 ```
 
 Observamos características
@@ -297,9 +302,49 @@ Los valores de abajo tienden a ser más altos en cuanto a violencia física
 - 1=Nivel alto de violencia física hacia la mujer
 
 ```{r}
-data1$clus=as.factor(data1$clus)
-levels(data1$clus)=c("Alto","Bajo")
-table(data1$clus)
+data1$cluster=as.factor(data1$cluster)
+levels(data1$cluster)=c("Alto","Bajo")
+table(data1$cluster)
 ```
 
+# **Extra: Limpieza**
 
+Como comentábamos en la PD anterior, la información que usarán para sus trabajos no suele estar formateada o "limpia". Por ello acá les comparto un par de códigos que me consultaron ayer para que puedan limpiar su BD.  Ojo que para la mayoría de técnicas del curso necesitamos una data sin NA ni valores inválidos, como lo son los 99 que usualmente se colocan cuando es una pregunta sin responder (por ejemplo en las encuestas).
+
+```{r}
+df=import("DataEjemplo.xlsx")
+```
+
+Mediante el uso de la función summary puedo ver que tengo datos vacíos en la columna saneamiento (3) y vivienda (1). Asimismo, tengo valores máximos de 99 lo cual correspondería, según el diccionario de datos, que son datos inconclusos. Dado lo último, tengo que retirar los 99 de mi base de datos.
+
+```{r}
+summary(df) 
+```
+
+## Eliminación NA
+
+Eliminación de SOLO las filas que contienen NA en una data frame. Es decir el nro de casos se disminuye.
+
+
+Si apreciamos el summary, se han eliminado las NA.
+```{r}
+df <- na.omit(df)
+
+summary(df) 
+```
+
+## Eliminación de 99
+
+Eliminación de 99 (u otro valor que deseen eliminar) y NA en una data frame. Esto aplica a todas las filas que contienen 99 y NA. Es decir el nro de casos se disminuye.
+
+
+```{r}
+library(dplyr) #usamos esta libreria
+
+df <- df %>%
+  filter_all(all_vars(. != 99))
+
+summary(df) 
+```
+
+Espero les pueda servir para la limpieza de sus DF. 

@@ -13,7 +13,7 @@
 
 <title>Análisis de conglomerados</title>
 
-<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-6.4.0/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -522,9 +522,9 @@ class="section level4">
 <p><br> <br></p>
 <div id="paso-1.-preparación-de-variables" class="section level2">
 <h2>Paso 1. Preparación de variables</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data<span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;desigualdad.xlsx&quot;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data<span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;desigualdad.xlsx&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
 <p>Vamos a usar una base que tiene diferentes indicadores relacionados a
 desigualdad de género, utilizaremos desde MLautonomia hasta Cuenta F</p>
 <ul>
@@ -546,14 +546,14 @@ hombres</p></li>
 sistema financiero</p></li>
 </ul>
 <p>Vamos a preparar la base</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(data) <span class="ot">&lt;-</span> data[,<span class="dv">1</span>]</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Asignamos las filas (casos) de acuerdo a la primera columna que era países</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">-</span>Pais, <span class="sc">-</span>DesigualdadGenero)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Mencionamos que queremos todas las variables menos la 1 (que es país) y 2 (que es el indicador general)</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>data1<span class="ot">&lt;-</span><span class="fu">na.omit</span>(data1)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">rownames</span>(data) <span class="ot">&lt;-</span> data[,<span class="dv">1</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#Asignamos las filas (casos) de acuerdo a la primera columna que era países</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">-</span>Pais, <span class="sc">-</span>DesigualdadGenero)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#Mencionamos que queremos todas las variables menos la 1 (que es país) y 2 (que es el indicador general)</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>data1<span class="ot">&lt;-</span><span class="fu">na.omit</span>(data1)</span></code></pre></div>
 <p>Exploramos la clasificación de todas las variables</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data1)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">summary</span>(data1)</span></code></pre></div>
 <pre><code>##   MLAutonomia      MLViolencia      VozPolitica    LibertadMov   
 ##  Min.   :0.0000   Min.   :0.2500   Min.   : 0.0   Min.   :29.70  
 ##  1st Qu.:0.0000   1st Qu.:0.5000   1st Qu.:16.0   1st Qu.:58.20  
@@ -571,18 +571,18 @@ sistema financiero</p></li>
 </div>
 <div id="paso-2.-cálculo-de-matriz-distancias" class="section level2">
 <h2>Paso 2. Cálculo de matriz distancias</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>m.distancia <span class="ot">&lt;-</span> <span class="fu">get_dist</span>(data1, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>m.distancia <span class="ot">&lt;-</span> <span class="fu">get_dist</span>(data1, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Vemos la matriz de distancia</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_dist</span>(m.distancia,<span class="at">gradient =</span> <span class="fu">list</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">mid=</span><span class="st">&quot;white&quot;</span>, <span class="at">high =</span><span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">fviz_dist</span>(m.distancia,<span class="at">gradient =</span> <span class="fu">list</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">mid=</span><span class="st">&quot;white&quot;</span>, <span class="at">high =</span><span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <p><img src="pd8_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="paso-3.-calculo-de-clúster" class="section level2">
 <h2>Paso 3. Calculo de clúster</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>resnumclust<span class="ot">=</span><span class="fu">NbClust</span>(data1, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">min.nc=</span> <span class="dv">2</span>, <span class="at">max.nc=</span> <span class="dv">10</span>, </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;ward.D&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>resnumclust<span class="ot">=</span><span class="fu">NbClust</span>(data1, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">min.nc=</span> <span class="dv">2</span>, <span class="at">max.nc=</span> <span class="dv">10</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;ward.D&quot;</span>)</span></code></pre></div>
 <p><img src="pd8_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
 ##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
@@ -612,33 +612,33 @@ sistema financiero</p></li>
 </div>
 <div id="paso-4.-observamos-el-dendograma" class="section level2">
 <h2>Paso 4. Observamos el dendograma</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Aca especificamos el número de clusters que deseamos</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">hcut</span>(data1, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">hc_method =</span> <span class="st">&quot;ward.D&quot;</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Ward: se va agrupando de acuerdo a las menores distancias</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#Aca especificamos el número de clusters que deseamos</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">hcut</span>(data1, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">hc_method =</span> <span class="st">&quot;ward.D&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#Ward: se va agrupando de acuerdo a las menores distancias</span></span></code></pre></div>
 <p><strong>Dendograma</strong></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#comando de gráfico</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#rect= agregar rectangulo punteado</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#cex=Tamaño del titulo</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_dend</span>(res1, <span class="at">rect =</span> T, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#comando de gráfico</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#rect= agregar rectangulo punteado</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#cex=Tamaño del titulo</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="fu">fviz_dend</span>(res1, <span class="at">rect =</span> T, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <p><img src="pd8_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Gráficamos los clusters</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(res1, <span class="at">data =</span> data1)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(res1, <span class="at">data =</span> data1)</span></code></pre></div>
 <p><img src="pd8_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="paso-5.-ver-características-de-los-grupos"
 class="section level2">
 <h2>Paso 5. Ver características de los grupos</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>clus<span class="ot">=</span><span class="fu">as.factor</span>(res1<span class="sc">$</span>cluster) <span class="co">#Agregamos la asignación a la base de datos inicial</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>clus)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>data<span class="sc">$</span>clus<span class="ot">=</span><span class="fu">as.factor</span>(res1<span class="sc">$</span>cluster) <span class="co">#Agregamos la asignación a la base de datos inicial</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>clus)</span></code></pre></div>
 <pre><code>## 
 ##  1  2  3  4 
 ## 30 27 35 29</code></pre>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>clust_car<span class="ot">&lt;-</span>data1 <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> res1<span class="sc">$</span>cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>clust_car</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>clust_car<span class="ot">&lt;-</span>data1 <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> res1<span class="sc">$</span>cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>clust_car</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 9
 ##   Cluster MLAutonomia MLViolencia VozPolitica LibertadMov DesconfianzaSJ
 ##     &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
@@ -678,26 +678,26 @@ COMPAÑERO LA MALTRATABA SEXUALMENTE</p></li>
 SU PAPÁ GOLPEÓ ALGUNA VEZ A SU MAMÁ</p></li>
 </ul>
 <p>Cargamos paquetes</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div>
 <p>Cargamos data</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>data<span class="ot">=</span> <span class="fu">import</span>(<span class="st">&quot;INDICADORES-ENDES.xlsx&quot;</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>data<span class="ot">=</span> <span class="fu">import</span>(<span class="st">&quot;INDICADORES-ENDES.xlsx&quot;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
 <pre><code>##  [1] &quot;REGION&quot;          &quot;psico-esp&quot;       &quot;fisica-esp&quot;      &quot;sexual-esp&quot;     
 ##  [5] &quot;fisica-otros&quot;    &quot;golpes-hija&quot;     &quot;fisica-preshija&quot; &quot;sexual-preshija&quot;
 ##  [9] &quot;vio-hijamadre&quot;   &quot;con-alcohol&quot;</code></pre>
 <p>Preparamos variables y vamos a hacer lo mismo que el ejercicio
 anterior.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(data) <span class="ot">=</span> data[,<span class="dv">1</span>]</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Asignamos los nombres de acuerdo a la primera columna que es regiones, el 1 es de acuerdo a la posición</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">rownames</span>(data) <span class="ot">=</span> data[,<span class="dv">1</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#Asignamos los nombres de acuerdo a la primera columna que es regiones, el 1 es de acuerdo a la posición</span></span></code></pre></div>
 <p>Eliminamos la variable región porque ya tenemos las etiquetas</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">=</span> data[,<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Mencionamos que queremos todas las variables menos la 1 </span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>data <span class="ot">=</span> data[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co">#Mencionamos que queremos todas las variables menos la 1 </span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    27 obs. of  9 variables:
 ##  $ psico-esp      : num  50.7 48.6 68 58.7 52.3 ...
 ##  $ fisica-esp     : num  28.3 27 41.8 37.9 39.9 ...
@@ -709,8 +709,8 @@ anterior.</p>
 ##  $ vio-hijamadre  : num  36.5 35.9 54.3 43.5 46.3 ...
 ##  $ con-alcohol    : num  5.54 5.59 6.88 8.56 8.52 ...</code></pre>
 <p>¿Qué variables seleccionamos?</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>data1<span class="ot">=</span><span class="fu">select</span>(data, <span class="st">&quot;psico-esp&quot;</span>,<span class="st">&quot;fisica-esp&quot;</span>,<span class="st">&quot;sexual-esp&quot;</span>, <span class="st">&quot;fisica-otros&quot;</span>,<span class="st">&quot;con-alcohol&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>data1<span class="ot">=</span><span class="fu">select</span>(data, <span class="st">&quot;psico-esp&quot;</span>,<span class="st">&quot;fisica-esp&quot;</span>,<span class="st">&quot;sexual-esp&quot;</span>, <span class="st">&quot;fisica-otros&quot;</span>,<span class="st">&quot;con-alcohol&quot;</span>)</span></code></pre></div>
 <p>En este caso como tenemos indicadores en la escala de % del 0 al 100,
 no necesitamos estandarizar</p>
 <div
@@ -718,15 +718,15 @@ id="paso-1.-calculamos-distancias-y-elaboramos-matriz-de-distancias"
 class="section level2">
 <h2>Paso 1. Calculamos distancias y elaboramos matriz de distancias</h2>
 <p>Calculamos distancias</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>m.distancia <span class="ot">&lt;-</span> <span class="fu">get_dist</span>(data1, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>m.distancia <span class="ot">&lt;-</span> <span class="fu">get_dist</span>(data1, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>) </span></code></pre></div>
 <p>Elaboramos matriz de distancias</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_dist</span>(m.distancia, <span class="at">gradient =</span> <span class="fu">list</span>(<span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;white&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">fviz_dist</span>(m.distancia, <span class="at">gradient =</span> <span class="fu">list</span>(<span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;white&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 <p><img src="pd8_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 <div id="paso-2.-estimar-el-número-de-clústers" class="section level2">
 <h2>Paso 2. Estimar el número de clústers</h2>
 <p>Especificar que el metodo es <strong>kmeans</strong></p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>resnumclust<span class="ot">&lt;-</span><span class="fu">NbClust</span>(data1, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">min.nc=</span><span class="dv">2</span>, <span class="at">max.nc=</span><span class="dv">10</span>, <span class="at">method =</span> <span class="st">&quot;kmeans&quot;</span>, <span class="at">index =</span> <span class="st">&quot;alllong&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>resnumclust<span class="ot">&lt;-</span><span class="fu">NbClust</span>(data1, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">min.nc=</span><span class="dv">2</span>, <span class="at">max.nc=</span><span class="dv">10</span>, <span class="at">method =</span> <span class="st">&quot;kmeans&quot;</span>, <span class="at">index =</span> <span class="st">&quot;alllong&quot;</span>)</span></code></pre></div>
 <p><img src="pd8_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
 ##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
@@ -764,31 +764,57 @@ class="section level2">
 <div id="paso-3.-calculamos-los-clústers-con-el-método-de-k-means"
 class="section level2">
 <h2>Paso 3. Calculamos los clústers con el método de k-means</h2>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>k1 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(data1, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>k1 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(data1, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span></code></pre></div>
 </div>
 <div id="paso-4.-graficamos-clústers" class="section level2">
 <h2>Paso 4. Graficamos clústers</h2>
 <p>Graficamos clústers</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k1, <span class="at">data =</span> data1, <span class="at">ellipse.type =</span> <span class="st">&quot;norm&quot;</span>,<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>, <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k1, <span class="at">data =</span> data1, <span class="at">ellipse.type =</span> <span class="st">&quot;norm&quot;</span>,<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>, <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code></pre></div>
 <p><img src="pd8_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>k1<span class="sc">$</span>cluster</span></code></pre></div>
+<pre><code>##           AMAZONAS             ANCASH           APURIMAC           AREQUIPA 
+##                  2                  2                  1                  1 
+##           AYACUCHO          CAJAMARCA             CALLAO              CUSCO 
+##                  1                  1                  1                  1 
+##       HUANCAVELICA            HUANUCO                ICA              JUNIN 
+##                  1                  2                  2                  2 
+##        LA LIBERTAD         LAMBAYEQUE               LIMA LIMA METROPOLITANA 
+##                  2                  2                  2                  2 
+##        REGION LIMA             LORETO      MADRE DE DIOS           MOQUEGUA 
+##                  1                  2                  1                  2 
+##              PASCO              PIURA               PUNO         SAN MARTIN 
+##                  2                  1                  1                  2 
+##              TACNA             TUMBES            UCAYALI 
+##                  2                  1                  2</code></pre>
 </div>
 <div id="paso-5.-ver-características-de-los-grupos-1"
 class="section level2">
 <h2>Paso 5. Ver características de los grupos</h2>
 <p>Agregamos a la base de datos</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>data1<span class="sc">$</span>clus<span class="ot">&lt;-</span><span class="fu">as.factor</span>(k1<span class="sc">$</span>cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>data1<span class="sc">$</span>cluster<span class="ot">&lt;-</span><span class="fu">as.factor</span>(k1<span class="sc">$</span>cluster)</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">head</span>(data1)</span></code></pre></div>
+<pre><code>##           psico-esp fisica-esp sexual-esp fisica-otros con-alcohol cluster
+## AMAZONAS   50.67401   28.33569   7.825505    10.745830    5.539800       2
+## ANCASH     48.58894   26.99176   5.755162     6.786679    5.594532       2
+## APURIMAC   68.04245   41.78400  14.340372    15.305285    6.881544       1
+## AREQUIPA   58.65568   37.93574  10.598720    22.176043    8.562342       1
+## AYACUCHO   52.33838   39.92452   8.348963    12.266426    8.520534       1
+## CAJAMARCA  58.11619   27.82115   7.968603     8.040995    5.772940       1</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="fu">names</span>(data1)<span class="co">#ahora ya aparece la columna cluster :)</span></span></code></pre></div>
+<pre><code>## [1] &quot;psico-esp&quot;    &quot;fisica-esp&quot;   &quot;sexual-esp&quot;   &quot;fisica-otros&quot; &quot;con-alcohol&quot; 
+## [6] &quot;cluster&quot;</code></pre>
 <p>Observamos características</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tabla<span class="ot">&lt;-</span>data1 <span class="sc">%&gt;%</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> k1<span class="sc">$</span>cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>tabla</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>tabla<span class="ot">&lt;-</span>data1 <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> k1<span class="sc">$</span>cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>tabla</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 7
 ##   Cluster `psico-esp` `fisica-esp` `sexual-esp` `fisica-otros` `con-alcohol`
 ##     &lt;int&gt;       &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;
 ## 1       1        58.6         34.8         8.91           15.6          6.94
 ## 2       2        47.6         27.9         5.98           13.2          5.79
-## # ℹ 1 more variable: clus &lt;dbl&gt;</code></pre>
+## # ℹ 1 more variable: cluster &lt;dbl&gt;</code></pre>
 <p>¿Cómo podemos determinar las categorías de ambos conglomerados?</p>
 <p>Los valores de abajo tienden a ser más altos en cuanto a violencia
 física</p>
@@ -796,12 +822,73 @@ física</p>
 <li><p>2=Nivel bajo de violencia física hacia la mujer</p></li>
 <li><p>1=Nivel alto de violencia física hacia la mujer</p></li>
 </ul>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>data1<span class="sc">$</span>clus<span class="ot">=</span><span class="fu">as.factor</span>(data1<span class="sc">$</span>clus)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data1<span class="sc">$</span>clus)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Alto&quot;</span>,<span class="st">&quot;Bajo&quot;</span>)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data1<span class="sc">$</span>clus)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>data1<span class="sc">$</span>cluster<span class="ot">=</span><span class="fu">as.factor</span>(data1<span class="sc">$</span>cluster)</span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="fu">levels</span>(data1<span class="sc">$</span>cluster)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Alto&quot;</span>,<span class="st">&quot;Bajo&quot;</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="fu">table</span>(data1<span class="sc">$</span>cluster)</span></code></pre></div>
 <pre><code>## 
 ## Alto Bajo 
 ##   12   15</code></pre>
+</div>
+</div>
+<div id="extra-limpieza" class="section level1">
+<h1><strong>Extra: Limpieza</strong></h1>
+<p>Como comentábamos en la PD anterior, la información que usarán para
+sus trabajos no suele estar formateada o “limpia”. Por ello acá les
+comparto un par de códigos que me consultaron ayer para que puedan
+limpiar su BD. Ojo que para la mayoría de técnicas del curso necesitamos
+una data sin NA ni valores inválidos, como lo son los 99 que usualmente
+se colocan cuando es una pregunta sin responder (por ejemplo en las
+encuestas).</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>df<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;DataEjemplo.xlsx&quot;</span>)</span></code></pre></div>
+<p>Mediante el uso de la función summary puedo ver que tengo datos
+vacíos en la columna saneamiento (3) y vivienda (1). Asimismo, tengo
+valores máximos de 99 lo cual correspondería, según el diccionario de
+datos, que son datos inconclusos. Dado lo último, tengo que retirar los
+99 de mi base de datos.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">summary</span>(df) </span></code></pre></div>
+<pre><code>##     REGION            saneamento       vivienda        internet     
+##  Length:27          Min.   :37.80   Min.   :19.54   Min.   : 3.281  
+##  Class :character   1st Qu.:47.65   1st Qu.:27.33   1st Qu.: 5.968  
+##  Mode  :character   Median :52.46   Median :31.82   Median : 6.790  
+##                     Mean   :54.13   Mean   :36.32   Mean   :10.518  
+##                     3rd Qu.:58.04   3rd Qu.:37.44   3rd Qu.: 8.162  
+##                     Max.   :99.00   Max.   :99.00   Max.   :99.000  
+##                     NA&#39;s   :3       NA&#39;s   :1</code></pre>
+<div id="eliminación-na" class="section level2">
+<h2>Eliminación NA</h2>
+<p>Eliminación de SOLO las filas que contienen NA en una data frame. Es
+decir el nro de casos se disminuye.</p>
+<p>Si apreciamos el summary, se han eliminado las NA.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(df)</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a><span class="fu">summary</span>(df) </span></code></pre></div>
+<pre><code>##     REGION            saneamento       vivienda        internet     
+##  Length:23          Min.   :37.80   Min.   :19.54   Min.   : 3.281  
+##  Class :character   1st Qu.:47.31   1st Qu.:27.13   1st Qu.: 5.639  
+##  Mode  :character   Median :52.38   Median :28.87   Median : 6.627  
+##                     Mean   :54.03   Mean   :36.54   Mean   :10.936  
+##                     3rd Qu.:58.06   3rd Qu.:36.95   3rd Qu.: 8.023  
+##                     Max.   :99.00   Max.   :99.00   Max.   :99.000</code></pre>
+</div>
+<div id="eliminación-de-99" class="section level2">
+<h2>Eliminación de 99</h2>
+<p>Eliminación de 99 (u otro valor que deseen eliminar) y NA en una data
+frame. Esto aplica a todas las filas que contienen 99 y NA. Es decir el
+nro de casos se disminuye.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co">#usamos esta libreria</span></span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a>  <span class="fu">filter_all</span>(<span class="fu">all_vars</span>(. <span class="sc">!=</span> <span class="dv">99</span>))</span>
+<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" tabindex="-1"></a><span class="fu">summary</span>(df) </span></code></pre></div>
+<pre><code>##     REGION            saneamento       vivienda        internet     
+##  Length:19          Min.   :37.80   Min.   :19.54   Min.   : 3.281  
+##  Class :character   1st Qu.:45.89   1st Qu.:26.89   1st Qu.: 5.431  
+##  Mode  :character   Median :50.68   Median :28.34   Median : 6.450  
+##                     Mean   :51.18   Mean   :30.20   Mean   : 6.998  
+##                     3rd Qu.:55.25   3rd Qu.:34.31   3rd Qu.: 8.023  
+##                     Max.   :68.04   Max.   :41.78   Max.   :14.340</code></pre>
+<p>Espero les pueda servir para la limpieza de sus DF.</p>
 </div>
 </div>
 
