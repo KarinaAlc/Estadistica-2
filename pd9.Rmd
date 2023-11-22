@@ -19,10 +19,12 @@ editor_options:
   markdown: 
     wrap: 72
 ---
+
 <br>
 
 <center><img src=" " width="200"/></center>
-```{r setup, include=FALSE} 
+
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
 
@@ -48,6 +50,8 @@ library(rio)
 library(data.table)
 library(tidyr)
 library(dplyr)
+library(factoextra)
+library(plyr)
 library(tidyverse)
 library(sp)
 library(polycor)
@@ -189,29 +193,34 @@ factorial_casos<-as.data.frame(factorial$scores)
 ```
 
 ```{r echo = T, results = 'hide',  fig.show='hide'}
-data2$factor1<- factorial_casos$MR1
-data2$factor2<- factorial_casos$MR2
+data$factor1<- factorial_casos$MR1
+data$factor2<- factorial_casos$MR2
 ```
 
 ```{r echo = T, results = 'hide',  fig.show='hide'}
-data$Egov = normalize(data2$factor1, 
+data$Egov = normalize(data$factor1, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 10))
-data$Demo = normalize(data2$factor2, 
+data$Demo = normalize(data$factor2, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 10))
 ```
 
-# **Georeferencia a nivel mundial** 🗺️
+# **Georreferencia a nivel mundial** 🗺️
+
+Para poder hacer un mapa con ggplot necesitamos: 1. Las posiciones de
+los polígonos que representan a los países (shapefile/shp) 2. Combinar
+la información del shp con lo que se quiere mostrar en los mapas 3.
+Identificar puntos de corte para la escala 4. Crear el gráfico con
+ggplot
 
 ```{r echo = T, results = 'hide',  fig.show='hide'}
 folder="world_map"
 file="world_map.shp"
 
 mapaFile=file.path(folder,file)
-
 ```
 
 ```{r echo = T, results = 'hide',  fig.show='hide'}
@@ -222,6 +231,8 @@ worldmap=st_read(mapaFile,stringsAsFactors=FALSE)
 str(data)
 ```
 
+Combinemos la información del shapefile con nuestra data
+
 ```{r echo = T, results = 'hide',  fig.show='hide'}
 #CON INNER JOIN
 world_map_data=inner_join(worldmap,data,by="NAME")
@@ -231,17 +242,22 @@ world_map_data=inner_join(worldmap,data,by="NAME")
 world_map_data_DEMO=world_map_data[complete.cases(world_map_data$Demo),]
 ```
 
+Identifiquemos los puntos de corte
+
+```{r echo = T, results = 'hide',  fig.show='hide'}
+summary(world_map_data_DEMO$Demo)
+```
+
 ## Heatmap DEMO
 
 ```{r echo = T}
-library(ggplot2)
 ggplot(world_map_data_DEMO)+
   geom_sf(aes(fill=Demo),lwd=0.2)+
    geom_sf_text(aes(label =NAME), size = 2
                 ,family="sans",fontface = "bold",check_overlap = TRUE
                 )+
-  guides(fill=guide_colorbar(title = "Pensar en un título para la leyenda")) +
-  labs(title = "Pensar en un título para el graf"
+  guides(fill=guide_colorbar(title = "Leyenda")) +
+  labs(title = "Mapa del indicador de componentes de democracia" 
       # ,subtitle = "añadir si se desea",
       #caption = "Fuente:añadir si se desea"
       ) +
@@ -261,13 +277,11 @@ ggplot(world_map_data_DEMO)+
   theme(
     legend.position=c(0.1, 0.3),
     legend.title = element_text(colour="black", size=10,  face="bold"),
-    
-    #"left","buttom"
+    #"left","bottom"
       )
-  
 ```
 
-## Heatmap E-GOV 
+## Heatmap E-GOV
 
 ```{r }
 world_map_data_EGOV=world_map_data[complete.cases(world_map_data$Egov),]
@@ -279,8 +293,8 @@ ggplot(world_map_data_EGOV)+
    geom_sf_text(aes(label = NAME), size = 2
                 ,family="sans",fontface = "bold",check_overlap = TRUE
                 )+
-  guides(fill=guide_colorbar(title = "Pensar en un título de la leyenda")) +
-  labs(title = "Pensar en un título") +
+  guides(fill=guide_colorbar(title = "Leyenda")) +
+  labs(title = "Mapa del indicador de componentes de Egov") +
   scale_fill_gradient(breaks=c(0,5,10),limits= c(0,10), high = "steelblue", low = "lightcyan", guide = "colorbar") +
  theme_bw()+
   theme(
@@ -292,13 +306,10 @@ ggplot(world_map_data_EGOV)+
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank()
   )+
-
-  
   theme(
     legend.position=c(0.1, 0.3),
     legend.title = element_text(colour="black", size=10,  face="bold"),
-    
-    #"left","buttom"
+    #"left","bottom"
       )
   
 ```
@@ -335,9 +346,6 @@ summary(dataClus)
 ## Cálculo de matriz distancias
 
 ```{r echo = T, results = 'hide',  fig.show='hide', message=FALSE}
-library(factoextra)
-library(ggplot2)
-library(plyr)
 m.distancia <- get_dist(dataClus, method = "euclidean", stand = TRUE)
 ```
 
@@ -353,7 +361,6 @@ fviz_dist(m.distancia,gradient = list(low="blue", mid="white", high ="red"))
 library(NbClust)
 resnumclust=NbClust(dataClus, distance = "euclidean", min.nc= 2, max.nc= 10, 
                        method = "ward.D")
-
 ```
 
 ## Observamos el dendograma
@@ -402,7 +409,7 @@ cluster_resumen
 names(dataClus)
 ```
 
-## unimos datasets y ploteamos 💥
+## Unimos datasets y ploteamos 💥
 
 ```{r}
 dataClus$NAME=rownames(dataClus)
@@ -415,15 +422,12 @@ names(dataClus)
 
 ```{r }
 cluster_map %>%
-  
   ggplot() +
   geom_sf(aes(fill = cluster),lwd=0.2)+
  geom_sf_text(aes(label = NAME), size = 2
                 ,family="sans",fontface = "bold",check_overlap = TRUE )+
-   scale_fill_manual(values = c("khaki", "#FFCC66"),labels =c("Grupo 1","Grupo 2"))+
- labs(title = "pensar en un nombre adecuado ", subtitle = "pensar en un nombre adecuado",
-      caption = "pensar en un nombre adecuado",
-      fill="pensar en un nombre adecuado") +
+   scale_fill_manual(values = c("khaki", "#FFCC66"),labels =c("Grupo 1-Alto","Grupo 2-Bajo"))+
+ labs(title = "Mapa con clústers ", subtitle = "¿Cómo se agrupan los países según su nivel de desarrollo tecnológico y el estado de su democracia")+
 theme_bw()+
   theme(
     axis.text.x = element_blank(),
@@ -441,3 +445,42 @@ theme_bw()+
       )
  
 ```
+
+## Georreferencia en Perú
+
+Supongamos que ya tienes una data lista a nivel provincial de Perú, y
+necesitas que se muestre en un mapa. Si no tengo ninguno de los datos
+que me brindaron en esta sesión, ¿cómo empiezo desde cero un mapa?
+
+1.  Buscar en internet el shapefile al nivel que deseo
+    ([Link](https://www.geogpsperu.com/2014/03/base-de-datos-peru-shapefile-shp-minam.html))
+2.  Unir las bases de datos, hacer el merge (en este caso podemos usar
+    los ubigeos)
+3.  Identificar los puntos de corte para la escala de color
+4.  Crear el mapa
+
+```{r}
+peru=import("Data-provincias.xlsx")
+```
+
+Importo el shapefile y su contenido
+
+```{r}
+#importo shapefile
+provincias="Límites-provinciales/PROVINCIAS.shp"
+mapa_prov=st_read(provincias,stringsAsFactors=FALSE)  #importo el contenido del shapefile
+```
+
+Uno ambas bases de datos
+
+```{r}
+head(table(peru$ubigeoProvincia),10)
+head(table(mapa_prov$IDPROV),10)
+```
+
+Identifico dos problemas
+
+1.  Las variables tienen distintos nombres
+2.  La extensión de ambas es distinta
+
+Solucionemos modificando la en mapa_prov

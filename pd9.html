@@ -13,7 +13,7 @@
 
 <title>Georeferenciación</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -521,15 +521,17 @@ class="section level4">
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(polycor)</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span></code></pre></div>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">library</span>(polycor)</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span></code></pre></div>
 <p>Esta vez usaremos la data “EgovDemocracia”, la cual es un
 conglomerado de diversos dataset tales como E-gov index, IDH, democracy
 index, digital access index e internet users by country. Estas datas
@@ -609,158 +611,158 @@ colores.</p>
 class="section level2">
 <h2>Agregamos los factores a la base de datos</h2>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>factorial_casos<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(factorial<span class="sc">$</span>scores)</span></code></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>data2<span class="sc">$</span>factor1<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR1</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>data2<span class="sc">$</span>factor2<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR2</span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>data<span class="sc">$</span>Egov <span class="ot">=</span> <span class="fu">normalize</span>(data2<span class="sc">$</span>factor1, </span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>data<span class="sc">$</span>factor1<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR1</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>data<span class="sc">$</span>factor2<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR2</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>data<span class="sc">$</span>Egov <span class="ot">=</span> <span class="fu">normalize</span>(data<span class="sc">$</span>factor1, </span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>data<span class="sc">$</span>Demo <span class="ot">=</span> <span class="fu">normalize</span>(data2<span class="sc">$</span>factor2, </span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>data<span class="sc">$</span>Demo <span class="ot">=</span> <span class="fu">normalize</span>(data<span class="sc">$</span>factor2, </span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
 <span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
 <span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span></code></pre></div>
 </div>
 </div>
-<div id="georeferencia-a-nivel-mundial" class="section level1">
-<h1><strong>Georeferencia a nivel mundial</strong> 🗺️</h1>
+<div id="georreferencia-a-nivel-mundial" class="section level1">
+<h1><strong>Georreferencia a nivel mundial</strong> 🗺️</h1>
+<p>Para poder hacer un mapa con ggplot necesitamos: 1. Las posiciones de
+los polígonos que representan a los países (shapefile/shp) 2. Combinar
+la información del shp con lo que se quiere mostrar en los mapas 3.
+Identificar puntos de corte para la escala 4. Crear el gráfico con
+ggplot</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>folder<span class="ot">=</span><span class="st">&quot;world_map&quot;</span></span>
 <span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>file<span class="ot">=</span><span class="st">&quot;world_map.shp&quot;</span></span>
 <span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
 <span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>mapaFile<span class="ot">=</span><span class="fu">file.path</span>(folder,file)</span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>worldmap<span class="ot">=</span><span class="fu">st_read</span>(mapaFile,<span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div>
+<p>Combinemos la información del shapefile con nuestra data</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co">#CON INNER JOIN</span></span>
 <span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>world_map_data<span class="ot">=</span><span class="fu">inner_join</span>(worldmap,data,<span class="at">by=</span><span class="st">&quot;NAME&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>world_map_data_DEMO<span class="ot">=</span>world_map_data[<span class="fu">complete.cases</span>(world_map_data<span class="sc">$</span>Demo),]</span></code></pre></div>
+<p>Identifiquemos los puntos de corte</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">summary</span>(world_map_data_DEMO<span class="sc">$</span>Demo)</span></code></pre></div>
 <div id="heatmap-demo" class="section level2">
 <h2>Heatmap DEMO</h2>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">ggplot</span>(world_map_data_DEMO)<span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Demo),<span class="at">lwd=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>   <span class="fu">geom_sf_text</span>(<span class="fu">aes</span>(<span class="at">label =</span>NAME), <span class="at">size =</span> <span class="dv">2</span></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>                ,<span class="at">family=</span><span class="st">&quot;sans&quot;</span>,<span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>,<span class="at">check_overlap =</span> <span class="cn">TRUE</span></span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>                )<span class="sc">+</span></span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">&quot;Pensar en un título para la leyenda&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pensar en un título para el graf&quot;</span></span>
-<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>      <span class="co"># ,subtitle = &quot;añadir si se desea&quot;,</span></span>
-<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>      <span class="co">#caption = &quot;Fuente:añadir si se desea&quot;</span></span>
-<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>      ) <span class="sc">+</span></span>
-<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">10</span>),<span class="at">limits=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="at">high =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">low =</span> <span class="st">&quot;lightcyan&quot;</span>, <span class="at">guide =</span> <span class="st">&quot;colorbar&quot;</span> ) <span class="sc">+</span></span>
-<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a> <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a>    <span class="at">axis.ticks =</span>  <span class="fu">element_blank</span>(),</span>
-<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-20"><a href="#cb23-20" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb23-21"><a href="#cb23-21" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb23-22"><a href="#cb23-22" tabindex="-1"></a>  </span>
-<span id="cb23-23"><a href="#cb23-23" tabindex="-1"></a>    )<span class="sc">+</span></span>
-<span id="cb23-24"><a href="#cb23-24" tabindex="-1"></a></span>
-<span id="cb23-25"><a href="#cb23-25" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb23-26"><a href="#cb23-26" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
-<span id="cb23-27"><a href="#cb23-27" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">10</span>,  <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
-<span id="cb23-28"><a href="#cb23-28" tabindex="-1"></a>    </span>
-<span id="cb23-29"><a href="#cb23-29" tabindex="-1"></a>    <span class="co">#&quot;left&quot;,&quot;buttom&quot;</span></span>
-<span id="cb23-30"><a href="#cb23-30" tabindex="-1"></a>      )</span></code></pre></div>
-<p><img src="pd9_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fu">ggplot</span>(world_map_data_DEMO)<span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Demo),<span class="at">lwd=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>   <span class="fu">geom_sf_text</span>(<span class="fu">aes</span>(<span class="at">label =</span>NAME), <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>                ,<span class="at">family=</span><span class="st">&quot;sans&quot;</span>,<span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>,<span class="at">check_overlap =</span> <span class="cn">TRUE</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>                )<span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">&quot;Leyenda&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mapa del indicador de componentes de democracia&quot;</span> </span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>      <span class="co"># ,subtitle = &quot;añadir si se desea&quot;,</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>      <span class="co">#caption = &quot;Fuente:añadir si se desea&quot;</span></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a>      ) <span class="sc">+</span></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">10</span>),<span class="at">limits=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="at">high =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">low =</span> <span class="st">&quot;lightcyan&quot;</span>, <span class="at">guide =</span> <span class="st">&quot;colorbar&quot;</span> ) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a> <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a>    <span class="at">axis.ticks =</span>  <span class="fu">element_blank</span>(),</span>
+<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-18"><a href="#cb24-18" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-19"><a href="#cb24-19" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb24-20"><a href="#cb24-20" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb24-21"><a href="#cb24-21" tabindex="-1"></a>  </span>
+<span id="cb24-22"><a href="#cb24-22" tabindex="-1"></a>    )<span class="sc">+</span></span>
+<span id="cb24-23"><a href="#cb24-23" tabindex="-1"></a></span>
+<span id="cb24-24"><a href="#cb24-24" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb24-25"><a href="#cb24-25" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb24-26"><a href="#cb24-26" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">10</span>,  <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb24-27"><a href="#cb24-27" tabindex="-1"></a>    <span class="co">#&quot;left&quot;,&quot;bottom&quot;</span></span>
+<span id="cb24-28"><a href="#cb24-28" tabindex="-1"></a>      )</span></code></pre></div>
+<p><img src="pd9_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 </div>
 <div id="heatmap-e-gov" class="section level2">
 <h2>Heatmap E-GOV</h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>world_map_data_EGOV<span class="ot">=</span>world_map_data[<span class="fu">complete.cases</span>(world_map_data<span class="sc">$</span>Egov),]</span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">ggplot</span>(world_map_data_EGOV)<span class="sc">+</span></span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Egov),<span class="at">lwd=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>   <span class="fu">geom_sf_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span></span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>                ,<span class="at">family=</span><span class="st">&quot;sans&quot;</span>,<span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>,<span class="at">check_overlap =</span> <span class="cn">TRUE</span></span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>                )<span class="sc">+</span></span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">&quot;Pensar en un título de la leyenda&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Pensar en un título&quot;</span>) <span class="sc">+</span></span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">10</span>),<span class="at">limits=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="at">high =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">low =</span> <span class="st">&quot;lightcyan&quot;</span>, <span class="at">guide =</span> <span class="st">&quot;colorbar&quot;</span>) <span class="sc">+</span></span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a> <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>    <span class="at">axis.ticks =</span>  <span class="fu">element_blank</span>(),</span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
-<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a>  )<span class="sc">+</span></span>
-<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a></span>
-<span id="cb25-20"><a href="#cb25-20" tabindex="-1"></a>  </span>
-<span id="cb25-21"><a href="#cb25-21" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb25-22"><a href="#cb25-22" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
-<span id="cb25-23"><a href="#cb25-23" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">10</span>,  <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
-<span id="cb25-24"><a href="#cb25-24" tabindex="-1"></a>    </span>
-<span id="cb25-25"><a href="#cb25-25" tabindex="-1"></a>    <span class="co">#&quot;left&quot;,&quot;buttom&quot;</span></span>
-<span id="cb25-26"><a href="#cb25-26" tabindex="-1"></a>      )</span></code></pre></div>
-<p><img src="pd9_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>world_map_data_EGOV<span class="ot">=</span>world_map_data[<span class="fu">complete.cases</span>(world_map_data<span class="sc">$</span>Egov),]</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">ggplot</span>(world_map_data_EGOV)<span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill=</span>Egov),<span class="at">lwd=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>   <span class="fu">geom_sf_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>                ,<span class="at">family=</span><span class="st">&quot;sans&quot;</span>,<span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>,<span class="at">check_overlap =</span> <span class="cn">TRUE</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>                )<span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_colorbar</span>(<span class="at">title =</span> <span class="st">&quot;Leyenda&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mapa del indicador de componentes de Egov&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="dv">10</span>),<span class="at">limits=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="at">high =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="at">low =</span> <span class="st">&quot;lightcyan&quot;</span>, <span class="at">guide =</span> <span class="st">&quot;colorbar&quot;</span>) <span class="sc">+</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a> <span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a>    <span class="at">axis.ticks =</span>  <span class="fu">element_blank</span>(),</span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a>  )<span class="sc">+</span></span>
+<span id="cb26-19"><a href="#cb26-19" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb26-20"><a href="#cb26-20" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb26-21"><a href="#cb26-21" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">10</span>,  <span class="at">face=</span><span class="st">&quot;bold&quot;</span>),</span>
+<span id="cb26-22"><a href="#cb26-22" tabindex="-1"></a>    <span class="co">#&quot;left&quot;,&quot;bottom&quot;</span></span>
+<span id="cb26-23"><a href="#cb26-23" tabindex="-1"></a>      )</span></code></pre></div>
+<p><img src="pd9_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 </div>
 </div>
 <div id="clusters" class="section level1">
 <h1><strong>Clusters</strong> 😎</h1>
 <p>Ahora realizamos georeferenciación con la técnica de clusters</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>dataClus<span class="ot">=</span>data</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>dataClus<span class="ot">=</span>data</span></code></pre></div>
 <div id="vamos-a-preparar-la-base" class="section level2">
 <h2>Vamos a preparar la base</h2>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">rownames</span>(dataClus) <span class="ot">=</span> dataClus[,<span class="dv">1</span>]</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="co">#Asignamos las filas (casos) de acuerdo a la primera columna que era países</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>dataClus<span class="ot">=</span>dataClus[,<span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>)]</span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>dataClus<span class="ot">=</span><span class="fu">na.omit</span>(dataClus)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">rownames</span>(dataClus) <span class="ot">=</span> dataClus[,<span class="dv">1</span>]</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="co">#Asignamos las filas (casos) de acuerdo a la primera columna que era países</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>dataClus<span class="ot">=</span>dataClus[,<span class="fu">c</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">13</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>dataClus<span class="ot">=</span><span class="fu">na.omit</span>(dataClus)</span></code></pre></div>
 </div>
 <div id="exploramos-la-clasificación-de-todas-las-variables"
 class="section level2">
 <h2>Exploramos la clasificación de todas las variables</h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">summary</span>(dataClus)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">summary</span>(dataClus)</span></code></pre></div>
 </div>
 <div id="cálculo-de-matriz-distancias" class="section level2">
 <h2>Cálculo de matriz distancias</h2>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
-<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>m.distancia <span class="ot">&lt;-</span> <span class="fu">get_dist</span>(dataClus, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>m.distancia <span class="ot">&lt;-</span> <span class="fu">get_dist</span>(dataClus, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Vemos la matriz de distancia</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">fviz_dist</span>(m.distancia,<span class="at">gradient =</span> <span class="fu">list</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">mid=</span><span class="st">&quot;white&quot;</span>, <span class="at">high =</span><span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">fviz_dist</span>(m.distancia,<span class="at">gradient =</span> <span class="fu">list</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">mid=</span><span class="st">&quot;white&quot;</span>, <span class="at">high =</span><span class="st">&quot;red&quot;</span>))</span></code></pre></div>
 </div>
 <div id="calculo-de-clúster" class="section level2">
 <h2>Calculo de clúster</h2>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>resnumclust<span class="ot">=</span><span class="fu">NbClust</span>(dataClus, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">min.nc=</span> <span class="dv">2</span>, <span class="at">max.nc=</span> <span class="dv">10</span>, </span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;ward.D&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>resnumclust<span class="ot">=</span><span class="fu">NbClust</span>(dataClus, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">min.nc=</span> <span class="dv">2</span>, <span class="at">max.nc=</span> <span class="dv">10</span>, </span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;ward.D&quot;</span>)</span></code></pre></div>
 </div>
 <div id="observamos-el-dendograma" class="section level2">
 <h2>Observamos el dendograma</h2>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co">#Aca especificamos el número de cortes que deseamos</span></span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">hcut</span>(dataClus, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">hc_method =</span> <span class="st">&quot;ward.D&quot;</span>)</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a><span class="co">#Ward: se va agrupando de acuerdo a las menores distancias</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="co">#Aca especificamos el número de cortes que deseamos</span></span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">hcut</span>(dataClus, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">hc_method =</span> <span class="st">&quot;ward.D&quot;</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="co">#Ward: se va agrupando de acuerdo a las menores distancias</span></span></code></pre></div>
 </div>
 <div id="graficar" class="section level2">
 <h2>Graficar</h2>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="co">#comando de gráfico</span></span>
-<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">fviz_dend</span>(res1, <span class="at">rect =</span> T, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
-<p><img src="pd9_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co">#rect= agregar rectangulo punteado</span></span>
-<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="co">#cex=Tamaño del titulo</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="co">#comando de gráfico</span></span>
+<span id="cb36-2"><a href="#cb36-2" tabindex="-1"></a><span class="fu">fviz_dend</span>(res1, <span class="at">rect =</span> T, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="pd9_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="co">#rect= agregar rectangulo punteado</span></span>
+<span id="cb37-2"><a href="#cb37-2" tabindex="-1"></a><span class="co">#cex=Tamaño del titulo</span></span></code></pre></div>
 </div>
 <div id="gráficamos-los-clusters" class="section level2">
 <h2>Gráficamos los clusters</h2>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(res1, <span class="at">data =</span> dataClus)</span></code></pre></div>
-<p><img src="pd9_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(res1, <span class="at">data =</span> dataClus)</span></code></pre></div>
+<p><img src="pd9_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 </div>
 <div id="ver-características-de-los-grupos" class="section level2">
 <h2>Ver características de los grupos</h2>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>dataClus<span class="sc">$</span>cluster<span class="ot">=</span><span class="fu">as.factor</span>(res1<span class="sc">$</span>cluster) <span class="co">#Agregamos la asignación a la base de datos inicial</span></span></code></pre></div>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a><span class="fu">table</span>(dataClus<span class="sc">$</span>cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>dataClus<span class="sc">$</span>cluster<span class="ot">=</span><span class="fu">as.factor</span>(res1<span class="sc">$</span>cluster) <span class="co">#Agregamos la asignación a la base de datos inicial</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">table</span>(dataClus<span class="sc">$</span>cluster)</span></code></pre></div>
 <pre><code>## 
 ##  1  2 
 ## 85 49</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a>cluster_resumen<span class="ot">=</span>dataClus <span class="sc">%&gt;%</span></span>
-<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> res1<span class="sc">$</span>cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="st">&quot;mean&quot;</span>)</span>
-<span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a>cluster_resumen</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>cluster_resumen<span class="ot">=</span>dataClus <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> res1<span class="sc">$</span>cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a>cluster_resumen</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 14
 ##   Cluster ProcesoElectoral FuncionGob ParticipacionPol Policulture onlineService
 ##     &lt;int&gt;            &lt;dbl&gt;      &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;         &lt;dbl&gt;
@@ -769,7 +771,7 @@ class="section level2">
 ## # ℹ 8 more variables: telecommunicationInfras &lt;dbl&gt;, InterUsers &lt;dbl&gt;,
 ## #   accesoInformacion &lt;dbl&gt;, LifeExpectancy &lt;dbl&gt;, ExpectedSchooling &lt;dbl&gt;,
 ## #   Yschool &lt;dbl&gt;, GNI &lt;dbl&gt;, cluster &lt;dbl&gt;</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">names</span>(dataClus)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">names</span>(dataClus)</span></code></pre></div>
 <pre><code>##  [1] &quot;ProcesoElectoral&quot;        &quot;FuncionGob&quot;             
 ##  [3] &quot;ParticipacionPol&quot;        &quot;Policulture&quot;            
 ##  [5] &quot;onlineService&quot;           &quot;telecommunicationInfras&quot;
@@ -779,10 +781,10 @@ class="section level2">
 ## [13] &quot;cluster&quot;</code></pre>
 </div>
 <div id="unimos-datasets-y-ploteamos" class="section level2">
-<h2>unimos datasets y ploteamos 💥</h2>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" tabindex="-1"></a>dataClus<span class="sc">$</span>NAME<span class="ot">=</span><span class="fu">rownames</span>(dataClus)</span>
-<span id="cb45-2"><a href="#cb45-2" tabindex="-1"></a>cluster_map<span class="ot">=</span><span class="fu">inner_join</span>(worldmap,dataClus )</span></code></pre></div>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="fu">names</span>(dataClus)</span></code></pre></div>
+<h2>Unimos datasets y ploteamos 💥</h2>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>dataClus<span class="sc">$</span>NAME<span class="ot">=</span><span class="fu">rownames</span>(dataClus)</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>cluster_map<span class="ot">=</span><span class="fu">inner_join</span>(worldmap,dataClus )</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" tabindex="-1"></a><span class="fu">names</span>(dataClus)</span></code></pre></div>
 <pre><code>##  [1] &quot;ProcesoElectoral&quot;        &quot;FuncionGob&quot;             
 ##  [3] &quot;ParticipacionPol&quot;        &quot;Policulture&quot;            
 ##  [5] &quot;onlineService&quot;           &quot;telecommunicationInfras&quot;
@@ -790,32 +792,71 @@ class="section level2">
 ##  [9] &quot;LifeExpectancy&quot;          &quot;ExpectedSchooling&quot;      
 ## [11] &quot;Yschool&quot;                 &quot;GNI&quot;                    
 ## [13] &quot;cluster&quot;                 &quot;NAME&quot;</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a>cluster_map <span class="sc">%&gt;%</span></span>
-<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a>  </span>
-<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> cluster),<span class="at">lwd=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
-<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a> <span class="fu">geom_sf_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span></span>
-<span id="cb48-6"><a href="#cb48-6" tabindex="-1"></a>                ,<span class="at">family=</span><span class="st">&quot;sans&quot;</span>,<span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>,<span class="at">check_overlap =</span> <span class="cn">TRUE</span> )<span class="sc">+</span></span>
-<span id="cb48-7"><a href="#cb48-7" tabindex="-1"></a>   <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;khaki&quot;</span>, <span class="st">&quot;#FFCC66&quot;</span>),<span class="at">labels =</span><span class="fu">c</span>(<span class="st">&quot;Grupo 1&quot;</span>,<span class="st">&quot;Grupo 2&quot;</span>))<span class="sc">+</span></span>
-<span id="cb48-8"><a href="#cb48-8" tabindex="-1"></a> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;pensar en un nombre adecuado &quot;</span>, <span class="at">subtitle =</span> <span class="st">&quot;pensar en un nombre adecuado&quot;</span>,</span>
-<span id="cb48-9"><a href="#cb48-9" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">&quot;pensar en un nombre adecuado&quot;</span>,</span>
-<span id="cb48-10"><a href="#cb48-10" tabindex="-1"></a>      <span class="at">fill=</span><span class="st">&quot;pensar en un nombre adecuado&quot;</span>) <span class="sc">+</span></span>
-<span id="cb48-11"><a href="#cb48-11" tabindex="-1"></a><span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb48-12"><a href="#cb48-12" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb48-13"><a href="#cb48-13" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-14"><a href="#cb48-14" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-15"><a href="#cb48-15" tabindex="-1"></a>    <span class="at">axis.ticks =</span>  <span class="fu">element_blank</span>(),</span>
-<span id="cb48-16"><a href="#cb48-16" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-17"><a href="#cb48-17" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-18"><a href="#cb48-18" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb48-19"><a href="#cb48-19" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())<span class="sc">+</span></span>
-<span id="cb48-20"><a href="#cb48-20" tabindex="-1"></a>   <span class="fu">theme</span>(</span>
-<span id="cb48-21"><a href="#cb48-21" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
-<span id="cb48-22"><a href="#cb48-22" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(</span>
-<span id="cb48-23"><a href="#cb48-23" tabindex="-1"></a>      <span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">10</span>, </span>
-<span id="cb48-24"><a href="#cb48-24" tabindex="-1"></a>                                      <span class="at">face=</span><span class="st">&quot;bold&quot;</span>)<span class="co">#&quot;left&quot;,&quot;buttom&quot;</span></span>
-<span id="cb48-25"><a href="#cb48-25" tabindex="-1"></a>      )</span></code></pre></div>
-<p><img src="pd9_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" tabindex="-1"></a>cluster_map <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb49-3"><a href="#cb49-3" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> cluster),<span class="at">lwd=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb49-4"><a href="#cb49-4" tabindex="-1"></a> <span class="fu">geom_sf_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> NAME), <span class="at">size =</span> <span class="dv">2</span></span>
+<span id="cb49-5"><a href="#cb49-5" tabindex="-1"></a>                ,<span class="at">family=</span><span class="st">&quot;sans&quot;</span>,<span class="at">fontface =</span> <span class="st">&quot;bold&quot;</span>,<span class="at">check_overlap =</span> <span class="cn">TRUE</span> )<span class="sc">+</span></span>
+<span id="cb49-6"><a href="#cb49-6" tabindex="-1"></a>   <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;khaki&quot;</span>, <span class="st">&quot;#FFCC66&quot;</span>),<span class="at">labels =</span><span class="fu">c</span>(<span class="st">&quot;Grupo 1-Alto&quot;</span>,<span class="st">&quot;Grupo 2-Bajo&quot;</span>))<span class="sc">+</span></span>
+<span id="cb49-7"><a href="#cb49-7" tabindex="-1"></a> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mapa con clústers &quot;</span>, <span class="at">subtitle =</span> <span class="st">&quot;¿Cómo se agrupan los países según su nivel de desarrollo tecnológico y el estado de su democracia&quot;</span>)<span class="sc">+</span></span>
+<span id="cb49-8"><a href="#cb49-8" tabindex="-1"></a><span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb49-9"><a href="#cb49-9" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb49-10"><a href="#cb49-10" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-11"><a href="#cb49-11" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-12"><a href="#cb49-12" tabindex="-1"></a>    <span class="at">axis.ticks =</span>  <span class="fu">element_blank</span>(),</span>
+<span id="cb49-13"><a href="#cb49-13" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-14"><a href="#cb49-14" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-15"><a href="#cb49-15" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb49-16"><a href="#cb49-16" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())<span class="sc">+</span></span>
+<span id="cb49-17"><a href="#cb49-17" tabindex="-1"></a>   <span class="fu">theme</span>(</span>
+<span id="cb49-18"><a href="#cb49-18" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb49-19"><a href="#cb49-19" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb49-20"><a href="#cb49-20" tabindex="-1"></a>      <span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">10</span>, </span>
+<span id="cb49-21"><a href="#cb49-21" tabindex="-1"></a>                                      <span class="at">face=</span><span class="st">&quot;bold&quot;</span>)<span class="co">#&quot;left&quot;,&quot;buttom&quot;</span></span>
+<span id="cb49-22"><a href="#cb49-22" tabindex="-1"></a>      )</span></code></pre></div>
+<p><img src="pd9_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+</div>
+<div id="georreferencia-en-perú" class="section level2">
+<h2>Georreferencia en Perú</h2>
+<p>Supongamos que ya tienes una data lista a nivel provincial de Perú, y
+necesitas que se muestre en un mapa. Si no tengo ninguno de los datos
+que me brindaron en esta sesión, ¿cómo empiezo desde cero un mapa?</p>
+<ol style="list-style-type: decimal">
+<li>Buscar en internet el shapefile al nivel que deseo (<a
+href="https://www.geogpsperu.com/2014/03/base-de-datos-peru-shapefile-shp-minam.html">Link</a>)</li>
+<li>Unir las bases de datos, hacer el merge (en este caso podemos usar
+los ubigeos)</li>
+<li>Identificar los puntos de corte para la escala de color</li>
+<li>Crear el mapa</li>
+</ol>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>peru<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;Data-provincias.xlsx&quot;</span>)</span></code></pre></div>
+<p>Importo el shapefile y su contenido</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="co">#importo shapefile</span></span>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a>provincias<span class="ot">=</span><span class="st">&quot;Límites-provinciales/PROVINCIAS.shp&quot;</span></span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a>mapa_prov<span class="ot">=</span><span class="fu">st_read</span>(provincias,<span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)  <span class="co">#importo el contenido del shapefile</span></span></code></pre></div>
+<pre><code>## Reading layer `PROVINCIAS&#39; from data source 
+##   `/Users/Karina/Estadistica-2/Límites-provinciales/PROVINCIAS.shp&#39; 
+##   using driver `ESRI Shapefile&#39;
+## Simple feature collection with 196 features and 79 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
+## Geodetic CRS:  WGS 84</code></pre>
+<p>Uno ambas bases de datos</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">table</span>(peru<span class="sc">$</span>ubigeoProvincia),<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## 
+## 010100 010200 010300 010400 010500 010600 010700 020100 020200 020300 
+##      1      1      1      1      1      1      1      1      1      1</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">table</span>(mapa_prov<span class="sc">$</span>IDPROV),<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## 
+## 0101 0102 0103 0104 0105 0106 0107 0201 0202 0203 
+##    1    1    1    1    1    1    1    1    1    1</code></pre>
+<p>Identifico dos problemas</p>
+<ol style="list-style-type: decimal">
+<li>Las variables tienen distintos nombres</li>
+<li>La extensión de ambas es distinta</li>
+</ol>
+<p>Solucionemos modificando la en mapa_prov</p>
 </div>
 </div>
 
