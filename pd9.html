@@ -516,22 +516,21 @@ class="section level4">
 <h4>Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h4>
 <p><br> <br></p>
 <p>LLamamos a los paquetes necesarios.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(latexpdf)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">library</span>(polycor)</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(polycor)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span></code></pre></div>
 <p>Esta vez usaremos la data “EgovDemocracia”, la cual es un
 conglomerado de diversos dataset tales como E-gov index, IDH, democracy
 index, digital access index e internet users by country. Estas datas
@@ -816,14 +815,15 @@ class="section level2">
 <span id="cb49-22"><a href="#cb49-22" tabindex="-1"></a>      )</span></code></pre></div>
 <p><img src="pd9_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 </div>
-<div id="georreferencia-en-perú" class="section level2">
-<h2>Georreferencia en Perú</h2>
+</div>
+<div id="georreferencia---mapa-perú" class="section level1">
+<h1>Georreferencia - Mapa Perú</h1>
 <p>Supongamos que ya tienes una data lista a nivel provincial de Perú, y
 necesitas que se muestre en un mapa. Si no tengo ninguno de los datos
 que me brindaron en esta sesión, ¿cómo empiezo desde cero un mapa?</p>
 <ol style="list-style-type: decimal">
 <li>Buscar en internet el shapefile al nivel que deseo (<a
-href="https://www.geogpsperu.com/2014/03/base-de-datos-peru-shapefile-shp-minam.html">Link</a>)</li>
+href="https://www.geogpsperu.com/2018/02/limite-provincial-politico-shapefile.html">Link</a>)</li>
 <li>Unir las bases de datos, hacer el merge (en este caso podemos usar
 los ubigeos)</li>
 <li>Identificar los puntos de corte para la escala de color</li>
@@ -832,8 +832,9 @@ los ubigeos)</li>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>peru<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;Data-provincias.xlsx&quot;</span>)</span></code></pre></div>
 <p>Importo el shapefile y su contenido</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" tabindex="-1"></a><span class="co">#importo shapefile</span></span>
-<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a>provincias<span class="ot">=</span><span class="st">&quot;Límites-provinciales/PROVINCIAS.shp&quot;</span></span>
-<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a>mapa_prov<span class="ot">=</span><span class="fu">st_read</span>(provincias,<span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)  <span class="co">#importo el contenido del shapefile</span></span></code></pre></div>
+<span id="cb51-2"><a href="#cb51-2" tabindex="-1"></a><span class="co">#Le cambié de nombre a mis archivos para que sea más facil </span></span>
+<span id="cb51-3"><a href="#cb51-3" tabindex="-1"></a>provincias<span class="ot">=</span><span class="st">&quot;Límites-provinciales/PROVINCIAS.shp&quot;</span></span>
+<span id="cb51-4"><a href="#cb51-4" tabindex="-1"></a>mapa_prov<span class="ot">=</span><span class="fu">st_read</span>(provincias,<span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)  <span class="co">#importo el contenido del shapefile</span></span></code></pre></div>
 <pre><code>## Reading layer `PROVINCIAS&#39; from data source 
 ##   `/Users/Karina/Estadistica-2/Límites-provinciales/PROVINCIAS.shp&#39; 
 ##   using driver `ESRI Shapefile&#39;
@@ -842,22 +843,59 @@ los ubigeos)</li>
 ## Dimension:     XY
 ## Bounding box:  xmin: -81.32823 ymin: -18.35093 xmax: -68.65228 ymax: -0.03860597
 ## Geodetic CRS:  WGS 84</code></pre>
-<p>Uno ambas bases de datos</p>
+<p>Recuerda que debo identificar una variable identificadora que me
+ayude a unir ambas bases.</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">table</span>(peru<span class="sc">$</span>ubigeoProvincia),<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## 
 ## 010100 010200 010300 010400 010500 010600 010700 020100 020200 020300 
 ##      1      1      1      1      1      1      1      1      1      1</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">table</span>(mapa_prov<span class="sc">$</span>IDPROV),<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">table</span>(mapa_prov<span class="sc">$</span>CCDD),<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## 
-## 0101 0102 0103 0104 0105 0106 0107 0201 0202 0203 
-##    1    1    1    1    1    1    1    1    1    1</code></pre>
+## 01 02 03 04 05 06 07 08 09 10 
+##  7 20  7  8 11 13  1 13  7 11</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">table</span>(mapa_prov<span class="sc">$</span>CCPP),<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>## 
+## 01 02 03 04 05 06 07 08 09 10 
+## 25 24 24 19 17 16 16 13 10  9</code></pre>
 <p>Identifico dos problemas</p>
 <ol style="list-style-type: decimal">
 <li>Las variables tienen distintos nombres</li>
 <li>La extensión de ambas es distinta</li>
 </ol>
-<p>Solucionemos modificando la en mapa_prov</p>
-</div>
+<p>En la data de provincias tengo ubigeoProvincia, pero en la otra base
+se encuentra dividio en 2 el ubigeo. Debo unir ambos código y añadir 00
+al final y almacenar eso en la variable nueva ubigeoProvincia para que
+ambas bases tengan el mismo id.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" tabindex="-1"></a>mapa_prov <span class="ot">&lt;-</span> mapa_prov <span class="sc">%&gt;%</span></span>
+<span id="cb59-2"><a href="#cb59-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ubigeoProvincia =</span> <span class="fu">paste0</span>(CCDD,CCPP,<span class="st">&quot;00&quot;</span>)) <span class="co">#uso paste0 para concatenar esas cadenas de texto pero sin espacio entre ellas </span></span></code></pre></div>
+<p>Ahora que tengo la misma variable id puedo unir mis bases:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a>peru2 <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(mapa_prov,peru,<span class="at">by =</span> <span class="st">&quot;ubigeoProvincia&quot;</span>)</span></code></pre></div>
+<p>Podemos mostrar qué partido obtuvo la mayoría de votos según
+provincia:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" tabindex="-1"></a>peru2 <span class="ot">&lt;-</span> peru2 <span class="sc">%&gt;%</span></span>
+<span id="cb61-2"><a href="#cb61-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ganador =</span> <span class="fu">ifelse</span>(PL<span class="sc">&gt;</span>FP,<span class="st">&quot;Ganó PL&quot;</span>,<span class="st">&quot;Ganó FP&quot;</span>))</span></code></pre></div>
+<p>Ahora coloreemos el mapa según ganador:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a>  <span class="fu">ggplot</span>(peru2) <span class="sc">+</span></span>
+<span id="cb62-2"><a href="#cb62-2" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> ganador),<span class="at">lwd=</span><span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb62-3"><a href="#cb62-3" tabindex="-1"></a>   <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;Ganó PL&quot;</span><span class="ot">=</span><span class="st">&quot;red&quot;</span>, <span class="st">&quot;Ganó FP&quot;</span> <span class="ot">=</span> <span class="st">&quot;orange&quot;</span>))<span class="sc">+</span></span>
+<span id="cb62-4"><a href="#cb62-4" tabindex="-1"></a> <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mapa ganador a nivel provincial&quot;</span>, <span class="at">subtitle =</span> <span class="st">&quot;En segunda vuelta&quot;</span>)<span class="sc">+</span></span>
+<span id="cb62-5"><a href="#cb62-5" tabindex="-1"></a><span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb62-6"><a href="#cb62-6" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb62-7"><a href="#cb62-7" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb62-8"><a href="#cb62-8" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb62-9"><a href="#cb62-9" tabindex="-1"></a>    <span class="at">axis.ticks =</span>  <span class="fu">element_blank</span>(),</span>
+<span id="cb62-10"><a href="#cb62-10" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb62-11"><a href="#cb62-11" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb62-12"><a href="#cb62-12" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb62-13"><a href="#cb62-13" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>())<span class="sc">+</span></span>
+<span id="cb62-14"><a href="#cb62-14" tabindex="-1"></a>   <span class="fu">theme</span>(</span>
+<span id="cb62-15"><a href="#cb62-15" tabindex="-1"></a>    <span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>),</span>
+<span id="cb62-16"><a href="#cb62-16" tabindex="-1"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(</span>
+<span id="cb62-17"><a href="#cb62-17" tabindex="-1"></a>      <span class="at">colour=</span><span class="st">&quot;black&quot;</span>, <span class="at">size=</span><span class="dv">10</span>, </span>
+<span id="cb62-18"><a href="#cb62-18" tabindex="-1"></a>                                      <span class="at">face=</span><span class="st">&quot;bold&quot;</span>)<span class="co">#&quot;left&quot;,&quot;bottom&quot;</span></span>
+<span id="cb62-19"><a href="#cb62-19" tabindex="-1"></a>      )<span class="sc">+</span>  </span>
+<span id="cb62-20"><a href="#cb62-20" tabindex="-1"></a>    <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;Ganador en 2da V&quot;</span>))</span></code></pre></div>
+<p><img src="pd9_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 </div>
 
 

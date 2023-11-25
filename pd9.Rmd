@@ -45,14 +45,13 @@ knitr::include_graphics("logoPUCP.png")
 LLamamos a los paquetes necesarios.
 
 ```{r echo = T, results = 'hide',  fig.show='hide'}
-library(latexpdf)
 library(rio)
 library(data.table)
 library(tidyr)
 library(dplyr)
 library(factoextra)
 library(plyr)
-library(tidyverse)
+library(ggplot2)
 library(sp)
 library(polycor)
 library(psych)
@@ -446,14 +445,14 @@ theme_bw()+
  
 ```
 
-## Georreferencia en Perú
+# Georreferencia - Mapa Perú
 
 Supongamos que ya tienes una data lista a nivel provincial de Perú, y
 necesitas que se muestre en un mapa. Si no tengo ninguno de los datos
 que me brindaron en esta sesión, ¿cómo empiezo desde cero un mapa?
 
 1.  Buscar en internet el shapefile al nivel que deseo
-    ([Link](https://www.geogpsperu.com/2014/03/base-de-datos-peru-shapefile-shp-minam.html))
+    ([Link](https://www.geogpsperu.com/2018/02/limite-provincial-politico-shapefile.html))
 2.  Unir las bases de datos, hacer el merge (en este caso podemos usar
     los ubigeos)
 3.  Identificar los puntos de corte para la escala de color
@@ -467,15 +466,18 @@ Importo el shapefile y su contenido
 
 ```{r}
 #importo shapefile
+#Le cambié de nombre a mis archivos para que sea más facil 
 provincias="Límites-provinciales/PROVINCIAS.shp"
 mapa_prov=st_read(provincias,stringsAsFactors=FALSE)  #importo el contenido del shapefile
 ```
 
-Uno ambas bases de datos
+Recuerda que debo identificar una variable identificadora que me ayude a
+unir ambas bases.
 
 ```{r}
 head(table(peru$ubigeoProvincia),10)
-head(table(mapa_prov$IDPROV),10)
+head(table(mapa_prov$CCDD),10)
+head(table(mapa_prov$CCPP),10)
 ```
 
 Identifico dos problemas
@@ -483,4 +485,51 @@ Identifico dos problemas
 1.  Las variables tienen distintos nombres
 2.  La extensión de ambas es distinta
 
-Solucionemos modificando la en mapa_prov
+En la data de provincias tengo ubigeoProvincia, pero en la otra base se
+encuentra dividio en 2 el ubigeo. Debo unir ambos código y añadir 00 al
+final y almacenar eso en la variable nueva ubigeoProvincia para que
+ambas bases tengan el mismo id.
+
+```{r}
+mapa_prov <- mapa_prov %>%
+  mutate(ubigeoProvincia = paste0(CCDD,CCPP,"00")) #uso paste0 para concatenar esas cadenas de texto pero sin espacio entre ellas 
+```
+
+Ahora que tengo la misma variable id puedo unir mis bases:
+
+```{r}
+peru2 <- inner_join(mapa_prov,peru,by = "ubigeoProvincia")
+```
+
+Podemos mostrar qué partido obtuvo la mayoría de votos según provincia:
+
+```{r}
+peru2 <- peru2 %>%
+  mutate(ganador = ifelse(PL>FP,"Ganó PL","Ganó FP"))
+```
+
+Ahora coloreemos el mapa según ganador:
+
+```{r}
+  ggplot(peru2) +
+  geom_sf(aes(fill = ganador),lwd=0.2)+
+   scale_fill_manual(values = c("Ganó PL"="red", "Ganó FP" = "orange"))+
+ labs(title = "Mapa ganador a nivel provincial", subtitle = "En segunda vuelta")+
+theme_bw()+
+  theme(
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks =  element_blank(),
+    axis.title = element_blank(),
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank())+
+   theme(
+    legend.position=c(0.1, 0.3),
+    legend.title = element_text(
+      colour="black", size=10, 
+                                      face="bold")#"left","bottom"
+      )+  
+    guides(fill = guide_legend(title = "Ganador en 2da V"))
+
+```
