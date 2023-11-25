@@ -226,6 +226,14 @@ mapaFile=file.path(folder,file)
 worldmap=st_read(mapaFile,stringsAsFactors=FALSE)
 ```
 
+```{r}
+names(worldmap)
+```
+
+```{r}
+names(data)
+```
+
 ```{r echo = T, results = 'hide',  fig.show='hide'}
 str(data)
 ```
