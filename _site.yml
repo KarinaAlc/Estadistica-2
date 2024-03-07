@@ -5,31 +5,5 @@ navbar:
   right:
     - text: "Sobre el curso"
       href: index.html
-    - text: "Sesión 1"
-      href: pd1.html
-    - text: "Sesión 2"
-      href: pd2.html
-    - text: "Revancha"
-      href: TidySup_Revancha_20232.html
-    - text: "Sesión 3"
-      href: pd3.html
-    - text: "Sesión 3 v2.0"
-      href: pd3_v2.html
-    - text: "Sesión 4"
-      href: pd4.html
-    - text: "Sesión 5"
-      href: pd5.html
-    - text: "Repaso"
-      href: Repaso.html
-    - text: "Sesión 6"
-      href: pd6.html
-    - text: "Solución - ejercicio clase"
-      href: Full_Factor.html
-    - text: "Sesión 7"
-      href: AFC.html
-    - text: "Sesión 8"
-      href: pd8.html
-    - text: "Sesión 9"
-      href: pd9.html
     - icon: fab fa-github
       href: https://karinaalc.github.io/Estadistica-2/
