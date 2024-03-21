@@ -19,7 +19,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 <br>
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1 <br>
 
 ### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
@@ -101,16 +101,23 @@ estamos filtrando de la data usa las personas que son judíos
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 usa %>%
   filter(relig=="Catolico", intecamp=="1. Mucho") 
+```
 
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 usa %>%
   filter(edad >= 50)
+```
 
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 usa %>%
   filter(intecamp=="1. Mucho", sexo=="Hombre", consipol=="1. Muy liberal")
+```
 
+```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 usa %>%
   filter(intecamp=="1. Mucho", sexo=="Mujer", consipol=="7. Muy Conservador")
 ```
+
 
 ### **SELECT**: Seleccionando subconjunto de variables
 
@@ -134,8 +141,6 @@ Lo podríamos volver un objeto para poder trabajar con ello
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
 # quitando variables
-usa %>%
-  select(-voto96, -quien96)
 menos96 <- usa %>%
   select(-voto96, -quien96)
 menos96 

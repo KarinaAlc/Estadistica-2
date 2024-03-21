@@ -433,45 +433,6 @@ div.tocify {
   <a href="index.html">Sobre el curso</a>
 </li>
 <li>
-  <a href="pd1.html">Sesión 1</a>
-</li>
-<li>
-  <a href="pd2.html">Sesión 2</a>
-</li>
-<li>
-  <a href="TidySup_Revancha_20232.html">Revancha</a>
-</li>
-<li>
-  <a href="pd3.html">Sesión 3</a>
-</li>
-<li>
-  <a href="pd3_v2.html">Sesión 3 v2.0</a>
-</li>
-<li>
-  <a href="pd4.html">Sesión 4</a>
-</li>
-<li>
-  <a href="pd5.html">Sesión 5</a>
-</li>
-<li>
-  <a href="Repaso.html">Repaso</a>
-</li>
-<li>
-  <a href="pd6.html">Sesión 6</a>
-</li>
-<li>
-  <a href="Full_Factor.html">Solución - ejercicio clase</a>
-</li>
-<li>
-  <a href="AFC.html">Sesión 7</a>
-</li>
-<li>
-  <a href="pd8.html">Sesión 8</a>
-</li>
-<li>
-  <a href="pd9.html">Sesión 9</a>
-</li>
-<li>
   <a href="https://karinaalc.github.io/Estadistica-2/">
     <span class="fab fa-github"></span>
      
@@ -503,10 +464,10 @@ div.tocify {
 <div id="facultad-de-ciencias-sociales---pucp" class="section level2">
 <h2>FACULTAD DE CIENCIAS SOCIALES - PUCP <br></h2>
 <div
-id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2023---2"
+id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2024---1"
 class="section level3">
 <h3>Curso: POL 304 - Estadística para el análisis político 2 | Semestre
-2023 - 2 <br></h3>
+2024 - 1 <br></h3>
 </div>
 <div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
 class="section level3">
@@ -574,16 +535,13 @@ concatenar(unir) varios comandos.</p>
 <p>Filtra casos o filas que cumplen con el criterio. Por ejemplo, aca
 estamos filtrando de la data usa las personas que son judíos</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">filter</span>(relig<span class="sc">==</span><span class="st">&quot;Catolico&quot;</span>, intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>) </span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">filter</span>(edad <span class="sc">&gt;=</span> <span class="dv">50</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="fu">filter</span>(intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>, sexo<span class="sc">==</span><span class="st">&quot;Hombre&quot;</span>, consipol<span class="sc">==</span><span class="st">&quot;1. Muy liberal&quot;</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="fu">filter</span>(intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>, sexo<span class="sc">==</span><span class="st">&quot;Mujer&quot;</span>, consipol<span class="sc">==</span><span class="st">&quot;7. Muy Conservador&quot;</span>)</span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">filter</span>(relig<span class="sc">==</span><span class="st">&quot;Catolico&quot;</span>, intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">filter</span>(edad <span class="sc">&gt;=</span> <span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">filter</span>(intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>, sexo<span class="sc">==</span><span class="st">&quot;Hombre&quot;</span>, consipol<span class="sc">==</span><span class="st">&quot;1. Muy liberal&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">filter</span>(intecamp<span class="sc">==</span><span class="st">&quot;1. Mucho&quot;</span>, sexo<span class="sc">==</span><span class="st">&quot;Mujer&quot;</span>, consipol<span class="sc">==</span><span class="st">&quot;7. Muy Conservador&quot;</span>)</span></code></pre></div>
 </div>
 <div id="select-seleccionando-subconjunto-de-variables"
 class="section level3">
@@ -592,19 +550,17 @@ class="section level3">
 según nombre.</p>
 <p>En este comando estamos especificando que queremos seleccionar de la
 data usa, las variables interés en las campañas (intecamp) y sexo.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>inte<span class="ot">=</span> usa <span class="sc">%&gt;%</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">select</span>(intecamp, sexo)</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>inte</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>inte<span class="ot">=</span> usa <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">select</span>(intecamp, sexo)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>inte</span></code></pre></div>
 <p>Si queremos quitar variable ponemos el signo de menos. Salen todas
 las varibales menos las del si voto en las elecciones del 96 (voto96) y
 por quién.</p>
 <p>Lo podríamos volver un objeto para poder trabajar con ello</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># quitando variables</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>voto96, <span class="sc">-</span>quien96)</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>menos96 <span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>voto96, <span class="sc">-</span>quien96)</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>menos96 </span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># quitando variables</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>menos96 <span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>voto96, <span class="sc">-</span>quien96)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>menos96 </span></code></pre></div>
 </div>
 <div id="summarise-crear-resumenes-de-datos" class="section level3">
 <h3><strong>SUMMARISE</strong>: Crear resumenes de datos</h3>
@@ -615,20 +571,20 @@ luego de su gestión. Para eso usamos sumarise. Mencionamos los datos de
 la base usa, luego la variable que se creará en base a ella, que será la
 media de la variable gorepst, omitiendo los valores perdidos</p>
 <p>Solo con variables numéricas (ojo)</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#Promedio aprobación Al Gore post elecciones</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">promgorepost =</span> <span class="fu">mean</span>(gorepst, <span class="at">na.rm =</span> T))</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#CORROBORAMOS</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="fu">class</span>(usa<span class="sc">$</span>gorepst) </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">#Promedio aprobación Al Gore post elecciones</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">promgorepost =</span> <span class="fu">mean</span>(gorepst, <span class="at">na.rm =</span> T))</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co">#CORROBORAMOS</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="fu">class</span>(usa<span class="sc">$</span>gorepst) </span></code></pre></div>
 <p>Acá nos menciona un error, dice que el argumento no es numérico. Las
 convertimos</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#CORREGIMOS</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>usa<span class="sc">$</span>gorepst<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gorepst)</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>usa<span class="sc">$</span>gorepre<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gorepre)</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MediaAprobGorePost =</span> <span class="fu">mean</span>(gorepst, <span class="at">na.rm =</span> T))</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#CORREGIMOS</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>usa<span class="sc">$</span>gorepst<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gorepst)</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>usa<span class="sc">$</span>gorepre<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gorepre)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">MediaAprobGorePost =</span> <span class="fu">mean</span>(gorepst, <span class="at">na.rm =</span> T))</span></code></pre></div>
 </div>
 <div id="count-contar-casos-en-base-a-una-variable"
 class="section level3">
@@ -638,11 +594,11 @@ class="section level3">
 educativo.</p>
 <p>Se puede observar que la mayoría tiene un nivel educativo mayor al de
 secundaria.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">count</span>(relig)</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="fu">count</span>(educ,<span class="at">sort =</span> <span class="cn">FALSE</span>) <span class="co">#numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">count</span>(relig)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">count</span>(educ,<span class="at">sort =</span> <span class="cn">FALSE</span>) <span class="co">#numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente</span></span></code></pre></div>
 </div>
 <div id="mutate-y-arrange" class="section level3">
 <h3><strong>MUTATE Y ARRANGE</strong></h3>
@@ -655,16 +611,16 @@ Al Gore antes y luego de su gestión, y luego de eso, queremos que esa
 variable creada, se ordene de manera descendente. Finalmente, queremos
 que los resultados muestre únicamente las variables de ID, difgore,
 gorepre y gorepst para ver la diferencia.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>usagoredesc<span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difgore =</span>  gorepst <span class="sc">-</span> gorepre) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(., <span class="fu">desc</span>(gorepst)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="fu">select</span>(id, difgore, gorepre, gorepst)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>usagoredesc<span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difgore =</span>  gorepst <span class="sc">-</span> gorepre) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(., <span class="fu">desc</span>(gorepst)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">select</span>(id, difgore, gorepre, gorepst)</span></code></pre></div>
 <p>Vamos a poner gorepost como función en arrange para ver su aprobación
 más alta.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#diferencia más alta</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difgore =</span>  gorepst <span class="sc">-</span> gorepre) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(difgore))  <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">select</span>(id, difgore, gorepre, gorepst)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#diferencia más alta</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>usa <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difgore =</span>  gorepst <span class="sc">-</span> gorepre) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(difgore))  <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="fu">select</span>(id, difgore, gorepre, gorepst)</span></code></pre></div>
 </div>
 <div id="transmute" class="section level3">
 <h3><strong>TRANSMUTE</strong></h3>
@@ -675,12 +631,12 @@ datos)</p>
 George Bush</p>
 <p>Vamos a cambiarla a numérica, para evitar que ocurra el mismo
 error.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>usa<span class="sc">$</span>gbushpst<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gbushpst)</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>usa<span class="sc">$</span>gbushpre<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gbushpre)</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>usabush <span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">difbush =</span> gbushpst <span class="sc">-</span> gbushpre) <span class="sc">%&gt;%</span></span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(difbush))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>usa<span class="sc">$</span>gbushpst<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gbushpst)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>usa<span class="sc">$</span>gbushpre<span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(usa<span class="sc">$</span>gbushpre)</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>usabush <span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">difbush =</span> gbushpst <span class="sc">-</span> gbushpre) <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(difbush))</span></code></pre></div>
 </div>
 <div id="group_by-agrupar-datos" class="section level3">
 <h3><strong>group_by</strong>: Agrupar datos</h3>
@@ -694,17 +650,17 @@ posición política, y usaremos sumarise para sacar el promedio de la
 aprobación de Bush post gestión Vemos los resultados. Vemos una
 tendencia que los más conservadores tenían una aprobación más alta de
 Bush</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>usa.g <span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="fu">group_by</span>(consipol) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gbushpst,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>usa.g</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>usa.g <span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">group_by</span>(consipol) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gbushpst,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>usa.g</span></code></pre></div>
 <p>Ahora con Al Gore ¿los datos se voltean? Los encuestados que se
 consideran muy Liberales, aprueban más la gestión de Al Gore, a
 diferencia de los muy conservadores.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>usa.b <span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span> </span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>  <span class="fu">group_by</span>(consipol) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gorepst,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>usa.b</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>usa.b <span class="ot">&lt;-</span> usa <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">group_by</span>(consipol) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gorepst,<span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">n =</span> <span class="fu">n</span>())</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>usa.b</span></code></pre></div>
 </div>
 </div>
 <div id="repaso-modelo-lineal-general-múltiple" class="section level2">
@@ -731,9 +687,9 @@ sociodemográficas, económicas etc.</p>
 class="section level3">
 <h3>Ejemplo 1: Prediciendo los casos de COVID-19</h3>
 <p>Obtenemos nuestra base de datos:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>competitividad<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;COVID - COMPETITIVIDAD.sav&quot;</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">names</span>(competitividad)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>competitividad<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;COVID - COMPETITIVIDAD.sav&quot;</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="fu">names</span>(competitividad)</span></code></pre></div>
 </div>
 <div id="recordando-la-regresión-lineal" class="section level3">
 <h3>RECORDANDO LA REGRESIÓN LINEAL</h3>
@@ -741,8 +697,8 @@ class="section level3">
 del gasto real por hogar mensual</p>
 <p>Variable dependiente: Casos COVID-19 por cada 100 mil personas</p>
 <p>Variable independiente: gasto real por hogar mensual (var5)</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>modelo <span class="ot">&lt;-</span><span class="fu">lm</span>(competitividad<span class="sc">$</span>casos_100k <span class="sc">~</span> competitividad<span class="sc">$</span>var5)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>modelo <span class="ot">&lt;-</span><span class="fu">lm</span>(competitividad<span class="sc">$</span>casos_100k <span class="sc">~</span> competitividad<span class="sc">$</span>var5)</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <p>Seguimos nuestro flujograma para evaluar el modelo:</p>
 <ol style="list-style-type: decimal">
 <li>Nos preguntamos si el modelo es válido</li>
@@ -758,9 +714,9 @@ personas</p></li>
 <li><p>Variables independientes: Stock de capital por trabajador (var3)
 + gasto real por hogar mensual (var5) + morbilidad (var20).</p></li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(competitividad<span class="sc">$</span>casos_100k<span class="sc">~</span> competitividad<span class="sc">$</span>var3<span class="sc">+</span>competitividad<span class="sc">$</span>var5<span class="sc">+</span></span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>                competitividad<span class="sc">$</span>var20)</span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(competitividad<span class="sc">$</span>casos_100k<span class="sc">~</span> competitividad<span class="sc">$</span>var3<span class="sc">+</span>competitividad<span class="sc">$</span>var5<span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>                competitividad<span class="sc">$</span>var20)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
 <p>Seguimos nuestro flujograma para evaluar el modelo:</p>
 <ol style="list-style-type: decimal">
 <li>Nos preguntamos si el modelo es válido</li>
@@ -768,7 +724,7 @@ personas</p></li>
 <li>Si las variables independientes aportan al modelo</li>
 <li>Identificamos los coeficientes</li>
 </ol>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>modelo1<span class="sc">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>modelo1<span class="sc">$</span>coefficients</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Construimos la ecuación 🤺</li>
 </ol>

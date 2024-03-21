@@ -5,5 +5,7 @@ navbar:
   right:
     - text: "Sobre el curso"
       href: index.html
+    - text: "Sesión 1"
+      href: pd1.html
     - icon: fab fa-github
       href: https://karinaalc.github.io/Estadistica-2/
