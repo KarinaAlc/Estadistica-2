@@ -7,5 +7,7 @@ navbar:
       href: index.html
     - text: "Sesión 1"
       href: pd1.html
+    - text: "Sesión 2"
+      href: pd2.html
     - icon: fab fa-github
       href: https://karinaalc.github.io/Estadistica-2/

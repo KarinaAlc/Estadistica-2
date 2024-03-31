@@ -23,14 +23,13 @@ knitr::include_graphics("logoPUCP.png")
 
 ### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
-### **MUNDO TIDYVERSE**
+### **Mundo Tidyverse**
 
 ```{r,echo=FALSE, out.width="30%",fig.align = "center",warning=FALSE,message=FALSE}
 knitr::include_graphics("PD1_tidy.png") 
 ```
 
-Tidyverse es un conjunto de de paquetes de R para ciencia de datos, nos
-ayuda a trabajar las bases de datos. Ha sido desarrollado por RStudio.
+Tidyverse es un conjunto de de paquetes de R para ciencia de datos, nos ayuda a trabajar las bases de datos. Ha sido desarrollado por RStudio.
 
 -   **Es consistente** : Todos los paquetes tienen una misma estructura
 
@@ -39,32 +38,19 @@ ayuda a trabajar las bases de datos. Ha sido desarrollado por RStudio.
 
 -   **Funcional**: Como casi todo R, promueve la programación
 
-Para cada paso de tratamiento de datos existe un paquete, se puede pasar
-desde cargar/importar los datos, limpiarlos, transformarlos, visualizar,
-modelarlos y finalmente comunicarlos.
+Para cada paso de tratamiento de datos existe un paquete, se puede pasar desde cargar/importar los datos, limpiarlos, transformarlos, visualizar, modelarlos y finalmente comunicarlos.
 
-Para importar datos tenemos readr, haven y readxl. Para limpiar los
-datos usamos *tidyr*, para transofrmar los datos se usa dyplr, que lo
-veremos a continuación, para modelar se usa purr o broom, para
-visualizar se usa ggplot2. Finalmente, para comunicar se usa knitr para
-publicar los resultados por html, pdf, ppt. y rmarkdown es la estructura
-de knitr.
+Para importar datos tenemos readr, haven y readxl. Para limpiar los datos usamos tidyr, para transformar los datos se usa dyplr, que lo veremos a continuación, para modelar se usa purr o broom, para visualizar se usa ggplot2. Finalmente, para comunicar se usa knitr para publicar los resultados por html, pdf, ppt. y rmarkdown es la estructura de knitr.
 
-Algunos les gusta usarlo porque facilita el análisis y manipulación de
-datos y es más rápido, pero, por otro lado, tiene otra lógica en la
-programación. En vez de usar "," para diferenciar entre comandos, usar
-%\>%,
+Algunos les gusta usarlo porque facilita el análisis y manipulación de datos y es más rápido, pero, por otro lado, tiene otra lógica en la programación. En vez de usar "," para diferenciar entre comandos, usar %\>%.
 
-Instalando el paquete de tidyverse te incluye los 8 paquetes. Pero, eso
-sí, toma más tiempo de lo debido. Por eso, en esta ocasión, se ha
-descargado los que necesitaremos ahora
+Instalando el paquete de tidyverse te incluye los 8 paquetes. Pero, eso sí, toma más tiempo de lo debido. Por eso, en esta ocasión, se ha descargado los que necesitaremos ahora
 
 ```{r,warning=FALSE,message=FALSE}
 # Paquetes que se usarán 
-library(dplyr)
+library(dplyr) 
 library(ggplot2)
 library(data.table)
-library(devtools)
 library(foreign)
 library(rio)
 ```
@@ -72,52 +58,32 @@ library(rio)
 #### Sobre la data a analizar
 
 ```{r,echo=FALSE, out.width="30%",fig.align = "center",warning=FALSE,message=FALSE}
-knitr::include_graphics("PD1_Elec96.png") 
+####DICCIONARIO DE DATOS
 ```
 
 #### Importar y preparar base de datos
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
+```{r,message=FALSE}
 
-usa <- read.spss("usa.sav",
-          use.value.labels = T, 
-          to.data.frame=TRUE)
-str(usa)#Ver estructura de bases de datos, tipo de variable
+data <- import("Data_pd1.xlsx")
+
+str(data)#Ver estructura de bases de datos, tipo de variable
 ```
 
-## **PAQUETE DPLYR**
+## **Paquete "dplyr"**
 
-El paquete dplyr es el más útil en R para la manipulación de datos, una
-de las ventajas es que se pueda usar el pipe para combinar diferentes
-funciones en R. Para no tener que escribirlo, se genera mediante control
-shift M. En pocas palabras, reemplaza la "," para concatenar(unir)
-varios comandos.
+El paquete dplyr es el más útil en R para la manipulación de datos, una de las ventajas es que se pueda usar el pipe para combinar diferentes funciones en R. Para no tener que escribirlo, se genera mediante Ctlr + shift M. En pocas palabras, reemplaza la "," para concatenar(unir) varios comandos.
 
-### **FILTER**: filtrar filas según un criterio
+
+### **Filter**: filtrar filas según un criterio
 
 Filtra casos o filas que cumplen con el criterio. Por ejemplo, aca
-estamos filtrando de la data usa las personas que son judíos
+estamos filtrando de la data a los países en los que más del 50% de personas realizan un gasto de bolsillo
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa %>%
-  filter(relig=="Catolico", intecamp=="1. Mucho") 
+```{r, message=FALSE}
+data %>%
+  filter(GastoBolsillo_porc > 50)
 ```
-
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa %>%
-  filter(edad >= 50)
-```
-
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa %>%
-  filter(intecamp=="1. Mucho", sexo=="Hombre", consipol=="1. Muy liberal")
-```
-
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa %>%
-  filter(intecamp=="1. Mucho", sexo=="Mujer", consipol=="7. Muy Conservador")
-```
-
 
 ### **SELECT**: Seleccionando subconjunto de variables
 
@@ -127,11 +93,7 @@ según nombre.
 En este comando estamos especificando que queremos seleccionar de la
 data usa, las variables interés en las campañas (intecamp) y sexo.
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-inte= usa %>%
-  select(intecamp, sexo)
-inte
-```
+
 
 Si queremos quitar variable ponemos el signo de menos. Salen todas las
 varibales menos las del si voto en las elecciones del 96 (voto96) y por
@@ -139,12 +101,7 @@ quién.
 
 Lo podríamos volver un objeto para poder trabajar con ello
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-# quitando variables
-menos96 <- usa %>%
-  select(-voto96, -quien96)
-menos96 
-```
+
 
 ### **SUMMARISE**: Crear resumenes de datos
 
@@ -158,27 +115,12 @@ media de la variable gorepst, omitiendo los valores perdidos
 
 Solo con variables numéricas (ojo)
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-#Promedio aprobación Al Gore post elecciones
-usa %>%
-  summarise(promgorepost = mean(gorepst, na.rm = T))
 
-#CORROBORAMOS
-class(usa$gorepst) 
-
-```
 
 Acá nos menciona un error, dice que el argumento no es numérico. Las
 convertimos
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-#CORREGIMOS
-usa$gorepst<- as.numeric(usa$gorepst)
-usa$gorepre<- as.numeric(usa$gorepre)
 
-usa %>%
-  summarise(MediaAprobGorePost = mean(gorepst, na.rm = T))
-```
 
 ### **COUNT**: contar casos en base a una variable
 
@@ -189,14 +131,7 @@ Vamos a contar los casos de las personas de acuerdo al nivel educativo.
 Se puede observar que la mayoría tiene un nivel educativo mayor al de
 secundaria.
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa %>%
-  count(relig)
 
-usa %>%
-  count(educ,sort = FALSE) #numero de personas en base a nivel educativo, con SORT=T estamos diciendo que nos ordene los datos de manera descendente
-
-```
 
 ### **MUTATE Y ARRANGE**
 
@@ -204,59 +139,17 @@ Crea nuevas columnas conservando las variables existentes. En esta
 ocasión estamos creando una nueva variable que vendría a ser la
 diferencia de la aprobación de Al Gore antes y luego de su gestión.
 
-Esta función es un poco más larga, pero no es difícil. Primero crearemos
-una nueva variable que será la diferencia de la aprobación de Al Gore
-antes y luego de su gestión, y luego de eso, queremos que esa variable
-creada, se ordene de manera descendente. Finalmente, queremos que los
-resultados muestre únicamente las variables de ID, difgore, gorepre y
-gorepst para ver la diferencia.
+Esta función es un poco más larga, pero no es difícil. Primero crearemos una nueva variable que será la diferencia de la aprobación de Al Gore antes y luego de su gestión, y luego de eso, queremos que esa variable creada, se ordene de manera descendente. Finalmente, queremos que los resultados muestre únicamente las variables de ID, difgore, gorepre y gorepst para ver la diferencia.
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usagoredesc<- usa %>%
-  mutate(difgore =  gorepst - gorepre) %>% arrange(., desc(gorepst)) %>%
-  select(id, difgore, gorepre, gorepst)
+```{r}
+data <- data %>%
+  mutate(AltaPerCorru = ifelse(Percep_corrup > 0.1422,1,0))
 ```
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,include=FALSE}
-#de manera ascendente
-usagoreasc <- usa %>%
-  mutate(difgore =  gorepst - gorepre) %>%
-  arrange(difgore) %>%
-  select(id, difgore, gorepre, gorepst)
-```
 
 Vamos a poner gorepost como función en arrange para ver su aprobación
 más alta.
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-#diferencia más alta
-usa %>%
-  mutate(difgore =  gorepst - gorepre) %>%
-  arrange(desc(difgore))  %>%
-  select(id, difgore, gorepre, gorepst)
-
-```
-
-### **TRANSMUTE**
-
-También existe la función transmute, que realiza lo mismo solo que
-muestra únicamente la nueva variable creada (no se agrega a la base de
-datos)
-
-Crearemos la vida variable de disfrencia pero con la aprobación George
-Bush
-
-Vamos a cambiarla a numérica, para evitar que ocurra el mismo error.
-
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa$gbushpst<- as.numeric(usa$gbushpst)
-usa$gbushpre<- as.numeric(usa$gbushpre)
-
-usabush <- usa %>%
-  transmute(difbush = gbushpst - gbushpre) %>%
-  arrange(desc(difbush))
-
-```
 
 ### **group_by**: Agrupar datos
 
@@ -273,23 +166,12 @@ aprobación de Bush post gestión Vemos los resultados. Vemos una
 tendencia que los más conservadores tenían una aprobación más alta de
 Bush
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa.g <- usa %>% 
-  group_by(consipol) %>% 
-  summarise(mean = mean(gbushpst,na.rm=TRUE), n = n())
-usa.g
-```
 
 Ahora con Al Gore ¿los datos se voltean? Los encuestados que se
 consideran muy Liberales, aprueban más la gestión de Al Gore, a
 diferencia de los muy conservadores.
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-usa.b <- usa %>% 
-  group_by(consipol) %>% 
-  summarise(mean = mean(gorepst,na.rm=TRUE), n = n())
-usa.b
-```
+
 
 ## **REPASO MODELO LINEAL GENERAL MÚLTIPLE**
 
@@ -317,14 +199,6 @@ sociodemográficas, económicas etc.
 
 ### Ejemplo 1: Prediciendo los casos de COVID-19
 
-Obtenemos nuestra base de datos:
-
-```{r setup, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-library(rio)
-competitividad<-import("COVID - COMPETITIVIDAD.sav")
-names(competitividad)
-```
-
 ### RECORDANDO LA REGRESIÓN LINEAL
 
 Calcularemos un modelo para predecir los casos de COVID-19 a partir del gasto real por hogar mensual
@@ -334,7 +208,7 @@ Variable dependiente: Casos COVID-19 por cada 100 mil personas
 Variable independiente: gasto real por hogar mensual (var5)
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-modelo <-lm(competitividad$casos_100k ~ competitividad$var5)
+modelo <-lm(data$Policulture ~ data$GastoBolsillo_porc)
 summary(modelo)
 ```
 
@@ -355,9 +229,9 @@ Calculamos nuestro modelo, en este caso usaremos lo siguiente:
     gasto real por hogar mensual (var5) + morbilidad (var20).
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-modelo1 <- lm(competitividad$casos_100k~ competitividad$var3+competitividad$var5+
-                competitividad$var20)
-summary(modelo1)
+modelo1 <- lm(data$Policulture~ data$GastoBolsillo_porc+
+                data$ParDig+
+                data$AltaPerCorru)
 ```
 
 Seguimos nuestro flujograma para evaluar el modelo:
