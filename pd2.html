@@ -13,7 +13,7 @@
 
 <title>Sesión 2</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -439,39 +439,6 @@ div.tocify {
   <a href="pd2.html">Sesión 2</a>
 </li>
 <li>
-  <a href="TidySup_Revancha_20232.html">Revancha</a>
-</li>
-<li>
-  <a href="pd3.html">Sesión 3</a>
-</li>
-<li>
-  <a href="pd3_v2.html">Sesión 3 v2.0</a>
-</li>
-<li>
-  <a href="pd4.html">Sesión 4</a>
-</li>
-<li>
-  <a href="pd5.html">Sesión 5</a>
-</li>
-<li>
-  <a href="Repaso.html">Repaso</a>
-</li>
-<li>
-  <a href="pd6.html">Sesión 6</a>
-</li>
-<li>
-  <a href="Full_Factor.html">Solución - ejercicio clase</a>
-</li>
-<li>
-  <a href="AFC.html">Sesión 7</a>
-</li>
-<li>
-  <a href="pd8.html">Sesión 8</a>
-</li>
-<li>
-  <a href="pd9.html">Sesión 9</a>
-</li>
-<li>
   <a href="https://karinaalc.github.io/Estadistica-2/">
     <span class="fab fa-github"></span>
      
@@ -694,7 +661,7 @@ Telecommunicacion_Infrastructura + ProcesoElectoral</p></li>
 ## Multiple R-squared:  0.9213, Adjusted R-squared:  0.9188 
 ## F-statistic: 363.1 on 4 and 124 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Seguimos nuestro flujograma para evaluar el modelo:</p>
-<ol style="list-style-type: decimal">
+<ol style="list-style-type: lower-alpha">
 <li><strong>Nos preguntamos si el modelo es válido:</strong></li>
 </ol>
 <ul>
@@ -702,7 +669,7 @@ Telecommunicacion_Infrastructura + ProcesoElectoral</p></li>
 nula, lo cual probaría que nuestro modelo sí funciona.</li>
 <li>Al tener un p-value de 2.2e-1-16 nuestro modelo sí funciona.</li>
 </ul>
-<ol start="2" style="list-style-type: decimal">
+<ol start="2" style="list-style-type: lower-alpha">
 <li><strong>¿Qué tanto explica el modelo?</strong></li>
 </ol>
 <ul>
@@ -712,7 +679,7 @@ nula, lo cual probaría que nuestro modelo sí funciona.</li>
 variabilidad de mi dependiente, esto es bueno, pero quizá podría ser
 mejor 😯</p></li>
 </ul>
-<ol start="3" style="list-style-type: decimal">
+<ol start="3" style="list-style-type: lower-alpha">
 <li><strong>¿Las variables independientes aportan al
 modelo?</strong></li>
 </ol>
@@ -722,7 +689,7 @@ modelo?</strong></li>
 sean menores que 0.05.</p></li>
 <li><p>Vemos que todas nuestras variables cumplen ✅</p></li>
 </ul>
-<ol start="4" style="list-style-type: decimal">
+<ol start="4" style="list-style-type: lower-alpha">
 <li><strong>Identificamos los coeficientes</strong></li>
 </ol>
 <ul>
@@ -760,18 +727,14 @@ el valor esperado de la variable dependiente son aditivos. Si este
 supuesto no se cumple significaría que posiblemente existan variables
 que no aporten al modelo o que se trate de una relación no lineal.</p>
 <p><strong>Cómo detectarlo</strong></p>
-<p>OPCIÓN 1: Exploración gráfica: Plot de valores residuales frente a
-valores predichos.</p>
-<p>OPCIÓN 2: Calculando la correlación bivariada de cada independiente
-con la dependiente.</p>
-<p><strong>Código e interpretación</strong></p>
+<p>Exploración gráfica: Plot de valores residuales frente a valores
+predichos.</p>
+<p><strong>Código</strong></p>
+<p>La línea verde debería de estar lo más cercana a la línea
+punteada.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">autoplot</span>(modelo1,<span class="dv">1</span>)</span></code></pre></div>
-<p>Usando el código plot, la línea roja debería de estar lo más cercana
-a la línea punteada. De acuerdo al resultado, el gráfico aún nos
-generaría suspicacias. En tanto, dado que la línea roja obedece a los
-puntos, éstos deberían distribuirse alrededor de una línea horizontal,
-con una varianza aproximadamente constante.</p>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;linearity&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 <div id="normalidad-de-residuos-el-problema-es-la-no-normalidad"
 class="section level3">
@@ -782,18 +745,17 @@ normalidad)</strong></h3>
 del valor observado menos el valor pronosticado (residuos) siguen una
 distribución normal, esto es importante porque si es que no se cumple no
 se podrían aplicar las pruebas globales del modelo.</p>
-<p><strong>Cómo detectarlo</strong></p>
-<p>Exploración gráfica: QQ plot de residuos Pruebas de normalidad a los
-residuos. Normalmente bastaría con la prueba de Shapiro Wilk, pero
-también se pueden probar otros como Lillieford, Kolmogorov (no es muy
-exigente), entre otros.</p>
+<p><strong>¿Cómo detectarlo?</strong></p>
+<p>Exploración gráfica y pruebas de normalidad a los residuos.</p>
+<p><strong>Si usamos prueba de normalidad:</strong> aplicamos la prueba
+de Shapiro a los residuos del modelo si estos son menores a 50 casos y
+Kolmogorov a aquellos mayores a 50 casos.</p>
 <p><strong>Código e interpretación</strong></p>
 <p>Si usamos sólo gráfico</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">autoplot</span>(modelo1, <span class="dv">2</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;qq&quot;</span>)</span></code></pre></div>
 <p>Todos los puntos deben estar sobre la diagonal. Los dos gráficos no
 son concluyentes, entonces procedo a realizar el test.</p>
-<p>Si usamos prueba de normalidad:aplicamos la prueba de Shapiro a los
-residuos del modelo</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(modelo1<span class="sc">$</span>resid)</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
@@ -810,7 +772,7 @@ frente a un caso de distribución normal de los residuos.</p>
 </div>
 <div id="homocedasticidad-el-problema-es-la-heterocedasticidad"
 class="section level3">
-<h3><strong>3- Homocedasticidad (el problema es la
+<h3><strong>3. Homocedasticidad (el problema es la
 heterocedasticidad)</strong></h3>
 <p><strong>Descripción</strong></p>
 <p>La homocedasticidad (también conocido como homogeneidad en la
@@ -821,19 +783,18 @@ heterocedasticidad.</p>
 <p><strong>Cómo detectarlo</strong></p>
 <p>OPCIÓN 1: Exploración gráfica: diagrama de residuos standarizados y
 valores predichos.</p>
-<p>OPCIÓN 2: Con el Score Test for Non-Constant Error Variance, también
-llamado Test Breusch Pagan. Evalúa si la varianza del error cambia con
-el nivel de la variable respuesta (valores ajustados) o con una
-combinación lineal de predictores.</p>
-<p><strong>Código e interpretación</strong></p>
+<p><strong>Código</strong></p>
 <p>Si usamos el gráfico</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">autoplot</span>(modelo1, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;homogeneity&quot;</span>)</span></code></pre></div>
 <p>En el Gráfico la línea roja debe seguir una tendencia horizontal,
 esto representaría que la distribución de los puntos son uniformes. Al
 ver nuestro gráfico nos damos cuenta que la línea roja va hacia arriba,
 lo cual nos dice que el gráfico no es concluyente aún. Vamos al
 test.</p>
-<p>Si usamos el test de BP:</p>
+<p>OPCIÓN 2: Con el Score Test for Non-Constant Error Variance, también
+llamado Test Breusch Pagan. Evalúa si la varianza del error cambia con
+el nivel de la variable respuesta (valores ajustados) o con una
+combinación lineal de predictores.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">bptest</span>(modelo1)</span></code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
@@ -867,23 +828,20 @@ resultados no encontramos multicolinealidad.</p>
 <ul>
 <li>Mayor a 10, grave problema de multicolinealidad.</li>
 </ul>
-<p><strong>Código e interpretación</strong></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">vif</span>(modelo1)</span></code></pre></div>
-<pre><code>##                   Capital_Humano                      Policulture 
-##                         3.753040                         1.595470 
-## Telecommunicacion_Infrastructura                 ProcesoElectoral 
-##                         4.079774                         1.455717</code></pre>
-<p>Valores &gt; 5 indican presencia de multicolinealidad.</p>
+<p><strong>Código</strong></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;vif&quot;</span>)</span></code></pre></div>
+</div>
+<div id="apalancamiento" class="section level3">
+<h3>5.<strong>Apalancamiento </strong></h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;outliers&quot;</span>)</span></code></pre></div>
 </div>
 <div
 id="independencia-de-residuos-el-problema-es-que-existe-autocorrelación-en-los-residuos"
 class="section level3">
-<h3>5.- <strong>Independencia de residuos (el problema es que existe
+<h3>6.- <strong>Independencia de residuos (el problema es que existe
 autocorrelación en los residuos)</strong></h3>
 <p><strong>Descripción</strong></p>
-<p>Si los errores residuales <strong>no son independientes</strong>, es
-probable que demuestren algún tipo de patrón (que no siempre es obvio a
-simple vista).</p>
+<p>– insertar</p>
 <p><strong>Cómo detectarlo</strong></p>
 <p>Los puntos se deben acercar lo más posible a la línea oblicua del
 gráfico que representa la distribución normal.</p>
@@ -898,8 +856,8 @@ gráfico que representa la distribución normal.</p>
 entonces podemos afirmar que los residuos son independientes</strong> o
 que no están autocrrelacionados. El modelo <strong>sí</strong> pasa este
 supuesto.</p>
-<p><strong>Modelo 2</strong> ¿Es posible mejorar mi modelo1? Esta vez,
-realizamos una nueva regresión.</p>
+<p><strong>Modelo 2</strong> ¿Es posible mejorar mi modelo1? Realizamos
+una nueva regresión.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">names</span>(Egov)</span></code></pre></div>
 <pre><code>## [1] &quot;pais&quot;                             &quot;participaciónDigital&quot;            
 ## [3] &quot;Servicios_Online&quot;                 &quot;Capital_Humano&quot;                  
@@ -930,7 +888,7 @@ realizamos una nueva regresión.</p>
 ## Multiple R-squared:  0.8983, Adjusted R-squared:  0.8959 
 ## F-statistic: 368.1 on 3 and 125 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Seguimos nuestro flujograma para evaluar el modelo:</p>
-<ol style="list-style-type: decimal">
+<ol style="list-style-type: lower-alpha">
 <li>Nos preguntamos si el modelo es válido:</li>
 </ol>
 <ul>
@@ -938,7 +896,7 @@ realizamos una nueva regresión.</p>
 nula, lo cual probaría que nuestro modelo sí funciona. -Al tener un
 p-value de 2.2e-16 nuestro modelo sí funciona.</li>
 </ul>
-<ol start="2" style="list-style-type: decimal">
+<ol start="2" style="list-style-type: lower-alpha">
 <li>¿Qué tanto explica el modelo? -Revisamos el R cuadrado que va de 0 a
 1 (0% a 100%) -En este caso mis variables (en conjunto) explican el
 89.8% de la variabilidad de mi dependiente, esto es bueno, pero quizá
