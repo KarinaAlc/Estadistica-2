@@ -358,6 +358,8 @@ check_model(modelo1, check="vif")
 ```{r,warning=FALSE,message=FALSE}
 check_model(modelo1, check="outliers")
 ```
+
+
 ### 6.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)**
 
 **Descripción**
