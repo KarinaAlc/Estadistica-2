@@ -258,7 +258,7 @@ residuos del modelo si estos son menores a 50 casos y Kolmogorov a aquellos mayo
 
 Si usamos sólo gráfico
 
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
+```{r,message=FALSE}
 #Exploración gráfica
 check_model(modelo1,check ="qq")
 ```
@@ -267,7 +267,7 @@ check_model(modelo1,check ="qq")
 Todos los puntos deben estar sobre la diagonal. Los dos gráficos no son
 concluyentes, entonces procedo a realizar el test.
 
-```{r,  fig.show='hide',warning=FALSE,message=FALSE}
+```{r,  message=FALSE}
 shapiro.test(modelo1$resid)
 ```
 
@@ -299,7 +299,7 @@ valores predichos.
 
 Si usamos el gráfico
 
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
+```{r, message=FALSE}
 check_model(modelo1, check="homogeneity")
 ```
 
@@ -348,14 +348,14 @@ no encontramos multicolinealidad.
 **Código**
 
 
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
+```{r,warning=FALSE,message=FALSE}
 check_model(modelo1, check="vif")
 ```
 
 ### 5.**Apalancamiento **
 
 
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
+```{r,warning=FALSE,message=FALSE}
 check_model(modelo1, check="outliers")
 ```
 ### 6.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)**

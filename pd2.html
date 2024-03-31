@@ -754,6 +754,7 @@ Kolmogorov a aquellos mayores a 50 casos.</p>
 <p>Si usamos sólo gráfico</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
 <span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;qq&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Todos los puntos deben estar sobre la diagonal. Los dos gráficos no
 son concluyentes, entonces procedo a realizar el test.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(modelo1<span class="sc">$</span>resid)</span></code></pre></div>
@@ -786,6 +787,7 @@ valores predichos.</p>
 <p><strong>Código</strong></p>
 <p>Si usamos el gráfico</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;homogeneity&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>En el Gráfico la línea roja debe seguir una tendencia horizontal,
 esto representaría que la distribución de los puntos son uniformes. Al
 ver nuestro gráfico nos damos cuenta que la línea roja va hacia arriba,
@@ -830,16 +832,14 @@ resultados no encontramos multicolinealidad.</p>
 </ul>
 <p><strong>Código</strong></p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;vif&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 <div id="apalancamiento" class="section level3">
 <h3>5.<strong>Apalancamiento </strong></h3>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;outliers&quot;</span>)</span></code></pre></div>
-</div>
-<div
-id="independencia-de-residuos-el-problema-es-que-existe-autocorrelación-en-los-residuos"
-class="section level3">
-<h3>6.- <strong>Independencia de residuos (el problema es que existe
-autocorrelación en los residuos)</strong></h3>
+<p><img src="pd2_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+### 6.- <strong>Independencia de residuos (el problema es que existe
+autocorrelación en los residuos)</strong></p>
 <p><strong>Descripción</strong></p>
 <p>– insertar</p>
 <p><strong>Cómo detectarlo</strong></p>
