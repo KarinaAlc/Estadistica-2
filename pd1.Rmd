@@ -11,6 +11,9 @@ output:
     highlight: kate
     always_allow_html: true
     code_folding: show
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r,echo=FALSE, out.width="30%",warning=FALSE,message=FALSE}
@@ -29,7 +32,8 @@ knitr::include_graphics("logoPUCP.png")
 knitr::include_graphics("PD1_tidy.png") 
 ```
 
-Tidyverse es un conjunto de de paquetes de R para ciencia de datos, nos ayuda a trabajar las bases de datos. Ha sido desarrollado por RStudio.
+Tidyverse es un conjunto de de paquetes de R para ciencia de datos, nos
+ayuda a trabajar las bases de datos. Ha sido desarrollado por RStudio.
 
 -   **Es consistente** : Todos los paquetes tienen una misma estructura
 
@@ -38,15 +42,27 @@ Tidyverse es un conjunto de de paquetes de R para ciencia de datos, nos ayuda a 
 
 -   **Funcional**: Como casi todo R, promueve la programación
 
-Para cada paso de tratamiento de datos existe un paquete, se puede pasar desde cargar/importar los datos, limpiarlos, transformarlos, visualizar, modelarlos y finalmente comunicarlos.
+Para cada paso de tratamiento de datos existe un paquete, se puede pasar
+desde cargar/importar los datos, limpiarlos, transformarlos, visualizar,
+modelarlos y finalmente comunicarlos.
 
-Para importar datos tenemos readr, haven y readxl. Para limpiar los datos usamos tidyr, para transformar los datos se usa dyplr, que lo veremos a continuación, para modelar se usa purr o broom, para visualizar se usa ggplot2. Finalmente, para comunicar se usa knitr para publicar los resultados por html, pdf, ppt. y rmarkdown es la estructura de knitr.
+Para importar datos tenemos readr, haven y readxl. Para limpiar los
+datos usamos tidyr, para transformar los datos se usa dyplr, que lo
+veremos a continuación, para modelar se usa purr o broom, para
+visualizar se usa ggplot2. Finalmente, para comunicar se usa knitr para
+publicar los resultados por html, pdf, ppt. y rmarkdown es la estructura
+de knitr.
 
-Algunos les gusta usarlo porque facilita el análisis y manipulación de datos y es más rápido, pero, por otro lado, tiene otra lógica en la programación. En vez de usar "," para diferenciar entre comandos, usar %\>%.
+Algunos les gusta usarlo porque facilita el análisis y manipulación de
+datos y es más rápido, pero, por otro lado, tiene otra lógica en la
+programación. En vez de usar "," para diferenciar entre comandos, usar
+%\>%.
 
-Instalando el paquete de tidyverse te incluye los 8 paquetes. Pero, eso sí, toma más tiempo de lo debido. Por eso, en esta ocasión, se ha descargado los que necesitaremos ahora
+Instalando el paquete de tidyverse te incluye los 8 paquetes. Pero, eso
+sí, toma más tiempo de lo debido. Por eso, en esta ocasión, se ha
+descargado los que necesitaremos ahora
 
-```{r,warning=FALSE,message=FALSE}
+```{r,warning=FALSE,message=FALSE,results = 'hide'}
 # Paquetes que se usarán 
 library(dplyr) 
 library(ggplot2)
@@ -58,7 +74,7 @@ library(rio)
 #### Sobre la data a analizar
 
 ```{r,echo=FALSE, out.width="30%",fig.align = "center",warning=FALSE,message=FALSE}
-####DICCIONARIO DE DATOS
+knitr::include_graphics("pd1-diccionario.jpeg") 
 ```
 
 #### Importar y preparar base de datos
@@ -72,108 +88,170 @@ str(data)#Ver estructura de bases de datos, tipo de variable
 
 ## **Paquete "dplyr"**
 
-El paquete dplyr es el más útil en R para la manipulación de datos, una de las ventajas es que se pueda usar el pipe para combinar diferentes funciones en R. Para no tener que escribirlo, se genera mediante Ctlr + shift M. En pocas palabras, reemplaza la "," para concatenar(unir) varios comandos.
-
+El paquete dplyr es el más útil en R para la manipulación de datos, una
+de las ventajas es que se pueda usar el pipe para combinar diferentes
+funciones en R. Para no tener que escribirlo, se genera mediante Ctlr +
+shift + M. En pocas palabras, reemplaza la "," para concatenar(unir)
+varios comandos.
 
 ### **Filter**: filtrar filas según un criterio
 
-Filtra casos o filas que cumplen con el criterio. Por ejemplo, aca
-estamos filtrando de la data a los países en los que más del 50% de personas realizan un gasto de bolsillo
+Filtra casos o filas que cumplen con el criterio.
+
+Por ejemplo, aca estamos filtrando de la data a los países en los que
+más del 50% de personas realizan un gasto de bolsillo
 
 ```{r, message=FALSE}
 data %>%
   filter(GastoBolsillo_porc > 50)
 ```
 
-### **SELECT**: Seleccionando subconjunto de variables
+### **Arrange**: ordenar las filas
+
+Ordenar las filas según una o más variables. Por default, si no se
+indica un criterio de orden, se ordenará de forma descendente.
+
+En este caso, además de realizar un filtro, se ha ordenado a la variable
+"GastoBolsillo_porc" de mayor a menor
+
+```{r}
+data %>%
+  filter(GastoBolsillo_porc > 50)%>%
+  arrange(desc(GastoBolsillo_porc))
+```
+
+### **Select**: Seleccionando subconjunto de variables
 
 Selecciona columnas o mejor dicho, variables de su conjunto de datos,
-según nombre.
+según nombre. También se puede cambiar el nombre de la variable
+indicando los nombres en el siguiente orden "Nuevo_nombre =
+nombreendata".
 
 En este comando estamos especificando que queremos seleccionar de la
-data usa, las variables interés en las campañas (intecamp) y sexo.
+data, las variables interés: país y GastoBolsillo_porc; además del
+filtro y orden que habíamos indicado previamente.
 
-
+```{r}
+data %>%
+  filter(GastoBolsillo_porc > 50)%>%
+  arrange(desc(GastoBolsillo_porc))%>%
+  select(pais,GastoBolsillo_porc)
+#Si quisiera cambiar el nombre de pais por Nombre_pais, debería usar select(Nombre_pais = pais, GastoBolsillo_porc)
+```
 
 Si queremos quitar variable ponemos el signo de menos. Salen todas las
-varibales menos las del si voto en las elecciones del 96 (voto96) y por
-quién.
+variables menos Gasto de bolsillo y generosidad
 
-Lo podríamos volver un objeto para poder trabajar con ello
+```{r}
+data %>%
+  select(-GastoBolsillo_porc,-Generosidad)
+```
 
-
-
-### **SUMMARISE**: Crear resumenes de datos
-
-Resume cualquiera de las funciones anteriores, para aplicarla a un grupo
-de datos.
-
-En este caso, queremos sacar el promedio de aprobación de Al Gore luego
-de su gestión. Para eso usamos sumarise. Mencionamos los datos de la
-base usa, luego la variable que se creará en base a ella, que será la
-media de la variable gorepst, omitiendo los valores perdidos
-
-Solo con variables numéricas (ojo)
-
-
-
-Acá nos menciona un error, dice que el argumento no es numérico. Las
-convertimos
-
-
-
-### **COUNT**: contar casos en base a una variable
-
-Nos ayuda a contar las observaciones.
-
-Vamos a contar los casos de las personas de acuerdo al nivel educativo.
-
-Se puede observar que la mayoría tiene un nivel educativo mayor al de
-secundaria.
-
-
-
-### **MUTATE Y ARRANGE**
+### **Mutate**: Para modificar la base de datos
 
 Crea nuevas columnas conservando las variables existentes. En esta
-ocasión estamos creando una nueva variable que vendría a ser la
-diferencia de la aprobación de Al Gore antes y luego de su gestión.
+ocasión estamos creando una nueva variable "AltaPerCorru" que toma como
+punto de corte su tercer cuartil. Si el valor es mayor al 3er cuartil,
+la nueva variable será 1, sino será 0.
 
-Esta función es un poco más larga, pero no es difícil. Primero crearemos una nueva variable que será la diferencia de la aprobación de Al Gore antes y luego de su gestión, y luego de eso, queremos que esa variable creada, se ordene de manera descendente. Finalmente, queremos que los resultados muestre únicamente las variables de ID, difgore, gorepre y gorepst para ver la diferencia.
+Primero determinemos el valor del punto de corte
+
+```{r}
+summary(data$Percep_corrup)
+```
+
+Ahora, dentro del comando mutate, estamos usando la función **ifelse**.
+Esta función necesita de 4 argumentos: la variable en la que se basa, la
+condición, el valor si se cumple la condición, y el valor cuando no se
+cumple la condición
+
+En este caso:
+
+-   Variable = Percep_corrup
+
+-   Condición = superar (\>) 0.1422
+
+-   Valor cuando se cumple la condición = 1
+
+-   Valor cuando no se cumple la condición = 0
+
+Reemplacemos:
 
 ```{r}
 data <- data %>%
-  mutate(AltaPerCorru = ifelse(Percep_corrup > 0.1422,1,0))
+  mutate(MayorPerCorru = ifelse(Percep_corrup > 0.1422,1,0))
 ```
 
+Para que la nueva variable se guarde en la data, debemos guardar en un
+objeto (en este caso es la misma data)
 
-Vamos a poner gorepost como función en arrange para ver su aprobación
-más alta.
+### **Count**: contar casos en base a una variable
 
+Nos ayuda a contar las observaciones.
 
-### **group_by**: Agrupar datos
+Vamos a contar los casos de los países según la percepción de corrupción
+(MayorPerCorru).
+
+```{r}
+data %>%
+  count(MayorPerCorru)
+```
+
+Como lo creamos a partir del tercer cuartil, se presupone que la
+relación entre los que no tienen una alta corrupción y los que sí es de
+3 a 1.
+
+### **Summarise**: Crear resúmenes de datos
+
+Resume cualquier de las variables de la data, según su tipo. Se le debe
+indicar una variable a analizar y el tipo de análisis que se le
+aplicará.
+
+```{r}
+data %>%
+  summarise(Media = mean(ProcesoElectoral,na.rm = T))
+```
+
+En este caso, queremos sacar el promedio de la puntuación de Proceso
+Electoral. Para eso usamos summarise. Mencionamos los datos de la base,
+luego la variable que se creará en base a ella, este nombre será el
+encabezado del valor que se genere en la tabla resumen. Luego, indicamos
+el cálculo que se quiere realizar, y la variable sobre la cual se
+realizará el mencionado cálculo. Si queremos que se omitan los valores
+perdidos (de haberlos) debemos indicar dentro del comando de la media
+"na.rm =T".
+
+**Solo con variables numéricas (ojo)**
+
+### **Group_by**: Agrupar datos
 
 Agrupa diferentes observaciones de manera que el conjunto de datos
 original no cambie.
 
-Aca estamos indicando que se agrupe la data en base a posición política.
+Podemos comparar cómo se califica a los procesos electorales según la
+percepción de corrupción en un país.
 
-Finalmente, agruparemos datos y usaremos más de una función
+```{r}
+data %>%
+  group_by(MayorPerCorru)%>%
+  summarise(Media = mean(ProcesoElectoral))
+```
 
-En el primer ejemplo, lo que haremos es agrupar los datos mediante la
-posición política, y usaremos sumarise para sacar el promedio de la
-aprobación de Bush post gestión Vemos los resultados. Vemos una
-tendencia que los más conservadores tenían una aprobación más alta de
-Bush
+#### Ejercicio en clase
 
+1.  Crea una nueva variable ("Generosos"), que indique "Más generosos"
+    si supera el 0.25 y "Menos generosos" si es menor o igual a 0.25.
+    Agrupando según "MayorPerCorru", identifica la media de cultura
+    política (Policulture).
 
-Ahora con Al Gore ¿los datos se voltean? Los encuestados que se
-consideran muy Liberales, aprueban más la gestión de Al Gore, a
-diferencia de los muy conservadores.
+```{r, echo=FALSE}
+  data %>% 
+  mutate(Generosos=ifelse(Generosidad > 0.25,"Más generosos","Menos generosos"))%>%
+  group_by(MayorPerCorru)%>%
+  summarise(media=mean(Policulture))
+```
 
-
-
-## **REPASO MODELO LINEAL GENERAL MÚLTIPLE**
+## **Repaso** 
 
 Recordemos que con los modelos buscamos medir el efecto de un conjunto
 de variables independientes sobre una dependiente y también con el
@@ -186,29 +264,23 @@ Como se mencionó en la clase anterior, para obtener el mejor modelo con
 la recta que capte la mayoría de las coordenadas, se realizaba el método
 de los mínimos cuadrados (el cual ya es calculado por R).
 
-Como no todo es perfecto, para poder realiar este método, se tienen que
+Como no todo es perfecto, para poder realizar este método, se tienen que
 cumplir 5 supuestos, y así asegurar que el modelo que creemos sea
 estable y pueda predecir correctamente.
 
-Para poder repasar nuevamente los pasos de análisis y los requisito
-usaremos la base de datos de la clase pasada, que contenía variables
-sobre los casos de COVID a nivel regional, y otras variables
-sociodemográficas, económicas etc.
+## Regresión Lineal: Prediciendo el nivel de cultura política en un país
 
-## Regresión Lineal
+### Recordando: RLSimple
 
-### Ejemplo 1: Prediciendo los casos de COVID-19
+Calcularemos un modelo para predecir el nivel de cultura política en un
+país según la tasa de cirujanos por mil habitantes
 
-### RECORDANDO LA REGRESIÓN LINEAL
+Variable dependiente: indicador de cultura política
 
-Calcularemos un modelo para predecir los casos de COVID-19 a partir del gasto real por hogar mensual
-
-Variable dependiente: Casos COVID-19 por cada 100 mil personas
-
-Variable independiente: gasto real por hogar mensual (var5)
+Variable independiente: Cirujanos por cada mil personas
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-modelo <-lm(data$Policulture ~ data$GastoBolsillo_porc)
+modelo <-lm(data$Policulture ~ data$Cirujanos_1000)
 summary(modelo)
 ```
 
@@ -219,19 +291,23 @@ Seguimos nuestro flujograma para evaluar el modelo:
 3.  Si la variable independiente aporta al modelo
 4.  Identificamos los coeficientes
 
+### Recordando: RLMúltiple
+
 ¿Qué sucede si ahora agregamos más variables? 😼
 
 Calculamos nuestro modelo, en este caso usaremos lo siguiente:
 
--   Variable dependiente: Casos COVID-19 por cada 100 mil personas
+-   Variable dependiente: indicador de cultura política
 
--   Variables independientes: Stock de capital por trabajador (var3) +
-    gasto real por hogar mensual (var5) + morbilidad (var20).
+-   Variables independientes: Cirujanos por cada mil personas
+    (Cirujanos_1000) + Participación digital (ParDig) + Percepción de
+    Corrupción Alta (MayorPerCorru)
 
 ```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
-modelo1 <- lm(data$Policulture~ data$GastoBolsillo_porc+
+modelo1 <- lm(data$Policulture~ data$Cirujanos_1000+
                 data$ParDig+
-                data$AltaPerCorru)
+                data$MayorPerCorru)
+summary(modelo1)
 ```
 
 Seguimos nuestro flujograma para evaluar el modelo:

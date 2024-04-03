@@ -517,6 +517,7 @@ descargado los que necesitaremos ahora</p>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(rio)</span></code></pre></div>
 <div id="sobre-la-data-a-analizar" class="section level4">
 <h4>Sobre la data a analizar</h4>
+<p><img src="pd1-diccionario.jpeg" width="30%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="importar-y-preparar-base-de-datos" class="section level4">
 <h4>Importar y preparar base de datos</h4>
@@ -545,13 +546,13 @@ descargado los que necesitaremos ahora</p>
 <p>El paquete dplyr es el más útil en R para la manipulación de datos,
 una de las ventajas es que se pueda usar el pipe para combinar
 diferentes funciones en R. Para no tener que escribirlo, se genera
-mediante Ctlr + shift M. En pocas palabras, reemplaza la “,” para
+mediante Ctlr + shift + M. En pocas palabras, reemplaza la “,” para
 concatenar(unir) varios comandos.</p>
 <div id="filter-filtrar-filas-según-un-criterio" class="section level3">
 <h3><strong>Filter</strong>: filtrar filas según un criterio</h3>
-<p>Filtra casos o filas que cumplen con el criterio. Por ejemplo, aca
-estamos filtrando de la data a los países en los que más del 50% de
-personas realizan un gasto de bolsillo</p>
+<p>Filtra casos o filas que cumplen con el criterio.</p>
+<p>Por ejemplo, aca estamos filtrando de la data a los países en los que
+más del 50% de personas realizan un gasto de bolsillo</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">filter</span>(GastoBolsillo_porc <span class="sc">&gt;</span> <span class="dv">50</span>)</span></code></pre></div>
 <pre><code>##           pais  ParDig Servicios_Online ProcesoElectoral Policulture
@@ -615,74 +616,512 @@ personas realizan un gasto de bolsillo</p>
 ## 18      3.0             7.1           86.6
 ## 19      2.4            12.1           50.4</code></pre>
 </div>
+<div id="arrange-ordenar-las-filas" class="section level3">
+<h3><strong>Arrange</strong>: ordenar las filas</h3>
+<p>Ordenar las filas según una o más variables. Por default, si no se
+indica un criterio de orden, se ordenará de forma descendente.</p>
+<p>En este caso, además de realizar un filtro, se ha ordenado a la
+variable “GastoBolsillo_porc” de mayor a menor</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">filter</span>(GastoBolsillo_porc <span class="sc">&gt;</span> <span class="dv">50</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(GastoBolsillo_porc))</span></code></pre></div>
+<pre><code>##           pais  ParDig Servicios_Online ProcesoElectoral Policulture
+## 1      Armenia 0.52542          0.42754             5.25        1.88
+## 2   Azerbaijan 0.67797          0.68116             0.50        3.75
+## 3      Nigeria 0.35593          0.41304             6.08        3.75
+## 4   Bangladesh 0.52542          0.62319             7.42        4.38
+## 5     Cameroon 0.16949          0.21739             4.00        4.38
+## 6     Pakistan 0.37288          0.32609             6.50        2.50
+## 7        India 0.76271          0.74638             9.17        5.63
+## 8        Egypt 0.40678          0.47101             3.58        3.75
+## 9         Chad 0.15254          0.13768             0.00        3.75
+## 10    Cambodia 0.06780          0.05072             1.33        5.63
+## 11       Niger 0.08475          0.07246             5.25        4.38
+## 12     Albania 0.64407          0.59420             7.00        5.00
+## 13     Ukraine 0.74576          0.58696             6.17        6.25
+## 14 Philippines 0.59322          0.66667             9.17        4.38
+## 15   Guatemala 0.62712          0.66667             7.92        5.00
+## 16  Uzbekistan 0.67797          0.68841             0.08        5.00
+## 17     Senegal 0.38983          0.37681             7.50        6.25
+## 18        Togo 0.38983          0.31884             3.17        5.00
+## 19   Sri Lanka 0.66102          0.65217             7.83        6.25
+##    SoporteSocial LibertadElegir Generosidad Percep_corrup GastoBolsillo_porc
+## 1          1.055          0.283       0.095         0.064               80.6
+## 2          1.147          0.351       0.035         0.182               78.9
+## 3          1.111          0.426       0.215         0.041               75.2
+## 4          0.928          0.527       0.166         0.143               71.9
+## 5          0.910          0.381       0.187         0.037               69.5
+## 6          0.886          0.313       0.220         0.098               65.2
+## 7          0.765          0.498       0.200         0.085               64.6
+## 8          1.039          0.241       0.076         0.067               62.0
+## 9          0.766          0.174       0.198         0.078               61.2
+## 10         1.122          0.609       0.232         0.062               58.6
+## 11         0.774          0.318       0.188         0.102               58.5
+## 12         0.848          0.383       0.178         0.027               58.0
+## 13         1.390          0.178       0.187         0.010               54.3
+## 14         1.293          0.558       0.117         0.107               53.9
+## 15         1.269          0.535       0.175         0.078               53.3
+## 16         1.529          0.631       0.322         0.240               52.2
+## 17         1.134          0.292       0.153         0.072               51.8
+## 18         0.572          0.293       0.177         0.085               50.4
+## 19         1.265          0.470       0.244         0.047               50.1
+##    Psi_1000 Enfermeras_1000 Cirujanos_1000
+## 1       2.9             5.6           86.7
+## 2       3.4             7.0           67.6
+## 3       0.4             1.5            1.4
+## 4       0.5             0.3            2.9
+## 5       0.1             0.9            1.2
+## 6       1.0             0.5            5.5
+## 7       0.8             2.1            6.8
+## 8       0.8             1.4           50.1
+## 9       0.0             0.4            0.3
+## 10      0.2             1.0            4.2
+## 11      0.1             0.3            0.4
+## 12      1.2             3.6           11.6
+## 13      3.0             7.1           86.6
+## 14      1.3             0.2            9.6
+## 15      0.4             0.9            3.4
+## 16      2.4            12.1           50.4
+## 17      0.1             0.3            1.1
+## 18      0.0             0.3            0.5
+## 19      1.0             2.1            2.8</code></pre>
+</div>
 <div id="select-seleccionando-subconjunto-de-variables"
 class="section level3">
-<h3><strong>SELECT</strong>: Seleccionando subconjunto de variables</h3>
+<h3><strong>Select</strong>: Seleccionando subconjunto de variables</h3>
 <p>Selecciona columnas o mejor dicho, variables de su conjunto de datos,
-según nombre.</p>
+según nombre. También se puede cambiar el nombre de la variable
+indicando los nombres en el siguiente orden “Nuevo_nombre =
+nombreendata”.</p>
 <p>En este comando estamos especificando que queremos seleccionar de la
-data usa, las variables interés en las campañas (intecamp) y sexo.</p>
+data, las variables interés: país y GastoBolsillo_porc; además del
+filtro y orden que habíamos indicado previamente.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">filter</span>(GastoBolsillo_porc <span class="sc">&gt;</span> <span class="dv">50</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(GastoBolsillo_porc))<span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">select</span>(pais,GastoBolsillo_porc)</span></code></pre></div>
+<pre><code>##           pais GastoBolsillo_porc
+## 1      Armenia               80.6
+## 2   Azerbaijan               78.9
+## 3      Nigeria               75.2
+## 4   Bangladesh               71.9
+## 5     Cameroon               69.5
+## 6     Pakistan               65.2
+## 7        India               64.6
+## 8        Egypt               62.0
+## 9         Chad               61.2
+## 10    Cambodia               58.6
+## 11       Niger               58.5
+## 12     Albania               58.0
+## 13     Ukraine               54.3
+## 14 Philippines               53.9
+## 15   Guatemala               53.3
+## 16  Uzbekistan               52.2
+## 17     Senegal               51.8
+## 18        Togo               50.4
+## 19   Sri Lanka               50.1</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#Si quisiera cambiar el nombre de pais por Nombre_pais, debería usar select(Nombre_pais = pais, GastoBolsillo_porc)</span></span></code></pre></div>
 <p>Si queremos quitar variable ponemos el signo de menos. Salen todas
-las varibales menos las del si voto en las elecciones del 96 (voto96) y
-por quién.</p>
-<p>Lo podríamos volver un objeto para poder trabajar con ello</p>
+las variables menos Gasto de bolsillo y generosidad</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>GastoBolsillo_porc,<span class="sc">-</span>Generosidad)</span></code></pre></div>
+<pre><code>##                         pais  ParDig Servicios_Online ProcesoElectoral
+## 1                    Albania 0.64407          0.59420             7.00
+## 2                    Algeria 0.11864          0.06522             2.58
+## 3                  Argentina 0.62712          0.71014             9.17
+## 4                    Armenia 0.52542          0.42754             5.25
+## 5                  Australia 0.98305          0.97826            10.00
+## 6                    Austria 0.88136          0.91304             9.58
+## 7                 Azerbaijan 0.67797          0.68116             0.50
+## 8                    Bahrain 0.74576          0.82609             0.83
+## 9                 Bangladesh 0.52542          0.62319             7.42
+## 10                   Belarus 0.55932          0.48551             0.92
+## 11                   Belgium 0.64407          0.71014             9.58
+## 12                     Benin 0.16949          0.14493             6.50
+## 13                    Bhutan 0.35593          0.31884             8.33
+## 14                  Botswana 0.28814          0.28261             9.17
+## 15                    Brazil 0.72881          0.73188             9.58
+## 16                  Bulgaria 0.69492          0.56522             9.17
+## 17              Burkina Faso 0.23729          0.18841             4.42
+## 18                   Burundi 0.15254          0.15217             0.00
+## 19                  Cambodia 0.06780          0.05072             1.33
+## 20                  Cameroon 0.16949          0.21739             4.00
+## 21                    Canada 0.91525          0.95652             9.58
+## 22  Central African Republic 0.00000          0.00000             2.25
+## 23                      Chad 0.15254          0.13768             0.00
+## 24                     Chile 0.74576          0.77536             9.58
+## 25                     China 0.81356          0.76812             0.00
+## 26                  Colombia 0.76271          0.78986             9.17
+## 27                Costa Rica 0.64407          0.63768             9.58
+## 28                   Croatia 0.77966          0.74638             9.17
+## 29                    Cyprus 0.52542          0.53623             9.17
+## 30                   Denmark 0.81356          0.77536            10.00
+## 31                   Ecuador 0.57627          0.63043             8.75
+## 32                     Egypt 0.40678          0.47101             3.58
+## 33               El Salvador 0.55932          0.48551             9.17
+## 34                   Estonia 0.81356          0.89130             9.58
+## 35                  Ethiopia 0.49153          0.52899             0.00
+## 36                   Finland 0.91525          0.94203            10.00
+## 37                    France 0.89831          0.94203             9.58
+## 38                   Germany 0.76271          0.84058             9.58
+## 39                    Greece 0.61017          0.57971             9.58
+## 40                 Guatemala 0.62712          0.66667             7.92
+## 41                     Haiti 0.13559          0.16667             5.17
+## 42                  Honduras 0.38983          0.31159             8.25
+## 43                   Hungary 0.49153          0.63043             8.75
+## 44                   Iceland 0.66102          0.62319            10.00
+## 45                     India 0.76271          0.74638             9.17
+## 46                   Ireland 0.71186          0.72464             9.58
+## 47                    Israel 0.83051          0.86232             9.17
+## 48                     Italy 0.91525          0.86957             9.58
+## 49                   Jamaica 0.27119          0.35507             9.17
+## 50                     Japan 0.98305          0.87681             8.75
+## 51                    Jordan 0.45763          0.45652             3.58
+## 52                Kazakhstan 0.59322          0.76812             0.50
+## 53                     Kenya 0.52542          0.55797             3.50
+## 54                    Latvia 0.52542          0.60870             9.58
+## 55                   Lebanon 0.49153          0.51449             3.50
+## 56                Luxembourg 0.69492          0.71739            10.00
+## 57                Madagascar 0.20339          0.22464             6.08
+## 58                  Malaysia 0.67797          0.71739             6.92
+## 59                      Mali 0.06780          0.09420             7.42
+## 60                     Malta 0.77966          0.79710             9.17
+## 61                 Mauritius 0.66102          0.70290             9.17
+## 62                  Mongolia 0.71186          0.51449             9.17
+## 63                   Morocco 0.83051          0.73913             5.25
+## 64                Mozambique 0.20339          0.20290             4.42
+## 65                   Namibia 0.23729          0.28261             5.67
+## 66               Netherlands 0.94915          0.92754             9.58
+## 67               New Zealand 0.94915          0.94203            10.00
+## 68                 Nicaragua 0.40678          0.38406             3.42
+## 69                     Niger 0.08475          0.07246             5.25
+## 70                   Nigeria 0.35593          0.41304             6.08
+## 71                    Norway 0.76271          0.80435            10.00
+## 72                  Pakistan 0.37288          0.32609             6.50
+## 73                    Panama 0.37288          0.33333             9.58
+## 74                  Paraguay 0.57627          0.60145             8.75
+## 75                      Peru 0.54237          0.63043             9.17
+## 76               Philippines 0.59322          0.66667             9.17
+## 77                    Poland 0.88136          0.70290             9.17
+## 78                  Portugal 0.66102          0.74638             9.58
+## 79                     Qatar 0.64407          0.67391             0.00
+## 80                   Romania 0.62712          0.45652             9.17
+## 81                    Rwanda 0.49153          0.45652             0.83
+## 82                   Senegal 0.38983          0.37681             7.50
+## 83                    Serbia 0.83051          0.81884             8.25
+## 84                 Singapore 0.91525          0.97101             4.33
+## 85                  Slovakia 0.54237          0.44203             9.58
+## 86                  Slovenia 0.72881          0.84783             9.58
+## 87              South Africa 0.55932          0.55797             7.42
+## 88                     Spain 0.93220          0.91304             9.17
+## 89                 Sri Lanka 0.66102          0.65217             7.83
+## 90                    Sweden 0.76271          0.87681             9.58
+## 91                  Thailand 0.59322          0.55072             3.00
+## 92                      Togo 0.38983          0.31884             3.17
+## 93                   Tunisia 0.69492          0.71739             6.00
+## 94                    Turkey 0.62712          0.60145             5.33
+## 95                    Uganda 0.49153          0.50000             5.25
+## 96                   Ukraine 0.74576          0.58696             6.17
+## 97                   Uruguay 0.71186          0.77536            10.00
+## 98                Uzbekistan 0.67797          0.68841             0.08
+## 99                    Zambia 0.35593          0.36957             6.17
+## 100                 Zimbabwe 0.28814          0.26087             0.50
+##     Policulture SoporteSocial LibertadElegir Percep_corrup Psi_1000
+## 1          5.00         0.848          0.383         0.027      1.2
+## 2          5.00         1.160          0.086         0.114      1.8
+## 3          6.88         1.432          0.471         0.050      4.0
+## 4          1.88         1.055          0.283         0.064      2.9
+## 5          8.75         1.548          0.557         0.290      3.6
+## 6          6.88         1.475          0.532         0.226      5.1
+## 7          3.75         1.147          0.351         0.182      3.4
+## 8          4.38         1.368          0.536         0.110      0.9
+## 9          4.38         0.928          0.527         0.143      0.5
+## 10         5.63         1.465          0.235         0.142      4.1
+## 11         6.88         1.504          0.473         0.210      3.3
+## 12         5.63         0.437          0.349         0.082      0.2
+## 13         4.38         1.321          0.457         0.167      0.4
+## 14         7.50         1.145          0.455         0.100      0.4
+## 15         3.75         1.439          0.390         0.086      2.1
+## 16         4.38         1.513          0.311         0.004      4.0
+## 17         5.63         1.056          0.255         0.113      0.1
+## 18         5.00         0.447          0.220         0.180      0.1
+## 19         5.63         1.122          0.609         0.062      0.2
+## 20         4.38         0.910          0.381         0.037      0.1
+## 21         8.75         1.505          0.584         0.308      2.6
+## 22         1.88         0.000          0.225         0.035      0.1
+## 23         3.75         0.766          0.174         0.078      0.0
+## 24         7.50         1.369          0.357         0.056      1.1
+## 25         6.25         1.125          0.521         0.100      1.8
+## 26         4.38         1.410          0.470         0.034      2.1
+## 27         6.88         1.441          0.558         0.093      1.1
+## 28         5.00         1.266          0.296         0.022      3.0
+## 29         6.88         1.223          0.406         0.041      2.0
+## 30         9.38         1.573          0.592         0.410      4.5
+## 31         4.38         1.312          0.498         0.087      2.1
+## 32         3.75         1.039          0.241         0.067      0.8
+## 33         5.00         1.242          0.430         0.074      1.6
+## 34         6.88         1.528          0.495         0.161      3.5
+## 35         5.63         1.033          0.344         0.100      0.1
+## 36         8.75         1.587          0.596         0.393      3.8
+## 37         5.63         1.472          0.436         0.183      3.2
+## 38         7.50         1.454          0.495         0.265      4.2
+## 39         6.88         1.156          0.067         0.034      4.6
+## 40         5.00         1.269          0.535         0.078      0.4
+## 41         4.38         0.688          0.026         0.110      0.2
+## 42         4.38         1.236          0.507         0.078      0.3
+## 43         6.88         1.410          0.199         0.020      3.2
+## 44        10.00         1.624          0.591         0.118      4.0
+## 45         5.63         0.765          0.498         0.085      0.8
+## 46        10.00         1.553          0.516         0.310      3.1
+## 47         7.50         1.455          0.371         0.082      3.2
+## 48         8.13         1.488          0.231         0.030      4.1
+## 49         6.88         1.478          0.490         0.028      1.3
+## 50         7.50         1.419          0.445         0.140      2.4
+## 51         4.38         1.225          0.383         0.130      2.3
+## 52         4.38         1.508          0.410         0.096      3.3
+## 53         5.63         0.983          0.431         0.053      0.2
+## 54         6.88         1.465          0.264         0.064      3.2
+## 55         5.63         1.224          0.216         0.027      2.3
+## 56         8.75         1.479          0.526         0.316      3.0
+## 57         5.63         0.916          0.148         0.041      0.2
+## 58         6.25         1.171          0.508         0.024      1.5
+## 59         6.25         1.105          0.327         0.052      0.1
+## 60         8.75         1.520          0.564         0.151      3.8
+## 61         8.75         1.402          0.498         0.060      2.0
+## 62         5.00         1.531          0.317         0.038      2.9
+## 63         5.63         0.782          0.418         0.076      0.7
+## 64         5.00         0.986          0.494         0.138      0.1
+## 65         5.63         1.313          0.401         0.056      0.4
+## 66         8.13         1.522          0.557         0.298      3.5
+## 67         8.13         1.557          0.585         0.380      3.0
+## 68         5.63         1.325          0.435         0.127      1.0
+## 69         4.38         0.774          0.318         0.102      0.1
+## 70         3.75         1.111          0.426         0.041      0.4
+## 71        10.00         1.582          0.603         0.341      4.6
+## 72         2.50         0.886          0.313         0.098      1.0
+## 73         5.00         1.442          0.516         0.054      1.6
+## 74         4.38         1.475          0.514         0.080      1.4
+## 75         5.00         1.274          0.455         0.027      1.3
+## 76         4.38         1.293          0.558         0.107      1.3
+## 77         4.38         1.438          0.483         0.050      2.4
+## 78         6.88         1.431          0.508         0.025      3.3
+## 79         5.63         1.313          0.555         0.167      0.0
+## 80         4.38         1.232          0.462         0.005      2.3
+## 81         4.38         0.711          0.555         0.411      0.1
+## 82         6.25         1.134          0.292         0.072      0.1
+## 83         5.00         1.383          0.282         0.039      3.1
+## 84         6.25         1.463          0.556         0.453      2.3
+## 85         5.63         1.504          0.334         0.014      2.5
+## 86         6.25         1.523          0.564         0.057      3.0
+## 87         5.00         1.351          0.389         0.055      0.9
+## 88         7.50         1.484          0.362         0.079      4.1
+## 89         6.25         1.265          0.470         0.047      1.0
+## 90        10.00         1.487          0.574         0.373      5.4
+## 91         5.00         1.409          0.557         0.028      0.8
+## 92         5.00         0.572          0.293         0.085      0.0
+## 93         6.25         1.000          0.167         0.055      1.3
+## 94         5.63         1.360          0.195         0.106      1.8
+## 95         6.88         1.069          0.356         0.060      0.1
+## 96         6.25         1.390          0.178         0.010      3.0
+## 97         7.50         1.465          0.523         0.150      5.0
+## 98         5.00         1.529          0.631         0.240      2.4
+## 99         6.88         1.058          0.431         0.087      0.1
+## 100        5.63         1.114          0.361         0.089      0.1
+##     Enfermeras_1000 Cirujanos_1000
+## 1               3.6           11.6
+## 2               2.2           12.1
+## 3               2.6           50.1
+## 4               5.6           86.7
+## 5              12.7           45.1
+## 6               8.2          109.9
+## 7               7.0           67.6
+## 8               2.5           14.4
+## 9               0.3            2.9
+## 10             11.4          124.2
+## 11             11.1           89.8
+## 12              0.6            1.9
+## 13              1.5            2.9
+## 14              3.3            3.6
+## 15              9.7           55.5
+## 16              5.3          112.7
+## 17              0.6            0.6
+## 18              0.7            0.4
+## 19              1.0            4.2
+## 20              0.9            1.2
+## 21              9.9           43.9
+## 22              0.2            0.4
+## 23              0.4            0.3
+## 24              0.9           59.3
+## 25              2.3           40.1
+## 26              1.3           22.7
+## 27              0.8           25.5
+## 28              8.1           81.2
+## 29              5.3           84.4
+## 30             10.3           69.0
+## 31              1.2           59.4
+## 32              1.4           50.1
+## 33              2.3           22.3
+## 34              6.5           65.0
+## 35              0.8            0.5
+## 36             14.7           76.3
+## 37              9.7           58.6
+## 38             13.2          108.0
+## 39              3.4          163.5
+## 40              0.9            3.4
+## 41              0.7            5.9
+## 42              0.9           13.7
+## 43              6.6           55.7
+## 44             15.7          101.6
+## 45              2.1            6.8
+## 46             14.3           72.0
+## 47              5.2           75.6
+## 48              5.9          142.4
+## 49              1.1           11.2
+## 50             11.5           37.4
+## 51              3.4           24.5
+## 52              8.5           73.2
+## 53              1.5            2.4
+## 54              4.8           67.6
+## 55              2.6           87.4
+## 56             12.3           80.8
+## 57              0.1            0.8
+## 58              4.1           11.4
+## 59              0.4            1.1
+## 60              9.0          113.5
+## 61              3.4           17.6
+## 62              4.0           45.0
+## 63              1.1            3.7
+## 64              0.4            0.5
+## 65              2.8            6.1
+## 66             11.1           49.0
+## 67             11.0           43.0
+## 68              1.6           15.5
+## 69              0.3            0.4
+## 70              1.5            1.4
+## 71             18.1           67.2
+## 72              0.5            5.5
+## 73              1.4           26.2
+## 74              1.2           20.5
+## 75              1.4           42.9
+## 76              0.2            9.6
+## 77              5.7           67.9
+## 78              6.4           86.1
+## 79              6.6           14.5
+## 80              6.1           60.5
+## 81              0.8            0.8
+## 82              0.3            1.1
+## 83              6.1           86.7
+## 84              7.2           31.5
+## 85              9.2           53.9
+## 86              9.7           66.7
+## 87              3.5           11.4
+## 88              5.5           79.9
+## 89              2.1            2.8
+## 90             11.5          113.1
+## 91              3.0           13.1
+## 92              0.3            0.5
+## 93              2.6           11.5
+## 94              2.6           47.6
+## 95              0.6            1.1
+## 96              7.1           86.6
+## 97              1.9           38.9
+## 98             12.1           50.4
+## 99              0.9            1.5
+## 100             1.2            1.6</code></pre>
 </div>
-<div id="summarise-crear-resumenes-de-datos" class="section level3">
-<h3><strong>SUMMARISE</strong>: Crear resumenes de datos</h3>
-<p>Resume cualquiera de las funciones anteriores, para aplicarla a un
-grupo de datos.</p>
-<p>En este caso, queremos sacar el promedio de aprobación de Al Gore
-luego de su gestión. Para eso usamos sumarise. Mencionamos los datos de
-la base usa, luego la variable que se creará en base a ella, que será la
-media de la variable gorepst, omitiendo los valores perdidos</p>
-<p>Solo con variables numéricas (ojo)</p>
-<p>Acá nos menciona un error, dice que el argumento no es numérico. Las
-convertimos</p>
+<div id="mutate-para-modificar-la-base-de-datos" class="section level3">
+<h3><strong>Mutate</strong>: Para modificar la base de datos</h3>
+<p>Crea nuevas columnas conservando las variables existentes. En esta
+ocasión estamos creando una nueva variable “AltaPerCorru” que toma como
+punto de corte su tercer cuartil. Si el valor es mayor al 3er cuartil,
+la nueva variable será 1, sino será 0.</p>
+<p>Primero determinemos el valor del punto de corte</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>Percep_corrup)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.0040  0.0500  0.0835  0.1174  0.1422  0.4530</code></pre>
+<p>Ahora, dentro del comando mutate, estamos usando la función
+<strong>ifelse</strong>. Esta función necesita de 4 argumentos: la
+variable en la que se basa, la condición, el valor si se cumple la
+condición, y el valor cuando no se cumple la condición</p>
+<p>En este caso:</p>
+<ul>
+<li><p>Variable = Percep_corrup</p></li>
+<li><p>Condición = superar (&gt;) 0.1422</p></li>
+<li><p>Valor cuando se cumple la condición = 1</p></li>
+<li><p>Valor cuando no se cumple la condición = 0</p></li>
+</ul>
+<p>Reemplacemos:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MayorPerCorru =</span> <span class="fu">ifelse</span>(Percep_corrup <span class="sc">&gt;</span> <span class="fl">0.1422</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span></code></pre></div>
+<p>Para que la nueva variable se guarde en la data, debemos guardar en
+un objeto (en este caso es la misma data)</p>
 </div>
 <div id="count-contar-casos-en-base-a-una-variable"
 class="section level3">
-<h3><strong>COUNT</strong>: contar casos en base a una variable</h3>
+<h3><strong>Count</strong>: contar casos en base a una variable</h3>
 <p>Nos ayuda a contar las observaciones.</p>
-<p>Vamos a contar los casos de las personas de acuerdo al nivel
-educativo.</p>
-<p>Se puede observar que la mayoría tiene un nivel educativo mayor al de
-secundaria.</p>
+<p>Vamos a contar los casos de los países según la percepción de
+corrupción (MayorPerCorru).</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  <span class="fu">count</span>(MayorPerCorru)</span></code></pre></div>
+<pre><code>##   MayorPerCorru  n
+## 1             0 75
+## 2             1 25</code></pre>
+<p>Como lo creamos a partir del tercer cuartil, se presupone que la
+relación entre los que no tienen una alta corrupción y los que sí es de
+3 a 1.</p>
 </div>
-<div id="mutate-y-arrange" class="section level3">
-<h3><strong>MUTATE Y ARRANGE</strong></h3>
-<p>Crea nuevas columnas conservando las variables existentes. En esta
-ocasión estamos creando una nueva variable que vendría a ser la
-diferencia de la aprobación de Al Gore antes y luego de su gestión.</p>
-<p>Esta función es un poco más larga, pero no es difícil. Primero
-crearemos una nueva variable que será la diferencia de la aprobación de
-Al Gore antes y luego de su gestión, y luego de eso, queremos que esa
-variable creada, se ordene de manera descendente. Finalmente, queremos
-que los resultados muestre únicamente las variables de ID, difgore,
-gorepre y gorepst para ver la diferencia.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AltaPerCorru =</span> <span class="fu">ifelse</span>(Percep_corrup <span class="sc">&gt;</span> <span class="fl">0.1422</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span></code></pre></div>
-<p>Vamos a poner gorepost como función en arrange para ver su aprobación
-más alta.</p>
+<div id="summarise-crear-resúmenes-de-datos" class="section level3">
+<h3><strong>Summarise</strong>: Crear resúmenes de datos</h3>
+<p>Resume cualquier de las variables de la data, según su tipo. Se le
+debe indicar una variable a analizar y el tipo de análisis que se le
+aplicará.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Media =</span> <span class="fu">mean</span>(ProcesoElectoral,<span class="at">na.rm =</span> T))</span></code></pre></div>
+<pre><code>##    Media
+## 1 6.7825</code></pre>
+<p>En este caso, queremos sacar el promedio de la puntuación de Proceso
+Electoral. Para eso usamos summarise. Mencionamos los datos de la base,
+luego la variable que se creará en base a ella, este nombre será el
+encabezado del valor que se genere en la tabla resumen. Luego, indicamos
+el cálculo que se quiere realizar, y la variable sobre la cual se
+realizará el mencionado cálculo. Si queremos que se omitan los valores
+perdidos (de haberlos) debemos indicar dentro del comando de la media
+“na.rm =T”.</p>
+<p><strong>Solo con variables numéricas (ojo)</strong></p>
 </div>
 <div id="group_by-agrupar-datos" class="section level3">
-<h3><strong>group_by</strong>: Agrupar datos</h3>
+<h3><strong>Group_by</strong>: Agrupar datos</h3>
 <p>Agrupa diferentes observaciones de manera que el conjunto de datos
 original no cambie.</p>
-<p>Aca estamos indicando que se agrupe la data en base a posición
-política.</p>
-<p>Finalmente, agruparemos datos y usaremos más de una función</p>
-<p>En el primer ejemplo, lo que haremos es agrupar los datos mediante la
-posición política, y usaremos sumarise para sacar el promedio de la
-aprobación de Bush post gestión Vemos los resultados. Vemos una
-tendencia que los más conservadores tenían una aprobación más alta de
-Bush</p>
-<p>Ahora con Al Gore ¿los datos se voltean? Los encuestados que se
-consideran muy Liberales, aprueban más la gestión de Al Gore, a
-diferencia de los muy conservadores.</p>
+<p>Podemos comparar cómo se califica a los procesos electorales según la
+percepción de corrupción en un país.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="fu">group_by</span>(MayorPerCorru)<span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Media =</span> <span class="fu">mean</span>(ProcesoElectoral))</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   MayorPerCorru Media
+##           &lt;dbl&gt; &lt;dbl&gt;
+## 1             0  6.55
+## 2             1  7.48</code></pre>
+<div id="ejercicio-en-clase" class="section level4">
+<h4>Ejercicio en clase</h4>
+<ol style="list-style-type: decimal">
+<li>Crea una nueva variable (“Generosos”), que indique “Más generosos”
+si supera el 0.25 y “Menos generosos” si es menor o igual a 0.25.
+Agrupando según “MayorPerCorru”, identifica la media de cultura política
+(Policulture).</li>
+</ol>
+<pre><code>## # A tibble: 2 × 2
+##   MayorPerCorru media
+##           &lt;dbl&gt; &lt;dbl&gt;
+## 1             0  5.54
+## 2             1  7.18</code></pre>
 </div>
 </div>
-<div id="repaso-modelo-lineal-general-múltiple" class="section level2">
-<h2><strong>REPASO MODELO LINEAL GENERAL MÚLTIPLE</strong></h2>
+</div>
+<div id="repaso" class="section level2">
+<h2><strong>Repaso</strong></h2>
 <p>Recordemos que con los modelos buscamos medir el efecto de un
 conjunto de variables independientes sobre una dependiente y también con
 el modelo creado predecir.</p>
@@ -691,28 +1130,23 @@ numérica continua.</p>
 <p>Como se mencionó en la clase anterior, para obtener el mejor modelo
 con la recta que capte la mayoría de las coordenadas, se realizaba el
 método de los mínimos cuadrados (el cual ya es calculado por R).</p>
-<p>Como no todo es perfecto, para poder realiar este método, se tienen
+<p>Como no todo es perfecto, para poder realizar este método, se tienen
 que cumplir 5 supuestos, y así asegurar que el modelo que creemos sea
 estable y pueda predecir correctamente.</p>
-<p>Para poder repasar nuevamente los pasos de análisis y los requisito
-usaremos la base de datos de la clase pasada, que contenía variables
-sobre los casos de COVID a nivel regional, y otras variables
-sociodemográficas, económicas etc.</p>
 </div>
-<div id="regresión-lineal" class="section level2">
-<h2>Regresión Lineal</h2>
-<div id="ejemplo-1-prediciendo-los-casos-de-covid-19"
-class="section level3">
-<h3>Ejemplo 1: Prediciendo los casos de COVID-19</h3>
-</div>
-<div id="recordando-la-regresión-lineal" class="section level3">
-<h3>RECORDANDO LA REGRESIÓN LINEAL</h3>
-<p>Calcularemos un modelo para predecir los casos de COVID-19 a partir
-del gasto real por hogar mensual</p>
-<p>Variable dependiente: Casos COVID-19 por cada 100 mil personas</p>
-<p>Variable independiente: gasto real por hogar mensual (var5)</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>modelo <span class="ot">&lt;-</span><span class="fu">lm</span>(data<span class="sc">$</span>Policulture <span class="sc">~</span> data<span class="sc">$</span>GastoBolsillo_porc)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
+<div
+id="regresión-lineal-prediciendo-el-nivel-de-cultura-política-en-un-país"
+class="section level2">
+<h2>Regresión Lineal: Prediciendo el nivel de cultura política en un
+país</h2>
+<div id="recordando-rlsimple" class="section level3">
+<h3>Recordando: RLSimple</h3>
+<p>Calcularemos un modelo para predecir el nivel de cultura política en
+un país según la tasa de cirujanos por mil habitantes</p>
+<p>Variable dependiente: indicador de cultura política</p>
+<p>Variable independiente: Cirujanos por cada mil personas</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>modelo <span class="ot">&lt;-</span><span class="fu">lm</span>(data<span class="sc">$</span>Policulture <span class="sc">~</span> data<span class="sc">$</span>Cirujanos_1000)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">summary</span>(modelo)</span></code></pre></div>
 <p>Seguimos nuestro flujograma para evaluar el modelo:</p>
 <ol style="list-style-type: decimal">
 <li>Nos preguntamos si el modelo es válido</li>
@@ -720,17 +1154,21 @@ del gasto real por hogar mensual</p>
 <li>Si la variable independiente aporta al modelo</li>
 <li>Identificamos los coeficientes</li>
 </ol>
+</div>
+<div id="recordando-rlmúltiple" class="section level3">
+<h3>Recordando: RLMúltiple</h3>
 <p>¿Qué sucede si ahora agregamos más variables? 😼</p>
 <p>Calculamos nuestro modelo, en este caso usaremos lo siguiente:</p>
 <ul>
-<li><p>Variable dependiente: Casos COVID-19 por cada 100 mil
-personas</p></li>
-<li><p>Variables independientes: Stock de capital por trabajador (var3)
-+ gasto real por hogar mensual (var5) + morbilidad (var20).</p></li>
+<li><p>Variable dependiente: indicador de cultura política</p></li>
+<li><p>Variables independientes: Cirujanos por cada mil personas
+(Cirujanos_1000) + Participación digital (ParDig) + Percepción de
+Corrupción Alta (MayorPerCorru)</p></li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(data<span class="sc">$</span>Policulture<span class="sc">~</span> data<span class="sc">$</span>GastoBolsillo_porc<span class="sc">+</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>                data<span class="sc">$</span>ParDig<span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                data<span class="sc">$</span>AltaPerCorru)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(data<span class="sc">$</span>Policulture<span class="sc">~</span> data<span class="sc">$</span>Cirujanos_1000<span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>                data<span class="sc">$</span>ParDig<span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>                data<span class="sc">$</span>MayorPerCorru)</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
 <p>Seguimos nuestro flujograma para evaluar el modelo:</p>
 <ol style="list-style-type: decimal">
 <li>Nos preguntamos si el modelo es válido</li>
@@ -738,7 +1176,7 @@ personas</p></li>
 <li>Si las variables independientes aportan al modelo</li>
 <li>Identificamos los coeficientes</li>
 </ol>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>modelo1<span class="sc">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>modelo1<span class="sc">$</span>coefficients</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Construimos la ecuación 🤺</li>
 </ol>
