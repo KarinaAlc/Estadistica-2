@@ -65,9 +65,6 @@ descargado los que necesitaremos ahora
 ```{r,warning=FALSE,message=FALSE,results = 'hide'}
 # Paquetes que se usarán 
 library(dplyr) 
-library(ggplot2)
-library(data.table)
-library(foreign)
 library(rio)
 ```
 
