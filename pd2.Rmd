@@ -165,13 +165,13 @@ summary(modelo1)
 
 Seguimos nuestro flujograma para evaluar el modelo:
 
-1.  **Nos preguntamos si el modelo es válido:**
+a.  **Nos preguntamos si el modelo es válido:**
 
 -   Si el p-value es menor a 0.05 significa que rechazamos la hipótesis
     nula, lo cual probaría que nuestro modelo sí funciona.
 -   Al tener un p-value de 2.2e-1-16 nuestro modelo sí funciona.
 
-2.  **¿Qué tanto explica el modelo?**
+b.  **¿Qué tanto explica el modelo?**
 
 -   Revisamos el **R cuadrado** que va de 0 a 1 (0% a 100%)
 
@@ -179,7 +179,7 @@ Seguimos nuestro flujograma para evaluar el modelo:
     variabilidad de mi dependiente, esto es bueno, pero quizá podría ser
     mejor 😯
 
-3.  **¿Las variables independientes aportan al modelo?**
+c.  **¿Las variables independientes aportan al modelo?**
 
 -   Nos enfocamos en el p-value de cada independiente
 
@@ -188,9 +188,9 @@ Seguimos nuestro flujograma para evaluar el modelo:
 
 -   Vemos que todas nuestras variables cumplen ✅
 
-4.  **Identificamos los coeficientes**
+d.  **Identificamos los coeficientes**
 
--   En este caso hacemos uso del código modelo1\$coefficients.
+-   En este caso hacemos uso del código modelo1$coefficients.
 
 ```{r, fig.show='hide',warning=FALSE,message=FALSE}
 modelo1$coefficients
@@ -224,24 +224,19 @@ o que se trate de una relación no lineal.
 
 **Cómo detectarlo**
 
-OPCIÓN 1: Exploración gráfica: Plot de valores residuales frente a
+Exploración gráfica: Plot de valores residuales frente a
 valores predichos.
 
-OPCIÓN 2: Calculando la correlación bivariada de cada independiente con
-la dependiente.
 
-**Código e interpretación**
+**Código**
 
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
+La línea verde debería de estar lo más cercana a la línea punteada. 
+
+```{r}
 #Exploración gráfica
-autoplot(modelo1,1)
+check_model(modelo1,check ="linearity")
 ```
 
-Usando el código plot, la línea roja debería de estar lo más cercana a
-la línea punteada. De acuerdo al resultado, el gráfico aún nos generaría
-suspicacias. En tanto, dado que la línea roja obedece a los puntos,
-éstos deberían distribuirse alrededor de una línea horizontal, con una
-varianza aproximadamente constante.
 
 ### **2. Normalidad de residuos (el problema es la NO normalidad)**
 
@@ -252,28 +247,27 @@ valor observado menos el valor pronosticado (residuos) siguen una
 distribución normal, esto es importante porque si es que no se cumple no
 se podrían aplicar las pruebas globales del modelo.
 
-**Cómo detectarlo**
+**¿Cómo detectarlo?**
 
-Exploración gráfica: QQ plot de residuos Pruebas de normalidad a los
-residuos. Normalmente bastaría con la prueba de Shapiro Wilk, pero
-también se pueden probar otros como Lillieford, Kolmogorov (no es muy
-exigente), entre otros.
+Exploración gráfica y pruebas de normalidad a los residuos. 
+
+**Si usamos prueba de normalidad:** aplicamos la prueba de Shapiro a los
+residuos del modelo si estos son menores a 50 casos y Kolmogorov a aquellos mayores a 50 casos.
 
 **Código e interpretación**
 
 Si usamos sólo gráfico
 
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
-autoplot(modelo1, 2) 
+```{r,message=FALSE}
+#Exploración gráfica
+check_model(modelo1,check ="qq")
 ```
+
 
 Todos los puntos deben estar sobre la diagonal. Los dos gráficos no son
 concluyentes, entonces procedo a realizar el test.
 
-Si usamos prueba de normalidad:aplicamos la prueba de Shapiro a los
-residuos del modelo
-
-```{r,  fig.show='hide',warning=FALSE,message=FALSE}
+```{r,  message=FALSE}
 shapiro.test(modelo1$resid)
 ```
 
@@ -285,7 +279,7 @@ Si el pvalor es menor a 0.05 entonces *NO existe normalidad de residuos*
 p-value es 0.1378, mayor que 0.05, entonces sí estamos frente a un caso
 de distribución normal de los residuos.
 
-### **3- Homocedasticidad (el problema es la heterocedasticidad)**
+### **3. Homocedasticidad (el problema es la heterocedasticidad)**
 
 **Descripción**
 
@@ -300,17 +294,13 @@ heterocedasticidad.
 OPCIÓN 1: Exploración gráfica: diagrama de residuos standarizados y
 valores predichos.
 
-OPCIÓN 2: Con el Score Test for Non-Constant Error Variance, también
-llamado Test Breusch Pagan. Evalúa si la varianza del error cambia con
-el nivel de la variable respuesta (valores ajustados) o con una
-combinación lineal de predictores.
 
-**Código e interpretación**
+**Código**
 
 Si usamos el gráfico
 
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
-autoplot(modelo1, 3)
+```{r, message=FALSE}
+check_model(modelo1, check="homogeneity")
 ```
 
 En el Gráfico la línea roja debe seguir una tendencia horizontal, esto
@@ -318,7 +308,10 @@ representaría que la distribución de los puntos son uniformes. Al ver
 nuestro gráfico nos damos cuenta que la línea roja va hacia arriba, lo
 cual nos dice que el gráfico no es concluyente aún. Vamos al test.
 
-Si usamos el test de BP:
+OPCIÓN 2: Con el Score Test for Non-Constant Error Variance, también
+llamado Test Breusch Pagan. Evalúa si la varianza del error cambia con
+el nivel de la variable respuesta (valores ajustados) o con una
+combinación lineal de predictores.
 
 ```{r message=FALSE, warning=FALSE}
 bptest(modelo1)
@@ -329,6 +322,8 @@ bptest(modelo1)
 
 Si el pvalor es menor a 0.05 entonces el modelo es heterocedástico
 (problema! ☠️ ). Esta vez estamos frente a un modelo homocedástico
+
+
 
 ### **4. Ausencia de multicolinealidad (el problema es la presencia de multicolinealidad)**
 
@@ -350,21 +345,26 @@ no encontramos multicolinealidad.
 
 -   Mayor a 10, grave problema de multicolinealidad.
 
-**Código e interpretación**
+**Código**
 
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
-vif(modelo1)
+
+```{r,warning=FALSE,message=FALSE}
+check_model(modelo1, check="vif")
 ```
 
-Valores \> 5 indican presencia de multicolinealidad.
+### 5.**Apalancamiento **
 
-### 5.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)**
+
+```{r,warning=FALSE,message=FALSE}
+check_model(modelo1, check="outliers")
+```
+
+
+### 6.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)**
 
 **Descripción**
 
-Si los errores residuales **no son independientes**, es probable que
-demuestren algún tipo de patrón (que no siempre es obvio a simple
-vista).
+-- insertar
 
 **Cómo detectarlo**
 
@@ -383,8 +383,7 @@ podemos afirmar que los residuos son independientes** o que no están
 autocrrelacionados. El modelo **sí** pasa este supuesto.
 
 
-**Modelo 2** ¿Es posible mejorar mi modelo1? Esta vez, realizamos una
-nueva regresión.
+**Modelo 2** ¿Es posible mejorar mi modelo1? Realizamos una nueva regresión.
 
 ```{r}
 names(Egov)
@@ -399,17 +398,17 @@ summary(modelo2)
 
 Seguimos nuestro flujograma para evaluar el modelo:
 
-1.  Nos preguntamos si el modelo es válido:
+a.  Nos preguntamos si el modelo es válido:
 
 -   Si el p-value es menor a 0.05 significa que rechazamos la hipótesis
     nula, lo cual probaría que nuestro modelo sí funciona. -Al tener un
     p-value de 2.2e-16 nuestro modelo sí funciona.
 
-2.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado  que
+b.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado  que
     va de 0 a 1 (0% a 100%) -En este caso mis variables (en conjunto)
     explican el 89.8% de la variabilidad de mi dependiente, esto es
     bueno, pero quizá podría ser mejor.
-3.  ¿Las variables independientes aportan al modelo? -Nos enfocamos en
+c.  ¿Las variables independientes aportan al modelo? -Nos enfocamos en
     el p-value de cada independiente -corroboramos que estas rechacen la
     hipótesis nula, es decir que sean menores que 0.05.
 
