@@ -238,13 +238,13 @@ data %>%
 
 1.  Crea una nueva variable ("Generosos"), que indique "Más generosos"
     si supera el 0.25 y "Menos generosos" si es menor o igual a 0.25.
-    Agrupando según "MayorPerCorru", identifica la media de cultura
-    política (Policulture).
+    Agrupando según "Generosos", identifica la media de cultura política
+    (Policulture).
 
 ```{r, echo=FALSE}
   data %>% 
   mutate(Generosos=ifelse(Generosidad > 0.25,"Más generosos","Menos generosos"))%>%
-  group_by(MayorPerCorru)%>%
+  group_by(Generosos)%>%
   summarise(media=mean(Policulture))
 ```
 
