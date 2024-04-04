@@ -101,7 +101,7 @@ Filtra casos o filas que cumplen con el criterio.
 Por ejemplo, aca estamos filtrando de la data a los países en los que
 más del 50% de personas realizan un gasto de bolsillo
 
-```{r, message=FALSE}
+```{r, message=FALSE,results= F}
 data %>%
   filter(GastoBolsillo_porc > 50)
 ```
@@ -114,7 +114,7 @@ indica un criterio de orden, se ordenará de forma descendente.
 En este caso, además de realizar un filtro, se ha ordenado a la variable
 "GastoBolsillo_porc" de mayor a menor
 
-```{r}
+```{r, results = F}
 data %>%
   filter(GastoBolsillo_porc > 50)%>%
   arrange(desc(GastoBolsillo_porc))
@@ -131,7 +131,7 @@ En este comando estamos especificando que queremos seleccionar de la
 data, las variables interés: país y GastoBolsillo_porc; además del
 filtro y orden que habíamos indicado previamente.
 
-```{r}
+```{r, results = F}
 data %>%
   filter(GastoBolsillo_porc > 50)%>%
   arrange(desc(GastoBolsillo_porc))%>%
@@ -142,7 +142,7 @@ data %>%
 Si queremos quitar variable ponemos el signo de menos. Salen todas las
 variables menos Gasto de bolsillo y generosidad
 
-```{r}
+```{r, results =F}
 data %>%
   select(-GastoBolsillo_porc,-Generosidad)
 ```
@@ -156,7 +156,7 @@ la nueva variable será 1, sino será 0.
 
 Primero determinemos el valor del punto de corte
 
-```{r}
+```{r, results = F}
 summary(data$Percep_corrup)
 ```
 
@@ -177,7 +177,7 @@ En este caso:
 
 Reemplacemos:
 
-```{r}
+```{r, results = F}
 data <- data %>%
   mutate(MayorPerCorru = ifelse(Percep_corrup > 0.1422,1,0))
 ```
@@ -251,7 +251,7 @@ data %>%
   summarise(media=mean(Policulture))
 ```
 
-## **Repaso** 
+## **Repaso**
 
 Recordemos que con los modelos buscamos medir el efecto de un conjunto
 de variables independientes sobre una dependiente y también con el
@@ -303,7 +303,7 @@ Calculamos nuestro modelo, en este caso usaremos lo siguiente:
     (Cirujanos_1000) + Participación digital (ParDig) + Percepción de
     Corrupción Alta (MayorPerCorru)
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
+```{r,  fig.show='hide',warning=FALSE,message=FALSE}
 modelo1 <- lm(data$Policulture~ data$Cirujanos_1000+
                 data$ParDig+
                 data$MayorPerCorru)
@@ -317,7 +317,7 @@ Seguimos nuestro flujograma para evaluar el modelo:
 3.  Si las variables independientes aportan al modelo
 4.  Identificamos los coeficientes
 
-```{r, results = 'hide',  fig.show='hide',warning=FALSE,message=FALSE}
+```{r, fig.show='hide',warning=FALSE,message=FALSE}
 modelo1$coefficients
 ```
 
