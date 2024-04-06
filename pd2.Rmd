@@ -6,7 +6,7 @@ output:
     toc_float: yes
     collapsed: no
     number_sections: no
-    toc_depth: 1
+    toc_depth: 3
     theme: simplex
     highlight: kate
     always_allow_html: true

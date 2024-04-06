@@ -106,7 +106,7 @@ data %>%
 ### **Arrange**: ordenar las filas
 
 Ordenar las filas según una o más variables. Por default, si no se
-indica un criterio de orden, se ordenará de forma descendente.
+indica un criterio de orden, se ordenará de forma **ascendente**.
 
 En este caso, además de realizar un filtro, se ha ordenado a la variable
 "GastoBolsillo_porc" de mayor a menor
