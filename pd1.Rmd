@@ -239,7 +239,7 @@ data %>%
 1.  Crea una nueva variable ("Generosos"), que indique "Más generosos"
     si supera el 0.25 y "Menos generosos" si es menor o igual a 0.25.
     Agrupando según "Generosos", identifica la media de cultura política
-    (Policulture).
+    (Policulture). 
 
 ```{r, echo=FALSE}
   data %>% 
