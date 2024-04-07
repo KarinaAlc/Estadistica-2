@@ -73,8 +73,7 @@ UsuariosInternet, las cuales provienen de otros estudios.*
 knitr::include_graphics("pd2_DDatos.png") 
 ```
 
-Cargar librerías
-pd2_performance.png
+Cargar librerías pd2_performance.png
 
 ```{r , fig.show='hide',warning=FALSE,message=FALSE}
 library(rio)
@@ -212,6 +211,13 @@ modelo1$coefficients
 
 # **SUPUESTOS**
 
+## Importancia 
+[FALTA]
+Las inferencias del modelo de regresión será confiable/correcta
+solamente si se cumplen los supuestos.
+
+
+[FALTA actualizar tablas]
 ```{r,echo=FALSE, out.width="70%",fig.align="center"}
 knitr::include_graphics("PD2_SUP.png") 
 ```
@@ -222,29 +228,49 @@ knitr::include_graphics("PD2_SUP2.png")
 
 ### **1- Linealidad (el problema es la no linealidad)**
 
-**Descripción** Como su nombre lo dice, debe de existir una linealidad
-entre la variable independiente y dependiente, en otras palabras,la
-linealidad indica que el valor esperado de la variable dependiente es
-una función lineal de cada variable independiente, manteniendo las demás
-fijas. La pendiente de esa línea no depende de los valores de las otras
-variables, por ello también nos fijamos variable por variable. Los
-efectos de diferentes variables independientes sobre el valor esperado
-de la variable dependiente son aditivos. Si este supuesto no se cumple
-significaría que posiblemente existan variables que no aporten al modelo
-o que se trate de una relación no lineal.
+Como su nombre lo dice, debe de existir una linealidad entre la variable
+independiente y dependiente, en otras palabras,la linealidad indica que
+el valor esperado de la variable dependiente es una *función lineal* de
+cada variable independiente, manteniendo las demás fijas. La pendiente
+de esa línea no depende de los valores de las otras variables, por ello
+también nos fijamos variable por variable. Los efectos de diferentes
+variables independientes sobre el valor esperado de la variable
+dependiente son aditivos. Si este supuesto no se cumple significaría que
+posiblemente existan variables que no aporten al modelo o que se trate
+de una relación no lineal [*polinomial, logística, logaritmicos*].
 
 **Cómo detectarlo**
 
--   Exploración gráfica: Plot de valores residuales frente a valores
+a.  Exploración gráfica: Plot de valores residuales frente a valores
     predichos.
 
--   Correlación: `cor.test`
 
 La línea verde debería de estar lo más cercana a la línea punteada.
 
 ```{r}
 #Exploración gráfica
 check_model(modelo1,check ="linearity")
+```
+
+b.  Correlación: `cor.test`
+
+p-value menor a 0.05 rechazo la hipótesis nula: sí hay correlación entre
+las variables.
+
+```{r}
+cor.test(Egov$accesoInformacion, Egov$Capital_Humano)
+```
+
+```{r}
+cor.test(Egov$accesoInformacion , Egov$Policulture)
+```
+
+```{r}
+cor.test(Egov$accesoInformacion , Egov$Telecommunicacion_Infrastructura )
+```
+
+```{r}
+cor.test(Egov$accesoInformacion,Egov$ProcesoElectoral)
 ```
 
 ### **2. Normalidad de residuos (el problema es la NO normalidad)**
@@ -258,18 +284,17 @@ se podrían aplicar las pruebas globales del modelo.
 
 **¿Cómo detectarlo?**
 
-a. Exploración gráfica
+a.  Exploración gráfica
 
+Todos los puntos deberían estar sobre la diagonal color verde.
 
 ```{r,message=FALSE}
 #Exploración gráfica
-check_model(modelo1,check ="qq")
+check_model(modelo1,check ="qq") #quantile-quantile plot
 ```
 
-Todos los puntos deben estar sobre la diagonal. Los dos gráficos no son
-concluyentes, entonces procedo a realizar el test.
-
-b. Pruebas de normalidad a los residuos: Lillieford (mayores a 50 casos) o Shapiro-Wilks (menores a 50 casos)
+b.  Pruebas de normalidad a los residuos: Lilliefors (mayores a 50
+    casos) o Shapiro-Wilks (menores a 50 casos)
 
 ```{r,  message=FALSE}
 lillie.test(modelo1$resid)
@@ -287,32 +312,27 @@ de distribución normal de los residuos.
 
 **Descripción**
 
-La homocedasticidad (también conocido como homogeneidad en la varianza
-de los residuos) indica que las variancias de los errores son
+La homocedasticidad (también conocido como *homogeneidad en la varianza
+de los residuos*) indica que las variancias de los errores son
 constantes. Cuando no se cumple es un problema porque los estimadores no
 son consistentes ni eficientes y se presenta el caso de la
 heterocedasticidad.
 
 **Cómo detectarlo**
 
-OPCIÓN 1: Exploración gráfica: diagrama de residuos standarizados y
+a. Exploración gráfica: diagrama de residuos standarizados y
 valores predichos.
-
-**Código**
-
-Si usamos el gráfico
 
 ```{r, message=FALSE}
 check_model(modelo1, check="homogeneity")
 ```
 
-En el Gráfico la línea roja debe seguir una tendencia horizontal, esto
+En el Gráfico la línea verde debe seguir una tendencia horizontal, esto
 representaría que la distribución de los puntos son uniformes. Al ver
-nuestro gráfico nos damos cuenta que la línea roja va hacia arriba, lo
-cual nos dice que el gráfico no es concluyente aún. Vamos al test.
+nuestro gráfico nos damos cuenta que la línea verde va hacia arriba, lo
+cual nos dice que el gráfico no es concluyente aún.
 
-OPCIÓN 2: Con el Score Test for Non-Constant Error Variance, también
-llamado Test Breusch Pagan. Evalúa si la varianza del error cambia con
+b.  Test Breusch Pagan: También llamado como el Score Test for Non-Constant Error Variance. Evalúa si la varianza del error cambia con
 el nivel de la variable respuesta (valores ajustados) o con una
 combinación lineal de predictores.
 
@@ -340,7 +360,7 @@ inestable.
 
 **Cómo detectarlo**
 
-Con el Factor de Inflación de Varianza (VIF). los factores de inflación
+a. Con el Factor de Inflación de Varianza (VIF). los factores de inflación
 de varianza deben de ser menores de 5. De acuerdo a nuestros resultados
 no encontramos multicolinealidad.
 
@@ -354,22 +374,27 @@ check_model(modelo1, check="vif")
 
 ### 5.**Apalancamiento**
 
+**Descripción**
+
+[FALTA]
+
+**Cómo detectarlo**
+
+a. Gráfico: Se espera que la línea verde tenga un comportamiento horizontal. Observamos si hay casos que están afuera de la línea punteada verde. 
+
 ```{r,warning=FALSE,message=FALSE}
 check_model(modelo1, check="outliers")
 ```
 
-### 6.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)**
+### 6.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)** 🚨
 
 **Descripción**
 
--- insertar
+[FALTA]
 
 **Cómo detectarlo**
 
-Los puntos se deben acercar lo más posible a la línea oblicua del
-gráfico que representa la distribución normal.
-
-**Código e interpretación**
+a. Test de Durbin Watson
 
 ```{r message=FALSE, warning=FALSE}
 library(car)
@@ -415,6 +440,6 @@ Conclusiones preliminares: el modelo sí pasa la evaluación; mis
 variables siguen aportando al modelo, mi modelo es válido al tener un p
 value de 2.2e-16; sin embargo, nos damos cuenta que mi modelo2 explica
 menos que mi modelo1. Por lo tanto, solo al evaluar mi modelo2, a pesar
-de que es un modelo válido, optaría por mantener mi modelo1. Ojo, solo
+de que es un modelo válido, optaría por mantener mi modelo1. **Ojo, solo
 basándome en esta primera evaluación del modelo. Una decisión más fina
-sería al realizar mis pruebas de supuestos completa.
+sería al realizar mis pruebas de supuestos completa.**

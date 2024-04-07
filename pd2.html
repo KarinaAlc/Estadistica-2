@@ -715,33 +715,91 @@ Capital_Humano(0.338730284)+….</li>
 </div>
 <div id="supuestos" class="section level1">
 <h1><strong>SUPUESTOS</strong></h1>
-<p><img src="PD2_SUP.png" width="70%" style="display: block; margin: auto;" /></p>
+<div id="importancia" class="section level2">
+<h2>Importancia</h2>
+<p>[FALTA] Las inferencias del modelo de regresión será
+confiable/correcta solamente si se cumplen los supuestos.</p>
+<p>[FALTA actualizar tablas]
+<img src="PD2_SUP.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><img src="PD2_SUP2.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="linealidad-el-problema-es-la-no-linealidad"
 class="section level3">
 <h3><strong>1- Linealidad (el problema es la no
 linealidad)</strong></h3>
-<p><strong>Descripción</strong> Como su nombre lo dice, debe de existir
-una linealidad entre la variable independiente y dependiente, en otras
-palabras,la linealidad indica que el valor esperado de la variable
-dependiente es una función lineal de cada variable independiente,
-manteniendo las demás fijas. La pendiente de esa línea no depende de los
-valores de las otras variables, por ello también nos fijamos variable
-por variable. Los efectos de diferentes variables independientes sobre
-el valor esperado de la variable dependiente son aditivos. Si este
-supuesto no se cumple significaría que posiblemente existan variables
-que no aporten al modelo o que se trate de una relación no lineal.</p>
+<p>Como su nombre lo dice, debe de existir una linealidad entre la
+variable independiente y dependiente, en otras palabras,la linealidad
+indica que el valor esperado de la variable dependiente es una
+<em>función lineal</em> de cada variable independiente, manteniendo las
+demás fijas. La pendiente de esa línea no depende de los valores de las
+otras variables, por ello también nos fijamos variable por variable. Los
+efectos de diferentes variables independientes sobre el valor esperado
+de la variable dependiente son aditivos. Si este supuesto no se cumple
+significaría que posiblemente existan variables que no aporten al modelo
+o que se trate de una relación no lineal [<em>polinomial, logística,
+logaritmicos</em>].</p>
 <p><strong>Cómo detectarlo</strong></p>
-<ul>
-<li><p>Exploración gráfica: Plot de valores residuales frente a valores
-predichos.</p></li>
-<li><p>Correlación: <code>cor.test</code></p></li>
-</ul>
+<ol style="list-style-type: lower-alpha">
+<li>Exploración gráfica: Plot de valores residuales frente a valores
+predichos.</li>
+</ol>
 <p>La línea verde debería de estar lo más cercana a la línea
 punteada.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;linearity&quot;</span>)</span></code></pre></div>
 <p><img src="pd2_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Correlación: <code>cor.test</code></li>
+</ol>
+<p>p-value menor a 0.05 rechazo la hipótesis nula: sí hay correlación
+entre las variables.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">cor.test</span>(Egov<span class="sc">$</span>accesoInformacion, Egov<span class="sc">$</span>Capital_Humano)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  Egov$accesoInformacion and Egov$Capital_Humano
+## t = 22.047, df = 127, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.8481015 0.9214524
+## sample estimates:
+##       cor 
+## 0.8904218</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">cor.test</span>(Egov<span class="sc">$</span>accesoInformacion , Egov<span class="sc">$</span>Policulture)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  Egov$accesoInformacion and Egov$Policulture
+## t = 8.8381, df = 127, p-value = 6.817e-15
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.4973051 0.7138223
+## sample estimates:
+##       cor 
+## 0.6171117</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">cor.test</span>(Egov<span class="sc">$</span>accesoInformacion , Egov<span class="sc">$</span>Telecommunicacion_Infrastructura )</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  Egov$accesoInformacion and Egov$Telecommunicacion_Infrastructura
+## t = 28.644, df = 127, p-value &lt; 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.9029585 0.9505284
+## sample estimates:
+##       cor 
+## 0.9305693</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">cor.test</span>(Egov<span class="sc">$</span>accesoInformacion,Egov<span class="sc">$</span>ProcesoElectoral)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  Egov$accesoInformacion and Egov$ProcesoElectoral
+## t = 8.0735, df = 127, p-value = 4.502e-13
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.4553674 0.6861617
+## sample estimates:
+##       cor 
+## 0.5823813</code></pre>
 </div>
 <div id="normalidad-de-residuos-el-problema-es-la-no-normalidad"
 class="section level3">
@@ -756,16 +814,15 @@ se podrían aplicar las pruebas globales del modelo.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Exploración gráfica</li>
 </ol>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;qq&quot;</span>)</span></code></pre></div>
-<p><img src="pd2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>Todos los puntos deben estar sobre la diagonal. Los dos gráficos no
-son concluyentes, entonces procedo a realizar el test.</p>
+<p>Todos los puntos deberían estar sobre la diagonal color verde.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;qq&quot;</span>) <span class="co">#quantile-quantile plot</span></span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: lower-alpha">
-<li>Pruebas de normalidad a los residuos: Lillieford (mayores a 50
+<li>Pruebas de normalidad a los residuos: Lilliefors (mayores a 50
 casos) o Shapiro-Wilks (menores a 50 casos)</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">lillie.test</span>(modelo1<span class="sc">$</span>resid)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">lillie.test</span>(modelo1<span class="sc">$</span>resid)</span></code></pre></div>
 <pre><code>## 
 ##  Lilliefors (Kolmogorov-Smirnov) normality test
 ## 
@@ -784,28 +841,29 @@ class="section level3">
 <h3><strong>3. Homocedasticidad (el problema es la
 heterocedasticidad)</strong></h3>
 <p><strong>Descripción</strong></p>
-<p>La homocedasticidad (también conocido como homogeneidad en la
-varianza de los residuos) indica que las variancias de los errores son
-constantes. Cuando no se cumple es un problema porque los estimadores no
-son consistentes ni eficientes y se presenta el caso de la
-heterocedasticidad.</p>
+<p>La homocedasticidad (también conocido como <em>homogeneidad en la
+varianza de los residuos</em>) indica que las variancias de los errores
+son constantes. Cuando no se cumple es un problema porque los
+estimadores no son consistentes ni eficientes y se presenta el caso de
+la heterocedasticidad.</p>
 <p><strong>Cómo detectarlo</strong></p>
-<p>OPCIÓN 1: Exploración gráfica: diagrama de residuos standarizados y
-valores predichos.</p>
-<p><strong>Código</strong></p>
-<p>Si usamos el gráfico</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;homogeneity&quot;</span>)</span></code></pre></div>
-<p><img src="pd2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<p>En el Gráfico la línea roja debe seguir una tendencia horizontal,
+<ol style="list-style-type: lower-alpha">
+<li>Exploración gráfica: diagrama de residuos standarizados y valores
+predichos.</li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;homogeneity&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>En el Gráfico la línea verde debe seguir una tendencia horizontal,
 esto representaría que la distribución de los puntos son uniformes. Al
-ver nuestro gráfico nos damos cuenta que la línea roja va hacia arriba,
-lo cual nos dice que el gráfico no es concluyente aún. Vamos al
-test.</p>
-<p>OPCIÓN 2: Con el Score Test for Non-Constant Error Variance, también
-llamado Test Breusch Pagan. Evalúa si la varianza del error cambia con
+ver nuestro gráfico nos damos cuenta que la línea verde va hacia arriba,
+lo cual nos dice que el gráfico no es concluyente aún.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Test Breusch Pagan: También llamado como el Score Test for
+Non-Constant Error Variance. Evalúa si la varianza del error cambia con
 el nivel de la variable respuesta (valores ajustados) o con una
-combinación lineal de predictores.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">bptest</span>(modelo1)</span></code></pre></div>
+combinación lineal de predictores.</li>
+</ol>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">bptest</span>(modelo1)</span></code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
@@ -832,35 +890,45 @@ las variables de insumo. Esto entendería que existe una relación fuerte
 entre variables independientes, por lo tanto podría darnos un modelo
 inestable.</p>
 <p><strong>Cómo detectarlo</strong></p>
-<p>Con el Factor de Inflación de Varianza (VIF). los factores de
+<ol style="list-style-type: lower-alpha">
+<li>Con el Factor de Inflación de Varianza (VIF). los factores de
 inflación de varianza deben de ser menores de 5. De acuerdo a nuestros
-resultados no encontramos multicolinealidad.</p>
+resultados no encontramos multicolinealidad.</li>
+</ol>
 <ul>
 <li>Mayor a 10, grave problema de multicolinealidad.</li>
 </ul>
 <p><strong>Código</strong></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;vif&quot;</span>)</span></code></pre></div>
-<p><img src="pd2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;vif&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 <div id="apalancamiento" class="section level3">
 <h3>5.<strong>Apalancamiento</strong></h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;outliers&quot;</span>)</span></code></pre></div>
-<p><img src="pd2_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><strong>Descripción</strong></p>
+<p>[FALTA]</p>
+<p><strong>Cómo detectarlo</strong></p>
+<ol style="list-style-type: lower-alpha">
+<li>Gráfico: Se espera que la línea verde tenga un comportamiento
+horizontal. Observamos si hay casos que están afuera de la línea
+punteada verde.</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;outliers&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 <div
 id="independencia-de-residuos-el-problema-es-que-existe-autocorrelación-en-los-residuos"
 class="section level3">
 <h3>6.- <strong>Independencia de residuos (el problema es que existe
-autocorrelación en los residuos)</strong></h3>
+autocorrelación en los residuos)</strong> 🚨</h3>
 <p><strong>Descripción</strong></p>
-<p>– insertar</p>
+<p>[FALTA]</p>
 <p><strong>Cómo detectarlo</strong></p>
-<p>Los puntos se deben acercar lo más posible a la línea oblicua del
-gráfico que representa la distribución normal.</p>
-<p><strong>Código e interpretación</strong></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(modelo1,<span class="at">simulate =</span> <span class="cn">TRUE</span>,<span class="at">reps =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li>Test de Durbin Watson</li>
+</ol>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(modelo1,<span class="at">simulate =</span> <span class="cn">TRUE</span>,<span class="at">reps =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>##  lag Autocorrelation D-W Statistic p-value
 ##    1      0.09614045      1.805361   0.262
 ##  Alternative hypothesis: rho != 0</code></pre>
@@ -870,14 +938,14 @@ que no están autocrrelacionados. El modelo <strong>sí</strong> pasa este
 supuesto.</p>
 <p><strong>Modelo 2</strong> ¿Es posible mejorar mi modelo1? Realizamos
 una nueva regresión.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">names</span>(Egov)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">names</span>(Egov)</span></code></pre></div>
 <pre><code>## [1] &quot;pais&quot;                             &quot;participaciónDigital&quot;            
 ## [3] &quot;Servicios_Online&quot;                 &quot;Capital_Humano&quot;                  
 ## [5] &quot;Telecommunicacion_Infrastructura&quot; &quot;ProcesoElectoral&quot;                
 ## [7] &quot;Policulture&quot;                      &quot;accesoInformacion&quot;               
 ## [9] &quot;UsuariosInternet&quot;</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> Egov <span class="sc">%&gt;%</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> ProcesoElectoral  <span class="sc">+</span> Capital_Humano <span class="sc">+</span> UsuariosInternet,<span class="at">data=</span>.)</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> Egov <span class="sc">%&gt;%</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> ProcesoElectoral  <span class="sc">+</span> Capital_Humano <span class="sc">+</span> UsuariosInternet,<span class="at">data=</span>.)</span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = accesoInformacion ~ ProcesoElectoral + Capital_Humano + 
@@ -921,9 +989,11 @@ hipótesis nula, es decir que sean menores que 0.05.</li>
 variables siguen aportando al modelo, mi modelo es válido al tener un p
 value de 2.2e-16; sin embargo, nos damos cuenta que mi modelo2 explica
 menos que mi modelo1. Por lo tanto, solo al evaluar mi modelo2, a pesar
-de que es un modelo válido, optaría por mantener mi modelo1. Ojo, solo
-basándome en esta primera evaluación del modelo. Una decisión más fina
-sería al realizar mis pruebas de supuestos completa.</p>
+de que es un modelo válido, optaría por mantener mi modelo1.
+<strong>Ojo, solo basándome en esta primera evaluación del modelo. Una
+decisión más fina sería al realizar mis pruebas de supuestos
+completa.</strong></p>
+</div>
 </div>
 </div>
 
