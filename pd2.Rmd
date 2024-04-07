@@ -152,6 +152,8 @@ Algunos detalles:
 4.  **Identificamos los coeficientes**
     -   En este caso hacemos uso del código modelo1\$coefficients.
 
+AÑADIR GRÁFICO CON RESIDUOS (EST1)
+
 ### ¿Qué sucede si agregamos más variables? 👾
 
 ```{r,echo=FALSE, out.width="20%",fig.align="center",fig.cap="Tehc is a meme man character  which is similarly used for tasks for which one might feel disproportionately proud of doing, though Tehc is paired with technology"}
@@ -293,8 +295,9 @@ Todos los puntos deberían estar sobre la diagonal color verde.
 check_model(modelo1,check ="qq") #quantile-quantile plot
 ```
 
-b.  Pruebas de normalidad a los residuos: Lilliefors (mayores a 50
-    casos) o Shapiro-Wilks (menores a 50 casos)
+
+b.  Pruebas de normalidad a los residuos: Lilliefors (kolmogorov-Smirnov) [mayores a 50
+    casos] o Shapiro-Wilks [menores a 50 casos]
 
 ```{r,  message=FALSE}
 lillie.test(modelo1$resid)
