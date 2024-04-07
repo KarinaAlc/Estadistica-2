@@ -494,12 +494,16 @@ para utilizar las tecnologías de la información y la comunicación (TIC)
 para proporcionar servicios públicos eficientes y efectivos. Fue
 desarrollado por la División de Administración Pública y Desarrollo de
 la ONU en colaboración con la Universidad de las Naciones Unidas.</p>
-<p>El EGDI se compone de tres dimensiones: el nivel de acceso a las
-tecnologías de la información y la comunicación (TIC), la disponibilidad
-de servicios gubernamentales en línea y el grado de capacitación y
-compromiso del gobierno con el desarrollo de servicios en línea. El
-índice se mide en una escala de 0 a 1, donde 1 representa el nivel más
-alto de desarrollo del gobierno electrónico.</p>
+<p>El EGDI se compone de tres dimensiones:</p>
+<ul>
+<li><p>Acceso a las tecnologías de la información y la comunicación
+(TIC),</p></li>
+<li><p>Disponibilidad de servicios gubernamentales en línea</p></li>
+<li><p>Grado de capacitación y compromiso del gobierno con el desarrollo
+de servicios en línea.</p></li>
+</ul>
+<p>El índice se mide en una escala de 0 a 1, donde 1 representa el nivel
+más alto de desarrollo del gobierno electrónico.</p>
 <p>El EGDI es utilizado por los gobiernos, las organizaciones
 internacionales y la sociedad civil para evaluar el progreso en el
 desarrollo del gobierno electrónico y para identificar las áreas en las
@@ -508,23 +512,32 @@ eficientes y efectivos en línea.</p>
 <p>Para mayor información: <a
 href="https://publicadministration.un.org/egovkb/en-us/About/Overview/-E-Government-Development-Index"
 class="uri">https://publicadministration.un.org/egovkb/en-us/About/Overview/-E-Government-Development-Index</a></p>
+<p><em>Con fines prácticos el día de hoy se trabajará con la data del
+EGDI (escala 0 a 1) y con las variables ProcesoElectoral, Policulture y
+UsuariosInternet, las cuales provienen de otros estudios.</em></p>
 <div class="figure" style="text-align: center">
 <img src="pd2_DDatos.png" alt="Diccionario de datos de EGov.xlsx" width="70%" />
 <p class="caption">
 Diccionario de datos de EGov.xlsx
 </p>
 </div>
-<p>Cargar librerías</p>
+<p>Cargar librerías pd2_performance.png</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(ggfortify)</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(see)</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(performance) </span>
 <span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
 <span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
-<p>Obtenemos nuestra base de datos 😼:</p>
+<div class="figure" style="text-align: center">
+<img src="pd2_performance.png" alt="librería de check_model" width="30%" />
+<p class="caption">
+librería de check_model
+</p>
+</div>
+<p>Importamos la base de datos 😼:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>Egov<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;EGov.xlsx&quot;</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">names</span>(Egov)</span></code></pre></div>
 <pre><code>## [1] &quot;pais&quot;                             &quot;participaciónDigital&quot;            
@@ -541,16 +554,7 @@ partir de participación digital</em>.</p>
 <li><p>Variable independiente: participaciónDigital</p></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>modeloRL <span class="ot">&lt;-</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> participaciónDigital, <span class="at">data=</span>Egov)</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>modeloRL</span></code></pre></div>
-<pre><code>## 
-## Call:
-## lm(formula = accesoInformacion ~ participaciónDigital, data = Egov)
-## 
-## Coefficients:
-##          (Intercept)  participaciónDigital  
-##              0.08298               0.64398</code></pre>
-<p>Resumen de los datos</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">summary</span>(modeloRL)</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">summary</span>(modeloRL)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = accesoInformacion ~ participaciónDigital, data = Egov)
@@ -619,7 +623,7 @@ nula, lo cual probaría que nuestro modelo sí funciona.</li>
 <div id="qué-sucede-si-agregamos-más-variables" class="section level3">
 <h3>¿Qué sucede si agregamos más variables? 👾</h3>
 <div class="figure" style="text-align: center">
-<img src="tehc.png" alt="Tehc is a meme man character  which is similarly used for tasks for which one might feel disproportionately proud of doing, though Tehc is paired with technology" width="40%" />
+<img src="tehc.png" alt="Tehc is a meme man character  which is similarly used for tasks for which one might feel disproportionately proud of doing, though Tehc is paired with technology" width="20%" />
 <p class="caption">
 Tehc is a meme man character which is similarly used for tasks for which
 one might feel disproportionately proud of doing, though Tehc is paired
@@ -636,8 +640,8 @@ with technology
 <li><p>Variables independientes: Capital_Humano + Policulture +
 Telecommunicacion_Infrastructura + ProcesoElectoral</p></li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>modelo1<span class="ot">&lt;-</span> Egov <span class="sc">%&gt;%</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> Capital_Humano <span class="sc">+</span> Policulture <span class="sc">+</span> Telecommunicacion_Infrastructura <span class="sc">+</span> ProcesoElectoral,<span class="at">data=</span>.)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>modelo1<span class="ot">&lt;-</span> Egov <span class="sc">%&gt;%</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> Capital_Humano <span class="sc">+</span> Policulture <span class="sc">+</span> Telecommunicacion_Infrastructura <span class="sc">+</span> ProcesoElectoral,<span class="at">data=</span>.)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = accesoInformacion ~ Capital_Humano + Policulture + 
@@ -693,9 +697,10 @@ sean menores que 0.05.</p></li>
 <li><strong>Identificamos los coeficientes</strong></li>
 </ol>
 <ul>
-<li>En este caso hacemos uso del código modelo1$coefficients.</li>
+<li>En este caso hacemos uso del código
+<code>modelo1$coefficients</code>.</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>modelo1<span class="sc">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>modelo1<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>##                      (Intercept)                   Capital_Humano 
 ##                     -0.121108754                      0.338730284 
 ##                      Policulture Telecommunicacion_Infrastructura 
@@ -727,13 +732,15 @@ el valor esperado de la variable dependiente son aditivos. Si este
 supuesto no se cumple significaría que posiblemente existan variables
 que no aporten al modelo o que se trate de una relación no lineal.</p>
 <p><strong>Cómo detectarlo</strong></p>
-<p>Exploración gráfica: Plot de valores residuales frente a valores
-predichos.</p>
-<p><strong>Código</strong></p>
+<ul>
+<li><p>Exploración gráfica: Plot de valores residuales frente a valores
+predichos.</p></li>
+<li><p>Correlación: <code>cor.test</code></p></li>
+</ul>
 <p>La línea verde debería de estar lo más cercana a la línea
 punteada.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;linearity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;linearity&quot;</span>)</span></code></pre></div>
 <p><img src="pd2_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 <div id="normalidad-de-residuos-el-problema-es-la-no-normalidad"
@@ -746,29 +753,30 @@ del valor observado menos el valor pronosticado (residuos) siguen una
 distribución normal, esto es importante porque si es que no se cumple no
 se podrían aplicar las pruebas globales del modelo.</p>
 <p><strong>¿Cómo detectarlo?</strong></p>
-<p>Exploración gráfica y pruebas de normalidad a los residuos.</p>
-<p><strong>Si usamos prueba de normalidad:</strong> aplicamos la prueba
-de Shapiro a los residuos del modelo si estos son menores a 50 casos y
-Kolmogorov a aquellos mayores a 50 casos.</p>
-<p><strong>Código e interpretación</strong></p>
-<p>Si usamos sólo gráfico</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;qq&quot;</span>)</span></code></pre></div>
+<ol style="list-style-type: lower-alpha">
+<li>Exploración gráfica</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;qq&quot;</span>)</span></code></pre></div>
 <p><img src="pd2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Todos los puntos deben estar sobre la diagonal. Los dos gráficos no
 son concluyentes, entonces procedo a realizar el test.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(modelo1<span class="sc">$</span>resid)</span></code></pre></div>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Pruebas de normalidad a los residuos: Lillieford (mayores a 50
+casos) o Shapiro-Wilks (menores a 50 casos)</li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">lillie.test</span>(modelo1<span class="sc">$</span>resid)</span></code></pre></div>
 <pre><code>## 
-##  Shapiro-Wilk normality test
+##  Lilliefors (Kolmogorov-Smirnov) normality test
 ## 
 ## data:  modelo1$resid
-## W = 0.98413, p-value = 0.1378</code></pre>
+## D = 0.077796, p-value = 0.05342</code></pre>
 <p><strong>Ojo con la hipótesis nula</strong>. H0: Es normal
 (distribución normal) | Ha: No es normal (no hay distribución
 normal)</p>
 <p>Si el pvalor es menor a 0.05 entonces <em>NO existe normalidad de
 residuos</em> (problemas!), se rechazaría la distribución normal. Dado
-que nuestro p-value es 0.1378, mayor que 0.05, entonces sí estamos
+que nuestro p-value es 0.05342, mayor que 0.05, entonces sí estamos
 frente a un caso de distribución normal de los residuos.</p>
 </div>
 <div id="homocedasticidad-el-problema-es-la-heterocedasticidad"
@@ -786,7 +794,7 @@ heterocedasticidad.</p>
 valores predichos.</p>
 <p><strong>Código</strong></p>
 <p>Si usamos el gráfico</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;homogeneity&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;homogeneity&quot;</span>)</span></code></pre></div>
 <p><img src="pd2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>En el Gráfico la línea roja debe seguir una tendencia horizontal,
 esto representaría que la distribución de los puntos son uniformes. Al
@@ -797,7 +805,7 @@ test.</p>
 llamado Test Breusch Pagan. Evalúa si la varianza del error cambia con
 el nivel de la variable respuesta (valores ajustados) o con una
 combinación lineal de predictores.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">bptest</span>(modelo1)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">bptest</span>(modelo1)</span></code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
@@ -831,12 +839,12 @@ resultados no encontramos multicolinealidad.</p>
 <li>Mayor a 10, grave problema de multicolinealidad.</li>
 </ul>
 <p><strong>Código</strong></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;vif&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;vif&quot;</span>)</span></code></pre></div>
 <p><img src="pd2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 <div id="apalancamiento" class="section level3">
-<h3>5.<strong>Apalancamiento </strong></h3>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;outliers&quot;</span>)</span></code></pre></div>
+<h3>5.<strong>Apalancamiento</strong></h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;outliers&quot;</span>)</span></code></pre></div>
 <p><img src="pd2_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div
@@ -850,9 +858,9 @@ autocorrelación en los residuos)</strong></h3>
 <p>Los puntos se deben acercar lo más posible a la línea oblicua del
 gráfico que representa la distribución normal.</p>
 <p><strong>Código e interpretación</strong></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(modelo1,<span class="at">simulate =</span> <span class="cn">TRUE</span>,<span class="at">reps =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(modelo1,<span class="at">simulate =</span> <span class="cn">TRUE</span>,<span class="at">reps =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>##  lag Autocorrelation D-W Statistic p-value
 ##    1      0.09614045      1.805361   0.262
 ##  Alternative hypothesis: rho != 0</code></pre>
@@ -862,14 +870,14 @@ que no están autocrrelacionados. El modelo <strong>sí</strong> pasa este
 supuesto.</p>
 <p><strong>Modelo 2</strong> ¿Es posible mejorar mi modelo1? Realizamos
 una nueva regresión.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">names</span>(Egov)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">names</span>(Egov)</span></code></pre></div>
 <pre><code>## [1] &quot;pais&quot;                             &quot;participaciónDigital&quot;            
 ## [3] &quot;Servicios_Online&quot;                 &quot;Capital_Humano&quot;                  
 ## [5] &quot;Telecommunicacion_Infrastructura&quot; &quot;ProcesoElectoral&quot;                
 ## [7] &quot;Policulture&quot;                      &quot;accesoInformacion&quot;               
 ## [9] &quot;UsuariosInternet&quot;</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> Egov <span class="sc">%&gt;%</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> ProcesoElectoral  <span class="sc">+</span> Capital_Humano <span class="sc">+</span> UsuariosInternet,<span class="at">data=</span>.)</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> Egov <span class="sc">%&gt;%</span> <span class="fu">lm</span>(accesoInformacion <span class="sc">~</span> ProcesoElectoral  <span class="sc">+</span> Capital_Humano <span class="sc">+</span> UsuariosInternet,<span class="at">data=</span>.)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = accesoInformacion ~ ProcesoElectoral + Capital_Humano + 

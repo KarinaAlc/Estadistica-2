@@ -11,6 +11,9 @@ output:
     highlight: kate
     always_allow_html: true
     code_folding: show
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 <br>
@@ -41,12 +44,17 @@ para proporcionar servicios públicos eficientes y efectivos. Fue
 desarrollado por la División de Administración Pública y Desarrollo de
 la ONU en colaboración con la Universidad de las Naciones Unidas.
 
-El EGDI se compone de tres dimensiones: el nivel de acceso a las
-tecnologías de la información y la comunicación (TIC), la disponibilidad
-de servicios gubernamentales en línea y el grado de capacitación y
-compromiso del gobierno con el desarrollo de servicios en línea. El
-índice se mide en una escala de 0 a 1, donde 1 representa el nivel más
-alto de desarrollo del gobierno electrónico.
+El EGDI se compone de tres dimensiones:
+
+-   Acceso a las tecnologías de la información y la comunicación (TIC),
+
+-   Disponibilidad de servicios gubernamentales en línea
+
+-   Grado de capacitación y compromiso del gobierno con el desarrollo de
+    servicios en línea.
+
+El índice se mide en una escala de 0 a 1, donde 1 representa el nivel
+más alto de desarrollo del gobierno electrónico.
 
 El EGDI es utilizado por los gobiernos, las organizaciones
 internacionales y la sociedad civil para evaluar el progreso en el
@@ -57,11 +65,16 @@ eficientes y efectivos en línea.
 Para mayor información:
 <https://publicadministration.un.org/egovkb/en-us/About/Overview/-E-Government-Development-Index>
 
+*Con fines prácticos el día de hoy se trabajará con la data del EGDI
+(escala 0 a 1) y con las variables ProcesoElectoral, Policulture y
+UsuariosInternet, las cuales provienen de otros estudios.*
+
 ```{r,echo=FALSE, out.width="70%",fig.align="center", fig.cap = "Diccionario de datos de EGov.xlsx"}
 knitr::include_graphics("pd2_DDatos.png") 
 ```
 
 Cargar librerías
+pd2_performance.png
 
 ```{r , fig.show='hide',warning=FALSE,message=FALSE}
 library(rio)
@@ -69,13 +82,17 @@ library(dplyr)
 library(ggfortify)
 library(see)
 library(patchwork)
-library(performance)
+library(performance) 
 library(nortest)
 library(lmtest)
 library(car)
 ```
 
-Obtenemos nuestra base de datos 😼:
+```{r,echo=FALSE, out.width="30%",fig.align="center", fig.cap = "librería de check_model"}
+knitr::include_graphics("pd2_performance.png") 
+```
+
+Importamos la base de datos 😼:
 
 ```{r, fig.show='hide',warning=FALSE,message=FALSE}
 Egov<-import("EGov.xlsx")
@@ -93,12 +110,6 @@ partir de participación digital*.
 
 ```{r, fig.show='hide',warning=FALSE,message=FALSE}
 modeloRL <- lm(accesoInformacion ~ participaciónDigital, data=Egov)
-modeloRL
-```
-
-Resumen de los datos
-
-```{r, fig.show='hide',warning=FALSE,message=FALSE}
 summary(modeloRL)
 ```
 
@@ -144,7 +155,7 @@ Algunos detalles:
 
 ### ¿Qué sucede si agregamos más variables? 👾
 
-```{r,echo=FALSE, out.width="40%",fig.align="center",fig.cap="Tehc is a meme man character  which is similarly used for tasks for which one might feel disproportionately proud of doing, though Tehc is paired with technology"}
+```{r,echo=FALSE, out.width="20%",fig.align="center",fig.cap="Tehc is a meme man character  which is similarly used for tasks for which one might feel disproportionately proud of doing, though Tehc is paired with technology"}
 knitr::include_graphics("tehc.png") 
 ```
 
@@ -190,7 +201,7 @@ c.  **¿Las variables independientes aportan al modelo?**
 
 d.  **Identificamos los coeficientes**
 
--   En este caso hacemos uso del código modelo1$coefficients.
+-   En este caso hacemos uso del código `modelo1$coefficients`.
 
 ```{r, fig.show='hide',warning=FALSE,message=FALSE}
 modelo1$coefficients
@@ -224,19 +235,17 @@ o que se trate de una relación no lineal.
 
 **Cómo detectarlo**
 
-Exploración gráfica: Plot de valores residuales frente a
-valores predichos.
+-   Exploración gráfica: Plot de valores residuales frente a valores
+    predichos.
 
+-   Correlación: `cor.test`
 
-**Código**
-
-La línea verde debería de estar lo más cercana a la línea punteada. 
+La línea verde debería de estar lo más cercana a la línea punteada.
 
 ```{r}
 #Exploración gráfica
 check_model(modelo1,check ="linearity")
 ```
-
 
 ### **2. Normalidad de residuos (el problema es la NO normalidad)**
 
@@ -249,26 +258,21 @@ se podrían aplicar las pruebas globales del modelo.
 
 **¿Cómo detectarlo?**
 
-Exploración gráfica y pruebas de normalidad a los residuos. 
+a. Exploración gráfica
 
-**Si usamos prueba de normalidad:** aplicamos la prueba de Shapiro a los
-residuos del modelo si estos son menores a 50 casos y Kolmogorov a aquellos mayores a 50 casos.
-
-**Código e interpretación**
-
-Si usamos sólo gráfico
 
 ```{r,message=FALSE}
 #Exploración gráfica
 check_model(modelo1,check ="qq")
 ```
 
-
 Todos los puntos deben estar sobre la diagonal. Los dos gráficos no son
 concluyentes, entonces procedo a realizar el test.
 
+b. Pruebas de normalidad a los residuos: Lillieford (mayores a 50 casos) o Shapiro-Wilks (menores a 50 casos)
+
 ```{r,  message=FALSE}
-shapiro.test(modelo1$resid)
+lillie.test(modelo1$resid)
 ```
 
 **Ojo con la hipótesis nula**. H0: Es normal (distribución normal) \|
@@ -276,7 +280,7 @@ Ha: No es normal (no hay distribución normal)
 
 Si el pvalor es menor a 0.05 entonces *NO existe normalidad de residuos*
 (problemas!), se rechazaría la distribución normal. Dado que nuestro
-p-value es 0.1378, mayor que 0.05, entonces sí estamos frente a un caso
+p-value es 0.05342, mayor que 0.05, entonces sí estamos frente a un caso
 de distribución normal de los residuos.
 
 ### **3. Homocedasticidad (el problema es la heterocedasticidad)**
@@ -293,7 +297,6 @@ heterocedasticidad.
 
 OPCIÓN 1: Exploración gráfica: diagrama de residuos standarizados y
 valores predichos.
-
 
 **Código**
 
@@ -323,8 +326,6 @@ bptest(modelo1)
 Si el pvalor es menor a 0.05 entonces el modelo es heterocedástico
 (problema! ☠️ ). Esta vez estamos frente a un modelo homocedástico
 
-
-
 ### **4. Ausencia de multicolinealidad (el problema es la presencia de multicolinealidad)**
 
 **Descripción**
@@ -347,18 +348,15 @@ no encontramos multicolinealidad.
 
 **Código**
 
-
 ```{r,warning=FALSE,message=FALSE}
 check_model(modelo1, check="vif")
 ```
 
-### 5.**Apalancamiento **
-
+### 5.**Apalancamiento**
 
 ```{r,warning=FALSE,message=FALSE}
 check_model(modelo1, check="outliers")
 ```
-
 
 ### 6.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)**
 
@@ -378,12 +376,13 @@ library(car)
 set.seed(11)
 durbinWatsonTest(modelo1,simulate = TRUE,reps = 1000)
 ```
+
 el p-value de durbinWatsonTest es 0.262 **Al ser mayor a 0.05, entonces
 podemos afirmar que los residuos son independientes** o que no están
 autocrrelacionados. El modelo **sí** pasa este supuesto.
 
-
-**Modelo 2** ¿Es posible mejorar mi modelo1? Realizamos una nueva regresión.
+**Modelo 2** ¿Es posible mejorar mi modelo1? Realizamos una nueva
+regresión.
 
 ```{r}
 names(Egov)
@@ -404,10 +403,10 @@ a.  Nos preguntamos si el modelo es válido:
     nula, lo cual probaría que nuestro modelo sí funciona. -Al tener un
     p-value de 2.2e-16 nuestro modelo sí funciona.
 
-b.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado  que
-    va de 0 a 1 (0% a 100%) -En este caso mis variables (en conjunto)
-    explican el 89.8% de la variabilidad de mi dependiente, esto es
-    bueno, pero quizá podría ser mejor.
+b.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado que va de 0 a
+    1 (0% a 100%) -En este caso mis variables (en conjunto) explican el
+    89.8% de la variabilidad de mi dependiente, esto es bueno, pero
+    quizá podría ser mejor.
 c.  ¿Las variables independientes aportan al modelo? -Nos enfocamos en
     el p-value de cada independiente -corroboramos que estas rechacen la
     hipótesis nula, es decir que sean menores que 0.05.
