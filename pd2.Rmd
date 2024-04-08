@@ -315,11 +315,8 @@ de distribución normal de los residuos.
 
 **Descripción**
 
-La homocedasticidad (también conocido como *homogeneidad en la varianza
-de los residuos*) indica que las variancias de los errores son
-constantes. Cuando no se cumple es un problema porque los estimadores no
-son consistentes ni eficientes y se presenta el caso de la
-heterocedasticidad.
+La homocedasticidad (también conocido como *homogeneidad en la varianza de los residuos*) indica que las variancias de los errores son constantes. Cuando no se cumple es un problema porque los estimadores no
+son consistentes ni eficientes y se presenta el caso de la heterocedasticidad.
 
 **Cómo detectarlo**
 
@@ -379,38 +376,36 @@ check_model(modelo1, check="vif")
 
 **Descripción**
 
-[FALTA]
+El indicador de apalancamiento muestra que tanta influencia o "palanca" pueden tener los residuos en la recta de regresión. El problema se da cuando hay puntos con mucha influencia o "leverage", ya que al afectar la línea de predicción genera que nuestro modelo sea menos confiable. 
 
 **Cómo detectarlo**
 
 a. Gráfico: Se espera que la línea verde tenga un comportamiento horizontal. Observamos si hay casos que están afuera de la línea punteada verde. 
 
-```{r,warning=FALSE,message=FALSE}
+```{r,warning=FALSE,message=FALSE message=FALSE, r,warning=FALSE}
 check_model(modelo1, check="outliers")
 ```
 
 ### 6.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)** 🚨
 
 **Descripción**
-
-[FALTA]
+Si los residuos no tienen una distribución normal (supuesto de normalidad), es probable que estos no sean independientes entre sí. Si no se cumple con este supuesto implica que el modelo tiene sesgo en su predicción debido a los patrones de error que existen. 
 
 **Cómo detectarlo**
+Previo a aplicación de la prueba Durbin-Watson debemos establecer una muestra para aplicarla. Esto debido a que de no hacerlo, y al seleccionar una muestra aleatoria cada vez, el resultado no será el mismo siempre. Podemos lograr eso con set.seed del paquete car. 
+
+La hipótesis nula de esta prueba es que no hay dependencia de residuos; por lo que para aprobar el supuesto necesitamos que el pvalue supere el 0.05. 
 
 a. Test de Durbin Watson
 
 ```{r message=FALSE, warning=FALSE}
-library(car)
 set.seed(11)
 durbinWatsonTest(modelo1,simulate = TRUE,reps = 1000)
 ```
 
-el p-value de durbinWatsonTest es 0.262 **Al ser mayor a 0.05, entonces
-podemos afirmar que los residuos son independientes** o que no están
-autocrrelacionados. El modelo **sí** pasa este supuesto.
+el p-value de durbinWatsonTest es 0.262 **Al ser mayor a 0.05, entonces podemos afirmar que los residuos son independientes** o que no están autocrrelacionados. El modelo **sí** pasa este supuesto.
 
-**Modelo 2** ¿Es posible mejorar mi modelo1? Realizamos una nueva
-regresión.
+**Modelo 2** ¿Es posible mejorar mi modelo1? Realizamos una nueva regresión.
 
 ```{r}
 names(Egov)
