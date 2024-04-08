@@ -619,6 +619,7 @@ nula, lo cual probaría que nuestro modelo sí funciona.</li>
 <li>En este caso hacemos uso del código modelo1$coefficients.</li>
 </ul></li>
 </ol>
+<p>AÑADIR GRÁFICO CON RESIDUOS (EST1)</p>
 </div>
 <div id="qué-sucede-si-agregamos-más-variables" class="section level3">
 <h3>¿Qué sucede si agregamos más variables? 👾</h3>
@@ -715,17 +716,16 @@ Capital_Humano(0.338730284)+….</li>
 </div>
 <div id="supuestos" class="section level1">
 <h1><strong>SUPUESTOS</strong></h1>
-<div id="importancia" class="section level2">
-<h2>Importancia</h2>
-<p>[FALTA] Las inferencias del modelo de regresión será
-confiable/correcta solamente si se cumplen los supuestos.</p>
-<p>[FALTA actualizar tablas]
-<img src="PD2_SUP.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Las inferencias del modelo de regresión será confiable/correcta
+solamente si se cumplen los supuestos.</p>
+<p>♦️ Tabla resumen 1</p>
+<p><img src="PD2_SUP.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>♦️ Tabla resumen 2</p>
 <p><img src="PD2_SUP2.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="linealidad-el-problema-es-la-no-linealidad"
 class="section level3">
-<h3><strong>1- Linealidad (el problema es la no
-linealidad)</strong></h3>
+<h3><strong>1- Linealidad</strong> (el problema es la no
+linealidad)</h3>
 <p>Como su nombre lo dice, debe de existir una linealidad entre la
 variable independiente y dependiente, en otras palabras,la linealidad
 indica que el valor esperado de la variable dependiente es una
@@ -803,8 +803,8 @@ entre las variables.</p>
 </div>
 <div id="normalidad-de-residuos-el-problema-es-la-no-normalidad"
 class="section level3">
-<h3><strong>2. Normalidad de residuos (el problema es la NO
-normalidad)</strong></h3>
+<h3><strong>2. Normalidad de residuos</strong> (el problema es la NO
+normalidad)</h3>
 <p><strong>Descripción</strong></p>
 <p>Identificar si los errores siguen una distribución normal. La resta
 del valor observado menos el valor pronosticado (residuos) siguen una
@@ -819,8 +819,9 @@ se podrían aplicar las pruebas globales del modelo.</p>
 <span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;qq&quot;</span>) <span class="co">#quantile-quantile plot</span></span></code></pre></div>
 <p><img src="pd2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: lower-alpha">
-<li>Pruebas de normalidad a los residuos: Lilliefors (mayores a 50
-casos) o Shapiro-Wilks (menores a 50 casos)</li>
+<li>Pruebas de normalidad a los residuos: Lilliefors
+(kolmogorov-Smirnov) [mayores a 50 casos] o Shapiro-Wilks [menores a 50
+casos]</li>
 </ol>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">lillie.test</span>(modelo1<span class="sc">$</span>resid)</span></code></pre></div>
 <pre><code>## 
@@ -832,14 +833,14 @@ casos) o Shapiro-Wilks (menores a 50 casos)</li>
 (distribución normal) | Ha: No es normal (no hay distribución
 normal)</p>
 <p>Si el pvalor es menor a 0.05 entonces <em>NO existe normalidad de
-residuos</em> (problemas!), se rechazaría la distribución normal. Dado
-que nuestro p-value es 0.05342, mayor que 0.05, entonces sí estamos
+residuos</em> (problemas! ☠️), se rechazaría la distribución normal.
+Dado que nuestro p-value es 0.05342, mayor que 0.05, entonces sí estamos
 frente a un caso de distribución normal de los residuos.</p>
 </div>
 <div id="homocedasticidad-el-problema-es-la-heterocedasticidad"
 class="section level3">
-<h3><strong>3. Homocedasticidad (el problema es la
-heterocedasticidad)</strong></h3>
+<h3><strong>3. Homocedasticidad</strong> (el problema es la
+heterocedasticidad)</h3>
 <p><strong>Descripción</strong></p>
 <p>La homocedasticidad (también conocido como <em>homogeneidad en la
 varianza de los residuos</em>) indica que las variancias de los errores
@@ -879,8 +880,8 @@ combinación lineal de predictores.</li>
 <div
 id="ausencia-de-multicolinealidad-el-problema-es-la-presencia-de-multicolinealidad"
 class="section level3">
-<h3><strong>4. Ausencia de multicolinealidad (el problema es la
-presencia de multicolinealidad)</strong></h3>
+<h3><strong>4. Ausencia de multicolinealidad</strong> (el problema es la
+presencia de multicolinealidad)</h3>
 <p><strong>Descripción</strong></p>
 <p>Se aplica en la regresión lineal MÚLTIPLE. Significa que las
 variables explicativas están relacionadas linealmente entre sí. La
@@ -905,7 +906,11 @@ resultados no encontramos multicolinealidad.</li>
 <div id="apalancamiento" class="section level3">
 <h3>5.<strong>Apalancamiento</strong></h3>
 <p><strong>Descripción</strong></p>
-<p>[FALTA]</p>
+<p>El indicador de apalancamiento muestra que tanta influencia o
+“palanca” pueden tener los residuos en la recta de regresión. El
+problema se da cuando hay puntos con mucha influencia o
+“<em>leverage</em>”, ya que al afectar la línea de predicción genera que
+nuestro modelo sea menos confiable.</p>
 <p><strong>Cómo detectarlo</strong></p>
 <ol style="list-style-type: lower-alpha">
 <li>Gráfico: Se espera que la línea verde tenga un comportamiento
@@ -918,26 +923,38 @@ punteada verde.</li>
 <div
 id="independencia-de-residuos-el-problema-es-que-existe-autocorrelación-en-los-residuos"
 class="section level3">
-<h3>6.- <strong>Independencia de residuos (el problema es que existe
-autocorrelación en los residuos)</strong> 🚨</h3>
-<p><strong>Descripción</strong></p>
-<p>[FALTA]</p>
-<p><strong>Cómo detectarlo</strong></p>
+<h3>6.- <strong>Independencia de residuos</strong> (el problema es que
+existe autocorrelación en los residuos) 🚨</h3>
+<p><strong>Descripción</strong> Si los residuos no tienen una
+distribución normal (supuesto de normalidad), es probable que estos no
+sean independientes entre sí. Si no se cumple con este supuesto implica
+que el modelo tiene sesgo en su predicción debido a los patrones de
+error que existen.</p>
+<p><strong>Cómo detectarlo</strong> Previo a aplicación de la prueba
+Durbin-Watson debemos establecer una muestra para aplicarla. Esto debido
+a que de no hacerlo, y al seleccionar una muestra aleatoria cada vez, el
+resultado no será el mismo siempre. Podemos lograr eso con
+<code>set.seed</code> del paquete <code>car</code>.</p>
+<p>La hipótesis nula de esta prueba es que no hay dependencia de
+residuos; por lo que para aprobar el supuesto necesitamos que el pvalue
+supere el 0.05.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Test de Durbin Watson</li>
 </ol>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(modelo1,<span class="at">simulate =</span> <span class="cn">TRUE</span>,<span class="at">reps =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(modelo1,<span class="at">simulate =</span> <span class="cn">TRUE</span>,<span class="at">reps =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <pre><code>##  lag Autocorrelation D-W Statistic p-value
 ##    1      0.09614045      1.805361   0.262
 ##  Alternative hypothesis: rho != 0</code></pre>
-<p>el p-value de durbinWatsonTest es 0.262 <strong>Al ser mayor a 0.05,
-entonces podemos afirmar que los residuos son independientes</strong> o
-que no están autocrrelacionados. El modelo <strong>sí</strong> pasa este
-supuesto.</p>
-<p><strong>Modelo 2</strong> ¿Es posible mejorar mi modelo1? Realizamos
-una nueva regresión.</p>
+<p>el p-value de <code>durbinWatsonTest</code> es 0.262 <strong>Al ser
+mayor a 0.05, entonces podemos afirmar que los residuos son
+independientes</strong> o que no están autocrrelacionados. El modelo
+<strong>sí</strong> pasa este supuesto.</p>
+</div>
+</div>
+<div id="modelo-2-es-posible-mejorar-mi-modelo1" class="section level1">
+<h1><strong>Modelo 2:</strong> ¿Es posible mejorar mi modelo1?</h1>
+<p>Realizamos una nueva regresión.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">names</span>(Egov)</span></code></pre></div>
 <pre><code>## [1] &quot;pais&quot;                             &quot;participaciónDigital&quot;            
 ## [3] &quot;Servicios_Online&quot;                 &quot;Capital_Humano&quot;                  
@@ -993,8 +1010,6 @@ de que es un modelo válido, optaría por mantener mi modelo1.
 <strong>Ojo, solo basándome en esta primera evaluación del modelo. Una
 decisión más fina sería al realizar mis pruebas de supuestos
 completa.</strong></p>
-</div>
-</div>
 </div>
 
 

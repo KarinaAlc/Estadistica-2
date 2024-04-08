@@ -213,22 +213,22 @@ modelo1$coefficients
 
 # **SUPUESTOS**
 
-## Importancia 
-[FALTA]
 Las inferencias del modelo de regresión será confiable/correcta
 solamente si se cumplen los supuestos.
 
+♦️ Tabla resumen 1
 
-[FALTA actualizar tablas]
 ```{r,echo=FALSE, out.width="70%",fig.align="center"}
 knitr::include_graphics("PD2_SUP.png") 
 ```
+
+♦️ Tabla resumen 2
 
 ```{r,echo=FALSE, out.width="70%",fig.align="center"}
 knitr::include_graphics("PD2_SUP2.png") 
 ```
 
-### **1- Linealidad (el problema es la no linealidad)**
+### **1- Linealidad** (el problema es la no linealidad)
 
 Como su nombre lo dice, debe de existir una linealidad entre la variable
 independiente y dependiente, en otras palabras,la linealidad indica que
@@ -245,7 +245,6 @@ de una relación no lineal [*polinomial, logística, logaritmicos*].
 
 a.  Exploración gráfica: Plot de valores residuales frente a valores
     predichos.
-
 
 La línea verde debería de estar lo más cercana a la línea punteada.
 
@@ -275,7 +274,7 @@ cor.test(Egov$accesoInformacion , Egov$Telecommunicacion_Infrastructura )
 cor.test(Egov$accesoInformacion,Egov$ProcesoElectoral)
 ```
 
-### **2. Normalidad de residuos (el problema es la NO normalidad)**
+### **2. Normalidad de residuos** (el problema es la NO normalidad)
 
 **Descripción**
 
@@ -295,9 +294,9 @@ Todos los puntos deberían estar sobre la diagonal color verde.
 check_model(modelo1,check ="qq") #quantile-quantile plot
 ```
 
-
-b.  Pruebas de normalidad a los residuos: Lilliefors (kolmogorov-Smirnov) [mayores a 50
-    casos] o Shapiro-Wilks [menores a 50 casos]
+b.  Pruebas de normalidad a los residuos: Lilliefors
+    (kolmogorov-Smirnov) [mayores a 50 casos] o Shapiro-Wilks [menores a
+    50 casos]
 
 ```{r,  message=FALSE}
 lillie.test(modelo1$resid)
@@ -307,21 +306,24 @@ lillie.test(modelo1$resid)
 Ha: No es normal (no hay distribución normal)
 
 Si el pvalor es menor a 0.05 entonces *NO existe normalidad de residuos*
-(problemas!), se rechazaría la distribución normal. Dado que nuestro
+(problemas! ☠️), se rechazaría la distribución normal. Dado que nuestro
 p-value es 0.05342, mayor que 0.05, entonces sí estamos frente a un caso
 de distribución normal de los residuos.
 
-### **3. Homocedasticidad (el problema es la heterocedasticidad)**
+### **3. Homocedasticidad** (el problema es la heterocedasticidad)
 
 **Descripción**
 
-La homocedasticidad (también conocido como *homogeneidad en la varianza de los residuos*) indica que las variancias de los errores son constantes. Cuando no se cumple es un problema porque los estimadores no
-son consistentes ni eficientes y se presenta el caso de la heterocedasticidad.
+La homocedasticidad (también conocido como *homogeneidad en la varianza
+de los residuos*) indica que las variancias de los errores son
+constantes. Cuando no se cumple es un problema porque los estimadores no
+son consistentes ni eficientes y se presenta el caso de la
+heterocedasticidad.
 
 **Cómo detectarlo**
 
-a. Exploración gráfica: diagrama de residuos standarizados y
-valores predichos.
+a.  Exploración gráfica: diagrama de residuos standarizados y valores
+    predichos.
 
 ```{r, message=FALSE}
 check_model(modelo1, check="homogeneity")
@@ -332,11 +334,12 @@ representaría que la distribución de los puntos son uniformes. Al ver
 nuestro gráfico nos damos cuenta que la línea verde va hacia arriba, lo
 cual nos dice que el gráfico no es concluyente aún.
 
-b.  Test Breusch Pagan: También llamado como el Score Test for Non-Constant Error Variance. Evalúa si la varianza del error cambia con
-el nivel de la variable respuesta (valores ajustados) o con una
-combinación lineal de predictores.
+b.  Test Breusch Pagan: También llamado como el Score Test for
+    Non-Constant Error Variance. Evalúa si la varianza del error cambia
+    con el nivel de la variable respuesta (valores ajustados) o con una
+    combinación lineal de predictores.
 
-```{r message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 bptest(modelo1)
 ```
 
@@ -346,7 +349,7 @@ bptest(modelo1)
 Si el pvalor es menor a 0.05 entonces el modelo es heterocedástico
 (problema! ☠️ ). Esta vez estamos frente a un modelo homocedástico
 
-### **4. Ausencia de multicolinealidad (el problema es la presencia de multicolinealidad)**
+### **4. Ausencia de multicolinealidad** (el problema es la presencia de multicolinealidad)
 
 **Descripción**
 
@@ -360,9 +363,9 @@ inestable.
 
 **Cómo detectarlo**
 
-a. Con el Factor de Inflación de Varianza (VIF). los factores de inflación
-de varianza deben de ser menores de 5. De acuerdo a nuestros resultados
-no encontramos multicolinealidad.
+a.  Con el Factor de Inflación de Varianza (VIF). los factores de
+    inflación de varianza deben de ser menores de 5. De acuerdo a
+    nuestros resultados no encontramos multicolinealidad.
 
 -   Mayor a 10, grave problema de multicolinealidad.
 
@@ -376,36 +379,52 @@ check_model(modelo1, check="vif")
 
 **Descripción**
 
-El indicador de apalancamiento muestra que tanta influencia o "palanca" pueden tener los residuos en la recta de regresión. El problema se da cuando hay puntos con mucha influencia o "leverage", ya que al afectar la línea de predicción genera que nuestro modelo sea menos confiable. 
+El indicador de apalancamiento muestra que tanta influencia o "palanca"
+pueden tener los residuos en la recta de regresión. El problema se da
+cuando hay puntos con mucha influencia o "*leverage*", ya que al afectar
+la línea de predicción genera que nuestro modelo sea menos confiable.
 
 **Cómo detectarlo**
 
-a. Gráfico: Se espera que la línea verde tenga un comportamiento horizontal. Observamos si hay casos que están afuera de la línea punteada verde. 
+a.  Gráfico: Se espera que la línea verde tenga un comportamiento
+    horizontal. Observamos si hay casos que están afuera de la línea
+    punteada verde.
 
-```{r,warning=FALSE,message=FALSE message=FALSE, r,warning=FALSE}
+```{r,warning=FALSE,message=FALSE ,warning=FALSE}
 check_model(modelo1, check="outliers")
 ```
 
-### 6.- **Independencia de residuos (el problema es que existe autocorrelación en los residuos)** 🚨
+### 6.- **Independencia de residuos** (el problema es que existe autocorrelación en los residuos) 🚨
 
-**Descripción**
-Si los residuos no tienen una distribución normal (supuesto de normalidad), es probable que estos no sean independientes entre sí. Si no se cumple con este supuesto implica que el modelo tiene sesgo en su predicción debido a los patrones de error que existen. 
+**Descripción** Si los residuos no tienen una distribución normal
+(supuesto de normalidad), es probable que estos no sean independientes
+entre sí. Si no se cumple con este supuesto implica que el modelo tiene
+sesgo en su predicción debido a los patrones de error que existen.
 
-**Cómo detectarlo**
-Previo a aplicación de la prueba Durbin-Watson debemos establecer una muestra para aplicarla. Esto debido a que de no hacerlo, y al seleccionar una muestra aleatoria cada vez, el resultado no será el mismo siempre. Podemos lograr eso con set.seed del paquete car. 
+**Cómo detectarlo** Previo a aplicación de la prueba Durbin-Watson
+debemos establecer una muestra para aplicarla. Esto debido a que de no
+hacerlo, y al seleccionar una muestra aleatoria cada vez, el resultado
+no será el mismo siempre. Podemos lograr eso con `set.seed` del paquete
+`car`.
 
-La hipótesis nula de esta prueba es que no hay dependencia de residuos; por lo que para aprobar el supuesto necesitamos que el pvalue supere el 0.05. 
+La hipótesis nula de esta prueba es que no hay dependencia de residuos;
+por lo que para aprobar el supuesto necesitamos que el pvalue supere el
+0.05.
 
-a. Test de Durbin Watson
+a.  Test de Durbin Watson
 
-```{r message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 set.seed(11)
 durbinWatsonTest(modelo1,simulate = TRUE,reps = 1000)
 ```
 
-el p-value de durbinWatsonTest es 0.262 **Al ser mayor a 0.05, entonces podemos afirmar que los residuos son independientes** o que no están autocrrelacionados. El modelo **sí** pasa este supuesto.
+el p-value de `durbinWatsonTest` es 0.262 **Al ser mayor a 0.05,
+entonces podemos afirmar que los residuos son independientes** o que no
+están autocrrelacionados. El modelo **sí** pasa este supuesto.
 
-**Modelo 2** ¿Es posible mejorar mi modelo1? Realizamos una nueva regresión.
+# **Modelo 2:** ¿Es posible mejorar mi modelo1? 
+
+Realizamos una nueva regresión.
 
 ```{r}
 names(Egov)
