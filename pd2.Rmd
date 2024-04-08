@@ -213,8 +213,25 @@ modelo1$coefficients
 
 # **SUPUESTOS**
 
-Las inferencias del modelo de regresión será confiable/correcta
-solamente si se cumplen los supuestos.
+-   Se analizan los residuos
+-   Las inferencias del modelo de regresión será confiable/correcta
+    solamente si se cumplen *todos* los supuestos.
+
+Creamos un gráfico a partir del modelo1 para ejemplificar los residuos
+👩‍🔬
+
+```{r,message=FALSE, warning=FALSE}
+Egov %>%
+ggplot(aes(x = participaciónDigital, y = accesoInformacion)) +
+  geom_point(aes(color = "Datos Originales"), size = 2) +  #Datos originales 
+  geom_smooth(method = "lm", aes(color = "Línea del Modelo"), se = FALSE) +  #La línea de regresión
+  geom_segment(aes(xend = participaciónDigital, yend = fitted(modeloRL)), alpha = 0.2) +  # Líneas de residuos
+  scale_color_manual(name = "", values = c("Datos Originales" = "skyblue", "Línea del Modelo" = "green")) +
+  labs(title = "Análisis de residuos de modelo1",
+       x = "Participación Digital", y = "Acceso a la Información") +
+  theme_minimal()
+
+```
 
 ♦️ Tabla resumen 1
 
@@ -422,7 +439,7 @@ el p-value de `durbinWatsonTest` es 0.262 **Al ser mayor a 0.05,
 entonces podemos afirmar que los residuos son independientes** o que no
 están autocrrelacionados. El modelo **sí** pasa este supuesto.
 
-# **Modelo 2:** ¿Es posible mejorar mi modelo1? 
+# **Modelo 2:** ¿Es posible mejorar mi modelo1?
 
 Realizamos una nueva regresión.
 
