@@ -26,7 +26,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2 <br>
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1 <br>
 
 ### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
@@ -152,7 +152,6 @@ Algunos detalles:
 4.  **Identificamos los coeficientes**
     -   En este caso hacemos uso del código modelo1\$coefficients.
 
-AÑADIR GRÁFICO CON RESIDUOS (EST1)
 
 ### ¿Qué sucede si agregamos más variables? 👾
 
