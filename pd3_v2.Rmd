@@ -210,11 +210,11 @@ avg_slopes(modelo2)
 
 Interpretemos **(Ojo: las variables aparecen en orden alfabético)**
 
--   Si el docente ha tenido o tiene cáncer, la probabilidad de que quiera retornar a clases presenciales disminuye, en promedio, en 0.1134 o en 11.34%
+-   Si el docente ha tenido o tiene cáncer, la probabilidad de que quiera retornar a clases presenciales disminuye, en promedio, en 0.1038 o en 10.38%
 
--   Si el docente ha tenido o tiene depresión, la probabilidad de que quiera retornar a clases presenciales disminuye, en promedio, en 0.0328 o en 3.28%
+-   Si el docente ha tenido o tiene depresión, la probabilidad de que quiera retornar a clases presenciales disminuye, en promedio, en 0.0221 o en 2.21%
 
--   Si el docente vive con personas de la tercera edad, la probabilidad de que quiera retornar a clases presenciales disminuye, en promedio, en 0.0478 o en 4.78%
+-   Si el docente vive con personas de la tercera edad, la probabilidad de que quiera retornar a clases presenciales disminuye, en promedio, en 0.0307 o en 3.07%
 
 #### Si queremos calcular datos determinados
 
