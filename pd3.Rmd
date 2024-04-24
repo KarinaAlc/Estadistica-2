@@ -28,7 +28,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1
 
 <br>
 
@@ -37,8 +37,6 @@ knitr::include_graphics("logoPUCP.png")
 <br>
 
 ### **SESIÓN 3 - Regresión Logística Binaria** <br>
-
-Repasito
 
 ```{r,echo=FALSE, out.width="100%",fig.align="center"}
 knitr::include_graphics("PD3_Conceptos.png") 
