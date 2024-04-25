@@ -159,8 +159,8 @@ data=as.data.frame(data[complete.cases(data),])
 
 ```{r,  echo = T, fig.show='hide'}
 table(data$Retorno)
-data$Retorno=as.factor(data$Retorno)
-levels(data$Retorno) = c("No", "Si")
+data$Retorno <- as.factor(data$Retorno)
+levels(data$Retorno)  <-  c("No", "Si")
 table(data$Retorno) #confirmo el nuevo formato de la variable
 ```
 
@@ -172,15 +172,15 @@ Ya teniendo lista la variable depediente vamos a realizar unos cuantos modelos y
 -   VI: El docente vive con personas de la tercera edad terEd
 
 ```{r}
-data$terEd=ifelse(data$terEd == "1", "1","0") 
-data$terEd=as.numeric(data$terEd)  
+data$terEd <- ifelse(data$terEd == "1", "1","0") 
+data$terEd <- as.numeric(data$terEd)  
 table(data$terEd)
 ```
 
 Creemos nuestro modelo (función glm). Recuerda que lo que se está modelando es el `logaritmo del odds (p/1-p)`.
 
 ```{r}
-modelo1 = glm(Retorno ~ terEd,family= binomial,data)
+modelo1 <- glm(Retorno ~ terEd,family= binomial,data)
 summary(modelo1)
 ```
 
