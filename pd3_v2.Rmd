@@ -97,7 +97,7 @@ Esta base de datos es del 2020, es decir, que hay que tomar en cuenta que se rea
 library(rio)
 library(dplyr)
 library(marginaleffects)
-endo=import("ENDO1.sav")
+endo<-import("ENDO1.sav")
 ```
 
 Estas son las variables que usaremos:
@@ -135,7 +135,7 @@ Durante el año 2020
 Selección de variables a usar
 
 ```{r, echo = T}
-data =endo%>% 
+data <-endo%>% 
        select( P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G,P1_11_H, P1_11_L, P1_18)
 ```
 
@@ -235,7 +235,7 @@ Agreguemos más variables:
 Queremos saber si estas variables influyen en la probabilidad de que el docente quiera retornar o no a clases presenciales
 
 ```{r}
-modelo2 = glm(Retorno ~ terEd+cancer+dep, family = binomial(link=logit),data = data)
+modelo2 <- glm(Retorno ~ terEd+cancer+dep, family = binomial(link=logit),data = data)
 summary(modelo2)
 ```
 
@@ -258,7 +258,7 @@ Interpretemos **(Ojo: las variables aparecen en orden alfabético)**
 Ejemplo 1: Si el docente no vive con personas de la tercera edad, tiene cancer y tiene depresión
 
 ```{r}
-log.odds1 = predict(modelo2, data.frame(terEd = 0, cancer = 1, dep = 1))
+log.odds1<-predict(modelo2, data.frame(terEd = 0, cancer = 1, dep = 1))
 
 exp(log.odds1)/(1+exp(log.odds1))#lo pasamos a probabilidades
 ```
@@ -268,7 +268,7 @@ La **probabilidad** estimada de que quiera retornara a clases presenciales es de
 Ejemplo 2: Si el docente **no** vive con personas de la tercera edad, no tiene cancer y tiene depresión
 
 ```{r}
-log.odds2 = predict(modelo2, data.frame(terEd = 0, cancer = 0, dep = 1))
+log.odds2<-predict(modelo2, data.frame(terEd = 0, cancer = 0, dep = 1))
 exp(log.odds2)/(1+exp(log.odds2)) #lo pasamos a probabilidades
 ```
 
@@ -279,7 +279,7 @@ La probabilidad de que quiera retornara a clases presenciales es de 0.91
 Nuestras explicativas serán si la persona vive o no con personas de la tercera edad, tiene o ha tenido ansiedad y la variable edad.
 
 ```{r}
-modelo3 = glm(Retorno ~ terEd+anx+edad, family = binomial, data = data)
+modelo3<-glm(Retorno ~ terEd+anx+edad, family = binomial, data = data)
 summary(modelo3)
 ```
 
@@ -302,7 +302,7 @@ Ahora obtengamos la probabilidad de que quieran retornar a clases presenciales s
 ¿Qué sucede cuando el docente NO vive con personas de tercera edad (es 0), ha tenido o tiene ansiedad (es 1) y su edad es de 50 años?
 
 ```{r}
-log.odds3 = predict(modelo3, data.frame(terEd = 0, anx = 1, edad = 50))
+log.odds3<-predict(modelo3, data.frame(terEd = 0, anx = 1, edad = 50))
 exp(log.odds3)/(1+exp(log.odds3)) #para pasarlo a probabilidad
 ```
 
@@ -311,7 +311,7 @@ Cuando un o una docente vive con personas de tercera edad, tiene ansiedad y teng
 Ahora obtengamos la probabilidad con menos edad.
 
 ```{r}
-log.odds4 = predict(modelo3, data.frame(terEd = 0, anx = 1, edad = 25))
+log.odds4<-predict(modelo3, data.frame(terEd = 0, anx = 1, edad = 25))
 exp(log.odds4)/(1+exp(log.odds4))
 ```
 
