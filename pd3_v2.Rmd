@@ -1,21 +1,21 @@
 ---
 title: "Sesión 3"
 output:
+  pdf_document:
+    latex_engine: lualatex
+    toc: yes
+    toc_depth: '1'
+  fontfamily: "Apple Color Emoji"
   html_document:
     toc: yes
     toc_float: yes
     collapsed: no
     number_sections: no
-    toc_depth: 1
+    toc_depth: 3
     theme: simplex
     highlight: kate
     always_allow_html: yes
     code_folding: show
-  fontfamily: "Apple Color Emoji"
-  pdf_document:
-    latex_engine: lualatex
-    toc: yes
-    toc_depth: '1'
 ---
 
 <br>
@@ -28,7 +28,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024- 1
 
 <br>
 
@@ -38,7 +38,9 @@ knitr::include_graphics("logoPUCP.png")
 
 ### **SESIÓN 3 - Regresión Logística Binaria** <br>
 
-Repasito
+
+
+<br> <br> <br>
 
 ```{r,echo=FALSE, out.width="100%",fig.align="center"}
 knitr::include_graphics("PD3_Conceptos.png") 
@@ -52,7 +54,36 @@ knitr::include_graphics("PD3_Ejemplo1.png")
 
 <br> <br> <br>
 
+```{r,echo=FALSE, out.width="100%",fig.align="center"}
+knitr::include_graphics("PD3_ejemplo2.png") 
+```
+
+<br> <br> <br>
+
+```{r,echo=FALSE, out.width="100%",fig.align="center"}
+knitr::include_graphics("PD3_EJEMPLO3.png") 
+```
+
+<br> <br> <br>
+
 # Modelo logístico binario
+
+
+```{=html}
+<style>
+.custom-text {
+  color: #00688B;
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+}
+</style>
+```
+::: custom-text
+¿Qué factores pueden influenciar el que un docente quiera retornar a clases presenciales? 🤔
+:::
+
 
 La base que usaremos hoy es la Encuesta Nacional a Docentes de Instituciones Educativas Públicas de Educación Básica Regular
 
@@ -62,7 +93,7 @@ knitr::include_graphics("endo.png")
 
 Esta base de datos es del 2020, es decir, que hay que tomar en cuenta que se realizó en contexto de la pandemia. Entonces, hay diversas variables. Con respecto al cuidado de parientes, qué enfermedades ha tenido, satisfacción sobre temas personales o de la misma institución educativa.
 
-```{r, echo = T, results = 'hide',  fig.show='hide'}
+```{r, echo = T, results = 'hide',  fig.show='hide',message=FALSE,warning=FALSE}
 library(rio)
 library(dplyr)
 library(marginaleffects)
@@ -83,6 +114,8 @@ Estas son las variables que usaremos:
 
 -   **P1_5**: En su hogar, ¿vive Ud. con personas que están en el grupo de riesgo ante COVID-19 por enfermedades preexistente
 
+<br>
+
 Durante el año 2020
 
 -   **P1_11_B**: ¿sufrió o sufre enfermedades respiratorias?
@@ -97,6 +130,10 @@ Durante el año 2020
 
 -   **P1_18**: ¿En este momento se encuentra pagando algún préstamo o crédito?
 
+## Limpieza de data
+
+Selección de variables a usar
+
 ```{r, echo = T}
 data =endo%>% 
        select( P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G,P1_11_H, P1_11_L, P1_18)
@@ -108,25 +145,23 @@ Tenemos variable de sexo, edad, si es que es area rural o urbana. También si es
 names(data)
 ```
 
+Cambiamos los nombres para que sea más fácil identificar las variables
+
 ```{r}
-colnames(data)=c("P2_2" ,  "satIE","edad"  ,  "terEd" ,   "riesCov",  "resp","anx", "dep", "cancer", "cov","cred")
+colnames(data)=c("Retorno" ,  "satIE","edad"  ,  "terEd" ,   "riesCov",  "resp","anx", "dep", "cancer", "cov","cred")
 ```
 
 ```{r}
 data=as.data.frame(data[complete.cases(data),])
 ```
 
-Vamos a realizar diferentes modelos para calentar motores y volvernos expertas y expertos en la intrepretación de coeficientes.
-
-Lo que queremos hacer es ver **qué factores pueden influenciar en que un docente quiera retornar a clases presenciales**
-
-**VARIABLE DEPENDIENTE: P2_2 Retorno a clases**
+**VARIABLE DEPENDIENTE: `Retorno`**
 
 ```{r,  echo = T, fig.show='hide'}
-table(data$P2_2)
-data$retorno=as.factor(data$P2_2)
-levels(data$retorno) = c("No", "Si")
-table(data$retorno) #confirmo el nuevo formato de la variable
+table(data$Retorno)
+data$Retorno=as.factor(data$Retorno)
+levels(data$Retorno) = c("No", "Si")
+table(data$Retorno) #confirmo el nuevo formato de la variable
 ```
 
 Ya teniendo lista la variable depediente vamos a realizar unos cuantos modelos y analizar el odds y la probabilidad.
@@ -142,10 +177,10 @@ data$terEd=as.numeric(data$terEd)
 table(data$terEd)
 ```
 
-Creemos nuestro modelo (función glm). Recuerda que lo que se está modelando es el logaritmo del odds (p/1-p).
+Creemos nuestro modelo (función glm). Recuerda que lo que se está modelando es el `logaritmo del odds (p/1-p)`.
 
 ```{r}
-modelo1 = glm(retorno ~ terEd,family= binomial,data)
+modelo1 = glm(Retorno ~ terEd,family= binomial,data)
 summary(modelo1)
 ```
 
@@ -153,26 +188,28 @@ Recordemos que
 
 -   *Los coefficientes obtenidos en esta regresión logística son el logaritmo natural de odds*
 
-Es importante revisar el **signo** del coeficiente, ya que dependiendo de eso procederemos a interpretar. En este caso, el coeficiente es negativo; es decir, *la relación es inversa.* La interpretación de la probabilidad tendrá la siguiente forma: cuando la VI aumenta o es 1 (para dicotómicas), la probabilidad de que la VD sea 1 (se de el caso de éxito) disminuye en ...
+Es importante revisar el **signo** del coeficiente, ya que dependiendo de eso procederemos a interpretar. En este caso, el coeficiente es negativo; es decir, *la relación es inversa.* La interpretación de la probabilidad tendrá la siguiente forma:
 
-Ejemplo para VI numérica (edad)
+> "cuando la VI aumenta o es 1 (para dicotómicas), la probabilidad de que la VD sea 1 (sea del caso de éxito) en promedio disminuye en [resultado de avg_slopes]..."
 
--   Cuando la edad **aumenta** en 1 año, la probabilidad de que la persona quiera emigrar a Europa **disminuye** en 20.5%.
+[**Ejemplo** para VI numérica (edad)]{.smallcaps}
 
-Ejemplo para VI dicotómica:
+-   [Cuando la edad **aumenta** en 1 año, la probabilidad de que la persona quiera emigrar a Europa **disminuye** en 20.5%.]{.smallcaps}
 
--   Cuando la persona **sí** tiene hijos **(es 1)** , la probabilidad de que la persona quiera emigrar a Europa disminuye en 31.3%
+[Ejemplo para VI dicotómica:]{.smallcaps}
 
-Apliquémoslo en nuestro modelo:
+-   [Cuando la persona **sí** tiene hijos **(es 1)** , la probabilidad de que la persona quiera emigrar a Europa disminuye en 31.3%]{.smallcaps}
+
+Ahora en el modelo1:
 
 ```{r}
-avg_slopes(modelo1)
+avg_slopes(modelo1)[,c(1,3)]
 
 ```
 
 Identificamos que la variación en la probabilidad es de -0.0309; es decir, disminuye un 3.09%. Esto quiere decir que cuando una persona sí vive con personas de tercera edad (es 1), la probabilidad de que quiera retornar a clases disminuye en un 0.0309 o en 3.09% (en promedio).
 
-¿De donde sale este valor?
+¿De donde sale este valor? 😼
 
 ```{r, eval = T}
 head(modelo1$fitted.values,10)
@@ -198,14 +235,14 @@ Agreguemos más variables:
 Queremos saber si estas variables influyen en la probabilidad de que el docente quiera retornar o no a clases presenciales
 
 ```{r}
-modelo2 = glm(retorno ~ terEd+cancer+dep, family = binomial(link=logit),data = data)
+modelo2 = glm(Retorno ~ terEd+cancer+dep, family = binomial(link=logit),data = data)
 summary(modelo2)
 ```
 
 Ojo, los tres coeficientes son negativos. Calculemos la probabilidad de que los docentes quieran retornar a las clases presenciales.
 
 ```{r}
-avg_slopes(modelo2)
+avg_slopes(modelo2)[,c(1,3)]
 ```
 
 Interpretemos **(Ojo: las variables aparecen en orden alfabético)**
@@ -223,12 +260,12 @@ Ejemplo 1: Si el docente no vive con personas de la tercera edad, tiene cancer y
 ```{r}
 log.odds1 = predict(modelo2, data.frame(terEd = 0, cancer = 1, dep = 1))
 
-exp(log.odds1)/(1+exp(log.odds1))
+exp(log.odds1)/(1+exp(log.odds1))#lo pasamos a probabilidades
 ```
 
-La probabilidad estimada de que quiera retornara a clases presenciales es de 0.80
+La **probabilidad** estimada de que quiera retornara a clases presenciales es de 0.80
 
-Ejemplo 2: Si el docente no vive con personas de la tercera edad, no tiene cancer y tiene depresión
+Ejemplo 2: Si el docente **no** vive con personas de la tercera edad, no tiene cancer y tiene depresión
 
 ```{r}
 log.odds2 = predict(modelo2, data.frame(terEd = 0, cancer = 0, dep = 1))
@@ -242,7 +279,7 @@ La probabilidad de que quiera retornara a clases presenciales es de 0.91
 Nuestras explicativas serán si la persona vive o no con personas de la tercera edad, tiene o ha tenido ansiedad y la variable edad.
 
 ```{r}
-modelo3 = glm(retorno ~ terEd+anx+edad, family = binomial, data = data)
+modelo3 = glm(Retorno ~ terEd+anx+edad, family = binomial, data = data)
 summary(modelo3)
 ```
 

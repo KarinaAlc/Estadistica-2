@@ -13,7 +13,7 @@
 
 <title>Sesión 3</title>
 
-<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -477,10 +477,10 @@ div.tocify {
 <div id="facultad-de-ciencias-sociales---pucp" class="section level2">
 <h2><strong>FACULTAD DE CIENCIAS SOCIALES - PUCP</strong> <br></h2>
 <div
-id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2023---2"
+id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2024--1"
 class="section level3">
 <h3>Curso: POL 304 - Estadística para el análisis político 2 | Semestre
-2023 - 2</h3>
+2024- 1</h3>
 <p><br></p>
 <div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
 class="section level4">
@@ -490,15 +490,32 @@ class="section level4">
 </div>
 <div id="sesión-3---regresión-logística-binaria" class="section level3">
 <h3><strong>SESIÓN 3 - Regresión Logística Binaria</strong> <br></h3>
-<p>Repasito</p>
+<p><br> <br> <br></p>
 <p><img src="PD3_Conceptos.png" width="100%" style="display: block; margin: auto;" /></p>
 <p><br> <br> <br></p>
 <p><img src="PD3_Ejemplo1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><br> <br> <br></p>
+<p><img src="PD3_ejemplo2.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><br> <br> <br></p>
+<p><img src="PD3_EJEMPLO3.png" width="100%" style="display: block; margin: auto;" /></p>
 <p><br> <br> <br></p>
 </div>
 </div>
 <div id="modelo-logístico-binario" class="section level1">
 <h1>Modelo logístico binario</h1>
+<style>
+.custom-text {
+  color: #00688B;
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+}
+</style>
+<div class="custom-text">
+<p>¿Qué factores pueden influenciar el que un docente quiera retornar a
+clases presenciales? 🤔</p>
+</div>
 <p>La base que usaremos hoy es la Encuesta Nacional a Docentes de
 Instituciones Educativas Públicas de Educación Básica Regular</p>
 <p><img src="endo.png" width="30%" style="display: block; margin: auto;" /></p>
@@ -508,18 +525,9 @@ variables. Con respecto al cuidado de parientes, qué enfermedades ha
 tenido, satisfacción sobre temas personales o de la misma institución
 educativa.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span></code></pre></div>
-<pre><code>## Warning: package &#39;marginaleffects&#39; was built under R version 4.2.3</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>endo<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;ENDO1.sav&quot;</span>)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>endo<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;ENDO1.sav&quot;</span>)</span></code></pre></div>
 <p>Estas son las variables que usaremos:</p>
 <p><strong>Variable dependiente</strong>: <em>(P2_2)</em> Retorno a
 clases</p>
@@ -534,6 +542,7 @@ la tercera edad?</p></li>
 están en el grupo de riesgo ante COVID-19 por enfermedades
 preexistente</p></li>
 </ul>
+<p><br></p>
 <p>Durante el año 2020</p>
 <ul>
 <li><p><strong>P1_11_B</strong>: ¿sufrió o sufre enfermedades
@@ -545,33 +554,35 @@ respiratorias?</p></li>
 <li><p><strong>P1_18</strong>: ¿En este momento se encuentra pagando
 algún préstamo o crédito?</p></li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>data <span class="ot">=</span>endo<span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>       <span class="fu">select</span>( P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G,P1_11_H, P1_11_L, P1_18)</span></code></pre></div>
+<div id="limpieza-de-data" class="section level2">
+<h2>Limpieza de data</h2>
+<p>Selección de variables a usar</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>data <span class="ot">=</span>endo<span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>       <span class="fu">select</span>( P2_2, P1_24_E, P1_2, P1_4, P1_5, P1_11_B, P1_11_F, P1_11_G,P1_11_H, P1_11_L, P1_18)</span></code></pre></div>
 <p>Tenemos variable de sexo, edad, si es que es area rural o urbana.
 También si es que el docente vive con personas de tercera edad, o con
 personas que tienen factores de riesgo de COVID, si en el 2020 han
 tenido depresión, ansiedad, enfermedades respiratorias, también hay otra
 variable sobre si regresarían a clases de manera presencial.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">colnames</span>(data)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;P2_2&quot;</span> ,  <span class="st">&quot;satIE&quot;</span>,<span class="st">&quot;edad&quot;</span>  ,  <span class="st">&quot;terEd&quot;</span> ,   <span class="st">&quot;riesCov&quot;</span>,  <span class="st">&quot;resp&quot;</span>,<span class="st">&quot;anx&quot;</span>, <span class="st">&quot;dep&quot;</span>, <span class="st">&quot;cancer&quot;</span>, <span class="st">&quot;cov&quot;</span>,<span class="st">&quot;cred&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">as.data.frame</span>(data[<span class="fu">complete.cases</span>(data),])</span></code></pre></div>
-<p>Vamos a realizar diferentes modelos para calentar motores y volvernos
-expertas y expertos en la intrepretación de coeficientes.</p>
-<p>Lo que queremos hacer es ver <strong>qué factores pueden influenciar
-en que un docente quiera retornar a clases presenciales</strong></p>
-<p><strong>VARIABLE DEPENDIENTE: P2_2 Retorno a clases</strong></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>P2_2)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
+<p>Cambiamos los nombres para que sea más fácil identificar las
+variables</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">colnames</span>(data)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Retorno&quot;</span> ,  <span class="st">&quot;satIE&quot;</span>,<span class="st">&quot;edad&quot;</span>  ,  <span class="st">&quot;terEd&quot;</span> ,   <span class="st">&quot;riesCov&quot;</span>,  <span class="st">&quot;resp&quot;</span>,<span class="st">&quot;anx&quot;</span>, <span class="st">&quot;dep&quot;</span>, <span class="st">&quot;cancer&quot;</span>, <span class="st">&quot;cov&quot;</span>,<span class="st">&quot;cred&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">as.data.frame</span>(data[<span class="fu">complete.cases</span>(data),])</span></code></pre></div>
+<p><strong>VARIABLE DEPENDIENTE: <code>Retorno</code></strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>Retorno)</span></code></pre></div>
 <pre><code>## 
 ##     0     1 
 ##  1551 16484</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>data<span class="sc">$</span>retorno<span class="ot">=</span><span class="fu">as.factor</span>(data<span class="sc">$</span>P2_2)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>retorno) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Si&quot;</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>retorno) <span class="co">#confirmo el nuevo formato de la variable</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>data<span class="sc">$</span>Retorno<span class="ot">=</span><span class="fu">as.factor</span>(data<span class="sc">$</span>Retorno)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>Retorno) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Si&quot;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>Retorno) <span class="co">#confirmo el nuevo formato de la variable</span></span></code></pre></div>
 <pre><code>## 
 ##    No    Si 
 ##  1551 16484</code></pre>
 <p>Ya teniendo lista la variable depediente vamos a realizar unos
 cuantos modelos y analizar el odds y la probabilidad.</p>
+</div>
 </div>
 <div id="modelo-1-retorno-y-personas-de-la-tercera-edad"
 class="section level1">
@@ -580,23 +591,19 @@ class="section level1">
 <li>VD: Retorno (variable dicotómica)</li>
 <li>VI: El docente vive con personas de la tercera edad terEd</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>data<span class="sc">$</span>terEd<span class="ot">=</span><span class="fu">ifelse</span>(data<span class="sc">$</span>terEd <span class="sc">==</span> <span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>,<span class="st">&quot;0&quot;</span>) </span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>data<span class="sc">$</span>terEd<span class="ot">=</span><span class="fu">as.numeric</span>(data<span class="sc">$</span>terEd)  </span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>terEd)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>data<span class="sc">$</span>terEd<span class="ot">=</span><span class="fu">ifelse</span>(data<span class="sc">$</span>terEd <span class="sc">==</span> <span class="st">&quot;1&quot;</span>, <span class="st">&quot;1&quot;</span>,<span class="st">&quot;0&quot;</span>) </span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>data<span class="sc">$</span>terEd<span class="ot">=</span><span class="fu">as.numeric</span>(data<span class="sc">$</span>terEd)  </span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>terEd)</span></code></pre></div>
 <pre><code>## 
 ##     0     1 
 ## 10660  7375</code></pre>
 <p>Creemos nuestro modelo (función glm). Recuerda que lo que se está
-modelando es el logaritmo del odds (p/1-p).</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>modelo1 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd,<span class="at">family=</span> binomial,data)</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
+modelando es el <code>logaritmo del odds (p/1-p)</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>modelo1 <span class="ot">=</span> <span class="fu">glm</span>(Retorno <span class="sc">~</span> terEd,<span class="at">family=</span> binomial,data)</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## glm(formula = retorno ~ terEd, family = binomial, data = data)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.2858   0.3903   0.3903   0.4693   0.4693  
+## glm(formula = Retorno ~ terEd, family = binomial, data = data)
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -620,35 +627,38 @@ logaritmo natural de odds</em></li>
 <p>Es importante revisar el <strong>signo</strong> del coeficiente, ya
 que dependiendo de eso procederemos a interpretar. En este caso, el
 coeficiente es negativo; es decir, <em>la relación es inversa.</em> La
-interpretación de la probabilidad tendrá la siguiente forma: cuando la
-VI aumenta o es 1 (para dicotómicas), la probabilidad de que la VD sea 1
-(se de el caso de éxito) disminuye en …</p>
-<p>Ejemplo para VI numérica (edad)</p>
+interpretación de la probabilidad tendrá la siguiente forma:</p>
+<blockquote>
+<p>“cuando la VI aumenta o es 1 (para dicotómicas), la probabilidad de
+que la VD sea 1 (sea del caso de éxito) en promedio disminuye en
+[resultado de avg_slopes]…”</p>
+</blockquote>
+<p><span class="smallcaps"><strong>Ejemplo</strong> para VI numérica
+(edad)</span></p>
 <ul>
-<li>Cuando la edad <strong>aumenta</strong> en 1 año, la probabilidad de
-que la persona quiera emigrar a Europa <strong>disminuye</strong> en
-20.5%.</li>
+<li><span class="smallcaps">Cuando la edad <strong>aumenta</strong> en 1
+año, la probabilidad de que la persona quiera emigrar a Europa
+<strong>disminuye</strong> en 20.5%.</span></li>
 </ul>
-<p>Ejemplo para VI dicotómica:</p>
+<p><span class="smallcaps">Ejemplo para VI dicotómica:</span></p>
 <ul>
-<li>Cuando la persona <strong>sí</strong> tiene hijos <strong>(es
-1)</strong> , la probabilidad de que la persona quiera emigrar a Europa
-disminuye en 31.3%</li>
+<li><span class="smallcaps">Cuando la persona <strong>sí</strong> tiene
+hijos <strong>(es 1)</strong> , la probabilidad de que la persona quiera
+emigrar a Europa disminuye en 31.3%</span></li>
 </ul>
-<p>Apliquémoslo en nuestro modelo:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo1)</span></code></pre></div>
+<p>Ahora en el modelo1:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo1)[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## 
-##   Term Contrast Estimate Std. Error     z Pr(&gt;|z|)    S   2.5 %  97.5 %
-##  terEd    1 - 0  -0.0309    0.00436 -7.08   &lt;0.001 39.4 -0.0395 -0.0224
+##   Term Estimate
+##  terEd  -0.0309
 ## 
-## Columns: term, contrast, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high 
-## Type:  response</code></pre>
+## Columns: term, estimate</code></pre>
 <p>Identificamos que la variación en la probabilidad es de -0.0309; es
 decir, disminuye un 3.09%. Esto quiere decir que cuando una persona sí
 vive con personas de tercera edad (es 1), la probabilidad de que quiera
 retornar a clases disminuye en un 0.0309 o en 3.09% (en promedio).</p>
-<p>¿De donde sale este valor?</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">head</span>(modelo1<span class="sc">$</span>fitted.values,<span class="dv">10</span>)</span></code></pre></div>
+<p>¿De donde sale este valor? 😼</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">head</span>(modelo1<span class="sc">$</span>fitted.values,<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>##         1         2         3         6         7        13        15        16 
 ## 0.9266417 0.8957288 0.8957288 0.9266417 0.9266417 0.8957288 0.8957288 0.9266417 
 ##        19        20 
@@ -657,7 +667,7 @@ retornar a clases disminuye en un 0.0309 o en 3.09% (en promedio).</p>
 tercera edad, 0.926, y cuando sí tiene personas de tercera edad, 0.895.
 Entonces la reducción de la probabilidad será la diferencia entre
 ambos.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="fl">0.9266417</span> <span class="sc">-</span> <span class="fl">0.8957288</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fl">0.9266417</span> <span class="sc">-</span> <span class="fl">0.8957288</span></span></code></pre></div>
 <pre><code>## [1] 0.0309129</code></pre>
 </div>
 <div id="modelo-2-retorno-personas-de-la-tercera-edad-y-enfermedades"
@@ -672,16 +682,12 @@ class="section level1">
 </ul>
 <p>Queremos saber si estas variables influyen en la probabilidad de que
 el docente quiera retornar o no a clases presenciales</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>modelo2 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd<span class="sc">+</span>cancer<span class="sc">+</span>dep, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span>logit),<span class="at">data =</span> data)</span>
-<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>modelo2 <span class="ot">=</span> <span class="fu">glm</span>(Retorno <span class="sc">~</span> terEd<span class="sc">+</span>cancer<span class="sc">+</span>dep, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span>logit),<span class="at">data =</span> data)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## glm(formula = retorno ~ terEd + cancer + dep, family = binomial(link = logit), 
+## glm(formula = Retorno ~ terEd + cancer + dep, family = binomial(link = logit), 
 ##     data = data)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.3087   0.3799   0.3799   0.4565   0.7834  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -701,15 +707,14 @@ el docente quiera retornar o no a clases presenciales</p>
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>Ojo, los tres coeficientes son negativos. Calculemos la probabilidad
 de que los docentes quieran retornar a las clases presenciales.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo2)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo2)[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## 
-##    Term Contrast Estimate Std. Error     z Pr(&gt;|z|)    S   2.5 %  97.5 %
-##  cancer    1 - 0  -0.1038    0.03218 -3.22  0.00126  9.6 -0.1669 -0.0407
-##  dep       1 - 0  -0.0221    0.00606 -3.64  &lt; 0.001 11.8 -0.0340 -0.0102
-##  terEd     1 - 0  -0.0307    0.00436 -7.04  &lt; 0.001 39.0 -0.0392 -0.0222
+##    Term Estimate
+##  cancer  -0.1038
+##  dep     -0.0221
+##  terEd   -0.0307
 ## 
-## Columns: term, contrast, estimate, std.error, statistic, p.value, s.value, conf.low, conf.high 
-## Type:  response</code></pre>
+## Columns: term, estimate</code></pre>
 <p>Interpretemos <strong>(Ojo: las variables aparecen en orden
 alfabético)</strong></p>
 <ul>
@@ -728,17 +733,17 @@ class="section level4">
 <h4>Si queremos calcular datos determinados</h4>
 <p>Ejemplo 1: Si el docente no vive con personas de la tercera edad,
 tiene cancer y tiene depresión</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>log.odds1 <span class="ot">=</span> <span class="fu">predict</span>(modelo2, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">cancer =</span> <span class="dv">1</span>, <span class="at">dep =</span> <span class="dv">1</span>))</span>
-<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds1))</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>log.odds1 <span class="ot">=</span> <span class="fu">predict</span>(modelo2, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">cancer =</span> <span class="dv">1</span>, <span class="at">dep =</span> <span class="dv">1</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="fu">exp</span>(log.odds1)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds1))<span class="co">#lo pasamos a probabilidades</span></span></code></pre></div>
 <pre><code>##         1 
 ## 0.8033939</code></pre>
-<p>La probabilidad estimada de que quiera retornara a clases
-presenciales es de 0.80</p>
-<p>Ejemplo 2: Si el docente no vive con personas de la tercera edad, no
-tiene cancer y tiene depresión</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>log.odds2 <span class="ot">=</span> <span class="fu">predict</span>(modelo2, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">cancer =</span> <span class="dv">0</span>, <span class="at">dep =</span> <span class="dv">1</span>))</span>
-<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds2)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds2)) <span class="co">#lo pasamos a probabilidades</span></span></code></pre></div>
+<p>La <strong>probabilidad</strong> estimada de que quiera retornara a
+clases presenciales es de 0.80</p>
+<p>Ejemplo 2: Si el docente <strong>no</strong> vive con personas de la
+tercera edad, no tiene cancer y tiene depresión</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>log.odds2 <span class="ot">=</span> <span class="fu">predict</span>(modelo2, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">cancer =</span> <span class="dv">0</span>, <span class="at">dep =</span> <span class="dv">1</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds2)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds2)) <span class="co">#lo pasamos a probabilidades</span></span></code></pre></div>
 <pre><code>##         1 
 ## 0.9113365</code></pre>
 <p>La probabilidad de que quiera retornara a clases presenciales es de
@@ -750,16 +755,12 @@ class="section level1">
 <h1>MODELO 3: Retorno, personas de la tercera edad, ansiedad, edad</h1>
 <p>Nuestras explicativas serán si la persona vive o no con personas de
 la tercera edad, tiene o ha tenido ansiedad y la variable edad.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>modelo3 <span class="ot">=</span> <span class="fu">glm</span>(retorno <span class="sc">~</span> terEd<span class="sc">+</span>anx<span class="sc">+</span>edad, <span class="at">family =</span> binomial, <span class="at">data =</span> data)</span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">summary</span>(modelo3)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>modelo3 <span class="ot">=</span> <span class="fu">glm</span>(Retorno <span class="sc">~</span> terEd<span class="sc">+</span>anx<span class="sc">+</span>edad, <span class="at">family =</span> binomial, <span class="at">data =</span> data)</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">summary</span>(modelo3)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## glm(formula = retorno ~ terEd + anx + edad, family = binomial, 
+## glm(formula = Retorno ~ terEd + anx + edad, family = binomial, 
 ##     data = data)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -2.5018   0.3542   0.3997   0.4535   0.6623  
 ## 
 ## Coefficients:
 ##              Estimate Std. Error z value Pr(&gt;|z|)    
@@ -778,7 +779,7 @@ la tercera edad, tiene o ha tenido ansiedad y la variable edad.</p>
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>Analicemos las probabilidades con los efectos marginales:</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo3)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo3)</span></code></pre></div>
 <pre><code>## 
 ##   Term Contrast Estimate Std. Error     z Pr(&gt;|z|)    S    2.5 %   97.5 %
 ##  anx      1 - 0  -0.0367   0.005015 -7.31   &lt;0.001 41.8 -0.04650 -0.02684
@@ -803,16 +804,16 @@ probabilidad de que quiera retornar a clases presenciales disminuye en
 presenciales según ciertas condiciones:</p>
 <p>¿Qué sucede cuando el docente NO vive con personas de tercera edad
 (es 0), ha tenido o tiene ansiedad (es 1) y su edad es de 50 años?</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a>log.odds3 <span class="ot">=</span> <span class="fu">predict</span>(modelo3, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">anx =</span> <span class="dv">1</span>, <span class="at">edad =</span> <span class="dv">50</span>))</span>
-<span id="cb38-2"><a href="#cb38-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds3)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds3)) <span class="co">#para pasarlo a probabilidad</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>log.odds3 <span class="ot">=</span> <span class="fu">predict</span>(modelo3, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">anx =</span> <span class="dv">1</span>, <span class="at">edad =</span> <span class="dv">50</span>))</span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds3)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds3)) <span class="co">#para pasarlo a probabilidad</span></span></code></pre></div>
 <pre><code>##         1 
 ## 0.8952608</code></pre>
 <p>Cuando un o una docente vive con personas de tercera edad, tiene
 ansiedad y tenga 50 años, la probabilidad de que quiera retornar a
 clases presenciales es de 0.89 o de 89.34%.</p>
 <p>Ahora obtengamos la probabilidad con menos edad.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a>log.odds4 <span class="ot">=</span> <span class="fu">predict</span>(modelo3, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">anx =</span> <span class="dv">1</span>, <span class="at">edad =</span> <span class="dv">25</span>))</span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds4)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds4))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>log.odds4 <span class="ot">=</span> <span class="fu">predict</span>(modelo3, <span class="fu">data.frame</span>(<span class="at">terEd =</span> <span class="dv">0</span>, <span class="at">anx =</span> <span class="dv">1</span>, <span class="at">edad =</span> <span class="dv">25</span>))</span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">exp</span>(log.odds4)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="fu">exp</span>(log.odds4))</span></code></pre></div>
 <pre><code>##       1 
 ## 0.93263</code></pre>
 <p>Cuando un o una docente vive con personas de tercera edad, tiene
@@ -874,7 +875,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1",
+      selectors: "h1,h2,h3",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
