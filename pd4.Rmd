@@ -101,22 +101,16 @@ demofree <- import("https://github.com/schrodingercase/primary/raw/master/demofr
 str(demofree) #Ver estructura de la base de datos
 ```
 
-# Modelo 1
+# Formateo de las variables
 
--   Variable dependiente= Regimen Político
-
--   Variable independiente= Trade Freedom (Libertad de comercio) y
-    Property Rights (Derecho a la propiedad privada)
-
-## Paso 1: Preparar la data
-
-### 1.1. Limpieza de data e identificación de las variables
+### 1.1 Limpieza de data e identificación de las variables
 
 ```{r}
 demofree <- demofree %>% 
   rename(regimen = `Regime type`,
          property = `Property Rights`,
-         tradefree = `Trade Freedom`)
+         tradefree = `Trade Freedom`,
+         busfree =`Business Freedom`)
 ```
 
 Eliminamos casos perdidos
@@ -124,8 +118,6 @@ Eliminamos casos perdidos
 ```{r}
 demofree <- demofree[complete.cases(demofree$regimen),]
 ```
-
-<br>
 
 Comencemos con la variable dependiente:
 
@@ -145,7 +137,6 @@ demofree$regimen <- recode(demofree$regimen,
                           'Authoritarian' = 1)
 ```
 
-
 Confirmamos la suma
 
 ```{r}
@@ -154,7 +145,7 @@ demofree %>%
   summarise (FrecuenciaRecod= n())
 ```
 
-Formateamos la variable :)
+Formateamos la variable regimen:)
 
 ```{r}
 
@@ -165,11 +156,10 @@ demofree <- demofree %>%
 
 ```
 
-
-
 ```{r}
 demofree$property <- as.numeric(demofree$property)
 demofree$tradefree <- as.numeric(demofree$tradefree)
+demofree$busfree <- as.numeric(demofree$busfree)
 ```
 
 ### 1.2. Elegir la línea base
@@ -191,6 +181,24 @@ tener bien etiquetadas las variables.
 
 ```{r}
 demofree$regimen <- relevel(demofree$regimen , ref = "Democracia fallida")
+```
+
+# Modelo 1
+
+-   Variable dependiente= Regimen Político `regimen`
+
+-   Variable independiente= Trade Freedom `tradefree` (Libertad de
+    comercio) y Property Rights `property` (Derecho a la propiedad
+    privada)
+
+## Paso 1: Preparar la data
+
+confirmamos que nuestras variables estén en el formato adecuado
+(numérico)
+
+```{r}
+str(demofree$tradefree)
+str(demofree$property)
 ```
 
 ## Paso 2: Modelo logístico
@@ -251,11 +259,13 @@ probabilidad de que sea democracia a que sea democracia fallida aumenta
 
 #### Recordamos la ecuación y realizamos un ejemplo
 
-#INSERTAR PNG DE ECUACIÓN (elegir la adecuada)
+```{r,echo=FALSE, out.width="80%",fig.align="center"}
+knitr::include_graphics("ecuacion.jpeg") 
+```
 
 Usamos los valores de 50 (property) y 60 (tradefree)
 
-prob dictadura
+**prob dictadura**
 
 ```{r}
 numeDct<-exp(6.015109-0.02654594*50-0.07105396*60)
@@ -264,7 +274,7 @@ ProbDct<-numeDct/denomDct
 ProbDct
 ```
 
-prob democracia
+**prob democracia**
 
 ```{r}
 numDemo= exp(-13.772977)*(exp(0.15297576*50)*exp(0.01435271*60))
@@ -275,7 +285,9 @@ ProbDemo
 
 ¿Probabilidad de la democracia fallida?
 
-#insertar imagen de: demfallida=1-probdictadura-probdemocracia \<3
+```{r,echo=FALSE, out.width="80%",fig.align="center"}
+knitr::include_graphics("prob-demofallida.jpeg") 
+```
 
 ### 2.4: SIGNIFICANCIA DE LAS VARIABLES
 
@@ -337,54 +349,46 @@ avg_slopes(mod1)[,c(1,2,3)]
 
 ## Paso 4: Recordando la ecuación
 
-```{r,echo=FALSE, out.width="80%",fig.align="center"}
-knitr::include_graphics("ecuacion.jpeg") 
-```
-
 Usemos los siguientes valores:
 
--   Property = 50
+-   Property = 80
 
--   Tradefree= 60
+-   Tradefree= 50
 
 Probabilidad de que sea **dictadura**
 
 ```{r}
-Num1<-exp(6.118423-0.02654594*50-0.07105396*60)
+Num1<-exp(6.015109-0.02654594*80-0.07105396*50)
 Deno1<-1+Num1
 ProbDictadura<-Num1/Deno1
 ProbDictadura
 ```
 
-Si un país tiene 50 de indice de derecho a la propiedad y 60 de indice
-de libertad de comercio, tiene un 0.62 de probabilidad de ser una
+Si un país tiene 80 de indice de derecho a la propiedad y 50 de indice
+de libertad de comercio, tiene un 0.58 de probabilidad de ser una
 dictadura.
 
 Probabilidad de que sea **democracia**
 
 ```{r}
-Num2 <- exp(-13.772977+0.15297576*50+0.01435271*60)
+Num2 <- exp(-13.772977+0.15297576*80+0.01435271*50)
 Deno2<-1+Num2
 ProbDemo<-Num2/Deno2
 ProbDemo
 ```
 
-Si un país tiene 50 de indice de derecho a la propiedad y 60 de indice
-de libertad de comercio, tiene un 0.005 de probabilidad de ser una
+Si un país tiene 80 de indice de derecho a la propiedad y 50 de indice
+de libertad de comercio, tiene un 0.30 de probabilidad de ser una
 democracia
 
 ¿Cuál es la probabilidad de que sea una **democracia fallida**?
-
-```{r,echo=FALSE, out.width="80%",fig.align="center"}
-knitr::include_graphics("prob-demofallida.jpeg") 
-```
 
 ```{r}
 1-ProbDictadura-ProbDemo
 ```
 
-Si un país tiene 50 de indice de derecho a la propiedad y 60 de indice
-de libertad de comercio, tiene un 0.366 de probabilidad de ser una
+Si un país tiene 80 de indice de derecho a la propiedad y 50 de indice
+de libertad de comercio, tiene un 0.11 de probabilidad de ser una
 democracia fallida
 
 # Modelo 2
@@ -397,61 +401,54 @@ knitr::include_graphics("tehc.png")
 ```
 
 La libertad comercial (Business Freedom) es muchas veces reconocida como
-una variable indispensable en toda democracia. ¿Cuánto afectaría al
-modelo? Vamos a crear un modelo agregando esta variable al modelo
+una variable indispensable en toda democracia. \*\*¿Cuánto afectaría al
+modelo?\*\* Vamos a crear un modelo agregando esta variable
 
-## Paso 1: Preparación de data
+## Paso 1: Preparación de variable
 
-Cambiamos el nombre de la variable
-
-```{r}
-demofree$busfree <- demofree$`Business Freedom`
-```
-
-La volvemos numérica porque también es un indicador numérico, pero la
-volveremos dummy para así poder analizarla como categórica.
+Para fines prácticos, dividamos la variable en países con *poca libertad
+comercial* y con *mucha libertad comercial*.
 
 ```{r}
-demofree$busfree <- as.numeric(demofree$busfree)
-summary(demofree$busfree)
+demofree$busfree <- ifelse(demofree$busfree<=74.50, "Poca", "Mucha")
 ```
 
-Para fines prácticos, dividamos esta variable en países con poca
-libertad comercial y con mucha libertad comercial.
-
-Libertad comercial: Poca Libertad comercial Mucha
+Corroboramos
 
 ```{r}
-demofree$busfreef <- ifelse(demofree$busfree<=74.50, "Poca", "Mucha")
-table(demofree$busfreef)
+demofree %>% 
+  group_by(busfree) %>% 
+  summarise (FrecLibCom= n())
 ```
 
-#### Volvemos "Dummy"
+#### Volvemos "Dummy" la variable busfree
 
-Utilizamos el paquete fastDummies para dicotomizar las variables, en
+Utilizamos la libreria fastDummies para dicotomizar las variables, en
 select_columns indicamos qué variable queremos
 
-```{r}
+```{r,message=FALSE,warning=FALSE}
 library(fastDummies)
-demofree <- dummy_cols(demofree, select_columns = c("busfreef"))
+demofree <- dummy_cols(demofree, select_columns = c("busfree"))
+```
+
+Revisamos los resultados
+
+```{r}
+demofree %>% 
+  group_by(busfree_Mucha) %>% 
+  summarise (N= n())
 ```
 
 ```{r}
-names(demofree)
-```
-
-```{r}
-table(demofree$busfreef_Poca)
-```
-
-```{r}
-table(demofree$busfreef_Mucha)
+demofree %>% 
+  group_by(busfree_Poca) %>% 
+  summarise (N= n())
 ```
 
 ## Paso 2: Modelo logístico
 
 ```{r}
-mod2<- multinom(regimen ~ property + tradefree + busfreef_Poca, data = demofree)
+mod2<- multinom(regimen ~ property + tradefree + busfree_Poca, data = demofree)
 summary(mod2)
 ```
 
@@ -500,7 +497,7 @@ disminuye.
 ### 2.1: Significancia de las variables
 
 ```{r}
-test.multinom(mod2,property) # Se colocar test.multinom(nombredelmodelo,variableindependiente1)
+test.multinom(mod2,property) # Se coloca test.multinom(nombredelmodelo,variableindependiente1)
 ```
 
 ```{r}
@@ -511,7 +508,7 @@ test.multinom(mod2,tradefree)
 ## Paso 3: Interpretación de coeficientes con efectos marginales
 
 ```{r}
-avg_slopes(mod2)[,c(1,2,3)]
+avg_slopes(mod2)[,c(1,2,4)]
 ```
 
 ## Paso 4: Recordamos la ecuación
@@ -533,7 +530,7 @@ ProbDictadura<-Num1/Deno1
 ProbDictadura
 ```
 
-Probabilidad de que sea democracia
+Probabilidad de que sea *democracia*
 
 ```{r}
 Num2<- exp(-13.207954+0.14741855*50+0.01448272*60-0.2906452*1)
@@ -542,13 +539,13 @@ ProbDemo<-Num2/Deno2
 ProbDemo
 ```
 
-Probabilidad de que sea democracia fallida
+Probabilidad de que sea *democracia fallida*
 
 ```{r}
 1-ProbDictadura-ProbDemo
 ```
 
-# COMPARAR MODELOS
+# Comparar modelos
 
 ### AIC
 
@@ -586,12 +583,11 @@ PseudoR2(mod2, which = c("Nagelkerke"))
 
 Según el Pseudo R2, los modelos tienen un nivel de ajuste muy parecido.
 
-<br>
-<br>
+<br> <br>
 
 Cat facts
+
 ```{r}
 library("cowsay", quietly = TRUE, warn.conflicts = FALSE)
 say("catfact", "cat")
 ```
-
