@@ -221,17 +221,6 @@ relación entre la variable independiente y la variable dependiente
 
 -   Coeficiente (dictadura) :-0.02654594
 
-Si un país incrementa 1 punto en el índice de derecho a la propiedad es
-menos probable que el estado sea dictadura a demoracia fallida.
-
-Si un país aumenta en un punto el indicador de derechos a la propiedad,
-la probabilidad de que sea dictadura a que sea democracia fallidad
-disminuye
-
--   Coeficiente (democracia): 0.15297576
-
--   Coeficiente (dictadura) :-0.02654594
-
 Si un país aumenta en un punto el indicador de derechos a la propiedad,
 la probabilidad de que sea dictadura a que sea democracia fallidad
 disminuye
