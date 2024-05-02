@@ -30,7 +30,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1
 
 <br>
 
@@ -54,20 +54,35 @@ knitr::include_graphics("PD4_ECUACIÓN.png")
 knitr::include_graphics("PD4_Ejemplo.png") 
 ```
 
+Pregunta de investigación:
+
+```{=html}
+<style>
+.custom-text {
+  color: #00688B;
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  font-weight: bold;
+  font-size: 22px;
+}
+</style>
+```
+::: custom-text
+¿Una economía liberal influye en el nivel de democracia? 🤔
+:::
+
 ## Base de Datos
 
 La base de datos a trabajar combina los datos obtenidos en el Democracy
-Index (<https://en.wikipedia.org/wiki/Democracy_Index>) y el Index of
-Economic Freedom
-(<https://en.wikipedia.org/wiki/Index_of_Economic_Freedom>). Lo que
-veremos en esta clase es la relación entre el tipo de régimen político
-(democracia, democracia fallida y dictadura) con algunas variables
-económicas.
+Index[^1] y el Index of Economic Freedom[^2] . Lo que veremos en esta
+clase es la relación entre el tipo de régimen político *(democracia,
+democracia fallida y dictadura)* con variables económicas.
 
-Todo esto para comprobar el supuesto: *¿una economía liberal influye en
-el nivel de democracia?*
+[^1]: <https://en.wikipedia.org/wiki/Democracy_Index>
 
-Llamemos a las librerías
+[^2]: <https://en.wikipedia.org/wiki/Index_of_Economic_Freedom>
+
+Llamamos a las librerías
 
 ```{r,warning=FALSE,message=FALSE, results = 'hide'}
 library(rio)
@@ -76,36 +91,32 @@ library(nnet)
 library(DescTools)
 library(RVAideMemoire)
 library(marginaleffects)
+library(tidyverse)
 ```
 
 Exploremos la data:
 
-```{r}
+```{r,warning=FALSE,message=FALSE, results = 'hide'}
 demofree <- import("https://github.com/schrodingercase/primary/raw/master/demofree.xlsx")
 str(demofree) #Ver estructura de la base de datos
 ```
 
-# Pregunta de investigación
-
-**¿Existe alguna relación entre el tipo de régimen político y las
-variables "Trade freedom" sistema económico con mayor libertad de
-comercio y "Property Rights" Derecho a la propiedad privada?**
-
--   VD= Regimen Político
-
--   VI= Trade Freedom (Libertad de comercio) y Property Rights (Derecho
-    a la propiedad privada)
-
 # Modelo 1
+
+-   Variable dependiente= Regimen Político
+
+-   Variable independiente= Trade Freedom (Libertad de comercio) y
+    Property Rights (Derecho a la propiedad privada)
 
 ## Paso 1: Preparar la data
 
 ### 1.1. Limpieza de data e identificación de las variables
 
 ```{r}
-demofree$regimen <- demofree$`Regime type`
-demofree$property <- demofree$`Property Rights`
-demofree$tradefree <- demofree$`Trade Freedom`
+demofree <- demofree %>% 
+  rename(regimen = `Regime type`,
+         property = `Property Rights`,
+         tradefree = `Trade Freedom`)
 ```
 
 Eliminamos casos perdidos
@@ -119,26 +130,42 @@ demofree <- demofree[complete.cases(demofree$regimen),]
 Comencemos con la variable dependiente:
 
 ```{r}
-table(demofree$regimen)
+demofree %>% 
+  group_by(regimen) %>% 
+  summarise (Frecuencia= n())
 ```
 
-Ojo, con Hybrid regime y Flawed democracy
+Ojo con Hybrid regime y Flawed democracy
 
 ```{r}
-demofree$regimen <- recode(demofree$regimen, "'Full democracy' = 3; 'Hybrid regime' = 2; 'Flawed democracy' = 2; 'Authoritarian' = 1")
-table(demofree$regimen)
+demofree$regimen <- recode(demofree$regimen, 
+                          'Full democracy' = 3,
+                          'Hybrid regime' = 2,
+                          'Flawed democracy' = 2,
+                          'Authoritarian' = 1)
 ```
 
-Volvemos factor la variable para poder etiquetarla nuevamente
+
+Confirmamos la suma
 
 ```{r}
-demofree$regimen <- as.factor(demofree$regimen)
-levels(demofree$regimen) <- c("Dictadura","Democracia fallida","Democracia")
+demofree %>% 
+  group_by(regimen) %>% 
+  summarise (FrecuenciaRecod= n())
 ```
 
+Formateamos la variable :)
+
 ```{r}
-table(demofree$regimen)
+
+demofree <- demofree %>%
+            mutate(regimen = factor(regimen, 
+                                    levels = c("1", "2", "3"),
+                                    labels = c("Dictadura", "Democracia fallida", "Democracia")))
+
 ```
+
+
 
 ```{r}
 demofree$property <- as.numeric(demofree$property)
@@ -287,8 +314,9 @@ cada escenario (democracia, democracia fallida o dictadura). Para la
 interpretación usamos el estimado.
 
 ```{r}
-Marg1=marginaleffects(mod1,type = "probs")
-summary(Marg1)[c(1,2,4)]   
+
+avg_slopes(mod1)[,c(1,2,3)]
+
 ```
 
 -   Cuando en un país el índice de derecho a la propiedad incrementa un
@@ -401,7 +429,7 @@ table(demofree$busfreef)
 #### Volvemos "Dummy"
 
 Utilizamos el paquete fastDummies para dicotomizar las variables, en
-select_columns indicamos qué variable queremos dicotomizar
+select_columns indicamos qué variable queremos
 
 ```{r}
 library(fastDummies)
@@ -483,8 +511,7 @@ test.multinom(mod2,tradefree)
 ## Paso 3: Interpretación de coeficientes con efectos marginales
 
 ```{r}
-Marg2<-marginaleffects(mod2,type = "probs")
-summary(Marg2)[c(1,2,4)]   
+avg_slopes(mod2)[,c(1,2,3)]
 ```
 
 ## Paso 4: Recordamos la ecuación
@@ -558,3 +585,13 @@ PseudoR2(mod2, which = c("Nagelkerke"))
 ```
 
 Según el Pseudo R2, los modelos tienen un nivel de ajuste muy parecido.
+
+<br>
+<br>
+
+Cat facts
+```{r}
+library("cowsay", quietly = TRUE, warn.conflicts = FALSE)
+say("catfact", "cat")
+```
+
