@@ -13,7 +13,7 @@
 
 <title>Sesión 3</title>
 
-<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -442,6 +442,12 @@ div.tocify {
   <a href="pd3_v2.html">Sesión 3</a>
 </li>
 <li>
+  <a href="pd4.html">Sesión 4</a>
+</li>
+<li>
+  <a href="pd5.html">Sesión 5</a>
+</li>
+<li>
   <a href="https://karinaalc.github.io/Estadistica-2/">
     <span class="fab fa-github"></span>
      
@@ -589,6 +595,10 @@ modelando es el logaritmo del odds (p/1-p).</p>
 ## Call:
 ## glm(formula = retorno ~ terEd, family = binomial, data = data)
 ## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.2858   0.3903   0.3903   0.4693   0.4693  
+## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
 ## (Intercept)  2.53621    0.03715  68.272  &lt; 2e-16 ***
@@ -662,6 +672,10 @@ el docente quiera retornar o no a clases presenciales</p>
 ## Call:
 ## glm(formula = retorno ~ terEd + cancer + dep, family = binomial(link = logit), 
 ##     data = data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.3087   0.3799   0.3799   0.4565   0.7834  
 ## 
 ## Coefficients:
 ##             Estimate Std. Error z value Pr(&gt;|z|)    
@@ -768,6 +782,10 @@ la tercera edad, tiene o ha tenido ansiedad y la variable edad.</p>
 ## Call:
 ## glm(formula = retorno ~ terEd + anx + edad, family = binomial, 
 ##     data = data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.5018   0.3542   0.3997   0.4535   0.6623  
 ## 
 ## Coefficients:
 ##              Estimate Std. Error z value Pr(&gt;|z|)    

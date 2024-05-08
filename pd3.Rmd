@@ -1,11 +1,6 @@
 ---
 title: "Sesión 3"
 output:
-  pdf_document:
-    latex_engine: lualatex
-    toc: yes
-    toc_depth: '1'
-  fontfamily: "Apple Color Emoji"
   html_document:
     toc: yes
     toc_float: yes
@@ -16,6 +11,11 @@ output:
     highlight: kate
     always_allow_html: yes
     code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: yes
+    toc_depth: '1'
 ---
 
 <br>
