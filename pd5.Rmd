@@ -30,7 +30,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1
 
 <br>
 
@@ -40,12 +40,13 @@ knitr::include_graphics("logoPUCP.png")
 
 Llamemos a los paquetes
 
-```{r}
+```{r,warning=FALSE, message=FALSE}
 library(rio) #para importar la base
 library(fastDummies) #Para volver dummy a una variable categórica
 library(MASS) #para crear el modelo
 library(marginaleffects) #para calcular la probabilidad
 library(DescTools) #Para calcular el pseudo R2
+library(dplyr)
 
 ```
 
@@ -89,13 +90,13 @@ table(data$salario_actual_ordinal)
     agreguemos etiquetas.
 
 ```{r}
-str(data$sexo)
+class(data$sexo)
 table(data$sexo)
 ```
 
 ```{r}
-data$sexo <- as.factor(data$sexo)
-levels(data$sexo) <- c("Mujer", "Hombre")
+data <- data %>% 
+  mutate(sexo = factor(sexo, levels = 0:1, labels = c("Mujer", "Hombre")))
 table(data$sexo)
 ```
 
@@ -168,7 +169,7 @@ variables independientes seleccionadas.
 # **Paso 3: Interpretamos el efecto de las variables**
 
 ```{r}
-marg<-marginaleffects(modelo,type="probs")
+marg<-avg_slopes(modelo,type="probs")
 summary(marg)[c(1,2,4)]  
 ```
 
