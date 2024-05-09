@@ -144,7 +144,7 @@ summary_table <- coef(summary(modelo)) #OBTENER TABLA CON COEFICIENTES
 summary_table
 ```
 
-Calculamos el pvalue a partir de t value y lo almacenamos en otro
+Calculamos el p-value a partir de t-value y lo almacenamos en otro
 objeto.
 
 ```{r}
@@ -169,8 +169,8 @@ variables independientes seleccionadas.
 # **Paso 3: Interpretamos el efecto de las variables**
 
 ```{r}
-marg<-avg_slopes(modelo,type="probs")
-summary(marg)[c(1,2,4)]  
+avg_slopes(modelo)[c(1,2,4)] 
+
 ```
 
 Recuerda que si la relación es positiva aumenta en 1 o es 1 (si es
@@ -181,7 +181,7 @@ dicotómica), la probabilidad aumenta; pero si es negativa si aumenta en
     de que tenga un salario alto aumenta en 1.03%. 
 
 -   Cuando la persona es mujer (cuando sexo_Mujer es 1), la probabilidad
-    de que tenga un salario alto disminuye en 9.54%
+    de que tenga un salario alto disminuye en 9.53%
 
 -   Y así para la demás variables....
 
@@ -311,7 +311,7 @@ años de educación tenga un salario Muy Alto es de 45.2%
 knitr::include_graphics("pd5_muyalto.png") 
 ```
 
-# **Paso 5: ¿Qué tan ajustado es nuestro modelo?**
+# **Paso 5: ¿Qué tan ajustado es?**
 
 ```{r}
 PseudoR2(modelo, which = c("Nagelkerke"))

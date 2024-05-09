@@ -610,7 +610,7 @@ independientes</h3>
 ## Muy Bajo|Bajo  3.6632440 0.55662857  6.581128
 ## Bajo|Alto      5.3305723 0.57522584  9.266921
 ## Alto|Muy Alto  7.1165070 0.62144567 11.451535</code></pre>
-<p>Calculamos el pvalue a partir de t value y lo almacenamos en otro
+<p>Calculamos el p-value a partir de t-value y lo almacenamos en otro
 objeto.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>pval <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fu">abs</span>(summary_table[, <span class="st">&quot;t value&quot;</span>]),<span class="at">lower.tail =</span> <span class="cn">FALSE</span>)<span class="sc">*</span> <span class="dv">2</span></span>
 <span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>pval</span></code></pre></div>
@@ -637,9 +637,19 @@ objeto.</p>
 class="section level1">
 <h1><strong>Paso 3: Interpretamos el efecto de las
 variables</strong></h1>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>marg<span class="ot">&lt;-</span><span class="fu">avg_slopes</span>(modelo,<span class="at">type=</span><span class="st">&quot;probs&quot;</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">summary</span>(marg)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]  </span></code></pre></div>
-<pre><code>## [1] &quot;Length:8          &quot; &quot;Class :character  &quot; NA</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)] </span></code></pre></div>
+<pre><code>## 
+##     Group       Term Estimate
+##  Alto     educ        0.01031
+##  Alto     sexo_Mujer -0.09534
+##  Bajo     educ       -0.00827
+##  Bajo     sexo_Mujer  0.08785
+##  Muy Alto educ        0.05733
+##  Muy Alto sexo_Mujer -0.23543
+##  Muy Bajo educ       -0.05937
+##  Muy Bajo sexo_Mujer  0.24292
+## 
+## Columns: term, group, estimate</code></pre>
 <p>Recuerda que si la relación es positiva aumenta en 1 o es 1 (si es
 dicotómica), la probabilidad aumenta; pero si es negativa si aumenta en
 1 o es 1, la probabilidad disminuye.</p>
@@ -647,7 +657,7 @@ dicotómica), la probabilidad aumenta; pero si es negativa si aumenta en
 <li><p>Cuando los años de educación aumentan en una unidad, la
 probabilidad de que tenga un salario alto aumenta en 1.03%. </p></li>
 <li><p>Cuando la persona es mujer (cuando sexo_Mujer es 1), la
-probabilidad de que tenga un salario alto disminuye en 9.54%</p></li>
+probabilidad de que tenga un salario alto disminuye en 9.53%</p></li>
 <li><p>Y así para la demás variables….</p></li>
 </ul>
 </div>
@@ -749,9 +759,8 @@ años de educación tenga un salario Muy Alto es de 45.2%</p>
 </div>
 </div>
 </div>
-<div id="paso-5-qué-tan-ajustado-es-nuestro-modelo"
-class="section level1">
-<h1><strong>Paso 5: ¿Qué tan ajustado es nuestro modelo?</strong></h1>
+<div id="paso-5-qué-tan-ajustado-es" class="section level1">
+<h1><strong>Paso 5: ¿Qué tan ajustado es?</strong></h1>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">PseudoR2</span>(modelo, <span class="at">which =</span> <span class="fu">c</span>(<span class="st">&quot;Nagelkerke&quot;</span>))</span></code></pre></div>
 <pre><code>## Nagelkerke 
 ##  0.5160308</code></pre>
