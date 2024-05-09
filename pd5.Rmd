@@ -193,6 +193,12 @@ años de educación.
 
 ### ¿Cuál es la probabilidad de tener un salario alto para un *hombre (sexo_Mujer = 0) con 15 años de educación*?
 
+Recordemos la ecuación:
+
+```{r, echo=FALSE, out.width="80%",fig.align="center"}
+knitr::include_graphics("EcuacionOrdinal.jpeg") 
+```
+
 Recordamos los coeficientes
 
 ```{r}
