@@ -311,7 +311,7 @@ años de educación tenga un salario Muy Alto es de 45.2%
 knitr::include_graphics("pd5_muyalto.png") 
 ```
 
-# **Paso 5: ¿Cuánto explica nuestro modelo?**
+# **Paso 5: ¿Qué tan ajustado es nuestro modelo?**
 
 ```{r}
 PseudoR2(modelo, which = c("Nagelkerke"))
