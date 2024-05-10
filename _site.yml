@@ -15,5 +15,7 @@ navbar:
       href: pd4.html
     - text: "Sesión 5"
       href: pd5.html
+    - text: "Repaso"
+      href: Repaso.html
     - icon: fab fa-github
       href: https://karinaalc.github.io/Estadistica-2/
