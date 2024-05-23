@@ -13,7 +13,7 @@
 
 <title>Análisis Factorial Exploratorio</title>
 
-<script src="site_libs/header-attrs-2.26/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
@@ -29,13 +29,13 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
-<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -653,7 +653,8 @@ latentes podemos obtener.</p>
 es en donde se presenta la mayor caída para determinar el número de
 factores.</p>
 <p>Donde está el codo las X’s que están encima de la línea roja</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(corMatrix, <span class="at">fm=</span><span class="st">&quot;pa&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(corMatrix, <span class="at">fm=</span><span class="st">&quot;minres&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
+<p><img src="pd6_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
 <p>El eje X vendría a ser lo factores que se podrían dividir y el eje Y
 son los autovalores</p>
@@ -704,14 +705,14 @@ class="section level2">
 ## Mean item complexity =  1.7
 ## Test of the hypothesis that 3 factors are sufficient.
 ## 
-## df null model =  66  with the objective function =  5.82 with Chi Square =  65402.32
-## df of  the model are 33  and the objective function was  0.25 
+## The degrees of freedom for the null model are  66  and the objective function was  5.82 with Chi Square of  65402.32
+## The degrees of freedom for the model are 33  and the objective function was  0.25 
 ## 
 ## The root mean square of the residuals (RMSR) is  0.03 
 ## The df corrected root mean square of the residuals is  0.05 
 ## 
-## The harmonic n.obs is  11247 with the empirical chi square  1614.08  with prob &lt;  7.200019e-319 
-## The total n.obs was  11247  with Likelihood Chi Square =  2841.41  with prob &lt;  0 
+## The harmonic number of observations is  11247 with the empirical chi square  1614.08  with prob &lt;  7.200019e-319 
+## The total number of observations was  11247  with Likelihood Chi Square =  2841.41  with prob &lt;  0 
 ## 
 ## Tucker Lewis Index of factoring reliability =  0.914
 ## RMSEA index =  0.087  and the 90 % confidence intervals are  0.084 0.09

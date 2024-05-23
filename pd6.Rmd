@@ -188,8 +188,8 @@ factores.
 
 Donde está el codo las X's que están encima de la línea roja
 
-```{r echo = T, fig.show='hide', message=FALSE, warning=FALSE}
-fa.parallel(corMatrix, fm="pa", fa="fa", main = "Scree Plot")
+```{r echo = T, message=FALSE, warning=FALSE}
+fa.parallel(corMatrix, fm="minres", fa="fa", main = "Scree Plot")
 ```
 
 El eje X vendría a ser lo factores que se podrían dividir y el eje Y son
