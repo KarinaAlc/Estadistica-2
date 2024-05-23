@@ -460,7 +460,10 @@ a.  Nos preguntamos si el modelo es válido:
     nula, lo cual probaría que nuestro modelo sí funciona. -Al tener un
     p-value de 2.2e-16 nuestro modelo sí funciona.
 
-b.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado (ajustado ya que es un modelo múltiple) que va de 0 a  1 (0% a 100%) -En este caso mis variables (en conjunto) explican el 89.59% de la variabilidad de mi dependiente, esto es bueno, pero quizá podría ser mejor.
+b.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado (ajustado ya
+    que es un modelo múltiple) que va de 0 a 1 (0% a 100%) -En este caso
+    mis variables (en conjunto) explican el 89.59% de la variabilidad de
+    mi dependiente, esto es bueno, pero quizá podría ser mejor.
 c.  ¿Las variables independientes aportan al modelo? -Nos enfocamos en
     el p-value de cada independiente -corroboramos que estas rechacen la
     hipótesis nula, es decir que sean menores que 0.05.
