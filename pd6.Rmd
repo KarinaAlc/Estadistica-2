@@ -49,7 +49,7 @@ sesión exploraremos la data a ver qué emerge.
 
 ```{r message=FALSE, warning=FALSE}
 library(rio)
-data<-import("enaho_2020.sav",to.data.frame=TRUE)
+data<-import("enaho_2023.sav",to.data.frame=TRUE)
 ```
 
 ## Tema de la clase
