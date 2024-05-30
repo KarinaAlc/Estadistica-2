@@ -19,5 +19,7 @@ navbar:
       href: Repaso.html
     - text: "Sesión 6"
       href: pd6.html
+    - text: "Sesión 7"
+      href: AFC.html
     - icon: fab fa-github
       href: https://karinaalc.github.io/Estadistica-2/
