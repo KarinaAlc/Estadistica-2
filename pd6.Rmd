@@ -36,11 +36,10 @@ knitr::include_graphics("logoPUCP.png")
 
 #### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
-<br> <br>
-El Análisis Factorial Exploratorio (AFE) es una técnica estadística que
-permite explorar con mayor precisión las dimensiones subyacentes,
-constructos o variables latentes de las variables observadas, es decir,
-las que observa y mide el investigador.
+<br> <br> El Análisis Factorial Exploratorio (AFE) es una técnica
+estadística que permite explorar con mayor precisión las dimensiones
+subyacentes, constructos o variables latentes de las variables
+observadas, es decir, las que observa y mide el investigador.
 
 Hacemos analisis factorial para reducir las variables en otras variables
 resumen. Es decir, queremos saber si las nuevas variables tienen un
@@ -174,8 +173,6 @@ identidad
 
 ## **PASO 4:** Determinar cuántos factores o variables latentes puede redimensionar la data
 
-
-
 Luego de haber determinado si podemos realizar el análisis factorial,
 pasaremos al paso de calcular el número de factores o de variables
 latentes podemos obtener.
@@ -205,7 +202,6 @@ Los autovalores que superan 1 son los factores que podríamos realizar.
 eigenf <- eigen(cor(confianza, use="complete"))
 eigenf$values
 ```
-
 
 ## **PASO 5:** Solicitamos el número de componentes.
 
@@ -307,7 +303,3 @@ Vemos resultados de cada factor
 ```{r echo = T,   fig.show='hide', message=FALSE, warning=FALSE}
 summary(confianza)
 ```
-
-
-
-
