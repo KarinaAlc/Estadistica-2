@@ -55,8 +55,6 @@ library(lavaan)
 library(semPlot)
 library(BBmisc)
 library(sf) #Para mapas
-library(rgdal)
-library(maptools) #Para mapas
 library(GPArotation)
 ```
 
