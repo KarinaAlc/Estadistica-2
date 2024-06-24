@@ -188,7 +188,7 @@ data$Demo = normalize(data2$factor2,
                                         range = c(0, 10))
 ```
 
-# Georeferencia  🗺️ {.custom-text}
+# Georeferencia  🗺️
 
 ## Mapa del mundo
 
@@ -200,7 +200,7 @@ IMPORTANTE: NO BORRAR LOS OTROS ARCHIVOS QUE COMPONEN LA CARPETA.
 
 Como en este ejemplo:
 
-```{r,echo=FALSE, out.width="20%",fig.align="center"}
+```{r,echo=FALSE, out.width="40%",fig.align="center"}
 knitr::include_graphics("ejemplocarpeta.png") 
 ```
 
