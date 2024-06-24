@@ -23,5 +23,7 @@ navbar:
       href: AFC.html
     - text: "Sesión 8"
       href: pd8.html
+    - text: "Sesión 9"
+      href: Mapas.html
     - icon: fab fa-github
       href: https://karinaalc.github.io/Estadistica-2/
