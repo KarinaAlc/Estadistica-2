@@ -25,7 +25,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1
 
 
 #### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
@@ -39,7 +39,6 @@ library(nnet)
 library(DescTools)
 library(RVAideMemoire)
 library(marginaleffects)
-
 ```
 
 ```{r}
@@ -118,8 +117,7 @@ Revisemos el ompacto de la VI en la probabilidad con efectos marginales. Recuerd
 Calculemos como la edad impacta en la probabilidad con efectos marginales.
 
 ```{r}
-margi=marginaleffects(modelo1)
-summary(margi)[c(1,3)]
+avg_slopes(modelo1)[c(1,3)]
 ```
 
 Cuando una persona tiene menos que 30 años la probabilidad en promedio de que esté a favor de la pena de muerte disminuye en 5.8%
@@ -185,11 +183,10 @@ Prob3
 Revisemos el ompacto de la VI en la probabilidad con efectos marginales. Recuerda que la interpretación se hace por cada variable independiente.
 
 ```{r}
-margi2=marginaleffects(modelo2)
-summary(margi2)[c(1,3)]
+avg_slopes(modelo2)[c(1,3)]
 ```
 
-Cuando una persona sí tienen una asistencia baja a la iglesia la probabilidad (en promedio) de que esté a favor del aborto aumenta en 5.4%.
+Cuando una persona sí tienen una asistencia baja a la iglesia la probabilidad (en promedio) de que esté a favor del aborto aumenta en 5.3%.
 
 Cuando una persona si tiene 30 años o menos, la probabilidad (en promedio) de que esté a favor del aborto disminuye en 6.4%.
 
@@ -283,8 +280,7 @@ Prob_inde
 Revisemos el ompacto de la VI en la probabilidad con efectos marginales. Recuerda que la interpretación se hace por cada variable independiente.
 
 ```{r}
-margiMod1=marginaleffects(mod1)
-summary(margiMod1)[c(1,3,4)]
+avg_slopes(mod1)[c(1,3,4)]
 ```
 
 -   Cuando una persona está a favor del aborto, la probabilidad (en promedio) de sentir afinidad por el partido demócrata aumenta en 16.68%
@@ -352,8 +348,7 @@ Probabilidad por partido independiente
 Revisemos el ompacto de la VI en la probabilidad con efectos marginales. Recuerda que la interpretación se hace por cada variable independiente.
 
 ```{r}
-margiMod2=marginaleffects(mod2)
-summary(margiMod2)[c(1,2,4)]
+avg_slopes(mod2)[c(1,2,4)]
 ```
 
 Interpretemos para las variables que acabamos de agregar **(blanco_raza y childs)**

@@ -310,7 +310,7 @@ summary(modelo1)
 Seguimos nuestro flujograma para evaluar el modelo:
 
 1.  Nos preguntamos si el modelo es válido
-2.  Qué tanto explica el modelo
+2.  Qué tanto explica el modelo (R2 ajustado)
 3.  Si las variables independientes aportan al modelo
 4.  Identificamos los coeficientes
 

@@ -439,13 +439,7 @@ div.tocify {
   <a href="pd2.html">Sesión 2</a>
 </li>
 <li>
-  <a href="TidySup_Revancha_20232.html">Revancha</a>
-</li>
-<li>
-  <a href="pd3.html">Sesión 3</a>
-</li>
-<li>
-  <a href="pd3_v2.html">Sesión 3 v2.0</a>
+  <a href="pd3_v2.html">Sesión 3</a>
 </li>
 <li>
   <a href="pd4.html">Sesión 4</a>
@@ -460,16 +454,13 @@ div.tocify {
   <a href="pd6.html">Sesión 6</a>
 </li>
 <li>
-  <a href="Full_Factor.html">Solución - ejercicio clase</a>
-</li>
-<li>
-  <a href="pd1.html">Sesión 7</a>
+  <a href="AFC.html">Sesión 7</a>
 </li>
 <li>
   <a href="pd8.html">Sesión 8</a>
 </li>
 <li>
-  <a href="pd9.html">Sesión 9</a>
+  <a href="Mapas.html">Sesión 9</a>
 </li>
 <li>
   <a href="https://karinaalc.github.io/Estadistica-2/">
@@ -506,10 +497,10 @@ div.tocify {
 <p><img src="logoPUCP.png" width="30%" style="display: block; margin: auto auto auto 0;" /></p>
 <p><strong>FACULTAD DE CIENCIAS SOCIALES - PUCP</strong> <br></p>
 <div
-id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2023---2"
+id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2024---1"
 class="section level2">
 <h2>Curso: POL 304 - Estadística para el análisis político 2 | Semestre
-2023 - 2</h2>
+2024 - 1</h2>
 <p><br></p>
 <div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
 class="section level4">
@@ -523,7 +514,7 @@ variables resumen. Es decir, queremos saber si las nuevas variables
 tienen un nombre, al cual se le denomina técnicamente variable latente.
 En esta sesión exploraremos la data a ver qué emerge.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;enaho_2020.sav&quot;</span>,<span class="at">to.data.frame=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;enaho_2023.sav&quot;</span>,<span class="at">to.data.frame=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="tema-de-la-clase" class="section level2">
@@ -661,17 +652,18 @@ id="paso-4-determinar-cuántos-factores-o-variables-latentes-puede-redimensionar
 class="section level2">
 <h2><strong>PASO 4:</strong> Determinar cuántos factores o variables
 latentes puede redimensionar la data</h2>
-<div id="opción-1-gráfico-de-sedimentación" class="section level4">
-<h4>➡️ <strong>Opción 1: Gráfico de sedimentación</strong></h4>
 <p>Luego de haber determinado si podemos realizar el análisis factorial,
 pasaremos al paso de calcular el número de factores o de variables
 latentes podemos obtener.</p>
 <p>Esto lo podemos ver con 2 maneras,</p>
+<div id="opción-1-gráfico-de-sedimentación" class="section level4">
+<h4>➡️ <strong>Opción 1: Gráfico de sedimentación</strong></h4>
 <p>Mediante el gráfico de sedimentación. En este gráfico lo que veremos
 es en donde se presenta la mayor caída para determinar el número de
 factores.</p>
 <p>Donde está el codo las X’s que están encima de la línea roja</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(corMatrix, <span class="at">fm=</span><span class="st">&quot;pa&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(corMatrix, <span class="at">fm=</span><span class="st">&quot;minres&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
+<p><img src="pd6_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
 <p>El eje X vendría a ser lo factores que se podrían dividir y el eje Y
 son los autovalores</p>

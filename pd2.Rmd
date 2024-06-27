@@ -183,9 +183,9 @@ a.  **Nos preguntamos si el modelo es válido:**
 
 b.  **¿Qué tanto explica el modelo?**
 
--   Revisamos el **R cuadrado** que va de 0 a 1 (0% a 100%)
+-   Revisamos el **R cuadrado ajustado** que va de 0 a 1 (0% a 100%)
 
--   En este caso mis variables (en conjunto) explican el 92.13% de la
+-   En este caso mis variables (en conjunto) explican el 91.88% de la
     variabilidad de mi dependiente, esto es bueno, pero quizá podría ser
     mejor 😯
 
@@ -263,9 +263,9 @@ a.  Exploración gráfica: Plot de valores residuales frente a valores
 
 La línea verde debería de estar lo más cercana a la línea punteada.
 
-```{r}
+```{r,out.width="70%"}
 #Exploración gráfica
-check_model(modelo1,check ="linearity")
+#check_model(modelo1,check ="linearity")
 ```
 
 b.  Correlación: `cor.test`
@@ -306,7 +306,7 @@ Todos los puntos deberían estar sobre la diagonal color verde.
 
 ```{r,message=FALSE}
 #Exploración gráfica
-check_model(modelo1,check ="qq") #quantile-quantile plot
+#check_model(modelo1,check ="qq") #quantile-quantile plot
 ```
 
 b.  Pruebas de normalidad a los residuos: Lilliefors
@@ -341,7 +341,7 @@ a.  Exploración gráfica: diagrama de residuos standarizados y valores
     predichos.
 
 ```{r, message=FALSE}
-check_model(modelo1, check="homogeneity")
+#check_model(modelo1, check="homogeneity")
 ```
 
 En el Gráfico la línea verde debe seguir una tendencia horizontal, esto
@@ -387,7 +387,7 @@ a.  Con el Factor de Inflación de Varianza (VIF). los factores de
 **Código**
 
 ```{r,warning=FALSE,message=FALSE}
-check_model(modelo1, check="vif")
+#check_model(modelo1, check="vif")
 ```
 
 ### 5.**Apalancamiento**
@@ -460,10 +460,10 @@ a.  Nos preguntamos si el modelo es válido:
     nula, lo cual probaría que nuestro modelo sí funciona. -Al tener un
     p-value de 2.2e-16 nuestro modelo sí funciona.
 
-b.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado que va de 0 a
-    1 (0% a 100%) -En este caso mis variables (en conjunto) explican el
-    89.8% de la variabilidad de mi dependiente, esto es bueno, pero
-    quizá podría ser mejor.
+b.  ¿Qué tanto explica el modelo? -Revisamos el R cuadrado (ajustado ya
+    que es un modelo múltiple) que va de 0 a 1 (0% a 100%) -En este caso
+    mis variables (en conjunto) explican el 89.59% de la variabilidad de
+    mi dependiente, esto es bueno, pero quizá podría ser mejor.
 c.  ¿Las variables independientes aportan al modelo? -Nos enfocamos en
     el p-value de cada independiente -corroboramos que estas rechacen la
     hipótesis nula, es decir que sean menores que 0.05.

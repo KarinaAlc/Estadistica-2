@@ -32,7 +32,7 @@ knitr::include_graphics("logoPUCP.png")
 
 **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1
 
 <br>
 
@@ -98,7 +98,6 @@ library(factoextra)
 library(ggplot2)
 m.distancia <- get_dist(data1, method = "euclidean", stand = TRUE)
 ```
-
 
 
 Vemos la matriz de distancia
@@ -230,7 +229,6 @@ data1=select(data, "psico-esp","fisica-esp","sexual-esp", "fisica-otros","con-al
 En este caso como tenemos indicadores en la escala de % del 0 al 100, no necesitamos estandarizar
 
 
-
 ## Paso 1.  Calculamos distancias y elaboramos matriz de distancias
 
 Calculamos distancias
@@ -245,6 +243,7 @@ fviz_dist(m.distancia, gradient = list(low = "blue", mid = "white", high = "red"
 
 
 ## Paso 2. Estimar el número de clústers
+
 Especificar que el metodo es **kmeans**
 ```{r }
 resnumclust<-NbClust(data1, distance = "euclidean", min.nc=2, max.nc=10, method = "kmeans", index = "alllong")
@@ -275,7 +274,6 @@ k1$cluster
 ## Paso 5. Ver características de los grupos
 
 Agregamos a la base de datos
-
 
 ```{r }
 data1$cluster<-as.factor(k1$cluster)

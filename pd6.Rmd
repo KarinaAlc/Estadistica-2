@@ -30,17 +30,16 @@ knitr::include_graphics("logoPUCP.png")
 
 **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2023 - 2
+## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1
 
 <br>
 
 #### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
-<br> <br>
-El Análisis Factorial Exploratorio (AFE) es una técnica estadística que
-permite explorar con mayor precisión las dimensiones subyacentes,
-constructos o variables latentes de las variables observadas, es decir,
-las que observa y mide el investigador.
+<br> <br> El Análisis Factorial Exploratorio (AFE) es una técnica
+estadística que permite explorar con mayor precisión las dimensiones
+subyacentes, constructos o variables latentes de las variables
+observadas, es decir, las que observa y mide el investigador.
 
 Hacemos analisis factorial para reducir las variables en otras variables
 resumen. Es decir, queremos saber si las nuevas variables tienen un
@@ -49,7 +48,7 @@ sesión exploraremos la data a ver qué emerge.
 
 ```{r message=FALSE, warning=FALSE}
 library(rio)
-data<-import("enaho_2020.sav",to.data.frame=TRUE)
+data<-import("enaho_2023.sav",to.data.frame=TRUE)
 ```
 
 ## Tema de la clase
@@ -174,13 +173,13 @@ identidad
 
 ## **PASO 4:** Determinar cuántos factores o variables latentes puede redimensionar la data
 
-#### ➡️ **Opción 1: Gráfico de sedimentación**
-
 Luego de haber determinado si podemos realizar el análisis factorial,
 pasaremos al paso de calcular el número de factores o de variables
 latentes podemos obtener.
 
 Esto lo podemos ver con 2 maneras,
+
+#### ➡️ **Opción 1: Gráfico de sedimentación**
 
 Mediante el gráfico de sedimentación. En este gráfico lo que veremos es
 en donde se presenta la mayor caída para determinar el número de
@@ -188,8 +187,8 @@ factores.
 
 Donde está el codo las X's que están encima de la línea roja
 
-```{r echo = T, fig.show='hide', message=FALSE, warning=FALSE}
-fa.parallel(corMatrix, fm="pa", fa="fa", main = "Scree Plot")
+```{r echo = T, message=FALSE, warning=FALSE}
+fa.parallel(corMatrix, fm="minres", fa="fa", main = "Scree Plot")
 ```
 
 El eje X vendría a ser lo factores que se podrían dividir y el eje Y son
@@ -304,7 +303,3 @@ Vemos resultados de cada factor
 ```{r echo = T,   fig.show='hide', message=FALSE, warning=FALSE}
 summary(confianza)
 ```
-
-
-
-
