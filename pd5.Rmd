@@ -260,7 +260,7 @@ p_menorigual_bajo-p_menorigual_muybajo
 ```
 
 La probabilidad de que una persona que sea hombre y con 15 años de
-educación tenga un salario Alto es de 0.13 o de 13.1%
+educación tenga un salario Bajo es de 0.13 o de 13.1%
 
 ```{r,echo=FALSE, out.width="80%",fig.align="center"}
 knitr::include_graphics("pd5_corte2.png") 
