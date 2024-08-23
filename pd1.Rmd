@@ -22,7 +22,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1 <br>
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 2 <br>
 
 ### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
@@ -95,7 +95,7 @@ varios comandos.
 
 Filtra casos o filas que cumplen con el criterio.
 
-Por ejemplo, aca estamos filtrando de la data a los países en los que
+Por ejemplo, acá estamos filtrando de la data a los países en los que
 más del 50% de personas realizan un gasto de bolsillo
 
 ```{r, message=FALSE,results= F}
@@ -247,6 +247,10 @@ data %>%
   group_by(Generosos)%>%
   summarise(media=mean(Policulture))
 ```
+
+2.  Filtra a aquellos países que tengan el valor de la libertad de
+    elegir superior al valor de la media. Luego, y cuenta los casos de
+    los países según si son más o menos generosos.
 
 ## **Repaso**
 
