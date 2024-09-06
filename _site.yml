@@ -7,4 +7,6 @@ navbar:
       href: index.html
     - text: "Sesión 1"
       href: pd1.html
+    - text: "Sesión 2"
+      href: pd2.html
    

@@ -26,7 +26,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1 <br>
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 2 <br>
 
 ### Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br>
 
@@ -206,12 +206,28 @@ d.  **Identificamos los coeficientes**
 modelo1$coefficients
 ```
 
--   Armamos nuestra ecuación: y=-0.121108754+
-    Capital_Humano(0.338730284)+....
+-   Armamos nuestra ecuación: y=-0.121108754 +
+    Capital_Humano(0.338730284) + Policulture(0.012707321) +
+    Telecommunicacion_Infrastructura(0.514122324)+
+    ProcesoElectoral(0.007493087)
 
 # **SUPUESTOS**
 
--   Se analizan los residuos
+-   Se analizan los residuos.
+-   Revisaremos 6 supuestos: linealidad, normalidad, homocedasticidad,
+    ausencia de multicolinealidad, apalancamiento e independencia de
+    residuos.
+
+```{r,echo=FALSE, out.width="70%",fig.align="center"}
+knitr::include_graphics("PD2_SUP.png") 
+```
+
+¿Cómo verificamos los supuestos?
+
+```{r,echo=FALSE, out.width="70%",fig.align="center"}
+knitr::include_graphics("PD2_SUP2.png") 
+```
+
 -   Las inferencias del modelo de regresión será confiable/correcta
     solamente si se cumplen *todos* los supuestos.
 
@@ -229,18 +245,6 @@ ggplot(aes(x = participaciónDigital, y = accesoInformacion)) +
        x = "Participación Digital", y = "Acceso a la Información") +
   theme_minimal()
 
-```
-
-♦️ Tabla resumen 1
-
-```{r,echo=FALSE, out.width="70%",fig.align="center"}
-knitr::include_graphics("PD2_SUP.png") 
-```
-
-♦️ Tabla resumen 2
-
-```{r,echo=FALSE, out.width="70%",fig.align="center"}
-knitr::include_graphics("PD2_SUP2.png") 
 ```
 
 ### **1- Linealidad** (el problema es la no linealidad)
@@ -265,7 +269,7 @@ La línea verde debería de estar lo más cercana a la línea punteada.
 
 ```{r,out.width="70%"}
 #Exploración gráfica
-#check_model(modelo1,check ="linearity")
+check_model(modelo1,check ="linearity")
 ```
 
 b.  Correlación: `cor.test`
@@ -405,7 +409,7 @@ a.  Gráfico: Se espera que la línea verde tenga un comportamiento
     horizontal. Observamos si hay casos que están afuera de la línea
     punteada verde.
 
-```{r,warning=FALSE,message=FALSE ,warning=FALSE}
+```{r,warning=FALSE,message=FALSE}
 check_model(modelo1, check="outliers")
 ```
 
@@ -475,3 +479,7 @@ menos que mi modelo1. Por lo tanto, solo al evaluar mi modelo2, a pesar
 de que es un modelo válido, optaría por mantener mi modelo1. **Ojo, solo
 basándome en esta primera evaluación del modelo. Una decisión más fina
 sería al realizar mis pruebas de supuestos completa.**
+
+## Ejercicio
+
+Analiza los supuestos del modelo 2.
