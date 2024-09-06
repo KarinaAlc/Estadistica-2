@@ -310,7 +310,7 @@ Todos los puntos deberían estar sobre la diagonal color verde.
 
 ```{r,message=FALSE}
 #Exploración gráfica
-#check_model(modelo1,check ="qq") #quantile-quantile plot
+check_model(modelo1,check ="qq") #quantile-quantile plot
 ```
 
 b.  Pruebas de normalidad a los residuos: Lilliefors
@@ -345,7 +345,7 @@ a.  Exploración gráfica: diagrama de residuos standarizados y valores
     predichos.
 
 ```{r, message=FALSE}
-#check_model(modelo1, check="homogeneity")
+check_model(modelo1, check="homogeneity")
 ```
 
 En el Gráfico la línea verde debe seguir una tendencia horizontal, esto
@@ -391,7 +391,7 @@ a.  Con el Factor de Inflación de Varianza (VIF). los factores de
 **Código**
 
 ```{r,warning=FALSE,message=FALSE}
-#check_model(modelo1, check="vif")
+check_model(modelo1, check="vif")
 ```
 
 ### 5.**Apalancamiento**
