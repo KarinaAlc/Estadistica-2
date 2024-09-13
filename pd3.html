@@ -439,6 +439,27 @@ div.tocify {
 <li>
   <a href="pd3.html">Sesión 3</a>
 </li>
+<li>
+  <a href="pd4.html">Sesión 4</a>
+</li>
+<li>
+  <a href="pd5.html">Sesión 5</a>
+</li>
+<li>
+  <a href="pd6.html">Sesión 6</a>
+</li>
+<li>
+  <a href="pd7.html">Sesión 7</a>
+</li>
+<li>
+  <a href="pd8.html">Sesión 8</a>
+</li>
+<li>
+  <a href="pd9.html">Sesión 9</a>
+</li>
+<li>
+  <a href="pd10.html">Sesión 10</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -559,8 +580,8 @@ variable sobre si regresarían a clases de manera presencial.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
 <p>Cambiamos los nombres para que sea más fácil identificar las
 variables</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">colnames</span>(data)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Retorno&quot;</span> ,  <span class="st">&quot;satIE&quot;</span>,<span class="st">&quot;edad&quot;</span>  ,  <span class="st">&quot;terEd&quot;</span> ,   <span class="st">&quot;riesCov&quot;</span>,  <span class="st">&quot;resp&quot;</span>,<span class="st">&quot;anx&quot;</span>, <span class="st">&quot;dep&quot;</span>, <span class="st">&quot;cancer&quot;</span>, <span class="st">&quot;cov&quot;</span>,<span class="st">&quot;cred&quot;</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">as.data.frame</span>(data[<span class="fu">complete.cases</span>(data),])</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">names</span>(data)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Retorno&quot;</span> ,  <span class="st">&quot;satIE&quot;</span>,<span class="st">&quot;edad&quot;</span>  ,  <span class="st">&quot;terEd&quot;</span> ,   <span class="st">&quot;riesCov&quot;</span>,  <span class="st">&quot;resp&quot;</span>,<span class="st">&quot;anx&quot;</span>, <span class="st">&quot;dep&quot;</span>, <span class="st">&quot;cancer&quot;</span>, <span class="st">&quot;cov&quot;</span>,<span class="st">&quot;cred&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>data <span class="ot">=</span> <span class="fu">na.omit</span>(data)</span></code></pre></div>
 <p><strong>VARIABLE DEPENDIENTE: <code>Retorno</code></strong></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>Retorno)</span></code></pre></div>
 <pre><code>## 
@@ -678,11 +699,11 @@ class="section level1">
 </ul>
 <p>Queremos saber si estas variables influyen en la probabilidad de que
 el docente quiera retornar o no a clases presenciales</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Retorno <span class="sc">~</span> terEd<span class="sc">+</span>cancer<span class="sc">+</span>dep, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link=</span>logit),<span class="at">data =</span> data)</span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Retorno <span class="sc">~</span> terEd<span class="sc">+</span>cancer<span class="sc">+</span>dep, <span class="at">family =</span> binomial,<span class="at">data =</span> data)</span>
 <span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
 <pre><code>## 
 ## Call:
-## glm(formula = Retorno ~ terEd + cancer + dep, family = binomial(link = logit), 
+## glm(formula = Retorno ~ terEd + cancer + dep, family = binomial, 
 ##     data = data)
 ## 
 ## Deviance Residuals: 

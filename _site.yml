@@ -11,4 +11,18 @@ navbar:
       href: pd2.html
     - text: "Sesión 3"
       href: pd3.html
+    - text: "Sesión 4"
+      href: pd4.html
+    - text: "Sesión 5"
+      href: pd5.html
+    - text: "Sesión 6"
+      href: pd6.html
+    - text: "Sesión 7"
+      href: pd7.html
+    - text: "Sesión 8"
+      href: pd8.html
+    - text: "Sesión 9"
+      href: pd9.html
+    - text: "Sesión 10"
+      href: pd10.html
    

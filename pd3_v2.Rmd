@@ -148,11 +148,11 @@ names(data)
 Cambiamos los nombres para que sea más fácil identificar las variables
 
 ```{r}
-colnames(data)=c("Retorno" ,  "satIE","edad"  ,  "terEd" ,   "riesCov",  "resp","anx", "dep", "cancer", "cov","cred")
+names(data)=c("Retorno" ,  "satIE","edad"  ,  "terEd" ,   "riesCov",  "resp","anx", "dep", "cancer", "cov","cred")
 ```
 
 ```{r}
-data=as.data.frame(data[complete.cases(data),])
+data = na.omit(data)
 ```
 
 **VARIABLE DEPENDIENTE: `Retorno`**
@@ -204,7 +204,6 @@ Ahora en el modelo1:
 
 ```{r}
 avg_slopes(modelo1)[,c(1,3)]
-
 ```
 
 Identificamos que la variación en la probabilidad es de -0.0309; es decir, disminuye un 3.09%. Esto quiere decir que cuando una persona sí vive con personas de tercera edad (es 1), la probabilidad de que quiera retornar a clases disminuye en un 0.0309 o en 3.09% (en promedio).
@@ -235,7 +234,7 @@ Agreguemos más variables:
 Queremos saber si estas variables influyen en la probabilidad de que el docente quiera retornar o no a clases presenciales
 
 ```{r}
-modelo2 <- glm(Retorno ~ terEd+cancer+dep, family = binomial(link=logit),data = data)
+modelo2 <- glm(Retorno ~ terEd+cancer+dep, family = binomial,data = data)
 summary(modelo2)
 ```
 
