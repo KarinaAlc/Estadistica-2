@@ -774,7 +774,8 @@ predichos.</li>
 <p>La línea verde debería de estar lo más cercana a la línea
 punteada.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#check_model(modelo1,check =&quot;linearity&quot;)</span></span></code></pre></div>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;linearity&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-14-1.png" width="70%" /></p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Correlación: <code>cor.test</code></li>
 </ol>
@@ -844,7 +845,8 @@ se podrían aplicar las pruebas globales del modelo.</p>
 </ol>
 <p>Todos los puntos deberían estar sobre la diagonal color verde.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="co">#Exploración gráfica</span></span>
-<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="co">#check_model(modelo1,check =&quot;qq&quot;) #quantile-quantile plot</span></span></code></pre></div>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a><span class="fu">check_model</span>(modelo1,<span class="at">check =</span><span class="st">&quot;qq&quot;</span>) <span class="co">#quantile-quantile plot</span></span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Pruebas de normalidad a los residuos: Lilliefors
 (kolmogorov-Smirnov) [mayores a 50 casos] o Shapiro-Wilks [menores a 50
@@ -879,7 +881,8 @@ la heterocedasticidad.</p>
 <li>Exploración gráfica: diagrama de residuos standarizados y valores
 predichos.</li>
 </ol>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="co">#check_model(modelo1, check=&quot;homogeneity&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;homogeneity&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>En el Gráfico la línea verde debe seguir una tendencia horizontal,
 esto representaría que la distribución de los puntos son uniformes. Al
 ver nuestro gráfico nos damos cuenta que la línea verde va hacia arriba,
@@ -926,7 +929,8 @@ resultados no encontramos multicolinealidad.</li>
 <li>Mayor a 10, grave problema de multicolinealidad.</li>
 </ul>
 <p><strong>Código</strong></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="co">#check_model(modelo1, check=&quot;vif&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="fu">check_model</span>(modelo1, <span class="at">check=</span><span class="st">&quot;vif&quot;</span>)</span></code></pre></div>
+<p><img src="pd2_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 <div id="apalancamiento" class="section level3">
 <h3>5.<strong>Apalancamiento</strong></h3>
