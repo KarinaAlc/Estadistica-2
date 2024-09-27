@@ -86,12 +86,11 @@ Llamamos a las librerías
 
 ```{r,warning=FALSE,message=FALSE, results = 'hide'}
 library(rio)
-library(car)
 library(nnet)
 library(DescTools)
 library(RVAideMemoire)
 library(marginaleffects)
-library(tidyverse)
+library(dplyr)
 ```
 
 Exploremos la data:
@@ -130,11 +129,10 @@ demofree %>%
 Ojo con Hybrid regime y Flawed democracy
 
 ```{r}
-demofree$regimen <- recode(demofree$regimen, 
-                          'Full democracy' = 3,
-                          'Hybrid regime' = 2,
-                          'Flawed democracy' = 2,
-                          'Authoritarian' = 1)
+demofree <- demofree %>% 
+  mutate(regimen = case_when(regimen == "Full democracy" ~ 3,
+                             regimen == "Authoritarian" ~  1,
+                             T ~ 2))
 ```
 
 Confirmamos la suma
@@ -148,7 +146,6 @@ demofree %>%
 Formateamos la variable regimen:)
 
 ```{r}
-
 demofree <- demofree %>%
             mutate(regimen = factor(regimen, 
                                     levels = c("1", "2", "3"),
@@ -156,11 +153,6 @@ demofree <- demofree %>%
 
 ```
 
-```{r}
-demofree$property <- as.numeric(demofree$property)
-demofree$tradefree <- as.numeric(demofree$tradefree)
-demofree$busfree <- as.numeric(demofree$busfree)
-```
 
 ### 1.2. Elegir la línea base
 
@@ -201,6 +193,11 @@ str(demofree$tradefree)
 str(demofree$property)
 ```
 
+```{r}
+demofree$property <- as.numeric(demofree$property)
+demofree$tradefree <- as.numeric(demofree$tradefree)
+```
+
 ## Paso 2: Modelo logístico
 
 ### 2.1 Realizar modelo logístico
@@ -208,7 +205,7 @@ str(demofree$property)
 No olvidemos cual es nuesta línea de base para la interpretación.
 
 ```{r}
-mod1 <- multinom(regimen ~ property + tradefree, data = demofree)
+mod1 <- multinom(regimen ~ property + tradefree, data = demofree)  #del paquete nnet
 summary(mod1)
 ```
 
@@ -290,8 +287,6 @@ library(RVAideMemoire)
 Se debe realizar variable por variable
 
 ```{r}
-#install.packages("RVAideMemoire")
-
 test.multinom(mod1,property) # Se coloca test.multinom(nombredelmodelo,variableindependiente1)
 ```
 
@@ -315,9 +310,7 @@ cada escenario (democracia, democracia fallida o dictadura). Para la
 interpretación usamos el estimado.
 
 ```{r}
-
-avg_slopes(mod1)[,c(1,2,3)]
-
+avg_slopes(mod1)[,c(1,2,3)]  #del paquete marginaleffects
 ```
 
 -   Cuando en un país el índice de derecho a la propiedad incrementa un
@@ -399,6 +392,7 @@ Para fines prácticos, dividamos la variable en países con *poca libertad
 comercial* y con *mucha libertad comercial*.
 
 ```{r}
+demofree$busfree <- as.numeric(demofree$busfree)
 demofree$busfree <- ifelse(demofree$busfree<=74.50, "Poca", "Mucha")
 ```
 
@@ -566,7 +560,7 @@ prop.table(table(demofree$regimen,predict(mod1)),1)
 ### PSEUDO R CUADRADO
 
 ```{r,warning=FALSE}
-PseudoR2(mod1, which = c("Nagelkerke"))
+PseudoR2(mod1, which = c("Nagelkerke")) #del paquete DescTools
 PseudoR2(mod2, which = c("Nagelkerke"))
 ```
 
