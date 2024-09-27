@@ -30,7 +30,7 @@ knitr::include_graphics("logoPUCP.png")
 
 ## **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1
+### Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 2
 
 <br>
 
@@ -56,7 +56,6 @@ knitr::include_graphics("PD4_Ejemplo.png")
 
 Pregunta de investigación:
 
-```{=html}
 <style>
 .custom-text {
   color: #00688B;
@@ -66,7 +65,7 @@ Pregunta de investigación:
   font-size: 22px;
 }
 </style>
-```
+
 ::: custom-text
 ¿Una economía liberal influye en el nivel de democracia? 🤔
 :::
@@ -152,7 +151,6 @@ demofree <- demofree %>%
                                     labels = c("Dictadura", "Democracia fallida", "Democracia")))
 
 ```
-
 
 ### 1.2. Elegir la línea base
 
