@@ -1,10 +1,6 @@
 ---
 title: "Sesión Multinomial"
 output:
-  pdf_document:
-    latex_engine: lualatex
-    toc: true
-  fontfamily: "Apple Color Emoji"
   html_document:
     toc: yes
     toc_float: yes
@@ -15,6 +11,10 @@ output:
     highlight: kate
     always_allow_html: yes
     code_folding: show
+  fontfamily: "Apple Color Emoji"
+  pdf_document:
+    latex_engine: lualatex
+    toc: true
 editor_options: 
   markdown: 
     wrap: 72

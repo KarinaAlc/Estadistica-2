@@ -9,10 +9,13 @@ output:
     toc_depth: 3
     theme: simplex
     highlight: kate
-    always_allow_html: true
+    always_allow_html: yes
     code_folding: show
-editor_options: 
-  markdown: 
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+editor_options:
+  markdown:
     wrap: 72
 ---
 
