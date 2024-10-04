@@ -54,13 +54,19 @@ library(dplyr)
 data <- import("trabajadores.sav")
 ```
 
-**Pregunta de investigación: ¿De qué manera, el sexo y los años de
-educación condicionan el nivel de salario que puede tener un
-trabajador?**
+```{r}
+names(data)
+```
+
+**Pregunta de investigación:**
+
+## **¿Qué factores condicionan el nivel de salario que puede tener un trabajador\@?**
 
 <br> <br>
 
-# **Paso 1: Preparar la data**
+# Modelo 1: **¿De qué manera, el sexo y los años de educación condicionan el nivel de salario que puede tener un trabajador?**
+
+## **Paso 1: Preparar la data**
 
 ### Variable dependiente: Salario anual (nivel)
 
@@ -112,12 +118,6 @@ data<-dummy_cols(data, select_columns = c("sexo"))
 str(data$educ)
 ```
 
-Volvemos Dummy la variable *Sexo*
-
-```{r, message=FALSE, warning=FALSE}
-data<-dummy_cols(data, select_columns = c("sexo"))
-```
-
 Revisamos que se hayan añadido nuestras variables correctamente.
 
 ```{r}
@@ -127,12 +127,11 @@ names(data)
 Veamos si el nivel educativo, y el ser mujer influye en el salario
 actual
 
-# **Paso 2: Creación del modelo**
+## **Paso 2: Creación del modelo**
 
 ```{r, message=FALSE, warning=FALSE}
-modelo <- polr(salario_actual_ordinal ~ sexo_Mujer + educ, data = data, Hess=T)
+modelo <- polr(salario_actual_ordinal ~ sexo_Mujer + educ, data = data, Hess = T)
 summary(modelo)
-
 ```
 
 ### Veamos el p-value y determinar la significancia de las variables independientes
@@ -166,7 +165,7 @@ Esta tabla nos da un resumen de los coeficientes y el pvalue.
 Lo que buscamos entonces es ver *si el p-value es menor a 0.05* en las
 variables independientes seleccionadas.
 
-# **Paso 3: Interpretamos el efecto de las variables**
+## **Paso 3: Interpretamos el efecto de las variables**
 
 ```{r}
 avg_slopes(modelo)[c(1,2,4)] 
@@ -185,7 +184,7 @@ dicotómica), la probabilidad aumenta; pero si es negativa si aumenta en
 
 -   Y así para la demás variables....
 
-# **Paso 4: Preparamos la ecuación del modelo**
+## **Paso 4: Preparamos la ecuación del modelo**
 
 Hagamos un ejemplo, queremos hallar la probabilidad de cada uno de los
 cortes y categorías para el caso de que la persona sea hombre y tenga 15
@@ -209,7 +208,7 @@ coef(summary(modelo))
 knitr::include_graphics("Pd5_Cortes.png") 
 ```
 
-## **PRIMER CORTE: Muy Bajo \| Bajo**
+#### **PRIMER CORTE: Muy Bajo \| Bajo**
 
 Hallemos primero la probabilidad del primer corte, que era Muy Bajo -
 Bajo. Es decir, que la persona sea hombre con 15 años de educación tenga
@@ -234,7 +233,7 @@ de 0.036 o de 3.6%
 knitr::include_graphics("pd5_corte1.png") 
 ```
 
-## **SEGUNDO CORTE: Bajo \| Alto**
+#### **SEGUNDO CORTE: Bajo \| Alto**
 
 Ahora calculemos para todo lo que está por debajo de alto (menor o igual
 a bajo); es decir, muy bajo y bajo.
@@ -266,7 +265,7 @@ educación tenga un salario Bajo es de 0.13 o de 13.1%
 knitr::include_graphics("pd5_corte2.png") 
 ```
 
-## **TERCER CORTE: Alto - Muy alto**
+#### **TERCER CORTE: Alto - Muy alto**
 
 En este corte se calculan los tres escalones menores o iguales a alto:
 Muy bajo, bajo y alto.
@@ -301,7 +300,7 @@ knitr::include_graphics("pd5_corte3.png")
 
 #### SOLO PROBABILIDAD DE MUY ALTO
 
-Como recordamos que era una probabilidad acumulada, donde llegaba hast
+Como recordamos que era una probabilidad acumulada, donde llegaba hasta
 MUY ALTO era 1. Ya tenemos la probabilidad de tener salario alto o
 menos, para hallar la probabilidad de que sea muy alto, solo debemos
 restar el resultado del tercer corte a 1 (1- Tercer corte)
@@ -317,8 +316,39 @@ años de educación tenga un salario Muy Alto es de 45.2%
 knitr::include_graphics("pd5_muyalto.png") 
 ```
 
-# **Paso 5: ¿Qué tan ajustado es?**
+# **Modelo 2: ¿De qué manera, el pertenecer a una minoría, ser personal administrativo o no y los años de educación condicionan el nivel de salario que puede tener un trabajador?**
+
+Convertir dummy a categoría laboral, ya que es politómica:
+
+-   0 es Ausente
+
+-   1 es administrtivo
+
+-   2 es seguridad
+
+-   3 es directivo
+
+```{r}
+str(data$catlab)
+table(data$catlab)
+```
+
+```{r}
+data<-dummy_cols(data, select_columns = c("catlab"))
+```
+
+Creación del modelo
+
+```{r, message=FALSE, warning=FALSE}
+modelo2 <- polr(salario_actual_ordinal ~ minoría + catlab_1 + educ, data = data, Hess = T)
+summary(modelo2)
+```
+
+Aplicar los pasos siguientes
+
+## **Paso 5: ¿Qué modelo es el más ajustado?**
 
 ```{r}
 PseudoR2(modelo, which = c("Nagelkerke"))
+PseudoR2(modelo2, which = c("Nagelkerke"))
 ```
