@@ -11,7 +11,7 @@
 
 
 
-<title>Repaso</title>
+<title>Análisis Factorial Exploratorio</title>
 
 <script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -477,532 +477,398 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Repaso</h1>
+<h1 class="title toc-ignore">Análisis Factorial Exploratorio</h1>
 
 </div>
 
 
+<p><br></p>
+<center>
+<img src=" " width="200"/>
+</center>
 <p><img src="logoPUCP.png" width="30%" style="display: block; margin: auto auto auto 0;" /></p>
-<div id="facultad-de-ciencias-sociales---pucp" class="section level2">
-<h2><strong>FACULTAD DE CIENCIAS SOCIALES - PUCP</strong> <br></h2>
+<p><strong>FACULTAD DE CIENCIAS SOCIALES - PUCP</strong> <br></p>
 <div
-id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2024---2"
-class="section level3">
-<h3>Curso: POL 304 - Estadística para el análisis político 2 | Semestre
-2024 - 2</h3>
+id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2024---1"
+class="section level2">
+<h2>Curso: POL 304 - Estadística para el análisis político 2 | Semestre
+2024 - 1</h2>
+<p><br></p>
 <div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
 class="section level4">
 <h4>Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h4>
+<p><br> <br> El Análisis Factorial Exploratorio (AFE) es una técnica
+estadística que permite explorar con mayor precisión las dimensiones
+subyacentes, constructos o variables latentes de las variables
+observadas, es decir, las que observa y mide el investigador.</p>
+<p>Hacemos analisis factorial para reducir las variables en otras
+variables resumen. Es decir, queremos saber si las nuevas variables
+tienen un nombre, al cual se le denomina técnicamente variable latente.
+En esta sesión exploraremos la data a ver qué emerge.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(RVAideMemoire)</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;Repaso.xlsx&quot;</span>)</span></code></pre></div>
-<table>
-<caption>Diccionario de datos</caption>
-<colgroup>
-<col width="34%" />
-<col width="32%" />
-<col width="32%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Nombre de variable</th>
-<th>Descripción</th>
-<th>Valores</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>abany1</td>
-<td>¿A favor del aborto?</td>
-<td>1: si/0:No</td>
-</tr>
-<tr class="even">
-<td>age</td>
-<td>Edad</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>treinta_menos</td>
-<td>¿La persona tiene 30 años o menos?</td>
-<td>1: si/0:No</td>
-</tr>
-<tr class="even">
-<td>relig_bajo</td>
-<td>¿Tiene asistencia baja a la iglesia?</td>
-<td>1: si/0:No</td>
-</tr>
-<tr class="odd">
-<td>favor_penamuerte</td>
-<td>¿A favor de la pena de muerte?</td>
-<td>1: si/0:No</td>
-</tr>
-<tr class="even">
-<td>childs</td>
-<td>N° de hijos</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td>mucha_conf_congreso</td>
-<td>¿Tiene mucha confianza en el congreso?</td>
-<td>1: si/0:No</td>
-</tr>
-<tr class="even">
-<td>blanco_raza</td>
-<td>¿La persona es de raza blanca?</td>
-<td>1: si/0:No</td>
-</tr>
-<tr class="odd">
-<td>partido</td>
-<td>¿Por cuál partido siente afinidad?</td>
-<td>1-Democrata,2-Republicano, 3-Independiente</td>
-</tr>
-</tbody>
-</table>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">&quot;enaho_2023.sav&quot;</span>,<span class="at">to.data.frame=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 </div>
 </div>
+<div id="tema-de-la-clase" class="section level2">
+<h2>Tema de la clase</h2>
+<p>Vamos a ver si podemos crear una variable <em>latente de
+confianza</em> en las instituciones <em>(del P1$01 (col 11) al P1$31
+(col 31)).</em></p>
+<p>Vamos a tomar 11 variables observables de la base de datos de enaho,
+que es justo la batería de preguntas que les mostré en el
+cuestionario.</p>
 </div>
-<div id="regresión-logística-binaria" class="section level2">
-<h2>Regresión logística binaria:</h2>
-<div id="modelo-1" class="section level3">
-<h3>Modelo 1</h3>
-<p><strong><em>¿Qué factores afectan la probabilidad de que una persona
-esté a favor de la pena de muerte?</em></strong></p>
+<div id="preparamos-las-variables" class="section level2">
+<h2>Preparamos las variables</h2>
+<p>Confianza en las instituciones</p>
+<div id="subset-de-las-variables-que-usaremos" class="section level3">
+<h3>Subset de las variables que usaremos</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>confianza<span class="ot">&lt;-</span>data[,<span class="fu">c</span>(<span class="dv">11</span><span class="sc">:</span><span class="dv">22</span>)]</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#En caso quieran mencionar el nombre de la variable pueden usar el comando select() del paquete dplyr.</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>confianza[confianza<span class="sc">==</span> <span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
+<p>Eliminamos los datos perdidos únicamente de la selección de
+variables.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>confianza<span class="ot">&lt;-</span><span class="fu">na.omit</span>(confianza)</span></code></pre></div>
+<p>Etiquetamos las variables seleccionadas de acuerdo al nombre</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">names</span>(confianza)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;JNE&quot;</span>,<span class="st">&quot;ONPE&quot;</span>,<span class="st">&quot;RENIEC&quot;</span>,<span class="st">&quot;Mun.Prov&quot;</span>,<span class="st">&quot;Mun.Dist&quot;</span>,<span class="st">&quot;PNP&quot;</span>,<span class="st">&quot;FFAA&quot;</span>,<span class="st">&quot;Gob.Reg&quot;</span>,<span class="st">&quot;P.Judicial&quot;</span>,<span class="st">&quot;MINEDU&quot;</span>,<span class="st">&quot;Def.Pueblo&quot;</span>,<span class="st">&quot;Congreso&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="paso-1-calcular-la-matriz-de-correlación"
+class="section level2">
+<h2><strong>PASO 1:</strong> Calcular la matriz de correlación</h2>
+<p>Tenemos diferentes maneras de crear la matriz de correlación.</p>
+<p>Al tener una variable que mide confianza desde nada a mucha
+confianza, la denominamos como ordinal, y por lo tanto,tendremos que
+ejecutar la correlación policórica.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#install.packages(&quot;polycor&quot;)</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">library</span>(polycor)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>poly_cor <span class="ot">&lt;-</span> <span class="fu">polychoric</span>(confianza)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>poly_cor</span></code></pre></div>
+<pre><code>## Call: polychoric(x = confianza)
+## Polychoric correlations 
+##            JNE  ONPE RENIE Mn.Pr Mn.Ds PNP  FFAA Gb.Rg P.Jdc MINED Df.Pb
+## JNE        1.00                                                         
+## ONPE       0.85 1.00                                                    
+## RENIEC     0.55 0.61 1.00                                               
+## Mun.Prov   0.52 0.53 0.44  1.00                                         
+## Mun.Dist   0.49 0.49 0.41  0.86  1.00                                   
+## PNP        0.47 0.50 0.46  0.54  0.55  1.00                             
+## FFAA       0.43 0.46 0.52  0.42  0.42  0.68 1.00                        
+## Gob.Reg    0.51 0.52 0.40  0.66  0.64  0.58 0.51 1.00                   
+## P.Judicial 0.51 0.52 0.42  0.57  0.56  0.59 0.50 0.70  1.00             
+## MINEDU     0.43 0.46 0.52  0.45  0.45  0.51 0.49 0.50  0.57  1.00       
+## Def.Pueblo 0.47 0.49 0.47  0.47  0.46  0.51 0.51 0.53  0.59  0.56  1.00 
+## Congreso   0.43 0.45 0.33  0.53  0.52  0.48 0.40 0.60  0.60  0.43  0.56 
+## [1] 1.00
+## 
+##  with tau of 
+##                 1      2   3
+## JNE        -0.403  0.940 1.8
+## ONPE       -0.488  0.792 1.8
+## RENIEC     -1.082 -0.048 1.1
+## Mun.Prov   -0.147  1.088 2.0
+## Mun.Dist   -0.176  1.059 2.0
+## PNP        -0.418  0.770 1.7
+## FFAA       -0.704  0.317 1.3
+## Gob.Reg    -0.061  1.173 2.1
+## P.Judicial -0.123  1.056 1.9
+## MINEDU     -0.911  0.323 1.4
+## Def.Pueblo -0.502  0.715 1.7
+## Congreso    0.350  1.477 2.2</code></pre>
+<p>Creamos un objeto con la matriz de correlaciones</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>corMatrix<span class="ot">=</span>poly_cor<span class="sc">$</span>rho </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">cor.plot</span>(corMatrix,</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>          <span class="at">numbers=</span>T, <span class="co">#Se muestren los numeros de las correlaciones</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>          <span class="at">upper=</span>F, <span class="co">#Que aparezca la segunda parte</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>          <span class="at">main=</span> <span class="st">&quot;Matriz de correlaciones&quot;</span>,<span class="co">#Titulo</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>          <span class="at">show.legend=</span>T)<span class="co">#Mostrar leyenda</span></span></code></pre></div>
+</div>
+<div id="paso-2-verificando-que-los-datos-se-puedan-factorizar"
+class="section level2">
+<h2><strong>PASO 2:</strong> Verificando que los datos se puedan
+factorizar</h2>
+<p>❗ La prueba de KMO nos permite determinar si se puede factorizar o
+no.</p>
+<p>Lo que hace es eliminar la influencia o la información que realmente
+no aporta en la relación con las variables observables, para así ver la
+correlación real, a este proceso se le denomina correlación parcial.</p>
+<p>Lo que buscamos es que la correlación parcial sea mayor a 0.5</p>
+<p>Se solicita un valor de al menos 0.5, a partir del 0.8 ya es
+excelente.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>psych<span class="sc">::</span><span class="fu">KMO</span>(confianza) </span></code></pre></div>
+<pre><code>## Kaiser-Meyer-Olkin factor adequacy
+## Call: psych::KMO(r = confianza)
+## Overall MSA =  0.9
+## MSA for each item = 
+##        JNE       ONPE     RENIEC   Mun.Prov   Mun.Dist        PNP       FFAA 
+##       0.84       0.84       0.92       0.84       0.84       0.92       0.90 
+##    Gob.Reg P.Judicial     MINEDU Def.Pueblo   Congreso 
+##       0.94       0.93       0.94       0.95       0.95</code></pre>
+<p>Lo que tenemos que ver es el overall MSA, este valor de preferencia
+tiene que ser mayor a 0.5, queremos que salga más cercano a 1.</p>
+</div>
+<div id="paso-3-verificar-si-la-matriz-de-correlaciones-es-adecuada"
+class="section level2">
+<h2><strong>PASO 3:</strong> Verificar si la matriz de correlaciones es
+adecuada</h2>
+<p>Verificar si la matriz de correlaciones es adecuada.</p>
 <ul>
-<li>Su edad (treinta_menos):</li>
+<li>Test de Bartlett:</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(favor_penamuerte <span class="sc">~</span> treinta_menos,<span class="at">family=</span> binomial,data)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
-<pre><code>## 
-## Call:
-## glm(formula = favor_penamuerte ~ treinta_menos, family = binomial, 
-##     data = data)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.4695  -1.4695   0.9111   0.9111   1.0070  
-## 
-## Coefficients:
-##               Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)    0.66475    0.05503  12.079   &lt;2e-16 ***
-## treinta_menos -0.24967    0.12272  -2.034   0.0419 *  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 2357.1  on 1818  degrees of freedom
-## Residual deviance: 2353.0  on 1817  degrees of freedom
-##   (155 observations deleted due to missingness)
-## AIC: 2357
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
-<div id="cuál-es-el-efecto-de-la-variable" class="section level4">
-<h4>¿Cuál es el efecto de la variable?</h4>
-<p>Cuando una persona tiene menos que 30 años, la probabilidad de que
-esté a favor de la pena de muerte disminuye.</p>
-</div>
-<div id="significancia-de-las-variables" class="section level4">
-<h4>Significancia de las variables</h4>
-<p>¿La variable es significativa?</p>
-<p>Sí, su p valor es menor a 0.05 :)</p>
-</div>
-<div id="predicciones" class="section level4">
-<h4>Predicciones</h4>
-<p>¿Cuál sera la probabilidad de estar a favor de la pena de muerte
-cuando una persona si tiene 30 años o menos (treinta_menos = 1)?</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">coef</span>(modelo1) <span class="co">#Veamos los coeficientes</span></span></code></pre></div>
-<pre><code>##   (Intercept) treinta_menos 
-##     0.6647477    -0.2496671</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#Prob cuando tiene 30 años o menos</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>Num1 <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">0.6647477</span> <span class="sc">-</span><span class="fl">0.2496671</span><span class="sc">*</span><span class="dv">1</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>Den1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num1 </span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>Prob_simenor30 <span class="ot">=</span> Num1<span class="sc">/</span>Den1</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>Prob_simenor30</span></code></pre></div>
-<pre><code>## [1] 0.6023055</code></pre>
-<p>¿Cuál sera la probabilidad de estar a favor de la pena de muerte
-cuando una persona si tiene 30 años o menos (treinta_menos = 1)?</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">#Prob cuando NO tiene 30 años o menos</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>Num1 <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">0.6647477</span> <span class="sc">-</span><span class="fl">0.2496671</span><span class="sc">*</span><span class="dv">0</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>Den1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num1 </span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>Prob_simenor30 <span class="ot">=</span> Num1<span class="sc">/</span>Den1</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>Prob_simenor30</span></code></pre></div>
-<pre><code>## [1] 0.6603261</code></pre>
-<p>¿Hay alguna diferencia entre las probabilidades?</p>
-</div>
-<div id="efectos-marginales" class="section level4">
-<h4>Efectos marginales:</h4>
-<p>Revisemos el ompacto de la VI en la probabilidad con efectos
-marginales. Recuerda que la interpretación se hace por cada variable
-independiente.</p>
-<p>Calculemos como la edad impacta en la probabilidad con efectos
-marginales.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div>
-<pre><code>## 
-##           Term Estimate
-##  treinta_menos   -0.058
-## 
-## Columns: term, estimate</code></pre>
-<p>Cuando una persona tiene menos que 30 años la probabilidad en
-promedio de que esté a favor de la pena de muerte disminuye en 5.8%</p>
-<p>(Solo para ver que la variación de la probabilidad calza con lo
-calculado previamente)</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">head</span>(modelo1<span class="sc">$</span>fitted.values)</span></code></pre></div>
-<pre><code>##         2         4         5         6         7         8 
-## 0.6023055 0.6603261 0.6603261 0.6603261 0.6603261 0.6023055</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fl">0.6603261-0.6023055</span> </span></code></pre></div>
-<pre><code>## [1] 0.0580206</code></pre>
-<p>Sale igualito :)</p>
-</div>
-</div>
-<div id="modelo-2" class="section level3">
-<h3>Modelo 2</h3>
+<p><img src="BARTLETT.png" width="20%" style="display: block; margin: auto;" /></p>
+<p>Otro manera de poder determinar si podemos realizar o no el análisis
+factorial, es mediante el test de bartlett, que nos permite indicar si
+la matriz de correlaciones que henmos obsrvado en el primer paso se
+parece o no a una matriz de identidad.</p>
 <ul>
-<li><p>Su edad (treinta_menos)</p></li>
-<li><p>Baja asistencia a misa (relig_bajo)</p></li>
+<li>Que es la matriz de identidad?</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(favor_penamuerte <span class="sc">~</span> treinta_menos<span class="sc">+</span>relig_bajo,<span class="at">family=</span> binomial,data)</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
+<p>Es una matriz donde solo se cuenta con los valores de 1 en la
+diagonal y en los demás valores es 0, es decir, que la unica correlación
+existente es entre las mismas variables.</p>
+<p>Entonces, lo que esperamos es que la matriz de correlación sea
+diferente a la matriz de identidad, para concluir que sí hay
+correlación.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">cortest.bartlett</span>(corMatrix,<span class="at">n=</span><span class="fu">nrow</span>(confianza))<span class="sc">$</span>p.value<span class="sc">&gt;</span><span class="fl">0.05</span><span class="co">#Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Este es una prueba de hipótesis donde H0: La matriz de correlacion es
+una matriz identidad</p>
+<p>Entonces buscamos que se rechace la hipótesis nula para así poder
+determinar que la matriz de correlación no se prece una matriz de
+identidad</p>
+</div>
+<div
+id="paso-4-determinar-cuántos-factores-o-variables-latentes-puede-redimensionar-la-data"
+class="section level2">
+<h2><strong>PASO 4:</strong> Determinar cuántos factores o variables
+latentes puede redimensionar la data</h2>
+<p>Luego de haber determinado si podemos realizar el análisis factorial,
+pasaremos al paso de calcular el número de factores o de variables
+latentes podemos obtener.</p>
+<p>Esto lo podemos ver con 2 maneras,</p>
+<div id="opción-1-gráfico-de-sedimentación" class="section level4">
+<h4>➡️ <strong>Opción 1: Gráfico de sedimentación</strong></h4>
+<p>Mediante el gráfico de sedimentación. En este gráfico lo que veremos
+es en donde se presenta la mayor caída para determinar el número de
+factores.</p>
+<p>Donde está el codo las X’s que están encima de la línea roja</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(corMatrix, <span class="at">fm=</span><span class="st">&quot;minres&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
+<p><img src="pd6_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
+<p>El eje X vendría a ser lo factores que se podrían dividir y el eje Y
+son los autovalores</p>
+</div>
+<div id="opción-2-eigen-values---autovalores" class="section level4">
+<h4>➡️ <strong>Opción 2: Eigen values - Autovalores</strong></h4>
+<p>Los autovalores que superan 1 son los factores que podríamos
+realizar.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>eigenf <span class="ot">&lt;-</span> <span class="fu">eigen</span>(<span class="fu">cor</span>(confianza, <span class="at">use=</span><span class="st">&quot;complete&quot;</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>eigenf<span class="sc">$</span>values</span></code></pre></div>
+<pre><code>##  [1] 5.7243559 1.1305763 0.9707585 0.7816106 0.6636440 0.5535846 0.5075943
+##  [8] 0.4647083 0.4033080 0.3622893 0.2257831 0.2117871</code></pre>
+</div>
+</div>
+<div id="paso-5-solicitamos-el-número-de-componentes."
+class="section level2">
+<h2><strong>PASO 5:</strong> Solicitamos el número de componentes.</h2>
+<p>Aplicamos la redimensión</p>
+<p>En esta parte, aplicamos los componentes principales.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co">#install.packages(&quot;GPArotation&quot;)</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="fu">library</span>(GPArotation)</span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>factorial <span class="ot">&lt;-</span> <span class="fu">fa</span>(confianza,<span class="at">nfactors=</span> <span class="dv">3</span> ,<span class="at">rotate =</span> <span class="st">&quot;varimax&quot;</span>,<span class="at">fm=</span><span class="st">&quot;minres&quot;</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>factorial</span></code></pre></div>
+<pre><code>## Factor Analysis using method =  minres
+## Call: fa(r = confianza, nfactors = 3, rotate = &quot;varimax&quot;, fm = &quot;minres&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##             MR1  MR3  MR2   h2   u2 com
+## JNE        0.27 0.24 0.73 0.67 0.33 1.5
+## ONPE       0.27 0.21 0.87 0.87 0.13 1.3
+## RENIEC     0.45 0.13 0.44 0.41 0.59 2.2
+## Mun.Prov   0.25 0.82 0.23 0.78 0.22 1.4
+## Mun.Dist   0.27 0.79 0.19 0.73 0.27 1.4
+## PNP        0.61 0.29 0.21 0.50 0.50 1.7
+## FFAA       0.63 0.14 0.23 0.47 0.53 1.4
+## Gob.Reg    0.51 0.49 0.19 0.53 0.47 2.3
+## P.Judicial 0.59 0.37 0.20 0.52 0.48 2.0
+## MINEDU     0.58 0.19 0.23 0.43 0.57 1.6
+## Def.Pueblo 0.59 0.23 0.23 0.46 0.54 1.6
+## Congreso   0.43 0.36 0.15 0.34 0.66 2.2
+## 
+##                        MR1  MR3  MR2
+## SS loadings           2.74 2.11 1.88
+## Proportion Var        0.23 0.18 0.16
+## Cumulative Var        0.23 0.40 0.56
+## Proportion Explained  0.41 0.31 0.28
+## Cumulative Proportion 0.41 0.72 1.00
+## 
+## Mean item complexity =  1.7
+## Test of the hypothesis that 3 factors are sufficient.
+## 
+## The degrees of freedom for the null model are  66  and the objective function was  5.82 with Chi Square of  65402.32
+## The degrees of freedom for the model are 33  and the objective function was  0.25 
+## 
+## The root mean square of the residuals (RMSR) is  0.03 
+## The df corrected root mean square of the residuals is  0.05 
+## 
+## The harmonic number of observations is  11247 with the empirical chi square  1614.08  with prob &lt;  7.200019e-319 
+## The total number of observations was  11247  with Likelihood Chi Square =  2841.41  with prob &lt;  0 
+## 
+## Tucker Lewis Index of factoring reliability =  0.914
+## RMSEA index =  0.087  and the 90 % confidence intervals are  0.084 0.09
+## BIC =  2533.59
+## Fit based upon off diagonal values = 0.99
+## Measures of factor score adequacy             
+##                                                    MR1  MR3  MR2
+## Correlation of (regression) scores with factors   0.85 0.89 0.92
+## Multiple R square of scores with factors          0.72 0.80 0.84
+## Minimum correlation of possible factor scores     0.45 0.59 0.68</code></pre>
+<p>Diagramamos 📊</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">fa.diagram</span>(factorial)</span></code></pre></div>
+<p>¿Que variables componen cada uno de mis factores?</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="fu">print</span>(factorial<span class="sc">$</span>loadings,<span class="at">cutoff =</span> <span class="fl">0.35</span>)</span></code></pre></div>
 <pre><code>## 
-## Call:
-## glm(formula = favor_penamuerte ~ treinta_menos + relig_bajo, 
-##     family = binomial, data = data)
+## Loadings:
+##            MR1   MR3   MR2  
+## JNE                    0.734
+## ONPE                   0.867
+## RENIEC     0.445       0.436
+## Mun.Prov         0.816      
+## Mun.Dist         0.789      
+## PNP        0.614            
+## FFAA       0.630            
+## Gob.Reg    0.506 0.489      
+## P.Judicial 0.589 0.372      
+## MINEDU     0.577            
+## Def.Pueblo 0.592            
+## Congreso   0.434 0.357      
 ## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.5195  -1.4150   0.8702   0.9571   1.0667  
-## 
-## Coefficients:
-##               Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)    0.54311    0.07399   7.340 2.13e-13 ***
-## treinta_menos -0.27703    0.12373  -2.239   0.0252 *  
-## relig_bajo     0.23268    0.09941   2.341   0.0192 *  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## (Dispersion parameter for binomial family taken to be 1)
-## 
-##     Null deviance: 2349.8  on 1811  degrees of freedom
-## Residual deviance: 2340.4  on 1809  degrees of freedom
-##   (162 observations deleted due to missingness)
-## AIC: 2346.4
-## 
-## Number of Fisher Scoring iterations: 4</code></pre>
-<div id="cuál-es-el-efecto-de-la-variable-1" class="section level4">
-<h4>¿Cuál es el efecto de la variable?</h4>
-<p>Cuando una persona tiene menos que 30 años, la probabilidad de que
-esté a favor de la pena de muerte disminuye.</p>
-<p>Cuando una persona tiene una asistencia baja a la iglesia la
-probabilidad de que esté a favor de la pena de muerte aumenta.</p>
+##                  MR1   MR3   MR2
+## SS loadings    2.735 2.107 1.875
+## Proportion Var 0.228 0.176 0.156
+## Cumulative Var 0.228 0.403 0.560</code></pre>
+<p>1.Ver qué variables tiene cada componente</p>
+<p>2.Ver la carga, que tanto aporta cada variable al componente.</p>
+<p>3.Proportion Var y Cumulative Var</p>
 </div>
-<div id="significancia-de-las-variables-1" class="section level4">
-<h4>Significancia de las variables</h4>
-<p>¿Las variables son significativas?</p>
-<p>Sí, las dos tienen valor menor a 0.05 :)</p>
-</div>
-<div id="predicciones-1" class="section level4">
-<h4>Predicciones</h4>
-<p>¿Cuál sera la probabilidad de estar a favor de la pena de muerte
-cuando una persona si tiene 30 años o menos (treinta_menos = 1) y tiene
-asistencia baja a la iglesia (relig_bajo = 1) ?</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">coef</span>(modelo2) <span class="co">#Revisemos los coeficientes</span></span></code></pre></div>
-<pre><code>##   (Intercept) treinta_menos    relig_bajo 
-##     0.5431132    -0.2770298     0.2326816</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>Num2 <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">0.5431132</span> <span class="sc">-</span><span class="fl">0.2770298</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.2326816</span><span class="sc">*</span><span class="dv">1</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>Den2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num2 </span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>Prob2 <span class="ot">=</span> Num2<span class="sc">/</span>Den2</span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>Prob2</span></code></pre></div>
-<pre><code>## [1] 0.6221691</code></pre>
-<p>¿Cuál sera la probabilidad de estar a favor de la pena de muerte
-cuando una persona si tiene 30 años o menos (treinta_menos = 1) y tiene
-asistencia baja a la iglesia (relig_bajo = 0) ?</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>Num2 <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">0.5431132</span> <span class="sc">-</span><span class="fl">0.2770298</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.2326816</span><span class="sc">*</span><span class="dv">0</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>Den2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num2 </span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>Prob3 <span class="ot">=</span> Num2<span class="sc">/</span>Den2</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>Prob3</span></code></pre></div>
-<pre><code>## [1] 0.5661311</code></pre>
-</div>
-<div id="efectos-marginales-1" class="section level4">
-<h4>Efectos marginales:</h4>
-<p>Revisemos el ompacto de la VI en la probabilidad con efectos
-marginales. Recuerda que la interpretación se hace por cada variable
-independiente.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo2)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div>
-<pre><code>## 
-##           Term Estimate
-##  relig_bajo      0.0530
-##  treinta_menos  -0.0644
-## 
-## Columns: term, estimate</code></pre>
-<p>Cuando una persona sí tienen una asistencia baja a la iglesia la
-probabilidad (en promedio) de que esté a favor del aborto aumenta en
-5.3%.</p>
-<p>Cuando una persona si tiene 30 años o menos, la probabilidad (en
-promedio) de que esté a favor del aborto disminuye en 6.4%.</p>
-</div>
-</div>
-</div>
-<div id="regresión-logística-multinomial" class="section level2">
-<h2>Regresión logística multinomial</h2>
-<p><strong><em>¿Qué factores afectan la probabilidad de que una persona
-sienta afinidad por cierto partido
-(democrata/republicano/independiente)?</em></strong></p>
-<div id="elección-de-linea-base" class="section level3">
-<h3>Elección de linea base</h3>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>partido)</span></code></pre></div>
-<pre><code>## 
-##   1   2   3 
-## 699 442 765</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>data<span class="sc">$</span>partido1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>partido,<span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Democrata&quot;</span>,<span class="st">&quot;Republicano&quot;</span>,<span class="st">&quot;Independiente&quot;</span>))</span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>partido1)</span></code></pre></div>
-<pre><code>## 
-##     Democrata   Republicano Independiente 
-##           699           442           765</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">contrasts</span>(data<span class="sc">$</span>partido1)</span></code></pre></div>
-<pre><code>##               Republicano Independiente
-## Democrata               0             0
-## Republicano             1             0
-## Independiente           0             1</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>data<span class="sc">$</span>partido1 <span class="ot">&lt;-</span> <span class="fu">relevel</span>(data<span class="sc">$</span>partido1 , <span class="at">ref =</span> <span class="st">&quot;Independiente&quot;</span>)</span></code></pre></div>
-</div>
-<div id="modelo-1-1" class="section level3">
-<h3>Modelo 1</h3>
-<p>Variables independientes</p>
-<p>abany: ¿Apoya el aborto? (Si/No)</p>
-<p>age: Edad (numérico)</p>
-</div>
-<div id="creación-del-modelo" class="section level3">
-<h3>Creación del modelo</h3>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">multinom</span>(partido1 <span class="sc">~</span> abany <span class="sc">+</span> age, <span class="at">data =</span> data)</span></code></pre></div>
-<pre><code>## # weights:  12 (6 variable)
-## initial  value 1317.236134 
-## iter  10 value 1246.902792
-## final  value 1246.902753 
-## converged</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
-<pre><code>## Call:
-## multinom(formula = partido1 ~ abany + age, data = data)
-## 
-## Coefficients:
-##             (Intercept)      abany        age
-## Democrata     -1.277693  0.4664781 0.02104493
-## Republicano   -1.236709 -0.7020387 0.02129955
-## 
-## Std. Errors:
-##             (Intercept)     abany         age
-## Democrata     0.2160525 0.1354483 0.004016450
-## Republicano   0.2346277 0.1625249 0.004439657
-## 
-## Residual Deviance: 2493.806 
-## AIC: 2505.806</code></pre>
-<div id="significancia-de-las-variables-2" class="section level4">
-<h4>Significancia de las variables</h4>
-<ol style="list-style-type: decimal">
-<li><p>Solo podemos revisar la significancia de las variables
-numéricas.</p></li>
-<li><p>El test se hace variable por variable.</p></li>
-</ol>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod1,age)</span></code></pre></div>
-<pre><code>##                               Coeff        SE Odds.ratio      z  Pr(&gt;|z|)    
-## Democrata|Independiente   0.0210449 0.0040164     1.0213 5.2397 1.609e-07 ***
-## Republicano|Independiente 0.0212996 0.0044397     1.0215 4.7976 1.606e-06 ***
-## Republicano|Democrata     0.0002547 0.0044263     1.0003 0.0575    0.9541    
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Sobre la variable edad: La edad es una variable que puede impactar en
-la probabilidad de sentir afinidad por el partido demócrata en contraste
-al independiente; y también impacta en la probabilidad de sentir
-afinidad por el partido republicano en contraste del independiente. Sin
-embargo, no es significativa para la probabilidad de ser republicano y
-no demócrata.</p>
-</div>
-<div id="predicciones-2" class="section level4">
-<h4>Predicciones:</h4>
-<p>¿Cuál será la probabilidad de sentir afinidad por x partido cuando se
-está a favor del aborto y tiene 45 años?</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="co">#recordando los coeficientes</span></span>
-<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="fu">coef</span>(mod1)</span></code></pre></div>
-<pre><code>##             (Intercept)      abany        age
-## Democrata     -1.277693  0.4664781 0.02104493
-## Republicano   -1.236709 -0.7020387 0.02129955</code></pre>
-<p>Probabilidad por demócrata:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="co">#Demócrata</span></span>
-<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>Num1 <span class="ot">=</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">1.277693</span> <span class="sc">+</span> <span class="fl">0.4664781</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.02104493</span><span class="sc">*</span><span class="dv">45</span> )</span>
-<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>Den1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num1 </span>
-<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>Prob_dem <span class="ot">=</span> Num1<span class="sc">/</span>Den1</span>
-<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>Prob_dem</span></code></pre></div>
-<pre><code>## [1] 0.5338997</code></pre>
-<p>Probabilidad por republicano:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>Num2 <span class="ot">=</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">1.236709</span> <span class="sc">-</span><span class="fl">0.7020387</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.02129955</span><span class="sc">*</span><span class="dv">45</span> )</span>
-<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>Den2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num2 </span>
-<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>Prob_rep <span class="ot">=</span> Num2<span class="sc">/</span>Den2</span>
-<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a>Prob_rep</span></code></pre></div>
-<pre><code>## [1] 0.2728386</code></pre>
-<p>Como sabemos la probabilidad es un valor que va del 0 al 1. Para
-poder encontrar la probabilidad restante solo debemos restarle la suma
-de las dos probabilidades encontradas al 1; es decir 1 - (prob1 +
-prob2).</p>
-<p>Probabilidad por independiente:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>Prob_inde<span class="ot">=</span><span class="dv">1</span><span class="sc">-</span>(Prob_dem<span class="sc">+</span>Prob_rep)</span>
-<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>Prob_inde</span></code></pre></div>
-<pre><code>## [1] 0.1932617</code></pre>
-</div>
-<div id="efectos-marginales-2" class="section level4">
-<h4>Efectos marginales:</h4>
-<p>Revisemos el ompacto de la VI en la probabilidad con efectos
-marginales. Recuerda que la interpretación se hace por cada variable
-independiente.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(mod1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code></pre></div>
-<pre><code>## 
-##   Term Contrast Estimate
-##  abany    1 - 0  0.16684
-##  age      dY/dX  0.00292
-##  abany    1 - 0 -0.00693
-##  age      dY/dX -0.00488
-##  abany    1 - 0 -0.15991
-##  age      dY/dX  0.00196
-## 
-## Columns: term, contrast, estimate</code></pre>
+<div id="paso-6-evaluamos-el-análisis-factorial-exploratorio-solicitado"
+class="section level2">
+<h2><strong>PASO 6:</strong> Evaluamos el Análisis Factorial
+Exploratorio solicitado</h2>
 <ul>
-<li><p>Cuando una persona está a favor del aborto, la probabilidad (en
-promedio) de sentir afinidad por el partido demócrata aumenta en
-16.68%</p></li>
-<li><p>Cuando la edad de una persona aumenta en un año, la probabilidad
-(en promedio) de sentir afinidad por el partido demócrata aumenta en
-0.29%</p></li>
-<li><p>Cuando una persona está a favor del aborto, la probabilidad (en
-promedio) de sentir afinidad por el partido independiente disminuye en
-0.69%</p></li>
-<li><p>Cuando la edad de una persona aumenta en un año, la probabilidad
-(en promedio) de sentir afinidad por el partido independiente disminuye
-en 0.48%</p></li>
+<li>¿Qué variables aportaron mas a los factores?</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>communality)</span></code></pre></div>
+<pre><code>##   Congreso     RENIEC     MINEDU Def.Pueblo       FFAA        PNP P.Judicial 
+##  0.3372837  0.4050627  0.4263242  0.4553069  0.4697649  0.5048577  0.5242361 
+##    Gob.Reg        JNE   Mun.Dist   Mun.Prov       ONPE 
+##  0.5317924  0.6714731  0.7339215  0.7837958  0.8732249</code></pre>
+<ul>
+<li>¿Qué variables contribuyen a mas de un factor?</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>complexity)</span></code></pre></div>
+<pre><code>##       ONPE   Mun.Prov   Mun.Dist       FFAA        JNE     MINEDU Def.Pueblo 
+##   1.329693   1.365548   1.366792   1.372612   1.505626   1.571662   1.611192 
+##        PNP P.Judicial     RENIEC   Congreso    Gob.Reg 
+##   1.687324   1.951096   2.164629   2.187600   2.273543</code></pre>
+<ul>
+<li>¿Qué variables tiene un componente “único” más grande?</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>uniquenesses)</span></code></pre></div>
+<pre><code>##       ONPE   Mun.Prov   Mun.Dist        JNE    Gob.Reg P.Judicial        PNP 
+##  0.1267751  0.2162042  0.2660785  0.3285269  0.4682076  0.4757639  0.4951423 
+##       FFAA Def.Pueblo     MINEDU     RENIEC   Congreso 
+##  0.5302351  0.5446931  0.5736758  0.5949373  0.6627163</code></pre>
+<p>Que tanto componente unico entre las variales, tiene menor cantidad
+de información en común (o sea varianza común)</p>
+</div>
+<div id="paso-7-guardamos-los-componentes-como-nuevas-variables"
+class="section level2">
+<h2><strong>PASO 7:</strong> Guardamos los componentes como nuevas
+variables</h2>
+<p>Podemos crear un data set con sólo los factores creados</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>factorial_casos<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(factorial<span class="sc">$</span>scores)</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">head</span>(factorial_casos)</span></code></pre></div>
+<pre><code>##            MR1        MR3         MR2
+## 1 -0.015398132  1.9326401 -1.53684777
+## 2 -0.045220205  0.5055937 -0.07725491
+## 3  0.343817132  0.3219684 -0.04101534
+## 4 -0.003566532 -0.9198334 -0.98524495
+## 5 -1.050240319  0.1812582  1.69585781
+## 7  0.987795750  0.2139105  1.07321242</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">summary</span>(factorial_casos)</span></code></pre></div>
+<pre><code>##       MR1                MR3                 MR2         
+##  Min.   :-2.63272   Min.   :-1.983424   Min.   :-2.5800  
+##  1st Qu.:-0.60080   1st Qu.:-0.723521   1st Qu.:-0.8837  
+##  Median :-0.06942   Median :-0.008546   Median :-0.0122  
+##  Mean   : 0.00000   Mean   : 0.000000   Mean   : 0.0000  
+##  3rd Qu.: 0.54671   3rd Qu.: 0.513798   3rd Qu.: 0.4524  
+##  Max.   : 4.07026   Max.   : 3.554010   Max.   : 3.3607</code></pre>
+<p>Agregamos a la subdata</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>confianza<span class="sc">$</span>pod_estado<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR1</span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>confianza<span class="sc">$</span>org_elect<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR2</span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>confianza<span class="sc">$</span>municipios<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR3</span></code></pre></div>
+<ul>
+<li>Primer factor:Poderes del Estado</li>
+<li>Segundo factor: Organismos electorales (confins2)</li>
+<li>Tercer factor:municipios</li>
 </ul>
 </div>
-</div>
-<div id="modelo-2-1" class="section level3">
-<h3>Modelo 2</h3>
-<p>Se agregaron las variables</p>
-<ul>
-<li><p>childs: número de hijos</p></li>
-<li><p>blanco_raza: es blanco?</p></li>
-</ul>
-<div id="creación-del-modelo-1" class="section level4">
-<h4>Creación del modelo</h4>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">multinom</span>(partido1 <span class="sc">~</span> abany <span class="sc">+</span> age<span class="sc">+</span>childs<span class="sc">+</span>blanco_raza, <span class="at">data =</span> data)</span></code></pre></div>
-<pre><code>## # weights:  18 (10 variable)
-## initial  value 1315.038910 
-## iter  10 value 1192.297537
-## final  value 1173.666990 
-## converged</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div>
-<pre><code>## Call:
-## multinom(formula = partido1 ~ abany + age + childs + blanco_raza, 
-##     data = data)
-## 
-## Coefficients:
-##             (Intercept)      abany        age      childs blanco_raza
-## Democrata    -0.7794812  0.5204134 0.02994665 -0.13445720   -1.011832
-## Republicano  -2.3455902 -0.8127828 0.02064037 -0.06776204    1.519681
-## 
-## Std. Errors:
-##             (Intercept)     abany         age     childs blanco_raza
-## Democrata     0.2319615 0.1417077 0.004569937 0.04530739   0.1558222
-## Republicano   0.3298047 0.1668108 0.004886855 0.05191693   0.2709868
-## 
-## Residual Deviance: 2347.334 
-## AIC: 2367.334</code></pre>
-</div>
-<div id="significancia-de-las-variables-3" class="section level4">
-<h4>Significancia de las variables</h4>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod2,age)</span></code></pre></div>
-<pre><code>##                                Coeff        SE Odds.ratio       z  Pr(&gt;|z|)    
-## Democrata|Independiente    0.0299467 0.0045699    1.03040  6.5530 5.640e-11 ***
-## Republicano|Independiente  0.0206404 0.0048869    1.02085  4.2237 2.404e-05 ***
-## Republicano|Democrata     -0.0093064 0.0050739    0.99074 -1.8342   0.06663 .  
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod2,childs)</span></code></pre></div>
-<pre><code>##                               Coeff       SE Odds.ratio       z Pr(&gt;|z|)   
-## Democrata|Independiente   -0.134457 0.045307    0.87419 -2.9677 0.003001 **
-## Republicano|Independiente -0.067762 0.051917    0.93448 -1.3052 0.191824   
-## Republicano|Democrata      0.066694 0.054628    1.06897  1.2209 0.222135   
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>En el caso de edad, encontramos que la variable solo es significativa
-para los cruces demócrata-independiente y republicano - independiente.
-Para la variable n° de hijos, la variable solo es significativa cuando
-queremos saber la probabilidad de sentir afinidad por el partido
-demócrata en comparación del independiente.</p>
-</div>
-<div id="predicciones-3" class="section level4">
-<h4>Predicciones:</h4>
-<p>¿Cuál es la probabilidad de sentir afinidad por x partido cuando la
-persona está a favor del aborto, tiene 45 años, tiene 3 hijos, y es de
-raza blanca?</p>
-<p>Probabilidad por partido demócrata</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a>Num1 <span class="ot">=</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.7794812</span> <span class="sc">+</span> <span class="fl">0.5204134</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.02994665</span><span class="sc">*</span><span class="dv">45</span> <span class="sc">-</span><span class="fl">0.13445720</span><span class="sc">*</span><span class="dv">3</span> <span class="sc">-</span><span class="fl">1.011832</span> <span class="sc">*</span> <span class="dv">1</span>)</span>
-<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a>Den1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num1 </span>
-<span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a>Prob_dem <span class="ot">=</span> Num1<span class="sc">/</span>Den1</span>
-<span id="cb58-4"><a href="#cb58-4" tabindex="-1"></a>Prob_dem</span></code></pre></div>
-<pre><code>## [1] 0.4190506</code></pre>
-<p>Probabilidad por partido republicano</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a>Num2 <span class="ot">=</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">2.3455902</span> <span class="sc">-</span><span class="fl">0.8127828</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.02064037</span><span class="sc">*</span><span class="dv">45</span> <span class="sc">-</span><span class="fl">0.06776204</span><span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> <span class="fl">1.519681</span><span class="sc">*</span><span class="dv">1</span>)</span>
-<span id="cb60-2"><a href="#cb60-2" tabindex="-1"></a>Den2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num2 </span>
-<span id="cb60-3"><a href="#cb60-3" tabindex="-1"></a>Prob_rep <span class="ot">=</span> Num2<span class="sc">/</span>Den2</span>
-<span id="cb60-4"><a href="#cb60-4" tabindex="-1"></a>Prob_rep</span></code></pre></div>
-<pre><code>## [1] 0.2863533</code></pre>
-<p>Probabilidad por partido independiente</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (Prob_dem<span class="sc">+</span>Prob_rep)</span></code></pre></div>
-<pre><code>## [1] 0.2945961</code></pre>
-</div>
-<div id="efectos-marginales-3" class="section level4">
-<h4>Efectos marginales:</h4>
-<p>Revisemos el ompacto de la VI en la probabilidad con efectos
-marginales. Recuerda que la interpretación se hace por cada variable
-independiente.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(mod2)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]</span></code></pre></div>
-<pre><code>## 
-##          Group        Term  Estimate
-##  Democrata     abany        0.167523
-##  Democrata     age          0.004700
-##  Democrata     blanco_raza -0.317477
-##  Democrata     childs      -0.022840
-##  Independiente abany        0.000714
-##  Independiente age         -0.005968
-##  Independiente blanco_raza  0.070818
-##  Independiente childs       0.024482
-##  Republicano   abany       -0.168237
-##  Republicano   age          0.001268
-##  Republicano   blanco_raza  0.246658
-##  Republicano   childs      -0.001642
-## 
-## Columns: term, group, estimate</code></pre>
-<p>Interpretemos para las variables que acabamos de agregar
-<strong>(blanco_raza y childs)</strong></p>
-<ul>
-<li><p>Cuando la persona es de raza blanca (blanco_raza = 1), la
-probabilidad de sentir afinidad por el partido demócrata disminuye en
-31.75%</p></li>
-<li><p>Cuando la persona aumenta sus hijos en 1, la probabilidad de
-sentir afinidad por el partido demócrata disminuye en 2.28%</p></li>
-<li><p>Cuando la persona es de raza blanca (blanco_raza = 1), la
-probabilidad de sentir afinidad por el partido independiente aumenta en
-7.08%</p></li>
-<li><p>Cuando la persona aumenta sus hijos en 1, la probabilidad de
-sentir afinidad por el partido independiente aumenta en 2.45%</p></li>
-<li><p>Cuando la persona es de raza blanca (blanco_raza = 1), la
-probabilidad de sentir afinidad por el partido republicano aumenta en
-24.67%</p></li>
-<li><p>Cuando la persona aumenta sus hijos en 1, la probabilidad de
-sentir afinidad por el partido republicano disminuye en 0.16%</p></li>
-</ul>
-</div>
-</div>
+<div id="paso-8-estandarizamos-a-una-escala-de-100"
+class="section level2">
+<h2><strong>PASO 8:</strong> Estandarizamos a una escala de 100</h2>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co">#install.packages(&quot;BBmisc&quot;)</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>confianza<span class="sc">$</span>confins1 <span class="ot">&lt;-</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>pod_estado, </span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>confianza<span class="sc">$</span>confins2 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>org_elect, </span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>confianza<span class="sc">$</span>confins3 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>municipios, </span>
+<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span></code></pre></div>
+<p>Vemos resultados de cada factor</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">summary</span>(confianza)</span></code></pre></div>
+<pre><code>##       JNE             ONPE           RENIEC         Mun.Prov        Mun.Dist   
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.00  
+##  1st Qu.:1.000   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.00  
+##  Median :2.000   Median :2.000   Median :3.000   Median :2.000   Median :2.00  
+##  Mean   :1.862   Mean   :1.938   Mean   :2.505   Mean   :1.721   Mean   :1.74  
+##  3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:2.00  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.00  
+##       PNP             FFAA          Gob.Reg        P.Judicial   
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000  
+##  1st Qu.:1.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.000  
+##  Median :2.000   Median :2.000   Median :2.000   Median :2.000  
+##  Mean   :1.927   Mean   :2.234   Mean   :1.664   Mean   :1.722  
+##  3rd Qu.:2.000   3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:2.000  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   :4.000  
+##      MINEDU        Def.Pueblo       Congreso       pod_estado      
+##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :-2.63272  
+##  1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.000   1st Qu.:-0.60080  
+##  Median :2.000   Median :2.000   Median :1.000   Median :-0.06942  
+##  Mean   :2.271   Mean   :1.979   Mean   :1.449   Mean   : 0.00000  
+##  3rd Qu.:3.000   3rd Qu.:2.000   3rd Qu.:2.000   3rd Qu.: 0.54671  
+##  Max.   :4.000   Max.   :4.000   Max.   :4.000   Max.   : 4.07026  
+##    org_elect         municipios           confins1         confins2     
+##  Min.   :-2.5800   Min.   :-1.983424   Min.   :  0.00   Min.   :  0.00  
+##  1st Qu.:-0.8837   1st Qu.:-0.723521   1st Qu.: 30.31   1st Qu.: 28.55  
+##  Median :-0.0122   Median :-0.008546   Median : 38.24   Median : 43.22  
+##  Mean   : 0.0000   Mean   : 0.000000   Mean   : 39.28   Mean   : 43.43  
+##  3rd Qu.: 0.4524   3rd Qu.: 0.513798   3rd Qu.: 47.43   3rd Qu.: 51.04  
+##  Max.   : 3.3607   Max.   : 3.554010   Max.   :100.00   Max.   :100.00  
+##     confins3     
+##  Min.   :  0.00  
+##  1st Qu.: 22.75  
+##  Median : 35.66  
+##  Mean   : 35.82  
+##  3rd Qu.: 45.10  
+##  Max.   :100.00</code></pre>
 </div>
 
 
@@ -1059,7 +925,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1",
+      selectors: "h1,h2",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
