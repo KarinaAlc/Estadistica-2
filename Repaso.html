@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Repaso</title>
+
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Prácticas de Estadística 2</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Sobre el curso</a>
+</li>
+<li>
+  <a href="pd1.html">Sesión 1</a>
+</li>
+<li>
+  <a href="pd2.html">Sesión 2</a>
+</li>
+<li>
+  <a href="pd3.html">Sesión 3</a>
+</li>
+<li>
+  <a href="pd4.html">Sesión 4</a>
+</li>
+<li>
+  <a href="pd5.html">Sesión 5</a>
+</li>
+<li>
+  <a href="pd6.html">Sesión 6</a>
+</li>
+<li>
+  <a href="pd7.html">Sesión 7</a>
+</li>
+<li>
+  <a href="pd8.html">Sesión 8</a>
+</li>
+<li>
+  <a href="pd9.html">Sesión 9</a>
+</li>
+<li>
+  <a href="pd10.html">Sesión 10</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Repaso</h1>
+
+</div>
+
+
+<p><img src="logoPUCP.png" width="30%" style="display: block; margin: auto auto auto 0;" /></p>
+<div id="facultad-de-ciencias-sociales---pucp" class="section level2">
+<h2><strong>FACULTAD DE CIENCIAS SOCIALES - PUCP</strong> <br></h2>
+<div
+id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2024---2"
+class="section level3">
+<h3>Curso: POL 304 - Estadística para el análisis político 2 | Semestre
+2024 - 2</h3>
+<div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
+class="section level4">
+<h4>Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(RVAideMemoire)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(marginaleffects)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;Repaso.xlsx&quot;</span>)</span></code></pre></div>
+<table>
+<caption>Diccionario de datos</caption>
+<colgroup>
+<col width="34%" />
+<col width="32%" />
+<col width="32%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Nombre de variable</th>
+<th>Descripción</th>
+<th>Valores</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>abany1</td>
+<td>¿A favor del aborto?</td>
+<td>1: si/0:No</td>
+</tr>
+<tr class="even">
+<td>age</td>
+<td>Edad</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>treinta_menos</td>
+<td>¿La persona tiene 30 años o menos?</td>
+<td>1: si/0:No</td>
+</tr>
+<tr class="even">
+<td>relig_bajo</td>
+<td>¿Tiene asistencia baja a la iglesia?</td>
+<td>1: si/0:No</td>
+</tr>
+<tr class="odd">
+<td>favor_penamuerte</td>
+<td>¿A favor de la pena de muerte?</td>
+<td>1: si/0:No</td>
+</tr>
+<tr class="even">
+<td>childs</td>
+<td>N° de hijos</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>mucha_conf_congreso</td>
+<td>¿Tiene mucha confianza en el congreso?</td>
+<td>1: si/0:No</td>
+</tr>
+<tr class="even">
+<td>blanco_raza</td>
+<td>¿La persona es de raza blanca?</td>
+<td>1: si/0:No</td>
+</tr>
+<tr class="odd">
+<td>partido</td>
+<td>¿Por cuál partido siente afinidad?</td>
+<td>1-Democrata,2-Republicano, 3-Independiente</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="regresión-logística-binaria" class="section level2">
+<h2>Regresión logística binaria:</h2>
+<div id="modelo-1" class="section level3">
+<h3>Modelo 1</h3>
+<p><strong><em>¿Qué factores afectan la probabilidad de que una persona
+esté a favor de la pena de muerte?</em></strong></p>
+<ul>
+<li>Su edad (treinta_menos):</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(favor_penamuerte <span class="sc">~</span> treinta_menos,<span class="at">family=</span> binomial,data)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = favor_penamuerte ~ treinta_menos, family = binomial, 
+##     data = data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.4695  -1.4695   0.9111   0.9111   1.0070  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    0.66475    0.05503  12.079   &lt;2e-16 ***
+## treinta_menos -0.24967    0.12272  -2.034   0.0419 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2357.1  on 1818  degrees of freedom
+## Residual deviance: 2353.0  on 1817  degrees of freedom
+##   (155 observations deleted due to missingness)
+## AIC: 2357
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div id="cuál-es-el-efecto-de-la-variable" class="section level4">
+<h4>¿Cuál es el efecto de la variable?</h4>
+<p>Cuando una persona tiene menos que 30 años, la probabilidad de que
+esté a favor de la pena de muerte disminuye.</p>
+</div>
+<div id="significancia-de-las-variables" class="section level4">
+<h4>Significancia de las variables</h4>
+<p>¿La variable es significativa?</p>
+<p>Sí, su p valor es menor a 0.05 :)</p>
+</div>
+<div id="predicciones" class="section level4">
+<h4>Predicciones</h4>
+<p>¿Cuál sera la probabilidad de estar a favor de la pena de muerte
+cuando una persona si tiene 30 años o menos (treinta_menos = 1)?</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">coef</span>(modelo1) <span class="co">#Veamos los coeficientes</span></span></code></pre></div>
+<pre><code>##   (Intercept) treinta_menos 
+##     0.6647477    -0.2496671</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#Prob cuando tiene 30 años o menos</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>Num1 <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">0.6647477</span> <span class="sc">-</span><span class="fl">0.2496671</span><span class="sc">*</span><span class="dv">1</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>Den1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num1 </span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>Prob_simenor30 <span class="ot">=</span> Num1<span class="sc">/</span>Den1</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>Prob_simenor30</span></code></pre></div>
+<pre><code>## [1] 0.6023055</code></pre>
+<p>¿Cuál sera la probabilidad de estar a favor de la pena de muerte
+cuando una persona si tiene 30 años o menos (treinta_menos = 1)?</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co">#Prob cuando NO tiene 30 años o menos</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>Num1 <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">0.6647477</span> <span class="sc">-</span><span class="fl">0.2496671</span><span class="sc">*</span><span class="dv">0</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>Den1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num1 </span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>Prob_simenor30 <span class="ot">=</span> Num1<span class="sc">/</span>Den1</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>Prob_simenor30</span></code></pre></div>
+<pre><code>## [1] 0.6603261</code></pre>
+<p>¿Hay alguna diferencia entre las probabilidades?</p>
+</div>
+<div id="efectos-marginales" class="section level4">
+<h4>Efectos marginales:</h4>
+<p>Revisemos el ompacto de la VI en la probabilidad con efectos
+marginales. Recuerda que la interpretación se hace por cada variable
+independiente.</p>
+<p>Calculemos como la edad impacta en la probabilidad con efectos
+marginales.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div>
+<pre><code>## 
+##           Term Estimate
+##  treinta_menos   -0.058
+## 
+## Columns: term, estimate</code></pre>
+<p>Cuando una persona tiene menos que 30 años la probabilidad en
+promedio de que esté a favor de la pena de muerte disminuye en 5.8%</p>
+<p>(Solo para ver que la variación de la probabilidad calza con lo
+calculado previamente)</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">head</span>(modelo1<span class="sc">$</span>fitted.values)</span></code></pre></div>
+<pre><code>##         2         4         5         6         7         8 
+## 0.6023055 0.6603261 0.6603261 0.6603261 0.6603261 0.6023055</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fl">0.6603261-0.6023055</span> </span></code></pre></div>
+<pre><code>## [1] 0.0580206</code></pre>
+<p>Sale igualito :)</p>
+</div>
+</div>
+<div id="modelo-2" class="section level3">
+<h3>Modelo 2</h3>
+<ul>
+<li><p>Su edad (treinta_menos)</p></li>
+<li><p>Baja asistencia a misa (relig_bajo)</p></li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(favor_penamuerte <span class="sc">~</span> treinta_menos<span class="sc">+</span>relig_bajo,<span class="at">family=</span> binomial,data)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = favor_penamuerte ~ treinta_menos + relig_bajo, 
+##     family = binomial, data = data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.5195  -1.4150   0.8702   0.9571   1.0667  
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    0.54311    0.07399   7.340 2.13e-13 ***
+## treinta_menos -0.27703    0.12373  -2.239   0.0252 *  
+## relig_bajo     0.23268    0.09941   2.341   0.0192 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2349.8  on 1811  degrees of freedom
+## Residual deviance: 2340.4  on 1809  degrees of freedom
+##   (162 observations deleted due to missingness)
+## AIC: 2346.4
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div id="cuál-es-el-efecto-de-la-variable-1" class="section level4">
+<h4>¿Cuál es el efecto de la variable?</h4>
+<p>Cuando una persona tiene menos que 30 años, la probabilidad de que
+esté a favor de la pena de muerte disminuye.</p>
+<p>Cuando una persona tiene una asistencia baja a la iglesia la
+probabilidad de que esté a favor de la pena de muerte aumenta.</p>
+</div>
+<div id="significancia-de-las-variables-1" class="section level4">
+<h4>Significancia de las variables</h4>
+<p>¿Las variables son significativas?</p>
+<p>Sí, las dos tienen valor menor a 0.05 :)</p>
+</div>
+<div id="predicciones-1" class="section level4">
+<h4>Predicciones</h4>
+<p>¿Cuál sera la probabilidad de estar a favor de la pena de muerte
+cuando una persona si tiene 30 años o menos (treinta_menos = 1) y tiene
+asistencia baja a la iglesia (relig_bajo = 1) ?</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">coef</span>(modelo2) <span class="co">#Revisemos los coeficientes</span></span></code></pre></div>
+<pre><code>##   (Intercept) treinta_menos    relig_bajo 
+##     0.5431132    -0.2770298     0.2326816</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>Num2 <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">0.5431132</span> <span class="sc">-</span><span class="fl">0.2770298</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.2326816</span><span class="sc">*</span><span class="dv">1</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>Den2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num2 </span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>Prob2 <span class="ot">=</span> Num2<span class="sc">/</span>Den2</span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>Prob2</span></code></pre></div>
+<pre><code>## [1] 0.6221691</code></pre>
+<p>¿Cuál sera la probabilidad de estar a favor de la pena de muerte
+cuando una persona si tiene 30 años o menos (treinta_menos = 1) y tiene
+asistencia baja a la iglesia (relig_bajo = 0) ?</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>Num2 <span class="ot">=</span> <span class="fu">exp</span>(<span class="fl">0.5431132</span> <span class="sc">-</span><span class="fl">0.2770298</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.2326816</span><span class="sc">*</span><span class="dv">0</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>Den2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num2 </span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>Prob3 <span class="ot">=</span> Num2<span class="sc">/</span>Den2</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>Prob3</span></code></pre></div>
+<pre><code>## [1] 0.5661311</code></pre>
+</div>
+<div id="efectos-marginales-1" class="section level4">
+<h4>Efectos marginales:</h4>
+<p>Revisemos el ompacto de la VI en la probabilidad con efectos
+marginales. Recuerda que la interpretación se hace por cada variable
+independiente.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(modelo2)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div>
+<pre><code>## 
+##           Term Estimate
+##  relig_bajo      0.0530
+##  treinta_menos  -0.0644
+## 
+## Columns: term, estimate</code></pre>
+<p>Cuando una persona sí tienen una asistencia baja a la iglesia la
+probabilidad (en promedio) de que esté a favor del aborto aumenta en
+5.3%.</p>
+<p>Cuando una persona si tiene 30 años o menos, la probabilidad (en
+promedio) de que esté a favor del aborto disminuye en 6.4%.</p>
+</div>
+</div>
+</div>
+<div id="regresión-logística-multinomial" class="section level2">
+<h2>Regresión logística multinomial</h2>
+<p><strong><em>¿Qué factores afectan la probabilidad de que una persona
+sienta afinidad por cierto partido
+(democrata/republicano/independiente)?</em></strong></p>
+<div id="elección-de-linea-base" class="section level3">
+<h3>Elección de linea base</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>partido)</span></code></pre></div>
+<pre><code>## 
+##   1   2   3 
+## 699 442 765</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>data<span class="sc">$</span>partido1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(data<span class="sc">$</span>partido,<span class="at">levels=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Democrata&quot;</span>,<span class="st">&quot;Republicano&quot;</span>,<span class="st">&quot;Independiente&quot;</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>partido1)</span></code></pre></div>
+<pre><code>## 
+##     Democrata   Republicano Independiente 
+##           699           442           765</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">contrasts</span>(data<span class="sc">$</span>partido1)</span></code></pre></div>
+<pre><code>##               Republicano Independiente
+## Democrata               0             0
+## Republicano             1             0
+## Independiente           0             1</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>data<span class="sc">$</span>partido1 <span class="ot">&lt;-</span> <span class="fu">relevel</span>(data<span class="sc">$</span>partido1 , <span class="at">ref =</span> <span class="st">&quot;Independiente&quot;</span>)</span></code></pre></div>
+</div>
+<div id="modelo-1-1" class="section level3">
+<h3>Modelo 1</h3>
+<p>Variables independientes</p>
+<p>abany: ¿Apoya el aborto? (Si/No)</p>
+<p>age: Edad (numérico)</p>
+</div>
+<div id="creación-del-modelo" class="section level3">
+<h3>Creación del modelo</h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">multinom</span>(partido1 <span class="sc">~</span> abany <span class="sc">+</span> age, <span class="at">data =</span> data)</span></code></pre></div>
+<pre><code>## # weights:  12 (6 variable)
+## initial  value 1317.236134 
+## iter  10 value 1246.902792
+## final  value 1246.902753 
+## converged</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div>
+<pre><code>## Call:
+## multinom(formula = partido1 ~ abany + age, data = data)
+## 
+## Coefficients:
+##             (Intercept)      abany        age
+## Democrata     -1.277693  0.4664781 0.02104493
+## Republicano   -1.236709 -0.7020387 0.02129955
+## 
+## Std. Errors:
+##             (Intercept)     abany         age
+## Democrata     0.2160525 0.1354483 0.004016450
+## Republicano   0.2346277 0.1625249 0.004439657
+## 
+## Residual Deviance: 2493.806 
+## AIC: 2505.806</code></pre>
+<div id="significancia-de-las-variables-2" class="section level4">
+<h4>Significancia de las variables</h4>
+<ol style="list-style-type: decimal">
+<li><p>Solo podemos revisar la significancia de las variables
+numéricas.</p></li>
+<li><p>El test se hace variable por variable.</p></li>
+</ol>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod1,age)</span></code></pre></div>
+<pre><code>##                               Coeff        SE Odds.ratio      z  Pr(&gt;|z|)    
+## Democrata|Independiente   0.0210449 0.0040164     1.0213 5.2397 1.609e-07 ***
+## Republicano|Independiente 0.0212996 0.0044397     1.0215 4.7976 1.606e-06 ***
+## Republicano|Democrata     0.0002547 0.0044263     1.0003 0.0575    0.9541    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Sobre la variable edad: La edad es una variable que puede impactar en
+la probabilidad de sentir afinidad por el partido demócrata en contraste
+al independiente; y también impacta en la probabilidad de sentir
+afinidad por el partido republicano en contraste del independiente. Sin
+embargo, no es significativa para la probabilidad de ser republicano y
+no demócrata.</p>
+</div>
+<div id="predicciones-2" class="section level4">
+<h4>Predicciones:</h4>
+<p>¿Cuál será la probabilidad de sentir afinidad por x partido cuando se
+está a favor del aborto y tiene 45 años?</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="co">#recordando los coeficientes</span></span>
+<span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="fu">coef</span>(mod1)</span></code></pre></div>
+<pre><code>##             (Intercept)      abany        age
+## Democrata     -1.277693  0.4664781 0.02104493
+## Republicano   -1.236709 -0.7020387 0.02129955</code></pre>
+<p>Probabilidad por demócrata:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="co">#Demócrata</span></span>
+<span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a>Num1 <span class="ot">=</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">1.277693</span> <span class="sc">+</span> <span class="fl">0.4664781</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.02104493</span><span class="sc">*</span><span class="dv">45</span> )</span>
+<span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a>Den1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num1 </span>
+<span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a>Prob_dem <span class="ot">=</span> Num1<span class="sc">/</span>Den1</span>
+<span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a>Prob_dem</span></code></pre></div>
+<pre><code>## [1] 0.5338997</code></pre>
+<p>Probabilidad por republicano:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a>Num2 <span class="ot">=</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">1.236709</span> <span class="sc">-</span><span class="fl">0.7020387</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.02129955</span><span class="sc">*</span><span class="dv">45</span> )</span>
+<span id="cb44-2"><a href="#cb44-2" tabindex="-1"></a>Den2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num2 </span>
+<span id="cb44-3"><a href="#cb44-3" tabindex="-1"></a>Prob_rep <span class="ot">=</span> Num2<span class="sc">/</span>Den2</span>
+<span id="cb44-4"><a href="#cb44-4" tabindex="-1"></a>Prob_rep</span></code></pre></div>
+<pre><code>## [1] 0.2728386</code></pre>
+<p>Como sabemos la probabilidad es un valor que va del 0 al 1. Para
+poder encontrar la probabilidad restante solo debemos restarle la suma
+de las dos probabilidades encontradas al 1; es decir 1 - (prob1 +
+prob2).</p>
+<p>Probabilidad por independiente:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>Prob_inde<span class="ot">=</span><span class="dv">1</span><span class="sc">-</span>(Prob_dem<span class="sc">+</span>Prob_rep)</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a>Prob_inde</span></code></pre></div>
+<pre><code>## [1] 0.1932617</code></pre>
+</div>
+<div id="efectos-marginales-2" class="section level4">
+<h4>Efectos marginales:</h4>
+<p>Revisemos el ompacto de la VI en la probabilidad con efectos
+marginales. Recuerda que la interpretación se hace por cada variable
+independiente.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(mod1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>## 
+##   Term Contrast Estimate
+##  abany    1 - 0  0.16684
+##  age      dY/dX  0.00292
+##  abany    1 - 0 -0.00693
+##  age      dY/dX -0.00488
+##  abany    1 - 0 -0.15991
+##  age      dY/dX  0.00196
+## 
+## Columns: term, contrast, estimate</code></pre>
+<ul>
+<li><p>Cuando una persona está a favor del aborto, la probabilidad (en
+promedio) de sentir afinidad por el partido demócrata aumenta en
+16.68%</p></li>
+<li><p>Cuando la edad de una persona aumenta en un año, la probabilidad
+(en promedio) de sentir afinidad por el partido demócrata aumenta en
+0.29%</p></li>
+<li><p>Cuando una persona está a favor del aborto, la probabilidad (en
+promedio) de sentir afinidad por el partido independiente disminuye en
+0.69%</p></li>
+<li><p>Cuando la edad de una persona aumenta en un año, la probabilidad
+(en promedio) de sentir afinidad por el partido independiente disminuye
+en 0.48%</p></li>
+</ul>
+</div>
+</div>
+<div id="modelo-2-1" class="section level3">
+<h3>Modelo 2</h3>
+<p>Se agregaron las variables</p>
+<ul>
+<li><p>childs: número de hijos</p></li>
+<li><p>blanco_raza: es blanco?</p></li>
+</ul>
+<div id="creación-del-modelo-1" class="section level4">
+<h4>Creación del modelo</h4>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">multinom</span>(partido1 <span class="sc">~</span> abany <span class="sc">+</span> age<span class="sc">+</span>childs<span class="sc">+</span>blanco_raza, <span class="at">data =</span> data)</span></code></pre></div>
+<pre><code>## # weights:  18 (10 variable)
+## initial  value 1315.038910 
+## iter  10 value 1192.297537
+## final  value 1173.666990 
+## converged</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div>
+<pre><code>## Call:
+## multinom(formula = partido1 ~ abany + age + childs + blanco_raza, 
+##     data = data)
+## 
+## Coefficients:
+##             (Intercept)      abany        age      childs blanco_raza
+## Democrata    -0.7794812  0.5204134 0.02994665 -0.13445720   -1.011832
+## Republicano  -2.3455902 -0.8127828 0.02064037 -0.06776204    1.519681
+## 
+## Std. Errors:
+##             (Intercept)     abany         age     childs blanco_raza
+## Democrata     0.2319615 0.1417077 0.004569937 0.04530739   0.1558222
+## Republicano   0.3298047 0.1668108 0.004886855 0.05191693   0.2709868
+## 
+## Residual Deviance: 2347.334 
+## AIC: 2367.334</code></pre>
+</div>
+<div id="significancia-de-las-variables-3" class="section level4">
+<h4>Significancia de las variables</h4>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod2,age)</span></code></pre></div>
+<pre><code>##                                Coeff        SE Odds.ratio       z  Pr(&gt;|z|)    
+## Democrata|Independiente    0.0299467 0.0045699    1.03040  6.5530 5.640e-11 ***
+## Republicano|Independiente  0.0206404 0.0048869    1.02085  4.2237 2.404e-05 ***
+## Republicano|Democrata     -0.0093064 0.0050739    0.99074 -1.8342   0.06663 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="fu">test.multinom</span>(mod2,childs)</span></code></pre></div>
+<pre><code>##                               Coeff       SE Odds.ratio       z Pr(&gt;|z|)   
+## Democrata|Independiente   -0.134457 0.045307    0.87419 -2.9677 0.003001 **
+## Republicano|Independiente -0.067762 0.051917    0.93448 -1.3052 0.191824   
+## Republicano|Democrata      0.066694 0.054628    1.06897  1.2209 0.222135   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>En el caso de edad, encontramos que la variable solo es significativa
+para los cruces demócrata-independiente y republicano - independiente.
+Para la variable n° de hijos, la variable solo es significativa cuando
+queremos saber la probabilidad de sentir afinidad por el partido
+demócrata en comparación del independiente.</p>
+</div>
+<div id="predicciones-3" class="section level4">
+<h4>Predicciones:</h4>
+<p>¿Cuál es la probabilidad de sentir afinidad por x partido cuando la
+persona está a favor del aborto, tiene 45 años, tiene 3 hijos, y es de
+raza blanca?</p>
+<p>Probabilidad por partido demócrata</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a>Num1 <span class="ot">=</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.7794812</span> <span class="sc">+</span> <span class="fl">0.5204134</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.02994665</span><span class="sc">*</span><span class="dv">45</span> <span class="sc">-</span><span class="fl">0.13445720</span><span class="sc">*</span><span class="dv">3</span> <span class="sc">-</span><span class="fl">1.011832</span> <span class="sc">*</span> <span class="dv">1</span>)</span>
+<span id="cb58-2"><a href="#cb58-2" tabindex="-1"></a>Den1 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num1 </span>
+<span id="cb58-3"><a href="#cb58-3" tabindex="-1"></a>Prob_dem <span class="ot">=</span> Num1<span class="sc">/</span>Den1</span>
+<span id="cb58-4"><a href="#cb58-4" tabindex="-1"></a>Prob_dem</span></code></pre></div>
+<pre><code>## [1] 0.4190506</code></pre>
+<p>Probabilidad por partido republicano</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a>Num2 <span class="ot">=</span> <span class="fu">exp</span>(<span class="sc">-</span><span class="fl">2.3455902</span> <span class="sc">-</span><span class="fl">0.8127828</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.02064037</span><span class="sc">*</span><span class="dv">45</span> <span class="sc">-</span><span class="fl">0.06776204</span><span class="sc">*</span><span class="dv">3</span> <span class="sc">+</span> <span class="fl">1.519681</span><span class="sc">*</span><span class="dv">1</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" tabindex="-1"></a>Den2 <span class="ot">=</span> <span class="dv">1</span> <span class="sc">+</span> Num2 </span>
+<span id="cb60-3"><a href="#cb60-3" tabindex="-1"></a>Prob_rep <span class="ot">=</span> Num2<span class="sc">/</span>Den2</span>
+<span id="cb60-4"><a href="#cb60-4" tabindex="-1"></a>Prob_rep</span></code></pre></div>
+<pre><code>## [1] 0.2863533</code></pre>
+<p>Probabilidad por partido independiente</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> (Prob_dem<span class="sc">+</span>Prob_rep)</span></code></pre></div>
+<pre><code>## [1] 0.2945961</code></pre>
+</div>
+<div id="efectos-marginales-3" class="section level4">
+<h4>Efectos marginales:</h4>
+<p>Revisemos el ompacto de la VI en la probabilidad con efectos
+marginales. Recuerda que la interpretación se hace por cada variable
+independiente.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" tabindex="-1"></a><span class="fu">avg_slopes</span>(mod2)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>## 
+##          Group        Term  Estimate
+##  Democrata     abany        0.167523
+##  Democrata     age          0.004700
+##  Democrata     blanco_raza -0.317477
+##  Democrata     childs      -0.022840
+##  Independiente abany        0.000714
+##  Independiente age         -0.005968
+##  Independiente blanco_raza  0.070818
+##  Independiente childs       0.024482
+##  Republicano   abany       -0.168237
+##  Republicano   age          0.001268
+##  Republicano   blanco_raza  0.246658
+##  Republicano   childs      -0.001642
+## 
+## Columns: term, group, estimate</code></pre>
+<p>Interpretemos para las variables que acabamos de agregar
+<strong>(blanco_raza y childs)</strong></p>
+<ul>
+<li><p>Cuando la persona es de raza blanca (blanco_raza = 1), la
+probabilidad de sentir afinidad por el partido demócrata disminuye en
+31.75%</p></li>
+<li><p>Cuando la persona aumenta sus hijos en 1, la probabilidad de
+sentir afinidad por el partido demócrata disminuye en 2.28%</p></li>
+<li><p>Cuando la persona es de raza blanca (blanco_raza = 1), la
+probabilidad de sentir afinidad por el partido independiente aumenta en
+7.08%</p></li>
+<li><p>Cuando la persona aumenta sus hijos en 1, la probabilidad de
+sentir afinidad por el partido independiente aumenta en 2.45%</p></li>
+<li><p>Cuando la persona es de raza blanca (blanco_raza = 1), la
+probabilidad de sentir afinidad por el partido republicano aumenta en
+24.67%</p></li>
+<li><p>Cuando la persona aumenta sus hijos en 1, la probabilidad de
+sentir afinidad por el partido republicano disminuye en 0.16%</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
