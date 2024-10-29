@@ -154,7 +154,7 @@ parece o no a una matriz de identidad.
 -   Que es la matriz de identidad?
 
 Es una matriz donde solo se cuenta con los valores de 1 en la diagonal y
-en los demás valores es 0, es decir, que la unica correlación existente
+en los demás valores es 0, es decir, que la única correlación existente
 es entre las mismas variables.
 
 Entonces, lo que esperamos es que la matriz de correlación sea diferente
@@ -164,11 +164,11 @@ a la matriz de identidad, para concluir que sí hay correlación.
 cortest.bartlett(corMatrix,n=nrow(confianza))$p.value>0.05#Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE
 ```
 
-Este es una prueba de hipótesis donde H0: La matriz de correlacion es
-una matriz identidad
+Este es una prueba de hipótesis donde H0: La matriz de correlación es
+una matriz identidad.
 
 Entonces buscamos que se rechace la hipótesis nula para así poder
-determinar que la matriz de correlación no se prece una matriz de
+determinar que la matriz de correlación no se parece una matriz de
 identidad
 
 ## **PASO 4:** Determinar cuántos factores o variables latentes puede redimensionar la data
@@ -236,7 +236,7 @@ print(factorial$loadings,cutoff = 0.35)
 
 ## **PASO 6:** Evaluamos el Análisis Factorial Exploratorio solicitado
 
--   ¿Qué variables aportaron mas a los factores?
+-   ¿Qué variables aportaron más a los factores?
 
 ```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 sort(factorial$communality)

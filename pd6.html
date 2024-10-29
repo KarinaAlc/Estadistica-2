@@ -629,17 +629,17 @@ parece o no a una matriz de identidad.</p>
 <li>Que es la matriz de identidad?</li>
 </ul>
 <p>Es una matriz donde solo se cuenta con los valores de 1 en la
-diagonal y en los demás valores es 0, es decir, que la unica correlación
+diagonal y en los demás valores es 0, es decir, que la única correlación
 existente es entre las mismas variables.</p>
 <p>Entonces, lo que esperamos es que la matriz de correlación sea
 diferente a la matriz de identidad, para concluir que sí hay
 correlación.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">cortest.bartlett</span>(corMatrix,<span class="at">n=</span><span class="fu">nrow</span>(confianza))<span class="sc">$</span>p.value<span class="sc">&gt;</span><span class="fl">0.05</span><span class="co">#Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE</span></span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<p>Este es una prueba de hipótesis donde H0: La matriz de correlacion es
+<p>Este es una prueba de hipótesis donde H0: La matriz de correlación es
 una matriz identidad</p>
 <p>Entonces buscamos que se rechace la hipótesis nula para así poder
-determinar que la matriz de correlación no se prece una matriz de
+determinar que la matriz de correlación no se parece una matriz de
 identidad</p>
 </div>
 <div
