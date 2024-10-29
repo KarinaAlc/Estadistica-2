@@ -27,4 +27,6 @@ navbar:
       href: pd9.html
     - text: "Sesión 10"
       href: pd10.html
+    - text: "Ejercicios"
+      href: Ejercicios.html
    
