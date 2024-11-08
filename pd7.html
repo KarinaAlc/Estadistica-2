@@ -547,7 +547,7 @@ de nuestra subdata están correlacionadas.</p>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>          <span class="at">upper=</span>F, <span class="co">#Que aparezca la segunda parte</span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>          <span class="at">main=</span> <span class="st">&quot;Matriz de correlaciones&quot;</span>,<span class="co">#Titulo</span></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>          <span class="at">show.legend=</span>T)<span class="co">#Mostrar leyenda</span></span></code></pre></div>
-<p><img src="AFC_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="pd7_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="paso-2-corroborar-si-se-puede-factorizar"
 class="section level1">
@@ -572,7 +572,7 @@ class="section level1">
 <h1>Paso 3: Análisis Factorial Exploratorio</h1>
 <p>Gráfico de sedimentación</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(corMatrix, <span class="at">fm=</span><span class="st">&quot;pa&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
-<p><img src="AFC_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="pd7_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre><code>## Parallel analysis suggests that the number of factors =  4  and the number of components =  NA</code></pre>
 <p>Autovalores</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>eigenf <span class="ot">=</span> <span class="fu">eigen</span>(<span class="fu">cor</span>(subdata, <span class="at">use=</span><span class="st">&quot;complete&quot;</span>))</span>
@@ -628,7 +628,7 @@ class="section level1">
 ## Multiple R square of scores with factors          0.96 0.74 0.61
 ## Minimum correlation of possible factor scores     0.92 0.47 0.21</code></pre>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">fa.diagram</span>(factorial)</span></code></pre></div>
-<p><img src="AFC_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="pd7_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>Podemos observar que hay unas líneas punteadas rojas, ello implica
 que las cargas factoriales son negativas, lo que significa que la
 relación entre la variable observable y el factor creado es inversa.</p>
@@ -771,7 +771,7 @@ factores de manera significativa.</p>
 <div id="graficamos" class="section level2">
 <h2><strong>Graficamos</strong></h2>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">semPaths</span>(modelo, <span class="at">intercepts =</span> <span class="cn">FALSE</span>,<span class="at">edge.label.cex=</span><span class="fl">1.5</span>, <span class="at">optimizeLatRes =</span> <span class="cn">TRUE</span>, <span class="at">groups =</span> <span class="st">&quot;lat&quot;</span>,<span class="at">pastel =</span> <span class="cn">TRUE</span>, <span class="at">exoVar =</span> <span class="cn">FALSE</span>, <span class="at">sizeInt=</span><span class="dv">5</span>,<span class="at">edge.color =</span><span class="st">&quot;black&quot;</span>,<span class="at">esize =</span> <span class="dv">6</span>, <span class="at">label.prop=</span><span class="dv">2</span>,<span class="at">sizeLat =</span> <span class="dv">6</span>,<span class="st">&quot;std&quot;</span>, <span class="at">layout=</span><span class="st">&quot;circle2&quot;</span>)</span></code></pre></div>
-<p><img src="AFC_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><img src="pd7_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>Podemos observar los 3 factores creados. Los numeros que vemos entre
 los factores y las variables latentes son las cargas facrtoriales,
 mientras más fuerte la línea o número mayor carga factorial tendrá. los
