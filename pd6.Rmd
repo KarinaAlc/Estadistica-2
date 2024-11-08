@@ -218,13 +218,13 @@ factorial
 
 Diagramamos 📊
 
-```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T,  message=FALSE, warning=FALSE}
 fa.diagram(factorial)
 ```
 
 ¿Que variables componen cada uno de mis factores?
 
-```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
+```{r echo = T, message=FALSE, warning=FALSE}
 print(factorial$loadings,cutoff = 0.35)
 ```
 
