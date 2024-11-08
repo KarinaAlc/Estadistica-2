@@ -163,34 +163,6 @@ print(factorial$loadings,cutoff = 0.2)
 
 3.Proportion Var y Cumulative Var
 
-#Evaluamos las variables observadas
-
--   ¿Qué variables observables tienen mayor información en común/
-    aportaron mas a los factores?
-
-```{r echo = T, message=FALSE, warning=FALSE}
-sort(factorial$communality) #comunalidad=varianza común
-```
-
-Secundaria y Libertad Mov tienen mayor información en común con las
-demás variables (comunalidad)
-
--   ¿Qué variables contribuyen a más de un factor?
-
-```{r echo = T,  message=FALSE, warning=FALSE}
-sort(factorial$complexity)
-```
-
--   ¿Qué variables observables tiene un componente "único" más grande?
-
-```{r echo = T, message=FALSE, warning=FALSE}
-sort(factorial$uniquenesses)
-```
-
-ML Violencia y Desempleo mujer tienen mayor información única, ello
-quiere decir que aportan poco cn la información en común que se tiene
-con las demás variables.
-
 # Paso 4: Análisis Factorial confirmatorio
 
 Como tenemos una sugerencia planteada en el AFE, lo corroboraremos con
@@ -243,32 +215,36 @@ que vemos direccionados hacia las variable observable es la información
 que no es eplicada con el factor, lo esperado es que este sea menor que
 la carga factorial.
 
-## Agregamos los factores a la base de datos
+## Agregamos los factores del AFC a la base de datos
 
 ```{r echo = T, message=FALSE, warning=FALSE}
-factorial_casos<-as.data.frame(factorial$scores)
-```
-
-```{r echo = T,  message=FALSE, warning=FALSE}
-subdata$factor1<- factorial_casos$MR1
-subdata$factor2<- factorial_casos$MR2
-subdata$factor3<- factorial_casos$MR3
+puntajes_factores<-as.data.frame(predict(modelo))
 ```
 
 ```{r echo = T, message=FALSE, warning=FALSE}
 library(BBmisc)
-data$autoecon <- normalize(subdata$factor1, 
+data$autoecon <- normalize(puntajes_factores$FAC1, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 10))
-data$percpinst <- normalize(subdata$factor2, 
+data$percpinst <- normalize(puntajes_factores$FAC2, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 10))
-data$autopol <- normalize(subdata$factor3, 
+data$autopol <- normalize(puntajes_factores$FAC3, 
                                         method = "range", 
                                         margin=2, # by column
                                         range = c(0, 10))
+```
 
+```{r}
+summary(data$autoecon)
+```
 
+```{r}
+summary(data$percpinst)
+```
+
+```{r}
+summary(data$autopol)
 ```

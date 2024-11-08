@@ -573,7 +573,7 @@ class="section level1">
 <p>Gráfico de sedimentación</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">fa.parallel</span>(corMatrix, <span class="at">fm=</span><span class="st">&quot;pa&quot;</span>, <span class="at">fa=</span><span class="st">&quot;fa&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Scree Plot&quot;</span>)</span></code></pre></div>
 <p><img src="pd7_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<pre><code>## Parallel analysis suggests that the number of factors =  4  and the number of components =  NA</code></pre>
+<pre><code>## Parallel analysis suggests that the number of factors =  3  and the number of components =  NA</code></pre>
 <p>Autovalores</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>eigenf <span class="ot">=</span> <span class="fu">eigen</span>(<span class="fu">cor</span>(subdata, <span class="at">use=</span><span class="st">&quot;complete&quot;</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>eigenf<span class="sc">$</span>values</span></code></pre></div>
@@ -653,38 +653,6 @@ relación entre la variable observable y el factor creado es inversa.</p>
 <p>1.Ver qué variables tiene cada componente</p>
 <p>2.Ver la carga, que tanto aporta cada variable al componente.</p>
 <p>3.Proportion Var y Cumulative Var</p>
-<p>#Evaluamos las variables observadas</p>
-<ul>
-<li>¿Qué variables observables tienen mayor información en común/
-aportaron mas a los factores?</li>
-</ul>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>communality) <span class="co">#comunalidad=varianza común</span></span></code></pre></div>
-<pre><code>##    MLViolencia   DesempleoMuj    VozPolitica    MLAutonomia DesconfianzaSJ 
-##      0.1496488      0.2059285      0.2952376      0.4424106      0.5122846 
-##        CuentaF    LibertadMov    SecundariaC 
-##      0.6136529      0.7533850      0.9964683</code></pre>
-<p>Secundaria y Libertad Mov tienen mayor información en común con las
-demás variables (comunalidad)</p>
-<ul>
-<li>¿Qué variables contribuyen a más de un factor?</li>
-</ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>complexity)</span></code></pre></div>
-<pre><code>## DesconfianzaSJ    MLViolencia    SecundariaC    VozPolitica        CuentaF 
-##       1.042928       1.209716       1.239126       1.255815       1.533909 
-##    LibertadMov    MLAutonomia   DesempleoMuj 
-##       1.537175       1.551318       1.865551</code></pre>
-<ul>
-<li>¿Qué variables observables tiene un componente “único” más
-grande?</li>
-</ul>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>uniquenesses)</span></code></pre></div>
-<pre><code>##    SecundariaC    LibertadMov        CuentaF DesconfianzaSJ    MLAutonomia 
-##    0.003531703    0.246615008    0.386347125    0.487715417    0.557589415 
-##    VozPolitica   DesempleoMuj    MLViolencia 
-##    0.704762372    0.794071465    0.850351153</code></pre>
-<p>ML Violencia y Desempleo mujer tienen mayor información única, ello
-quiere decir que aportan poco cn la información en común que se tiene
-con las demás variables.</p>
 </div>
 <div id="paso-4-análisis-factorial-confirmatorio"
 class="section level1">
@@ -693,23 +661,23 @@ class="section level1">
 con el AFC.</p>
 <p>En caso una variable observable comparte en más de un factor la
 consideraremos en donde tiene una mayor carga factorial.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="co">#install.packages(&quot;lavaan&quot;)</span></span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="co">#install.packages(&quot;semPlot&quot;)</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">names</span>(subdata)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="co">#install.packages(&quot;lavaan&quot;)</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a><span class="co">#install.packages(&quot;semPlot&quot;)</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="fu">library</span>(lavaan)</span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">names</span>(subdata)</span></code></pre></div>
 <pre><code>## [1] &quot;MLAutonomia&quot;    &quot;MLViolencia&quot;    &quot;VozPolitica&quot;    &quot;LibertadMov&quot;   
 ## [5] &quot;DesconfianzaSJ&quot; &quot;SecundariaC&quot;    &quot;DesempleoMuj&quot;   &quot;CuentaF&quot;</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>Modelo_confir <span class="ot">&lt;-</span> <span class="st">&quot;FAC1 =~ SecundariaC + CuentaF + MLAutonomia + DesempleoMuj</span></span>
-<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="st">                FAC2 =~ LibertadMov + DesconfianzaSJ</span></span>
-<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a><span class="st">                FAC3 =~ VozPolitica + MLViolencia&quot;</span></span>
-<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>Modelo_confir</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>Modelo_confir <span class="ot">&lt;-</span> <span class="st">&quot;FAC1 =~ SecundariaC + CuentaF + MLAutonomia + DesempleoMuj</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="st">                FAC2 =~ LibertadMov + DesconfianzaSJ</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a><span class="st">                FAC3 =~ VozPolitica + MLViolencia&quot;</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>Modelo_confir</span></code></pre></div>
 <pre><code>## [1] &quot;FAC1 =~ SecundariaC + CuentaF + MLAutonomia + DesempleoMuj\n                FAC2 =~ LibertadMov + DesconfianzaSJ\n                FAC3 =~ VozPolitica + MLViolencia&quot;</code></pre>
 <p>Lo que se realizaría es indicar el nombre de cada facrtor, y qué
 variables las integran, solo indicamos el nombre de estas variables, en
 el siguiente comando indicaríamos la base</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>modelo<span class="ot">&lt;-</span><span class="fu">cfa</span>(Modelo_confir, <span class="at">data=</span>subdata)</span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">summary</span>(modelo,<span class="at">fit.measures=</span>F)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>modelo<span class="ot">&lt;-</span><span class="fu">cfa</span>(Modelo_confir, <span class="at">data=</span>subdata)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">summary</span>(modelo,<span class="at">fit.measures=</span>F)</span></code></pre></div>
 <pre><code>## lavaan 0.6.16 ended normally after 255 iterations
 ## 
 ##   Estimator                                         ML
@@ -770,8 +738,8 @@ tengan un pvalue menor a 0.05 para concluir que si aportan a los
 factores de manera significativa.</p>
 <div id="graficamos" class="section level2">
 <h2><strong>Graficamos</strong></h2>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">semPaths</span>(modelo, <span class="at">intercepts =</span> <span class="cn">FALSE</span>,<span class="at">edge.label.cex=</span><span class="fl">1.5</span>, <span class="at">optimizeLatRes =</span> <span class="cn">TRUE</span>, <span class="at">groups =</span> <span class="st">&quot;lat&quot;</span>,<span class="at">pastel =</span> <span class="cn">TRUE</span>, <span class="at">exoVar =</span> <span class="cn">FALSE</span>, <span class="at">sizeInt=</span><span class="dv">5</span>,<span class="at">edge.color =</span><span class="st">&quot;black&quot;</span>,<span class="at">esize =</span> <span class="dv">6</span>, <span class="at">label.prop=</span><span class="dv">2</span>,<span class="at">sizeLat =</span> <span class="dv">6</span>,<span class="st">&quot;std&quot;</span>, <span class="at">layout=</span><span class="st">&quot;circle2&quot;</span>)</span></code></pre></div>
-<p><img src="pd7_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">semPaths</span>(modelo, <span class="at">intercepts =</span> <span class="cn">FALSE</span>,<span class="at">edge.label.cex=</span><span class="fl">1.5</span>, <span class="at">optimizeLatRes =</span> <span class="cn">TRUE</span>, <span class="at">groups =</span> <span class="st">&quot;lat&quot;</span>,<span class="at">pastel =</span> <span class="cn">TRUE</span>, <span class="at">exoVar =</span> <span class="cn">FALSE</span>, <span class="at">sizeInt=</span><span class="dv">5</span>,<span class="at">edge.color =</span><span class="st">&quot;black&quot;</span>,<span class="at">esize =</span> <span class="dv">6</span>, <span class="at">label.prop=</span><span class="dv">2</span>,<span class="at">sizeLat =</span> <span class="dv">6</span>,<span class="st">&quot;std&quot;</span>, <span class="at">layout=</span><span class="st">&quot;circle2&quot;</span>)</span></code></pre></div>
+<p><img src="pd7_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>Podemos observar los 3 factores creados. Los numeros que vemos entre
 los factores y las variables latentes son las cargas facrtoriales,
 mientras más fuerte la línea o número mayor carga factorial tendrá. los
@@ -779,26 +747,32 @@ numeros que vemos direccionados hacia las variable observable es la
 información que no es eplicada con el factor, lo esperado es que este
 sea menor que la carga factorial.</p>
 </div>
-<div id="agregamos-los-factores-a-la-base-de-datos"
+<div id="agregamos-los-factores-del-afc-a-la-base-de-datos"
 class="section level2">
-<h2>Agregamos los factores a la base de datos</h2>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>factorial_casos<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(factorial<span class="sc">$</span>scores)</span></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>subdata<span class="sc">$</span>factor1<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR1</span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>subdata<span class="sc">$</span>factor2<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR2</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>subdata<span class="sc">$</span>factor3<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR3</span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>data<span class="sc">$</span>autoecon <span class="ot">&lt;-</span> <span class="fu">normalize</span>(subdata<span class="sc">$</span>factor1, </span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
-<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
-<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>data<span class="sc">$</span>percpinst <span class="ot">&lt;-</span> <span class="fu">normalize</span>(subdata<span class="sc">$</span>factor2, </span>
-<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
-<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
-<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
-<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a>data<span class="sc">$</span>autopol <span class="ot">&lt;-</span> <span class="fu">normalize</span>(subdata<span class="sc">$</span>factor3, </span>
-<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
-<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
-<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span></code></pre></div>
+<h2>Agregamos los factores del AFC a la base de datos</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>puntajes_factores<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(<span class="fu">predict</span>(modelo))</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>data<span class="sc">$</span>autoecon <span class="ot">&lt;-</span> <span class="fu">normalize</span>(puntajes_factores<span class="sc">$</span>FAC1, </span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>data<span class="sc">$</span>percpinst <span class="ot">&lt;-</span> <span class="fu">normalize</span>(puntajes_factores<span class="sc">$</span>FAC2, </span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a>data<span class="sc">$</span>autopol <span class="ot">&lt;-</span> <span class="fu">normalize</span>(puntajes_factores<span class="sc">$</span>FAC3, </span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>autoecon)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   2.754   5.311   5.272   7.745  10.000</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>percpinst)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   4.410   5.644   5.430   6.584  10.000</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">summary</span>(data<span class="sc">$</span>autopol)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   0.000   3.701   4.936   4.936   6.139  10.000</code></pre>
 </div>
 </div>
 
