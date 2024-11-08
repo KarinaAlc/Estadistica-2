@@ -234,30 +234,7 @@ print(factorial$loadings,cutoff = 0.35)
 
 3.Proportion Var y Cumulative Var
 
-## **PASO 6:** Evaluamos el Análisis Factorial Exploratorio solicitado
-
--   ¿Qué variables aportaron más a los factores?
-
-```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
-sort(factorial$communality)
-```
-
--   ¿Qué variables contribuyen a mas de un factor?
-
-```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
-sort(factorial$complexity)
-```
-
--   ¿Qué variables tiene un componente "único" más grande?
-
-```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
-sort(factorial$uniquenesses)
-```
-
-Que tanto componente unico entre las variales, tiene menor cantidad de
-información en común (o sea varianza común)
-
-## **PASO 7:** Guardamos los componentes como nuevas variables
+## **PASO 6:** Guardamos los componentes como nuevas variables
 
 Podemos crear un data set con sólo los factores creados
 
@@ -279,7 +256,7 @@ confianza$municipios<- factorial_casos$MR3
 -   Segundo factor: Organismos electorales (confins2)
 -   Tercer factor:municipios
 
-## **PASO 8:** Estandarizamos a una escala de 100
+## **PASO 7:** Estandarizamos a una escala de 100
 
 ```{r echo = T,  fig.show='hide', message=FALSE, warning=FALSE}
 #install.packages("BBmisc")

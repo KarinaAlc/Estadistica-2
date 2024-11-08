@@ -463,6 +463,9 @@ div.tocify {
 <li>
   <a href="pd10.html">Sesión 10</a>
 </li>
+<li>
+  <a href="Ejercicios.html">Ejercicios</a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -637,7 +640,7 @@ correlación.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">cortest.bartlett</span>(corMatrix,<span class="at">n=</span><span class="fu">nrow</span>(confianza))<span class="sc">$</span>p.value<span class="sc">&gt;</span><span class="fl">0.05</span><span class="co">#Menor a 0.05 saldrá FALSE, mayor a 0.05 saldra TRUE</span></span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>Este es una prueba de hipótesis donde H0: La matriz de correlación es
-una matriz identidad</p>
+una matriz identidad.</p>
 <p>Entonces buscamos que se rechace la hipótesis nula para así poder
 determinar que la matriz de correlación no se parece una matriz de
 identidad</p>
@@ -755,44 +758,13 @@ class="section level2">
 <p>2.Ver la carga, que tanto aporta cada variable al componente.</p>
 <p>3.Proportion Var y Cumulative Var</p>
 </div>
-<div id="paso-6-evaluamos-el-análisis-factorial-exploratorio-solicitado"
+<div id="paso-6-guardamos-los-componentes-como-nuevas-variables"
 class="section level2">
-<h2><strong>PASO 6:</strong> Evaluamos el Análisis Factorial
-Exploratorio solicitado</h2>
-<ul>
-<li>¿Qué variables aportaron mas a los factores?</li>
-</ul>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>communality)</span></code></pre></div>
-<pre><code>##   Congreso     RENIEC     MINEDU Def.Pueblo       FFAA        PNP P.Judicial 
-##  0.3372837  0.4050627  0.4263242  0.4553069  0.4697649  0.5048577  0.5242361 
-##    Gob.Reg        JNE   Mun.Dist   Mun.Prov       ONPE 
-##  0.5317924  0.6714731  0.7339215  0.7837958  0.8732249</code></pre>
-<ul>
-<li>¿Qué variables contribuyen a mas de un factor?</li>
-</ul>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>complexity)</span></code></pre></div>
-<pre><code>##       ONPE   Mun.Prov   Mun.Dist       FFAA        JNE     MINEDU Def.Pueblo 
-##   1.329693   1.365548   1.366792   1.372612   1.505626   1.571662   1.611192 
-##        PNP P.Judicial     RENIEC   Congreso    Gob.Reg 
-##   1.687324   1.951096   2.164629   2.187600   2.273543</code></pre>
-<ul>
-<li>¿Qué variables tiene un componente “único” más grande?</li>
-</ul>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">sort</span>(factorial<span class="sc">$</span>uniquenesses)</span></code></pre></div>
-<pre><code>##       ONPE   Mun.Prov   Mun.Dist        JNE    Gob.Reg P.Judicial        PNP 
-##  0.1267751  0.2162042  0.2660785  0.3285269  0.4682076  0.4757639  0.4951423 
-##       FFAA Def.Pueblo     MINEDU     RENIEC   Congreso 
-##  0.5302351  0.5446931  0.5736758  0.5949373  0.6627163</code></pre>
-<p>Que tanto componente unico entre las variales, tiene menor cantidad
-de información en común (o sea varianza común)</p>
-</div>
-<div id="paso-7-guardamos-los-componentes-como-nuevas-variables"
-class="section level2">
-<h2><strong>PASO 7:</strong> Guardamos los componentes como nuevas
+<h2><strong>PASO 6:</strong> Guardamos los componentes como nuevas
 variables</h2>
 <p>Podemos crear un data set con sólo los factores creados</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>factorial_casos<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(factorial<span class="sc">$</span>scores)</span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="fu">head</span>(factorial_casos)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>factorial_casos<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(factorial<span class="sc">$</span>scores)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="fu">head</span>(factorial_casos)</span></code></pre></div>
 <pre><code>##            MR1        MR3         MR2
 ## 1 -0.015398132  1.9326401 -1.53684777
 ## 2 -0.045220205  0.5055937 -0.07725491
@@ -800,7 +772,7 @@ variables</h2>
 ## 4 -0.003566532 -0.9198334 -0.98524495
 ## 5 -1.050240319  0.1812582  1.69585781
 ## 7  0.987795750  0.2139105  1.07321242</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a><span class="fu">summary</span>(factorial_casos)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">summary</span>(factorial_casos)</span></code></pre></div>
 <pre><code>##       MR1                MR3                 MR2         
 ##  Min.   :-2.63272   Min.   :-1.983424   Min.   :-2.5800  
 ##  1st Qu.:-0.60080   1st Qu.:-0.723521   1st Qu.:-0.8837  
@@ -809,34 +781,34 @@ variables</h2>
 ##  3rd Qu.: 0.54671   3rd Qu.: 0.513798   3rd Qu.: 0.4524  
 ##  Max.   : 4.07026   Max.   : 3.554010   Max.   : 3.3607</code></pre>
 <p>Agregamos a la subdata</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>confianza<span class="sc">$</span>pod_estado<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR1</span>
-<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>confianza<span class="sc">$</span>org_elect<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR2</span>
-<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>confianza<span class="sc">$</span>municipios<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR3</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>confianza<span class="sc">$</span>pod_estado<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR1</span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>confianza<span class="sc">$</span>org_elect<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR2</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>confianza<span class="sc">$</span>municipios<span class="ot">&lt;-</span> factorial_casos<span class="sc">$</span>MR3</span></code></pre></div>
 <ul>
 <li>Primer factor:Poderes del Estado</li>
 <li>Segundo factor: Organismos electorales (confins2)</li>
 <li>Tercer factor:municipios</li>
 </ul>
 </div>
-<div id="paso-8-estandarizamos-a-una-escala-de-100"
+<div id="paso-7-estandarizamos-a-una-escala-de-100"
 class="section level2">
-<h2><strong>PASO 8:</strong> Estandarizamos a una escala de 100</h2>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="co">#install.packages(&quot;BBmisc&quot;)</span></span>
-<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
-<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>confianza<span class="sc">$</span>confins1 <span class="ot">&lt;-</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>pod_estado, </span>
-<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
-<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
-<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
-<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>confianza<span class="sc">$</span>confins2 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>org_elect, </span>
-<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
-<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
-<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
-<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a>confianza<span class="sc">$</span>confins3 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>municipios, </span>
-<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
-<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
-<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span></code></pre></div>
+<h2><strong>PASO 7:</strong> Estandarizamos a una escala de 100</h2>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="co">#install.packages(&quot;BBmisc&quot;)</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a><span class="fu">library</span>(BBmisc)</span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>confianza<span class="sc">$</span>confins1 <span class="ot">&lt;-</span> <span class="fu">normalize</span>(confianza<span class="sc">$</span>pod_estado, </span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>confianza<span class="sc">$</span>confins2 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>org_elect, </span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a>confianza<span class="sc">$</span>confins3 <span class="ot">&lt;-</span><span class="fu">normalize</span>(confianza<span class="sc">$</span>municipios, </span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>                                        <span class="at">method =</span> <span class="st">&quot;range&quot;</span>, </span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a>                                        <span class="at">margin=</span><span class="dv">2</span>, <span class="co"># by column</span></span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a>                                        <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span></code></pre></div>
 <p>Vemos resultados de cada factor</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">summary</span>(confianza)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="fu">summary</span>(confianza)</span></code></pre></div>
 <pre><code>##       JNE             ONPE           RENIEC         Mun.Prov        Mun.Dist   
 ##  Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.000   Min.   :1.00  
 ##  1st Qu.:1.000   1st Qu.:1.000   1st Qu.:2.000   1st Qu.:1.000   1st Qu.:1.00  
