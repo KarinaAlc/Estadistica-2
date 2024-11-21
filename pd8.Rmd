@@ -32,7 +32,7 @@ knitr::include_graphics("logoPUCP.png")
 
 **FACULTAD DE CIENCIAS SOCIALES - PUCP** <br>
 
-## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 1
+## Curso: POL 304 - Estadística para el análisis político 2 \| Semestre 2024 - 2
 
 <br>
 
@@ -307,7 +307,7 @@ table(data1$cluster)
 
 # **Extra: Limpieza**
 
-Como comentábamos en la PD anterior, la información que usarán para sus trabajos no suele estar formateada o "limpia". Por ello acá les comparto un par de códigos que me consultaron ayer para que puedan limpiar su BD.  Ojo que para la mayoría de técnicas del curso necesitamos una data sin NA ni valores inválidos, como lo son los 99 que usualmente se colocan cuando es una pregunta sin responder (por ejemplo en las encuestas).
+La información que usarán para sus trabajos no suele estar formateada o "limpia". Por ello acá les comparto un par de códigos que me consultaron ayer para que puedan limpiar su BD.  Ojo que para la mayoría de técnicas del curso necesitamos una data sin NA ni valores inválidos, como lo son los 99 que usualmente se colocan cuando es una pregunta sin responder (por ejemplo en las encuestas).
 
 ```{r}
 df=import("DataEjemplo.xlsx")

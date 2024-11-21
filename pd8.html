@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Análisis de conglomerados</title>
+
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    background-color: #ffffff;
+    color: #a0a0a0;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #a0a0a0;  padding-left: 4px; }
+div.sourceCode
+  { color: #1f1c1b; background-color: #ffffff; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #1f1c1b; } /* Normal */
+code span.al { color: #bf0303; background-color: #f7e6e6; font-weight: bold; } /* Alert */
+code span.an { color: #ca60ca; } /* Annotation */
+code span.at { color: #0057ae; } /* Attribute */
+code span.bn { color: #b08000; } /* BaseN */
+code span.bu { color: #644a9b; font-weight: bold; } /* BuiltIn */
+code span.cf { color: #1f1c1b; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #924c9d; } /* Char */
+code span.cn { color: #aa5500; } /* Constant */
+code span.co { color: #898887; } /* Comment */
+code span.cv { color: #0095ff; } /* CommentVar */
+code span.do { color: #607880; } /* Documentation */
+code span.dt { color: #0057ae; } /* DataType */
+code span.dv { color: #b08000; } /* DecVal */
+code span.er { color: #bf0303; text-decoration: underline; } /* Error */
+code span.ex { color: #0095ff; font-weight: bold; } /* Extension */
+code span.fl { color: #b08000; } /* Float */
+code span.fu { color: #644a9b; } /* Function */
+code span.im { color: #ff5500; } /* Import */
+code span.in { color: #b08000; } /* Information */
+code span.kw { color: #1f1c1b; font-weight: bold; } /* Keyword */
+code span.op { color: #1f1c1b; } /* Operator */
+code span.ot { color: #006e28; } /* Other */
+code span.pp { color: #006e28; } /* Preprocessor */
+code span.re { color: #0057ae; background-color: #e0e9f8; } /* RegionMarker */
+code span.sc { color: #3daee9; } /* SpecialChar */
+code span.ss { color: #ff5500; } /* SpecialString */
+code span.st { color: #bf0303; } /* String */
+code span.va { color: #0057ae; } /* Variable */
+code span.vs { color: #bf0303; } /* VerbatimString */
+code span.wa { color: #bf0303; } /* Warning */
+
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Prácticas de Estadística 2</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Sobre el curso</a>
+</li>
+<li>
+  <a href="pd1.html">Sesión 1</a>
+</li>
+<li>
+  <a href="pd2.html">Sesión 2</a>
+</li>
+<li>
+  <a href="pd3.html">Sesión 3</a>
+</li>
+<li>
+  <a href="pd4.html">Sesión 4</a>
+</li>
+<li>
+  <a href="pd5.html">Sesión 5</a>
+</li>
+<li>
+  <a href="Repaso.html">Repaso</a>
+</li>
+<li>
+  <a href="pd6.html">Sesión 6</a>
+</li>
+<li>
+  <a href="pd7.html">Sesión 7</a>
+</li>
+<li>
+  <a href="pd8.html">Sesión 8</a>
+</li>
+<li>
+  <a href="pd9.html">Sesión 9</a>
+</li>
+<li>
+  <a href="pd10.html">Sesión 10</a>
+</li>
+<li>
+  <a href="Ejercicios.html">Ejercicios</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Análisis de conglomerados</h1>
+
+</div>
+
+
+<p><br></p>
+<center>
+<img src=" " width="200"/>
+</center>
+<p><img src="logoPUCP.png" width="30%" style="display: block; margin: auto auto auto 0;" /></p>
+<p><strong>FACULTAD DE CIENCIAS SOCIALES - PUCP</strong> <br></p>
+<div
+id="curso-pol-304---estadística-para-el-análisis-político-2-semestre-2024---2"
+class="section level2">
+<h2>Curso: POL 304 - Estadística para el análisis político 2 | Semestre
+2024 - 2</h2>
+<p><br></p>
+<div id="jefas-de-práctica-karina-alcántara-y-lizette-crispín"
+class="section level4">
+<h4>Jefas de Práctica: Karina Alcántara 👩‍🏫 y Lizette Crispín 👩‍🏫<br></h4>
+<p><br> <br></p>
+</div>
+</div>
+<div id="cluster-jerárquico" class="section level1">
+<h1><strong>Cluster jerárquico</strong></h1>
+<p><br> <br></p>
+<div id="paso-1.-preparación-de-variables" class="section level2">
+<h2>Paso 1. Preparación de variables</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>data<span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">&quot;desigualdad.xlsx&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
+<p>Vamos a usar una base que tiene diferentes indicadores relacionados a
+desigualdad de género, utilizaremos desde MLautonomia hasta Cuenta F</p>
+<ul>
+<li><p>DesigualdadGenero: Indice de desigualdad de género</p></li>
+<li><p>MLAutonomia: Mide que tanto el sistema legal protege derechos
+reporductivos de las mujeres</p></li>
+<li><p>MLViolencia: Mide que tanto el sistema legal protege a las
+mujeres de la violencia</p></li>
+<li><p>VozPolítica: Presencia de mujeres en el parlamento</p></li>
+<li><p>LibertadMov: Porcentaje de mujeres que declaran no sentirse
+seguras en las calles</p></li>
+<li><p>DesconfianzaSJ: Porcentaje de mujeres que no confian en el
+sistema de justicia</p></li>
+<li><p>SecundariaC: Porcentaje de población con secundaria
+completa</p></li>
+<li><p>DesempleoMuj: Ratio de desempleo de muejeres frente a
+hombres</p></li>
+<li><p>CuentaF: Porcentaje de mujeres que cuentan con una cuenta en el
+sistema financiero</p></li>
+</ul>
+<p>Vamos a preparar la base</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">rownames</span>(data) <span class="ot">&lt;-</span> data[,<span class="dv">1</span>]</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#Asignamos las filas (casos) de acuerdo a la primera columna que era países</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> <span class="fu">select</span>(data, <span class="sc">-</span>Pais, <span class="sc">-</span>DesigualdadGenero)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#Mencionamos que queremos todas las variables menos la 1 (que es país) y 2 (que es el indicador general)</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>data1<span class="ot">&lt;-</span><span class="fu">na.omit</span>(data1)</span></code></pre></div>
+<p>Exploramos la clasificación de todas las variables</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">summary</span>(data1)</span></code></pre></div>
+<pre><code>##   MLAutonomia      MLViolencia      VozPolitica    LibertadMov   
+##  Min.   :0.0000   Min.   :0.2500   Min.   : 0.0   Min.   :29.70  
+##  1st Qu.:0.0000   1st Qu.:0.5000   1st Qu.:16.0   1st Qu.:58.20  
+##  Median :0.2500   Median :0.7500   Median :22.1   Median :65.40  
+##  Mean   :0.3698   Mean   :0.5702   Mean   :24.0   Mean   :63.56  
+##  3rd Qu.:0.7500   3rd Qu.:0.7500   3rd Qu.:32.5   3rd Qu.:70.20  
+##  Max.   :1.0000   Max.   :0.7500   Max.   :61.3   Max.   :91.10  
+##  DesconfianzaSJ   SecundariaC      DesempleoMuj      CuentaF      
+##  Min.   :23.20   Min.   :  1.74   Min.   :0.500   Min.   :  1.67  
+##  1st Qu.:47.40   1st Qu.: 36.73   1st Qu.:0.930   1st Qu.: 32.91  
+##  Median :52.30   Median : 61.51   Median :1.170   Median : 53.70  
+##  Mean   :51.49   Mean   : 60.65   Mean   :1.237   Mean   : 57.54  
+##  3rd Qu.:57.50   3rd Qu.: 89.18   3rd Qu.:1.480   3rd Qu.: 87.11  
+##  Max.   :65.50   Max.   :100.00   Max.   :2.330   Max.   :100.00</code></pre>
+</div>
+<div id="paso-2.-cálculo-de-matriz-distancias" class="section level2">
+<h2>Paso 2. Cálculo de matriz distancias</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>m.distancia <span class="ot">&lt;-</span> <span class="fu">get_dist</span>(data1, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Vemos la matriz de distancia</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">fviz_dist</span>(m.distancia,<span class="at">gradient =</span> <span class="fu">list</span>(<span class="at">low=</span><span class="st">&quot;blue&quot;</span>, <span class="at">mid=</span><span class="st">&quot;white&quot;</span>, <span class="at">high =</span><span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<p><img src="pd8_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="paso-3.-calculo-de-clúster" class="section level2">
+<h2>Paso 3. Calculo de clúster</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>resnumclust<span class="ot">=</span><span class="fu">NbClust</span>(data1, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">min.nc=</span> <span class="dv">2</span>, <span class="at">max.nc=</span> <span class="dv">10</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;ward.D&quot;</span>)</span></code></pre></div>
+<p><img src="pd8_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
+##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
+##                 significant increase of the value of the measure i.e the significant peak in Hubert
+##                 index second differences plot. 
+## </code></pre>
+<p><img src="pd8_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
+##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
+##                 second differences plot) that corresponds to a significant increase of the value of
+##                 the measure. 
+##  
+## ******************************************************************* 
+## * Among all indices:                                                
+## * 6 proposed 2 as the best number of clusters 
+## * 6 proposed 3 as the best number of clusters 
+## * 7 proposed 4 as the best number of clusters 
+## * 1 proposed 6 as the best number of clusters 
+## * 2 proposed 10 as the best number of clusters 
+## 
+##                    ***** Conclusion *****                            
+##  
+## * According to the majority rule, the best number of clusters is  4 
+##  
+##  
+## *******************************************************************</code></pre>
+</div>
+<div id="paso-4.-observamos-el-dendograma" class="section level2">
+<h2>Paso 4. Observamos el dendograma</h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">#Aca especificamos el número de clusters que deseamos</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">hcut</span>(data1, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">hc_method =</span> <span class="st">&quot;ward.D&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#Ward: se va agrupando de acuerdo a las menores distancias</span></span></code></pre></div>
+<p><strong>Dendograma</strong></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">#comando de gráfico</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="co">#rect= agregar rectangulo punteado</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="co">#cex=Tamaño del titulo</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="fu">fviz_dend</span>(res1, <span class="at">rect =</span> T, <span class="at">cex =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="pd8_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Gráficamos los clusters</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(res1, <span class="at">data =</span> data1)</span></code></pre></div>
+<p><img src="pd8_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="paso-5.-ver-características-de-los-grupos"
+class="section level2">
+<h2>Paso 5. Ver características de los grupos</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>data<span class="sc">$</span>clus<span class="ot">=</span><span class="fu">as.factor</span>(res1<span class="sc">$</span>cluster) <span class="co">#Agregamos la asignación a la base de datos inicial</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>clus)</span></code></pre></div>
+<pre><code>## 
+##  1  2  3  4 
+## 30 27 35 29</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>clust_car<span class="ot">&lt;-</span>data1 <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> res1<span class="sc">$</span>cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>  <span class="fu">group_by</span>(Cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>clust_car</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 9
+##   Cluster MLAutonomia MLViolencia VozPolitica LibertadMov DesconfianzaSJ
+##     &lt;int&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;
+## 1       1      0.708        0.658        15.3        53.6           44.2
+## 2       2      0.0278       0.352        27.5        66.8           50.5
+## 3       3      0.55         0.514        28.4        66.0           55.8
+## 4       4      0.121        0.75         24.5        68.0           54.7
+## # ℹ 3 more variables: SecundariaC &lt;dbl&gt;, DesempleoMuj &lt;dbl&gt;, CuentaF &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div id="cluster-no-jerárquico" class="section level1">
+<h1><strong>Cluster NO jerárquico</strong></h1>
+<p>Base de datos: Indicadores de ENDES 2019</p>
+<p>Variables que se usarán son de indicadores ENDES 2019 relacionados a
+violencia física contra la mujer y sus hijas/os</p>
+<p>Haremos un indicador sobre violencia física contra la mujer.</p>
+<ul>
+<li><p>psico-esp: VIOLENCIA PSICOLÓGICA EJERCIDA ALGUNA VEZ POR EL
+ESPOSO O COMPAÑERO</p></li>
+<li><p>fisica-esp: VIOLENCIA FÍSICA EJERCIDA ALGUNA VEZ POR EL ESPOSO O
+COMPAÑERO</p></li>
+<li><p>sexual-esp: VIOLENCIA SEXUAL EJERCIDA ALGUNA VEZ POR EL ESPOSO O
+COMPAÑERO</p></li>
+<li><p>fisica-otros: VIOLENCIA FÍSICA EJERCIDA ALGUNA VEZ POR OTRA
+PERSONA, APARTE DE SU ACTUAL/ÚLTIMO ESPOSO</p></li>
+<li><p>con-alcohol:Esposo / Compañero toma o tomaba bebidas alcohólicas
+algunas veces o con frecuencia</p></li>
+<li><p>golpes-hija GOLPES O CASTIGOS FÍSICOS EJERCIDOS POR EL PADRE
+BIOLÓGICO A SUS HIJAS E HIJOS</p></li>
+<li><p>fisica-preshija: MUJERES DE 15 A 49 AÑOS DE EDAD QUE DECLARARON
+LA PRESENCIA DE SUS HIJAS/OS DE 1 A 5 AÑOS DE EDAD CUANDO SU ESPOSO O
+COMPAÑERO LA MALTRATABA FISICAMENTE</p></li>
+<li><p>sexual-preshija MUJERES DE 15 A 49 AÑOS DE EDAD QUE DECLARARON LA
+PRESENCIA DE SUS HIJAS/OS DE 1 A 5 AÑOS DE EDAD CUANDO SU ESPOSO O
+COMPAÑERO LA MALTRATABA SEXUALMENTE</p></li>
+<li><p>vio-hijamadre: MUJERES DE 15 A 49 AÑOS DE EDAD QUE DECLARARON QUE
+SU PAPÁ GOLPEÓ ALGUNA VEZ A SU MAMÁ</p></li>
+</ul>
+<p>Cargamos paquetes</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div>
+<p>Cargamos data</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>data<span class="ot">=</span> <span class="fu">import</span>(<span class="st">&quot;INDICADORES-ENDES.xlsx&quot;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a><span class="fu">names</span>(data)</span></code></pre></div>
+<pre><code>##  [1] &quot;REGION&quot;          &quot;psico-esp&quot;       &quot;fisica-esp&quot;      &quot;sexual-esp&quot;     
+##  [5] &quot;fisica-otros&quot;    &quot;golpes-hija&quot;     &quot;fisica-preshija&quot; &quot;sexual-preshija&quot;
+##  [9] &quot;vio-hijamadre&quot;   &quot;con-alcohol&quot;</code></pre>
+<p>Preparamos variables y vamos a hacer lo mismo que el ejercicio
+anterior.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">rownames</span>(data) <span class="ot">=</span> data[,<span class="dv">1</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="co">#Asignamos los nombres de acuerdo a la primera columna que es regiones, el 1 es de acuerdo a la posición</span></span></code></pre></div>
+<p>Eliminamos la variable región porque ya tenemos las etiquetas</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>data <span class="ot">=</span> data[,<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="co">#Mencionamos que queremos todas las variables menos la 1 </span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    27 obs. of  9 variables:
+##  $ psico-esp      : num  50.7 48.6 68 58.7 52.3 ...
+##  $ fisica-esp     : num  28.3 27 41.8 37.9 39.9 ...
+##  $ sexual-esp     : num  7.83 5.76 14.34 10.6 8.35 ...
+##  $ fisica-otros   : num  10.75 6.79 15.31 22.18 12.27 ...
+##  $ golpes-hija    : num  35 25.9 38.4 13.5 38.4 ...
+##  $ fisica-preshija: num  23.8 31.5 33.6 45.4 32.9 ...
+##  $ sexual-preshija: num  6.12 3.63 3.12 5.2 1.41 ...
+##  $ vio-hijamadre  : num  36.5 35.9 54.3 43.5 46.3 ...
+##  $ con-alcohol    : num  5.54 5.59 6.88 8.56 8.52 ...</code></pre>
+<p>¿Qué variables seleccionamos?</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>data1<span class="ot">=</span><span class="fu">select</span>(data, <span class="st">&quot;psico-esp&quot;</span>,<span class="st">&quot;fisica-esp&quot;</span>,<span class="st">&quot;sexual-esp&quot;</span>, <span class="st">&quot;fisica-otros&quot;</span>,<span class="st">&quot;con-alcohol&quot;</span>)</span></code></pre></div>
+<p>En este caso como tenemos indicadores en la escala de % del 0 al 100,
+no necesitamos estandarizar</p>
+<div
+id="paso-1.-calculamos-distancias-y-elaboramos-matriz-de-distancias"
+class="section level2">
+<h2>Paso 1. Calculamos distancias y elaboramos matriz de distancias</h2>
+<p>Calculamos distancias</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>m.distancia <span class="ot">&lt;-</span> <span class="fu">get_dist</span>(data1, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>) </span></code></pre></div>
+<p>Elaboramos matriz de distancias</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a><span class="fu">fviz_dist</span>(m.distancia, <span class="at">gradient =</span> <span class="fu">list</span>(<span class="at">low =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">mid =</span> <span class="st">&quot;white&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<p><img src="pd8_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="paso-2.-estimar-el-número-de-clústers" class="section level2">
+<h2>Paso 2. Estimar el número de clústers</h2>
+<p>Especificar que el metodo es <strong>kmeans</strong></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>resnumclust<span class="ot">&lt;-</span><span class="fu">NbClust</span>(data1, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>, <span class="at">min.nc=</span><span class="dv">2</span>, <span class="at">max.nc=</span><span class="dv">10</span>, <span class="at">method =</span> <span class="st">&quot;kmeans&quot;</span>, <span class="at">index =</span> <span class="st">&quot;alllong&quot;</span>)</span></code></pre></div>
+<p><img src="pd8_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre><code>## *** : The Hubert index is a graphical method of determining the number of clusters.
+##                 In the plot of Hubert index, we seek a significant knee that corresponds to a 
+##                 significant increase of the value of the measure i.e the significant peak in Hubert
+##                 index second differences plot. 
+## </code></pre>
+<p><img src="pd8_files/figure-html/unnamed-chunk-22-2.png" width="672" /></p>
+<pre><code>## *** : The D index is a graphical method of determining the number of clusters. 
+##                 In the plot of D index, we seek a significant knee (the significant peak in Dindex
+##                 second differences plot) that corresponds to a significant increase of the value of
+##                 the measure. 
+##  
+## ******************************************************************* 
+## * Among all indices:                                                
+## * 7 proposed 2 as the best number of clusters 
+## * 6 proposed 3 as the best number of clusters 
+## * 4 proposed 6 as the best number of clusters 
+## * 4 proposed 7 as the best number of clusters 
+## * 3 proposed 9 as the best number of clusters 
+## * 3 proposed 10 as the best number of clusters 
+## 
+##                    ***** Conclusion *****                            
+##  
+## * According to the majority rule, the best number of clusters is  2 
+##  
+##  
+## *******************************************************************</code></pre>
+<ul>
+<li>¿Qué nos sugiere el gráfico?<br />
+</li>
+<li>¿Cuántos clúster podemos hacer?</li>
+<li>¿Cuál es la segunda opción?</li>
+</ul>
+</div>
+<div id="paso-3.-calculamos-los-clústers-con-el-método-de-k-means"
+class="section level2">
+<h2>Paso 3. Calculamos los clústers con el método de k-means</h2>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>k1 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(data1, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span></code></pre></div>
+</div>
+<div id="paso-4.-graficamos-clústers" class="section level2">
+<h2>Paso 4. Graficamos clústers</h2>
+<p>Graficamos clústers</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k1, <span class="at">data =</span> data1, <span class="at">ellipse.type =</span> <span class="st">&quot;norm&quot;</span>,<span class="at">palette =</span> <span class="st">&quot;Set2&quot;</span>, <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code></pre></div>
+<p><img src="pd8_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>k1<span class="sc">$</span>cluster</span></code></pre></div>
+<pre><code>##           AMAZONAS             ANCASH           APURIMAC           AREQUIPA 
+##                  2                  2                  1                  1 
+##           AYACUCHO          CAJAMARCA             CALLAO              CUSCO 
+##                  1                  1                  1                  1 
+##       HUANCAVELICA            HUANUCO                ICA              JUNIN 
+##                  1                  2                  2                  2 
+##        LA LIBERTAD         LAMBAYEQUE               LIMA LIMA METROPOLITANA 
+##                  2                  2                  2                  2 
+##        REGION LIMA             LORETO      MADRE DE DIOS           MOQUEGUA 
+##                  1                  2                  1                  2 
+##              PASCO              PIURA               PUNO         SAN MARTIN 
+##                  2                  1                  1                  2 
+##              TACNA             TUMBES            UCAYALI 
+##                  2                  1                  2</code></pre>
+</div>
+<div id="paso-5.-ver-características-de-los-grupos-1"
+class="section level2">
+<h2>Paso 5. Ver características de los grupos</h2>
+<p>Agregamos a la base de datos</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a>data1<span class="sc">$</span>cluster<span class="ot">&lt;-</span><span class="fu">as.factor</span>(k1<span class="sc">$</span>cluster)</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="fu">head</span>(data1)</span></code></pre></div>
+<pre><code>##           psico-esp fisica-esp sexual-esp fisica-otros con-alcohol cluster
+## AMAZONAS   50.67401   28.33569   7.825505    10.745830    5.539800       2
+## ANCASH     48.58894   26.99176   5.755162     6.786679    5.594532       2
+## APURIMAC   68.04245   41.78400  14.340372    15.305285    6.881544       1
+## AREQUIPA   58.65568   37.93574  10.598720    22.176043    8.562342       1
+## AYACUCHO   52.33838   39.92452   8.348963    12.266426    8.520534       1
+## CAJAMARCA  58.11619   27.82115   7.968603     8.040995    5.772940       1</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" tabindex="-1"></a><span class="fu">names</span>(data1)<span class="co">#ahora ya aparece la columna cluster :)</span></span></code></pre></div>
+<pre><code>## [1] &quot;psico-esp&quot;    &quot;fisica-esp&quot;   &quot;sexual-esp&quot;   &quot;fisica-otros&quot; &quot;con-alcohol&quot; 
+## [6] &quot;cluster&quot;</code></pre>
+<p>Observamos características</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" tabindex="-1"></a>tabla<span class="ot">&lt;-</span>data1 <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Cluster =</span> k1<span class="sc">$</span>cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb39-5"><a href="#cb39-5" tabindex="-1"></a>tabla</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 7
+##   Cluster `psico-esp` `fisica-esp` `sexual-esp` `fisica-otros` `con-alcohol`
+##     &lt;int&gt;       &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;          &lt;dbl&gt;         &lt;dbl&gt;
+## 1       1        58.6         34.8         8.91           15.6          6.94
+## 2       2        47.6         27.9         5.98           13.2          5.79
+## # ℹ 1 more variable: cluster &lt;dbl&gt;</code></pre>
+<p>¿Cómo podemos determinar las categorías de ambos conglomerados?</p>
+<p>Los valores de abajo tienden a ser más altos en cuanto a violencia
+física</p>
+<ul>
+<li><p>2=Nivel bajo de violencia física hacia la mujer</p></li>
+<li><p>1=Nivel alto de violencia física hacia la mujer</p></li>
+</ul>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a>data1<span class="sc">$</span>cluster<span class="ot">=</span><span class="fu">as.factor</span>(data1<span class="sc">$</span>cluster)</span>
+<span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="fu">levels</span>(data1<span class="sc">$</span>cluster)<span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;Alto&quot;</span>,<span class="st">&quot;Bajo&quot;</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="fu">table</span>(data1<span class="sc">$</span>cluster)</span></code></pre></div>
+<pre><code>## 
+## Alto Bajo 
+##   12   15</code></pre>
+</div>
+</div>
+<div id="extra-limpieza" class="section level1">
+<h1><strong>Extra: Limpieza</strong></h1>
+<p>La información que usarán para sus trabajos no suele estar formateada
+o “limpia”. Por ello acá les comparto un par de códigos que me
+consultaron ayer para que puedan limpiar su BD. Ojo que para la mayoría
+de técnicas del curso necesitamos una data sin NA ni valores inválidos,
+como lo son los 99 que usualmente se colocan cuando es una pregunta sin
+responder (por ejemplo en las encuestas).</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a>df<span class="ot">=</span><span class="fu">import</span>(<span class="st">&quot;DataEjemplo.xlsx&quot;</span>)</span></code></pre></div>
+<p>Mediante el uso de la función summary puedo ver que tengo datos
+vacíos en la columna saneamiento (3) y vivienda (1). Asimismo, tengo
+valores máximos de 99 lo cual correspondería, según el diccionario de
+datos, que son datos inconclusos. Dado lo último, tengo que retirar los
+99 de mi base de datos.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="fu">summary</span>(df) </span></code></pre></div>
+<pre><code>##     REGION            saneamento       vivienda        internet     
+##  Length:27          Min.   :37.80   Min.   :19.54   Min.   : 3.281  
+##  Class :character   1st Qu.:47.65   1st Qu.:27.33   1st Qu.: 5.968  
+##  Mode  :character   Median :52.46   Median :31.82   Median : 6.790  
+##                     Mean   :54.13   Mean   :36.32   Mean   :10.518  
+##                     3rd Qu.:58.04   3rd Qu.:37.44   3rd Qu.: 8.162  
+##                     Max.   :99.00   Max.   :99.00   Max.   :99.000  
+##                     NA&#39;s   :3       NA&#39;s   :1</code></pre>
+<div id="eliminación-na" class="section level2">
+<h2>Eliminación NA</h2>
+<p>Eliminación de SOLO las filas que contienen NA en una data frame. Es
+decir el nro de casos se disminuye.</p>
+<p>Si apreciamos el summary, se han eliminado las NA.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(df)</span>
+<span id="cb46-2"><a href="#cb46-2" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" tabindex="-1"></a><span class="fu">summary</span>(df) </span></code></pre></div>
+<pre><code>##     REGION            saneamento       vivienda        internet     
+##  Length:23          Min.   :37.80   Min.   :19.54   Min.   : 3.281  
+##  Class :character   1st Qu.:47.31   1st Qu.:27.13   1st Qu.: 5.639  
+##  Mode  :character   Median :52.38   Median :28.87   Median : 6.627  
+##                     Mean   :54.03   Mean   :36.54   Mean   :10.936  
+##                     3rd Qu.:58.06   3rd Qu.:36.95   3rd Qu.: 8.023  
+##                     Max.   :99.00   Max.   :99.00   Max.   :99.000</code></pre>
+</div>
+<div id="eliminación-de-99" class="section level2">
+<h2>Eliminación de 99</h2>
+<p>Eliminación de 99 (u otro valor que deseen eliminar) y NA en una data
+frame. Esto aplica a todas las filas que contienen 99 y NA. Es decir el
+nro de casos se disminuye.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co">#usamos esta libreria</span></span>
+<span id="cb48-2"><a href="#cb48-2" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" tabindex="-1"></a>  <span class="fu">filter_all</span>(<span class="fu">all_vars</span>(. <span class="sc">!=</span> <span class="dv">99</span>))</span>
+<span id="cb48-5"><a href="#cb48-5" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" tabindex="-1"></a><span class="fu">summary</span>(df) </span></code></pre></div>
+<pre><code>##     REGION            saneamento       vivienda        internet     
+##  Length:19          Min.   :37.80   Min.   :19.54   Min.   : 3.281  
+##  Class :character   1st Qu.:45.89   1st Qu.:26.89   1st Qu.: 5.431  
+##  Mode  :character   Median :50.68   Median :28.34   Median : 6.450  
+##                     Mean   :51.18   Mean   :30.20   Mean   : 6.998  
+##                     3rd Qu.:55.25   3rd Qu.:34.31   3rd Qu.: 8.023  
+##                     Max.   :68.04   Max.   :41.78   Max.   :14.340</code></pre>
+<p>Espero les pueda servir para la limpieza de sus DF.</p>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("show" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
